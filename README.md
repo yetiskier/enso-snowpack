@@ -1,7 +1,7 @@
-# El Niño vs. snowpack — MT, ID, CO, UT
+# El Niño vs. snowpack — MT, ID, WY, CO, UT
 
 Does El Niño strength correlate with winter snowpack in Montana, Idaho,
-Colorado and Utah? This directory is a self-contained, reproducible pipeline
+Wyoming, Colorado and Utah? This directory is a self-contained, reproducible pipeline
 that downloads every public input, computes the correlations, and writes a
 report with figures.
 
@@ -57,7 +57,7 @@ If the AWDB API rejects a parameter, the failure lands in
 |---|---|---|---|
 | NOAA CPC ONI | 3-month running Niño-3.4 SST anomaly, the official ENSO index | 1950– | cpc.ncep.noaa.gov/data/indices/oni.ascii.txt (fallback psl.noaa.gov/data/correlation/oni.data) |
 | NOAA PSL MEI v2 | Multivariate ENSO Index, sensitivity check | 1979– | psl.noaa.gov/enso/mei/data/meiv2.data |
-| NRCS SNOTEL (AWDB REST v1) | daily SWE (`WTEQ`), accumulated precipitation (`PREC`), mean air temperature (`TAVG`) for every SNOTEL station in the four states | ~1979– | wcc.sc.egov.usda.gov/awdbRestApi |
+| NRCS SNOTEL (AWDB REST v1) | daily SWE (`WTEQ`), snow depth (`SNWD`), accumulated precipitation (`PREC`), mean air temperature (`TAVG`) for every SNOTEL station in the five states | ~1979– | wcc.sc.egov.usda.gov/awdbRestApi |
 | NRCS snow courses (AWDB, network `SNOW`) | manual April-1 SWE, extends the record before SNOTEL | ~1930s– | same |
 | NCEI nClimDiv | statewide monthly precipitation and mean temperature | 1895– | ncei.noaa.gov/pub/data/cirs/climdiv/ |
 
@@ -70,7 +70,8 @@ committed once a real run exists.
 
 1. **Water year** N = 1 Oct N−1 … 30 Sep N. Snowpack metrics per station and
    water year: April-1 SWE (nearest value within ±3 days), peak SWE and its
-   date, Oct–Mar precipitation, DJF mean temperature.
+   date, April-1 snow depth and bulk density (SWE/depth), Oct–Mar
+   precipitation, DJF mean temperature.
 2. **ENSO** per water year: DJF ONI (Dec N−1 … Feb N), winter mean
    (NDJ/DJF/JFM), and the winter peak |ONI| (OND…FMA) for strength bins.
    Phases use the CPC ±0.5 °C thresholds; strength bins weak 0.5–0.9,
@@ -80,7 +81,8 @@ committed once a real run exists.
    as a sensitivity. Stations need ≥ 15 valid years and a median April-1
    SWE ≥ 50 mm.
 4. **Aggregate**: mean station z per state and water year (≥ 5 stations),
-   plus North (MT+ID), South (CO+UT), ALL.
+   plus North (MT+ID), South (CO+UT), ALL. Wyoming straddles the ENSO node
+   and is deliberately in neither composite; it has its own row.
 5. **Statistics** per region: Pearson r with a bootstrap 95 % CI, Spearman ρ,
    regression slope per °C of ONI, composite means by phase with a Welch
    t-test (El Niño vs the rest), composites by strength bin, and — the direct

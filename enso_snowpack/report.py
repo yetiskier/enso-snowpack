@@ -126,7 +126,7 @@ def write_report(out_dir: Path, ctx: dict) -> Path:
     e = ctx["enso"]
     nino = e[e["phase"] == "El Nino"]
     lines = [
-        "# El Niño and snowpack in Montana, Idaho, Colorado and Utah",
+        "# El Niño and snowpack in Montana, Idaho, Wyoming, Colorado and Utah",
         "",
         f"_Generated {date.today().isoformat()} by `enso_snowpack` "
         f"({'SYNTHETIC FIXTURE — not real data' if ctx.get('fixture') else 'real data'})._",
@@ -134,7 +134,7 @@ def write_report(out_dir: Path, ctx: dict) -> Path:
         "## Question",
         "",
         "Is there a correlation between El Niño strength (Oceanic Niño Index, ONI) and the "
-        "winter snowpack of the four states, and how strong is it?",
+        "winter snowpack of the five states, and how strong is it?",
         "",
         "## Data",
         "",
@@ -142,7 +142,7 @@ def write_report(out_dir: Path, ctx: dict) -> Path:
         f"{len(nino)} El Niño winters ({', '.join(str(int(y)) for y in nino['water_year'])}), "
         f"{(e['phase'] == 'La Nina').sum()} La Niña winters, {(e['phase'] == 'Neutral').sum()} neutral.",
         f"- SNOTEL: {ctx['n_stations_used']} stations with ≥ {ctx['min_years']} valid April-1 SWE "
-        f"values (of {ctx['n_stations_total']} in the four states), daily WTEQ / PREC / TAVG.",
+        f"values (of {ctx['n_stations_total']} in the five states), daily WTEQ / SNWD / PREC / TAVG.",
     ]
     if ctx.get("n_courses_used"):
         lines.append(f"- Snow courses: {ctx['n_courses_used']} manual courses with ≥ {ctx['min_years']} "
@@ -213,6 +213,12 @@ def write_report(out_dir: Path, ctx: dict) -> Path:
     ]
     for region, comp in ctx["composites"].items():
         lines += [f"### {region}", "", composite_table(comp), ""]
+    if ctx.get("corr_depth"):
+        lines += ["## April-1 snow depth (SNWD) anomaly vs DJF ONI", "", corr_table(ctx["corr_depth"]), ""]
+    if ctx.get("corr_density"):
+        lines += ["## April-1 bulk density (SWE / depth) anomaly vs DJF ONI", "",
+                  "A positive r here means El Niño packs are denser for their depth (warmer, "
+                  "wetter snow or more mid-winter melt-refreeze).", "", corr_table(ctx["corr_density"]), ""]
     if ctx.get("corr_pct"):
         lines += ["## Sensitivity: percent-of-median instead of detrended z", "",
                   corr_table(ctx["corr_pct"]), ""]

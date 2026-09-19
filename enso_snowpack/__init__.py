@@ -7,5 +7,5 @@ series. See README.md for the workflow.
 
 __version__ = "0.1.0"
 
-STATES = ["MT", "ID", "CO", "UT"]
-STATE_NAMES = {"MT": "Montana", "ID": "Idaho", "CO": "Colorado", "UT": "Utah"}
+STATES = ["MT", "ID", "WY", "CO", "UT"]
+STATE_NAMES = {"MT": "Montana", "ID": "Idaho", "WY": "Wyoming", "CO": "Colorado", "UT": "Utah"}

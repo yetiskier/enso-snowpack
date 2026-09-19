@@ -14,7 +14,7 @@ from matplotlib.colors import LinearSegmentedColormap, TwoSlopeNorm  # noqa: E40
 
 from . import STATE_NAMES  # noqa: E402
 
-STATE_COLORS = {"MT": "#2a78d6", "ID": "#eb6834", "CO": "#1baf7a", "UT": "#eda100"}
+STATE_COLORS = {"MT": "#2a78d6", "ID": "#eb6834", "WY": "#e87ba4", "CO": "#1baf7a", "UT": "#eda100"}
 PHASE_COLORS = {"La Nina": "#2a78d6", "Neutral": "#9a9892", "El Nino": "#e34948"}
 DIVERGING = LinearSegmentedColormap.from_list("bluered", ["#0d366b", "#2a78d6", "#f0efec",
                                                           "#e34948", "#7a1f1e"])
@@ -103,8 +103,8 @@ def fig_station_map(sc: pd.DataFrame, out: Path, title: str, name: str) -> Path:
     ax.set_aspect(1 / np.cos(np.deg2rad(d["latitude"].mean())))
     ax.set_title(title)
     ax.legend(frameon=False, loc="lower left", title="Station significance")
-    for st, (lon, lat) in {"MT": (-110.0, 46.9), "ID": (-114.6, 44.3), "CO": (-105.5, 39.0),
-                           "UT": (-111.6, 39.3)}.items():
+    for st, (lon, lat) in {"MT": (-110.0, 46.9), "ID": (-114.6, 44.3), "WY": (-107.5, 43.0),
+                           "CO": (-105.5, 39.0), "UT": (-111.6, 39.3)}.items():
         ax.text(lon, lat, st, fontsize=12, color=MUTED, ha="center", alpha=0.7, fontweight="bold")
     return _save(fig, out, name)
 
@@ -180,5 +180,5 @@ def fig_regional_timeseries(regional: pd.DataFrame, enso: pd.DataFrame, out: Pat
     ax.axhline(0, color=MUTED, lw=0.6)
     ax.set_ylabel(metric_label); ax.set_xlabel("Water year")
     ax.set_title("Statewide snowpack anomaly; red bands = El Niño winters, blue = La Niña")
-    ax.legend(frameon=False, ncol=4, loc="upper left")
+    ax.legend(frameon=False, ncol=5, loc="upper left")
     return _save(fig, out, name)

@@ -110,7 +110,7 @@ def parse_mei_v2(text: str) -> pd.DataFrame:
 # ------------------------------------------------------------ nClimDiv -----
 
 # NCEI nClimDiv state codes (alphabetical order of the 48 contiguous states).
-NCLIMDIV_STATE_CODES = {"CO": 5, "ID": 10, "MT": 24, "UT": 42}
+NCLIMDIV_STATE_CODES = {"CO": 5, "ID": 10, "MT": 24, "UT": 42, "WY": 48}
 NCLIMDIV_ELEMENTS = {"01": "pcpn", "02": "tavg", "27": "tmax", "28": "tmin", "05": "pdsi"}
 NCLIMDIV_MISSING = {"pcpn": -9.99, "tavg": -99.9, "tmax": -99.9, "tmin": -99.9, "pdsi": -99.99}
 

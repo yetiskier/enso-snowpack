@@ -83,7 +83,8 @@ def test_parse_mei():
 
 def test_parse_nclimdiv_statewide_and_divisional():
     df = parse_nclimdiv(NCLIMDIV_SAMPLE, ["MT", "CO", "UT", "ID"])
-    assert set(df.state) == {"MT", "CO"}          # WY (48) filtered out
+    assert set(df.state) == {"MT", "CO"}          # WY (48) filtered out when not requested
+    assert set(parse_nclimdiv(NCLIMDIV_SAMPLE, ["WY"]).state) == {"WY"}
     st = df[(df.state == "MT") & (df.division == 0)]
     assert set(st.element) == {"pcpn", "tavg"}
     assert len(df[(df.state == "CO") & (df.element == "pcpn")]) == 11   # one -9.99 dropped
@@ -128,6 +129,8 @@ def test_station_metrics_april1_and_peak():
     assert set(m.water_year) == {2000, 2001, 2002, 2003}
     assert (m.apr1_swe > 0).all() and (m.peak_swe >= m.apr1_swe).all()
     assert m.precip_oct_mar.notna().all() and m.tavg_djf.notna().all()
+    assert m.apr1_depth.notna().all() and (m.apr1_depth > m.apr1_swe).all()
+    assert m.apr1_density.between(0.15, 0.6).all()
 
 
 def test_pipeline_recovers_planted_dipole(tmp_path: Path):
@@ -142,6 +145,8 @@ def test_pipeline_recovers_planted_dipole(tmp_path: Path):
     sc = pd.read_csv(tmp_path / "results" / "station_corr_apr1.csv")
     assert (sc[sc.stateCode == "MT"].r < 0).mean() > 0.8
     assert (sc[sc.stateCode == "UT"].r > 0).mean() > 0.8
+    assert "WY" in set(sc.stateCode) and "WY" in set(corr.index)
+    assert (tmp_path / "results" / "corr_apr1_depth_zd.csv").exists()
     assert (tmp_path / "results" / "summary.md").exists()
     for i in range(1, 8):
         assert list((tmp_path / "results").glob(f"fig{i}_*.png")), f"figure {i} missing"

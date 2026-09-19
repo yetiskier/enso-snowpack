@@ -9,7 +9,7 @@ Sources
             (fallback https://psl.noaa.gov/data/correlation/oni.data)
 * MEI v2:   https://psl.noaa.gov/enso/mei/data/meiv2.data   (optional)
 * SNOTEL /  https://wcc.sc.egov.usda.gov/awdbRestApi/services/v1/
-  snow courses  (``/stations`` metadata, ``/data`` daily WTEQ/PREC/TAVG,
+  snow courses  (``/stations`` metadata, ``/data`` daily WTEQ/SNWD/PREC/TAVG,
             semimonthly WTEQ for snow courses)
 * nClimDiv: https://www.ncei.noaa.gov/pub/data/cirs/climdiv/
 """
@@ -35,7 +35,7 @@ MEI_URL = "https://psl.noaa.gov/enso/mei/data/meiv2.data"
 AWDB_BASE = "https://wcc.sc.egov.usda.gov/awdbRestApi/services/v1"
 NCLIMDIV_BASE = "https://www.ncei.noaa.gov/pub/data/cirs/climdiv/"
 
-SNOTEL_ELEMENTS = ["WTEQ", "PREC", "TAVG"]
+SNOTEL_ELEMENTS = ["WTEQ", "SNWD", "PREC", "TAVG"]
 USER_AGENT = "enso-snowpack/0.1 (research; contact via repository)"
 
 

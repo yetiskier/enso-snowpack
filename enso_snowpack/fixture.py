@@ -14,7 +14,7 @@ import pandas as pd
 from . import STATES
 from .sources import ONI_SEASONS
 
-FIXTURE_SIGNAL = {"MT": -0.5, "ID": -0.4, "CO": +0.3, "UT": +0.45}  # z per °C of ONI
+FIXTURE_SIGNAL = {"MT": -0.5, "ID": -0.4, "WY": -0.1, "CO": +0.3, "UT": +0.45}  # z per °C of ONI
 
 
 def synthetic_oni(y0: int = 1950, y1: int = 2025, seed: int = 1) -> pd.DataFrame:
@@ -35,6 +35,7 @@ def synthetic_oni(y0: int = 1950, y1: int = 2025, seed: int = 1) -> pd.DataFrame
 def synthetic_stations(n_per_state: int = 12, seed: int = 2) -> pd.DataFrame:
     rng = np.random.default_rng(seed)
     boxes = {"MT": (44.5, 48.9, -115.5, -109.0), "ID": (42.2, 48.5, -116.8, -111.2),
+             "WY": (41.2, 44.9, -110.9, -104.5),
              "CO": (37.2, 40.9, -108.8, -105.0), "UT": (37.2, 41.8, -113.5, -109.2)}
     rows = []
     k = 300
@@ -55,7 +56,7 @@ def synthetic_stations(n_per_state: int = 12, seed: int = 2) -> pd.DataFrame:
 
 def synthetic_daily(stations: pd.DataFrame, oni: pd.DataFrame, end_wy: int = 2025,
                     seed: int = 3) -> pd.DataFrame:
-    """Daily WTEQ/PREC/TAVG (inches, inches, °F — as AWDB stores them)."""
+    """Daily WTEQ/SNWD/PREC/TAVG (inches, inches, inches, °F — as AWDB stores them)."""
     rng = np.random.default_rng(seed)
     djf = oni[oni["season"] == "DJF"].set_index("year")["oni"]
     frames = []
@@ -75,6 +76,9 @@ def synthetic_daily(stations: pd.DataFrame, oni: pd.DataFrame, end_wy: int = 202
             tavg = 25 + 30 * np.sin((t - 100) / 365 * 2 * np.pi) + rng.normal(0, 2, len(days))
             frames.append(pd.DataFrame({"stationTriplet": st.stationTriplet, "element": "WTEQ",
                                         "date": days, "value": np.round(swe, 1), "unit": "in"}))
+            depth = swe / np.clip(0.22 + 0.25 * accum, 0.2, 0.5)     # density 0.22 -> 0.47
+            frames.append(pd.DataFrame({"stationTriplet": st.stationTriplet, "element": "SNWD",
+                                        "date": days, "value": np.round(depth, 0), "unit": "in"}))
             frames.append(pd.DataFrame({"stationTriplet": st.stationTriplet, "element": "PREC",
                                         "date": days, "value": np.round(prec, 1), "unit": "in"}))
             frames.append(pd.DataFrame({"stationTriplet": st.stationTriplet, "element": "TAVG",

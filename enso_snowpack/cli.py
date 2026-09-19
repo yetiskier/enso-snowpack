@@ -155,7 +155,7 @@ def cmd_bundle(args) -> int:
 
 def _corr_set(regional, enso, metric, index_col="oni_djf", n_boot=2000):
     rows = []
-    for region in ["MT", "ID", "CO", "UT", "North (MT+ID)", "South (CO+UT)", "ALL"]:
+    for region in ["MT", "ID", "WY", "CO", "UT", "North (MT+ID)", "South (CO+UT)", "ALL"]:
         s = regional[regional["region"] == region][["water_year", "value"]]
         c = A.correlate(s, enso, region, metric, index_col, n_boot)
         if c is not None:
@@ -194,11 +194,11 @@ def cmd_analyze(args) -> int:
     # --- resampling significance (water years as the exchangeable unit)
     st_tab = std.merge(stations[["stationTriplet", "stateCode"]], on="stationTriplet")
     boots = []
-    for region in ["MT", "ID", "CO", "UT", "North (MT+ID)", "South (CO+UT)", "ALL"]:
+    for region in ["MT", "ID", "WY", "CO", "UT", "North (MT+ID)", "South (CO+UT)", "ALL"]:
         s_ = reg[reg["region"] == region][["water_year", "value"]]
         if s_.empty:
             continue
-        if region in ("MT", "ID", "CO", "UT"):
+        if region in ("MT", "ID", "WY", "CO", "UT"):
             tab = st_tab[st_tab["stateCode"] == region]
         elif region.startswith("North"):
             tab = st_tab[st_tab["stateCode"].isin(["MT", "ID"])]
@@ -215,7 +215,7 @@ def cmd_analyze(args) -> int:
     ctx["boot_apr1"] = boots
     ctx["boot_scheme"] = args.bootstrap
     pd.DataFrame(boots).to_csv(results / f"bootstrap_apr1_{args.bootstrap}.csv", index=False)
-    for region in ["MT", "ID", "CO", "UT"]:
+    for region in ["MT", "ID", "WY", "CO", "UT"]:
         s = reg[reg["region"] == region][["water_year", "value"]]
         if not s.empty:
             ctx["composites"][region] = A.strength_composites(s, enso)
@@ -230,6 +230,17 @@ def cmd_analyze(args) -> int:
     regpk.to_csv(results / "regional_peak_zd.csv", index=False)
     ctx["corr_peak"] = _corr_set(regpk, enso, "peak_swe_zd", n_boot=args.n_boot)
     pd.DataFrame(ctx["corr_peak"]).to_csv(results / "corr_peak_zd.csv", index=False)
+
+    # --- snow depth (SNWD) and April-1 bulk density
+    if metrics["apr1_depth"].notna().any():
+        stdd = A.standardize(metrics, "apr1_depth", min_median=200.0)
+        regd = A.regional_means(stdd, stations, "apr1_depth_zd")
+        ctx["corr_depth"] = _corr_set(regd, enso, "apr1_depth_zd", n_boot=args.n_boot)
+        pd.DataFrame(ctx["corr_depth"]).to_csv(results / "corr_apr1_depth_zd.csv", index=False)
+        stdn = A.standardize(metrics, "apr1_density", min_median=0.05, detrend=True)
+        regn_ = A.regional_means(stdn, stations, "apr1_density_zd")
+        ctx["corr_density"] = _corr_set(regn_, enso, "apr1_density_zd", n_boot=args.n_boot)
+        pd.DataFrame(ctx["corr_density"]).to_csv(results / "corr_apr1_density_zd.csv", index=False)
 
     # --- SNOTEL precipitation
     if metrics["precip_oct_mar"].notna().any():

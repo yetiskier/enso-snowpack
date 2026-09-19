@@ -91,6 +91,9 @@ def station_water_year_metrics(long: pd.DataFrame) -> pd.DataFrame:
         wteq = wteq[~wteq.index.duplicated()]
         prec = el.get("PREC")
         tavg = el.get("TAVG")
+        snwd = el.get("SNWD")
+        if snwd is not None:
+            snwd = snwd[~snwd.index.duplicated()]
         wy_all = np.where(wteq.index.month >= 10, wteq.index.year + 1, wteq.index.year)
         for wy in np.unique(wy_all):
             season = wteq[(wteq.index >= pd.Timestamp(wy - 1, 10, 1)) &
@@ -108,6 +111,14 @@ def station_water_year_metrics(long: pd.DataFrame) -> pd.DataFrame:
                    "peak_swe": peak, "peak_doy": (peak_date - pd.Timestamp(wy - 1, 10, 1)).days
                    if pd.notna(peak_date) else np.nan,
                    "n_core_days": n_core}
+            if snwd is not None and not snwd.empty:
+                d_apr = _nearest_value(snwd, pd.Timestamp(wy, 4, 1), 3)
+                row["apr1_depth"] = d_apr
+                dcore = snwd[(snwd.index >= pd.Timestamp(wy - 1, 11, 1)) &
+                             (snwd.index <= pd.Timestamp(wy, 4, 30))]
+                row["peak_depth"] = float(dcore.max()) if len(dcore) else np.nan
+                # bulk density of the April-1 pack (SWE / depth, both mm)
+                row["apr1_density"] = apr1 / d_apr if np.isfinite(apr1) and np.isfinite(d_apr) and d_apr > 100 else np.nan
             if prec is not None and not prec.empty:
                 prec = prec[~prec.index.duplicated()]
                 p_apr = _nearest_value(prec, pd.Timestamp(wy, 4, 1), 3)
@@ -121,7 +132,7 @@ def station_water_year_metrics(long: pd.DataFrame) -> pd.DataFrame:
                 row["tavg_djf"] = float(djf.mean()) if len(djf) >= 60 else np.nan
             rows.append(row)
     cols = ["stationTriplet", "water_year", "apr1_swe", "peak_swe", "peak_doy",
-            "n_core_days", "precip_oct_mar", "tavg_djf"]
+            "n_core_days", "apr1_depth", "peak_depth", "apr1_density", "precip_oct_mar", "tavg_djf"]
     df = pd.DataFrame(rows)
     for c in cols:
         if c not in df:
@@ -174,8 +185,10 @@ def standardize(metrics: pd.DataFrame, col: str = "apr1_swe", min_years: int = M
 
 def regional_means(std: pd.DataFrame, stations: pd.DataFrame, col: str,
                    min_stations: int = MIN_STATIONS_REGION_YEAR) -> pd.DataFrame:
-    """Mean anomaly per (state, water_year) plus a 4-state 'ALL' region and a
-    north (MT+ID) / south (CO+UT) split. Columns: region, water_year, value, n."""
+    """Mean anomaly per (state, water_year) plus an all-state 'ALL' region and a
+    north (MT+ID) / south (CO+UT) split. Wyoming straddles the ENSO node and
+    is kept out of both composites (it has its own row and its stations are
+    on the map). Columns: region, water_year, value, n."""
     m = std.merge(stations[["stationTriplet", "stateCode"]], on="stationTriplet", how="inner")
     m["region"] = m["stateCode"]
     parts = [m]
