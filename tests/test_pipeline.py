@@ -288,3 +288,145 @@ def test_snowcourse_picks_measurement_nearest_april_1():
     assert set(zip(m.water_year, m.apr1_swe)) == {(1994, 22.4), (1995, 18.0)}, m
     # a late-January reading is never mistaken for April
     assert 10.1 not in set(m.apr1_swe)
+
+
+# --------------------------------------------- daily seasonal analysis -----
+from enso_snowpack import daily as D  # noqa: E402
+
+
+def test_day_of_water_year_is_index_safe():
+    """A non-contiguous index must not union and change length."""
+    dates = pd.Series(pd.to_datetime(["2000-10-01", "2001-01-01", "2001-04-01", "2001-09-30"]),
+                      index=[7, 19, 3, 44])
+    doy, wy = D.day_of_water_year(dates)
+    assert len(doy) == 4 and len(wy) == 4
+    assert doy[0] == 0                       # 1 Oct is day 0
+    assert list(wy) == [2001, 2001, 2001, 2001]
+    assert doy[2] == 182                     # 1 Apr of a non-leap water year
+    assert doy[3] == 364
+
+
+def test_period_of_day_matches_brown_harper_table_1():
+    def d(m, day):
+        y = 2001 if m >= 10 else 2002
+        return (pd.Timestamp(y, m, day) - pd.Timestamp(2001, 10, 1)).days
+    assert D.period_of_day(d(11, 19)) == "Early Accumulation"
+    assert D.period_of_day(d(1, 27)) == "Early Accumulation"
+    assert D.period_of_day(d(1, 28)) == "Core Accumulation"
+    assert D.period_of_day(d(3, 8)) == "Core Accumulation"
+    assert D.period_of_day(d(3, 9)) == "Late Accumulation"
+    assert D.period_of_day(d(4, 17)) == "Late Accumulation"
+    assert D.period_of_day(d(4, 18)) == "Melt Onset"
+    assert D.period_of_day(d(6, 7)) == "Melt Onset"
+    assert D.period_of_day(d(10, 15)) is None      # before the first period
+
+
+def test_bh_vectorized_matches_reference():
+    rng = np.random.default_rng(4)
+    x = rng.normal(size=48)
+    y = -0.45 * x + rng.normal(size=48)
+    rm, rs, sm, ss = D.bh_vectorized(x, y, 8000, 0.2, np.random.default_rng(5))
+    ref_r = B.brown_harper_2026(x, y, B._stat_r, n_iter=8000, rng=np.random.default_rng(6))
+    ref_s = B.brown_harper_2026(x, y, B._stat_slope, n_iter=8000, rng=np.random.default_rng(7))
+    assert abs(rm - ref_r[0]) < 0.02 and abs(rs - ref_r[1]) < 0.01
+    assert abs(sm - ref_s[0]) < 0.02 and abs(ss - ref_s[1]) < 0.02
+    # subsets are drawn WITHOUT replacement: each keeps exactly 80% distinct points
+    idx = np.argsort(np.random.default_rng(8).random((5, 48)), axis=1)[:, :38]
+    assert all(len(set(row)) == 38 for row in idx)
+
+
+def test_daily_pipeline_recovers_planted_signal_on_fixture():
+    oni = FX.synthetic_oni(1990, 2025)
+    stations = FX.synthetic_stations(6)
+    daily = to_metric(FX.synthetic_daily(stations, oni, end_wy=2025))
+    cube, trips, years = D.build_cube(daily, min_years=10)
+    assert cube.shape[0] == len(trips) > 0 and cube.shape[2] == D.DAYS_IN_WY
+    z = D.standardize_cube(cube, years)
+    regions = D.regional_daily(z, trips, stations, min_stations=3)
+    enso = A.enso_by_water_year(oni)
+    mt = D.daily_enso_curve(regions["MT"], years, enso, n_iter=400, min_years=15)
+    ut = D.daily_enso_curve(regions["UT"], years, enso, n_iter=400, min_years=15)
+    # planted: MT negative, UT positive — must hold in the accumulation season
+    core_mt = mt[mt["period"] == "Core Accumulation"]["r"]
+    core_ut = ut[ut["period"] == "Core Accumulation"]["r"]
+    assert len(core_mt) > 10 and core_mt.mean() < -0.3, core_mt.mean()
+    assert len(core_ut) > 10 and core_ut.mean() > 0.2, core_ut.mean()
+    ps = D.period_summary(mt)
+    assert list(ps["period"]) == [p[0] for p in D.PERIODS if p[0] in set(ps["period"])]
+
+
+# ------------------------------------------------- ski-season analysis -----
+from enso_snowpack import ski as SKI  # noqa: E402
+
+
+def test_ski_windows_tile_the_season_without_overlap():
+    def day(m, d):
+        y = 2001 if m >= 10 else 2002
+        return (pd.Timestamp(y, m, d) - pd.Timestamp(2001, 10, 1)).days
+    spans = [(day(*a), day(*b)) for _, a, b in SKI.SKI_WINDOWS]
+    assert spans == sorted(spans), "windows must be in calendar order"
+    for (_, e0), (s1, _) in zip(spans, spans[1:]):
+        assert s1 == e0 + 1, "ski windows must abut, with no gap and no overlap"
+    mask = SKI.window_mask(np.arange(366), SKI.SKI_WINDOWS[1][1:])
+    assert mask.sum() == 21                      # 16 Dec - 5 Jan inclusive
+
+
+def test_assign_regions_uses_real_distance():
+    st = pd.DataFrame({"stationTriplet": ["A", "B", "C"],
+                       "latitude": [40.60, 40.60, 48.45],
+                       "longitude": [-111.60, -105.00, -114.35],
+                       "elevation": [9000.0, 9000.0, 6000.0]})
+    rm = SKI.assign_regions(st)
+    wasatch = set(rm[rm.region.str.startswith("Wasatch")].stationTriplet)
+    assert wasatch == {"A"}, "only the station at the Wasatch centre may join it"
+    assert "C" in set(rm[rm.region.str.startswith("NW Montana")].stationTriplet)
+    assert "B" not in set(rm.stationTriplet) or "Wasatch" not in {
+        r for r in rm[rm.stationTriplet == "B"].region}
+
+
+def test_storm_days_counted_from_swe_gain_and_normalised():
+    """A within-winter SWE gain is a storm; the water-year reset is not."""
+    days = pd.date_range("2009-11-01", "2010-04-15", freq="D")
+    swe = np.zeros(len(days))
+    swe[10:] = 30.0          # a 30 mm storm on day 10 (early season)
+    swe[60:] = 90.0          # a 60 mm storm inside the holidays
+    long = pd.DataFrame({"stationTriplet": "X:MT:SNTL", "element": "WTEQ",
+                         "date": days, "value": swe})
+    m = SKI.station_window_metrics(long)
+    early = m[m.window == "Early season"].iloc[0]
+    hol = m[m.window == "Holidays"].iloc[0]
+    assert early.big_storm_days > 0 and hol.big_storm_days > 0
+    # counts are per 30 days, so a single storm in a 21-day window scales up
+    assert hol.big_storm_days == pytest.approx(30 / 21, rel=0.02)
+    assert early.mean_swe < hol.mean_swe
+
+
+def test_test_grid_applies_fdr_across_the_whole_grid():
+    oni = FX.synthetic_oni(1980, 2025)
+    enso = A.enso_by_water_year(oni)
+    rng = np.random.default_rng(11)
+    years = enso.water_year.to_numpy()
+    x = enso.oni_djf.to_numpy()
+    rows, rmap = [], []
+    for reg_i, (region, state, *_ ) in enumerate(SKI.SKI_REGIONS[:3]):
+        for s in range(4):
+            trip = f"{reg_i}{s}:XX:SNTL"
+            rmap.append({"stationTriplet": trip, "region": region, "state": state,
+                         "km": 1.0, "elevation": 9000.0})
+            for yv, xv in zip(years, x):
+                for w, *_ in SKI.SKI_WINDOWS:
+                    rows.append({"stationTriplet": trip, "water_year": yv, "window": w,
+                                 "mean_swe": 300 - 60 * xv + rng.normal(0, 40),
+                                 "mean_depth": np.nan, "storm_days": 3.0 + rng.normal(0, 1),
+                                 "big_storm_days": 0.5 + rng.normal(0, 0.3),
+                                 "days_with_base": 10.0 + rng.normal(0, 3)})
+    grid = SKI.test_grid(pd.DataFrame(rows), pd.DataFrame(rmap), enso,
+                         n_iter=500, n_perm=400)
+    assert len(grid) > 0 and "fdr_significant" in grid
+    base = grid[grid.metric == "mean_swe"]
+    assert (base.r < -0.4).all(), "planted strong negative base signal must be recovered"
+    assert base.fdr_significant.all()
+    noise = grid[grid.metric == "big_storm_days"]
+    assert noise.fdr_significant.sum() <= 1, "pure noise must not survive FDR"
+    signs = SKI.window_sign_summary(grid)
+    assert len(signs) == len(SKI.SKI_WINDOWS) and set(signs.columns) >= {"sign_test_p", "mean_r"}

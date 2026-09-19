@@ -31,6 +31,35 @@ Phase from the DJF ONI (El Niño ≥ +0.5 °C, La Niña ≤ −0.5 °C); strengt
 | La Nina | strong | 7 | 1956 (-1.2), 1976 (-1.5), 1989 (-1.6), 1999 (-1.5), 2000 (-1.5), 2008 (-1.8), 2011 (-1.3) |
 | La Nina | very strong | 1 | 1974 (-1.9) |
 
+## When in the season the signal acts
+
+April-1 SWE is one snapshot and it mixes accumulation with melt already under way, so it cannot show *when* ENSO acts. Following Brown & Harper (2026), the correlation is computed for **every day of the water year** and summarised over their four seasonal periods. This is the primary result; the April-1 tables below are the conventional cross-section of it.
+
+![](fig8_daily_enso_curve.png)
+
+| State | Period | days | mean r | range | days significant | mean z, El Niño | mean z, La Niña |
+|---|---|---|---|---|---|---|---|
+| Montana | Early Accumulation | 70 | -0.27 | -0.36 to -0.13 | 60% | -0.21 | +0.25 |
+|  | Core Accumulation | 40 | -0.41 | -0.46 to -0.36 | 100% | -0.37 | +0.39 |
+|  | Late Accumulation | 40 | -0.48 | -0.50 to -0.45 | 100% | -0.45 | +0.44 |
+|  | Melt Onset | 51 | -0.40 | -0.49 to -0.33 | 100% | -0.40 | +0.37 |
+| Idaho | Early Accumulation | 70 | -0.18 | -0.25 to -0.06 | 3% | -0.19 | +0.20 |
+|  | Core Accumulation | 40 | -0.26 | -0.28 to -0.23 | 70% | -0.31 | +0.20 |
+|  | Late Accumulation | 40 | -0.29 | -0.31 to -0.26 | 82% | -0.34 | +0.30 |
+|  | Melt Onset | 51 | -0.25 | -0.33 to -0.14 | 29% | -0.25 | +0.29 |
+| Wyoming | Early Accumulation | 70 | -0.13 | -0.25 to +0.03 | 41% | -0.17 | +0.09 |
+|  | Core Accumulation | 40 | -0.27 | -0.29 to -0.24 | 100% | -0.30 | +0.14 |
+|  | Late Accumulation | 40 | -0.24 | -0.28 to -0.20 | 82% | -0.27 | +0.15 |
+|  | Melt Onset | 51 | -0.14 | -0.25 to -0.03 | 2% | -0.16 | +0.14 |
+| Colorado | Early Accumulation | 70 | +0.02 | -0.13 to +0.23 | 0% | +0.07 | +0.04 |
+|  | Core Accumulation | 40 | -0.14 | -0.16 to -0.07 | 0% | -0.03 | +0.16 |
+|  | Late Accumulation | 40 | -0.00 | -0.09 to +0.06 | 0% | +0.11 | +0.11 |
+|  | Melt Onset | 51 | +0.16 | +0.07 to +0.22 | 0% | +0.25 | -0.03 |
+| Utah | Early Accumulation | 70 | +0.02 | -0.11 to +0.15 | 0% | +0.02 | +0.02 |
+|  | Core Accumulation | 40 | -0.02 | -0.04 to +0.00 | 0% | -0.00 | +0.08 |
+|  | Late Accumulation | 40 | +0.03 | -0.02 to +0.07 | 0% | +0.06 | +0.12 |
+|  | Melt Onset | 51 | +0.15 | +0.04 to +0.25 | 0% | +0.18 | +0.03 |
+
 ## Headline: correlation of April-1 SWE anomaly with DJF ONI
 
 | Region | n | Pearson r [95% CI] | p | Spearman ρ | slope per +1 °C ONI | mean El Niño / Neutral / La Niña (n) | Welch p (El Niño vs rest) | r within El Niño (n) | reading |

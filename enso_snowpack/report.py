@@ -58,6 +58,59 @@ def composite_table(comp: pd.DataFrame) -> str:
     return "\n".join(out)
 
 
+def ski_window_table(signs) -> str:
+    """Sign consistency per ski window across all regions and metrics."""
+    if signs is None or len(signs) == 0:
+        return "_ski analysis not run_"
+    out = ["| Window of winter | tests | leaning to less snow | mean r | sign-test p |",
+           "|---|---|---|---|---|"]
+    for r in signs.itertuples():
+        out.append(f"| {r.window} | {int(r.tests)} | {int(r.negative)} ({100 * r.frac_negative:.0f}%) | "
+                   f"{_f(r.mean_r, plus=True)} | {_f(r.sign_test_p, 4)}{_stars(r.sign_test_p)} |")
+    out.append("")
+    out.append("A negative correlation means El Niño winters bring less of that quantity. The sign "
+               "test asks whether the direction is consistent across independent ski regions, which "
+               "is the question that matters when each single correlation is modest.")
+    return "\n".join(out)
+
+
+def ski_findings(grid) -> str:
+    """The tests that survive false-discovery control, in plain terms."""
+    if grid is None or len(grid) == 0:
+        return "_ski analysis not run_"
+    sig = grid[grid["fdr_significant"]]
+    head = (f"**{len(sig)} of {len(grid)} tests survive false-discovery control at "
+            f"alpha = 0.10.** Each row is a real, sub-seasonal relationship:")
+    if sig.empty:
+        return ("No individual region-window-metric test survives false-discovery control across "
+                f"all {len(grid)} tests. Read the sign table above instead: it is the consistency "
+                "of direction, not any single cell, that carries the signal.")
+    out = [head, "",
+           "| Ski region | Window | What | n winters | r | mean z, El Niño | mean z, La Niña |",
+           "|---|---|---|---|---|---|---|"]
+    for r in sig.itertuples():
+        out.append(f"| {r.region} | {r.window} | {r.metric_label} | {int(r.n_winters)} | "
+                   f"{_f(r.r, plus=True)} | {_f(r.mean_nino, plus=True)} | {_f(r.mean_nina, plus=True)} |")
+    return "\n".join(out)
+
+
+def daily_period_tables(periods: dict) -> str:
+    """Per state, the daily correlation collapsed onto the Brown & Harper periods."""
+    if not periods:
+        return "_daily analysis not run (no daily station data)_"
+    out = ["| State | Period | days | mean r | range | days significant | mean z, El Niño | mean z, La Niña |",
+           "|---|---|---|---|---|---|---|---|"]
+    for st in ("MT", "ID", "WY", "CO", "UT"):
+        g = periods.get(st)
+        if g is None or len(g) == 0:
+            continue
+        for i, r in enumerate(g.itertuples()):
+            out.append(f"| {STATE_NAMES.get(st, st) if i == 0 else ''} | {r.period} | {int(r.days)} | "
+                       f"{_f(r.r_mean, plus=True)} | {_f(r.r_min, plus=True)} to {_f(r.r_max, plus=True)} | "
+                       f"{100 * r.frac_sig:.0f}% | {_f(r.nino, plus=True)} | {_f(r.nina, plus=True)} |")
+    return "\n".join(out)
+
+
 def boot_table(rows: list[dict]) -> str:
     if rows and rows[0].get("scheme") == "brown_harper_2026":
         hdr = ("| Region | n | slope per +1 °C ONI: mean ± σ | 2σ bounds | significant (2σ) | "
@@ -165,6 +218,31 @@ def write_report(out_dir: Path, ctx: dict) -> Path:
         "1.0–1.4, strong 1.5–1.9, very strong ≥ 2.0. The value in parentheses is the DJF ONI.",
         "",
         enso_years_table(e),
+        "",
+        "## The ski season: by region and window of winter",
+        "",
+        "Skiing is not water supply. What matters is the base underfoot and how often it storms "
+        "during the windows that carry a season, so this section scores destination ski regions "
+        "(not states, which are not snow climates) inside ski windows, and controls the "
+        "false-discovery rate across the whole grid, because asking this many questions at "
+        "p<0.05 buys false positives for free.",
+        "",
+        "![](fig9_ski_region_window.png)",
+        "",
+        ski_window_table(ctx.get("ski_window_signs")),
+        "",
+        ski_findings(ctx.get("ski_grid")),
+        "",
+        "## When in the season the signal acts",
+        "",
+        "April-1 SWE is one snapshot and it mixes accumulation with melt already under way, so it "
+        "cannot show *when* ENSO acts. Following Brown & Harper (2026), the correlation is computed "
+        "for **every day of the water year** and summarised over their four seasonal periods. This "
+        "is the primary result; the April-1 tables below are the conventional cross-section of it.",
+        "",
+        "![](fig8_daily_enso_curve.png)",
+        "",
+        daily_period_tables(ctx.get("daily_periods", {})),
         "",
         "## Headline: correlation of April-1 SWE anomaly with DJF ONI",
         "",

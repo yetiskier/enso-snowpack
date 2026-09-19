@@ -1,7 +1,14 @@
 # El Niño vs. snowpack — MT, ID, WY, CO, UT
 
-Does El Niño strength correlate with winter snowpack in Montana, Idaho,
-Wyoming, Colorado and Utah? This directory is a self-contained, reproducible pipeline
+Does El Niño affect the **ski season** in Montana, Idaho, Wyoming, Colorado
+and Utah, and if so where and when in the winter?
+
+This is deliberately not a water-supply study. April-1 SWE is a runoff
+metric; a ski operation cares about the base underfoot and how often it
+storms during the windows that carry a season. So the headline analysis
+scores destination ski regions inside ski windows, and controls the
+false-discovery rate across the whole grid. The seasonal and April-1
+analyses are kept as context and cross-checks. This directory is a self-contained, reproducible pipeline
 that downloads every public input, computes the correlations, and writes a
 report with figures.
 
@@ -91,7 +98,23 @@ committed once a real run exists.
 6. **Weather cross-check**: nClimDiv statewide Nov–Mar precipitation (% of
    1991–2020 normal) and DJF temperature anomaly against the same index over
    70+ winters; SNOTEL Oct–Mar precipitation the same way.
-7. **Bootstrap / permutation significance** (`enso_snowpack/bootstrap.py`),
+7. **Ski season** (`enso_snowpack/ski.py`): 12 destination ski regions
+   (stations within a radius of a real ski destination, since a state is not
+   a snow climate), four windows — Early season (1 Nov–15 Dec), Holidays
+   (16 Dec–5 Jan), Midwinter (6 Jan–28 Feb), Spring (1 Mar–15 Apr) — and
+   metrics that matter to skiing: base (mean SWE and, where the record
+   allows, mean depth), storm days and powder days counted from daily SWE
+   gain (>= 10 mm and >= 25 mm, per 30 days), and days with a skiable base.
+   Every region x window x metric is tested, then Benjamini-Hochberg
+   false-discovery control is applied across the whole grid, and a binomial
+   sign test asks whether a window leans consistently across regions.
+   Snow depth begins ~1993, so depth metrics have ~25 winters against ~45
+   for the SWE-derived ones; storm days come from SWE gain because that is
+   both longer and density-independent.
+8. **Day by day** (`enso_snowpack/daily.py`): the correlation for every day
+   of the water year, summarised over the Brown & Harper (2026) periods,
+   because April-1 SWE is one snapshot that mixes accumulation with melt.
+9. **Bootstrap / permutation significance** (`enso_snowpack/bootstrap.py`),
    because ~40 winters and ~15 El Niño winters are too few for parametric
    p-values on skewed, serially correlated series. See below.
 
@@ -162,6 +185,8 @@ enso_snowpack/
   analysis.py  water-year metrics, standardisation, statistics
   figures.py   matplotlib figures
   report.py    results/summary.md
+  ski.py       ski regions x windows of winter, the headline analysis
+  daily.py     day-by-day correlation through the water year
   bootstrap.py permutation, moving-block and two-level bootstraps; FDR field significance
   fixture.py   synthetic data with a planted north-negative / south-positive signal
   cli.py       fetch | bundle | analyze | run

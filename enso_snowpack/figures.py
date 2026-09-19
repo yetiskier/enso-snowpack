@@ -182,3 +182,135 @@ def fig_regional_timeseries(regional: pd.DataFrame, enso: pd.DataFrame, out: Pat
     ax.set_title("Statewide snowpack anomaly; red bands = El Niño winters, blue = La Niña")
     ax.legend(frameon=False, ncol=5, loc="upper left")
     return _save(fig, out, name)
+
+
+def fig_daily_curve(curve: pd.DataFrame, climatology: np.ndarray, out: Path,
+                    name: str = "fig8_daily_enso_curve",
+                    regions=("MT", "ID", "WY", "CO", "UT")) -> Path:
+    """The ENSO signal day by day through the water year.
+
+    Top panel: mean snowpack climatology, so the reader can see where in the
+    season the snow actually is. Bottom panel: correlation of the regional
+    standardised anomaly with the DJF ONI on each day, thick where the
+    Brown & Harper (2026) calibrated 2σ bounds exclude zero. Both share the
+    water-year axis; neither panel carries a second scale.
+    """
+    from .daily import PERIODS
+    fig, (ax0, ax) = plt.subplots(2, 1, figsize=(11.5, 6.4), sharex=True,
+                                  gridspec_kw={"height_ratios": [1, 2.6], "hspace": 0.12})
+
+    # period bands, drawn first so everything sits on top of them
+    def _day(m, d):
+        y = 2001 if m >= 10 else 2002
+        return (pd.Timestamp(y, m, d) - pd.Timestamp(2001, 10, 1)).days
+    for i, (label, (m0, d0), (m1, d1)) in enumerate(PERIODS):
+        a, b = _day(m0, d0), _day(m1, d1)
+        for axis in (ax0, ax):
+            axis.axvspan(a, b, color=MUTED, alpha=0.05 if i % 2 else 0.10, lw=0)
+        ax0.text((a + b) / 2, 1.02, label.replace(" ", "\n"), transform=ax0.get_xaxis_transform(),
+                 ha="center", va="bottom", fontsize=8, color=MUTED, linespacing=1.15)
+
+    ax0.plot(np.arange(len(climatology)), climatology, color=TEXT, lw=1.8)
+    ax0.fill_between(np.arange(len(climatology)), 0, climatology, color=MUTED, alpha=0.12, lw=0)
+    ax0.set_ylabel("Mean SWE (mm)")
+    ax0.set_ylim(0, None)
+
+    x_lo, x_hi = _day(10, 15), _day(6, 20)
+    label_at = _day(6, 1)          # label inside the axes, where curves are separated
+    for st in regions:
+        d = curve[(curve["region"] == st)].sort_values("doy")
+        d = d[(d["doy"] >= x_lo) & (d["doy"] <= x_hi)]
+        if d.empty:
+            continue
+        c = STATE_COLORS.get(st, TEXT)
+        ax.plot(d["doy"], d["r"], color=c, lw=1.4, alpha=0.55)
+        sig = d[d["r_sig_cal"]]
+        # thick segments where the relation clears the calibrated 2σ test
+        for _, block in sig.groupby((sig["doy"].diff() != 1).cumsum()):
+            ax.plot(block["doy"], block["r"], color=c, lw=3.2, solid_capstyle="round")
+        near = d.iloc[(d["doy"] - label_at).abs().argsort().iloc[0]]
+        ax.annotate(STATE_NAMES.get(st, st), (near["doy"], near["r"]), color=c, fontsize=9,
+                    fontweight="bold", xytext=(7, 0), textcoords="offset points", va="center",
+                    bbox=dict(boxstyle="round,pad=0.15", fc="#fcfcfb", ec="none", alpha=0.85))
+
+    ax.axhline(0, color=TEXT, lw=0.9)
+    ax.set_ylabel("Correlation with DJF ONI")
+    ax.set_xlabel("Water year")
+    ticks = [(pd.Timestamp(2001 if m >= 10 else 2002, m, 1) - pd.Timestamp(2001, 10, 1)).days
+             for m in (10, 11, 12, 1, 2, 3, 4, 5, 6)]
+    ax.set_xticks(ticks)
+    ax.set_xticklabels(["Oct", "Nov", "Dec", "Jan", "Feb", "Mar", "Apr", "May", "Jun"])
+    ax.set_xlim(x_lo, x_hi + 26)
+    ax.plot([], [], color=MUTED, lw=3.2, label="significant (calibrated 2σ)")
+    ax.plot([], [], color=MUTED, lw=1.4, alpha=0.55, label="not significant")
+    ax.legend(frameon=False, loc="lower left", fontsize=8.5)
+    ax0.set_title("When in the season does El Niño act on the snowpack?", pad=26)
+    return _save(fig, out, name)
+
+
+def fig_ski_heatmap(grid: pd.DataFrame, out: Path, name: str = "fig9_ski_region_window",
+                    metrics=("mean_swe", "storm_days", "big_storm_days")) -> Path:
+    """Ski region x window x metric, as small multiples of one measure.
+
+    Rows are ski regions ordered north to south, so the ENSO dipole reads as a
+    vertical gradient. Columns are the windows that carry a ski season. Colour
+    is the correlation with the DJF ONI on one diverging scale with a neutral
+    midpoint; a ring marks a test that survives false-discovery control across
+    the whole grid, and every cell is labelled, so colour is never the only
+    encoding.
+    """
+    from .ski import SKI_REGIONS, SKI_WINDOWS, METRICS
+    labels = dict(METRICS)
+    regions = [r[0] for r in sorted(SKI_REGIONS, key=lambda r: -r[2])]
+    windows = [w[0] for w in SKI_WINDOWS]
+    metrics = [m for m in metrics if m in set(grid["metric"])]
+
+    fig, axes = plt.subplots(1, len(metrics), figsize=(4.6 * len(metrics), 5.4), sharey=True)
+    axes = np.atleast_1d(axes)
+    norm = TwoSlopeNorm(vmin=-0.6, vcenter=0, vmax=0.6)
+    for ax, metric in zip(axes, metrics):
+        d = grid[grid["metric"] == metric]
+        M = np.full((len(regions), len(windows)), np.nan)
+        for i, reg in enumerate(regions):
+            for j, win in enumerate(windows):
+                s = d[(d["region"] == reg) & (d["window"] == win)]
+                if not s.empty:
+                    M[i, j] = s["r"].iloc[0]
+        ax.imshow(M, cmap=DIVERGING, norm=norm, aspect="auto")
+        for i, reg in enumerate(regions):
+            for j, win in enumerate(windows):
+                s = d[(d["region"] == reg) & (d["window"] == win)]
+                if s.empty or not np.isfinite(M[i, j]):
+                    continue
+                s = s.iloc[0]
+                strong = abs(M[i, j]) > 0.38
+                ax.text(j, i, f"{M[i, j]:+.2f}", ha="center", va="center", fontsize=8.5,
+                        color="#ffffff" if strong else TEXT,
+                        fontweight="bold" if s["fdr_significant"] else "normal")
+                if s["fdr_significant"]:
+                    ax.add_patch(plt.Rectangle((j - .5, i - .5), 1, 1, fill=False,
+                                               edgecolor=TEXT, lw=2.2))
+        ax.set_xticks(range(len(windows)))
+        ax.set_xticklabels([w.replace(" ", "\n") for w in windows], fontsize=8.5)
+        ax.set_title(labels.get(metric, metric), fontsize=9.5)
+        ax.set_xticks(np.arange(len(windows)) - .5, minor=True)
+        ax.set_yticks(np.arange(len(regions)) - .5, minor=True)
+        ax.grid(which="minor", color="#fcfcfb", lw=2)
+        ax.grid(which="major", visible=False)
+        ax.tick_params(which="minor", length=0)
+    axes[0].set_yticks(range(len(regions)))
+    axes[0].set_yticklabels(regions, fontsize=8.5)
+    sm = plt.cm.ScalarMappable(cmap=DIVERGING, norm=norm)
+    cb = fig.colorbar(sm, ax=axes, shrink=0.55, pad=0.015)
+    cb.set_label("Correlation with DJF ONI\n(negative = El Niño is worse)", fontsize=8.5)
+    fig.suptitle("El Niño and the ski season, by region and window of winter", y=0.99,
+                 fontsize=12, fontweight="bold")
+    fig.text(0.5, 0.005, "Bold value in a ring: survives false-discovery control across all "
+             f"{int(grid['n_tests'].iloc[0]) if 'n_tests' in grid else len(grid)} tests. "
+             "Regions ordered north (top) to south (bottom).",
+             ha="center", fontsize=8, color=MUTED)
+    out.mkdir(parents=True, exist_ok=True)
+    p = out / f"{name}.png"
+    fig.savefig(p, bbox_inches="tight")
+    plt.close(fig)
+    return p

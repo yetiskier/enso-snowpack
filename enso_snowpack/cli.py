@@ -11,7 +11,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from . import STATES, analysis as A, figures as F, fixture as FX, bootstrap as B
+from . import STATES, analysis as A, figures as F, fixture as FX, bootstrap as B, daily as D, ski as SKI
 from .fetch import (fetch_all_stations, fetch_mei, fetch_nclimdiv, fetch_oni, fetch_stations,
                     FetchError)
 from .report import write_report
@@ -285,6 +285,44 @@ def cmd_analyze(args) -> int:
         e2 = enso.merge(dj[["water_year", "mei_dj"]], on="water_year", how="left")
         ctx["corr_mei"] = _corr_set(reg, e2, "apr1_swe_zd", index_col="mei_dj", n_boot=args.n_boot)
 
+    # --- day-by-day seasonal signal (Brown & Harper 2026 frame)
+    if daily is not None and not args.no_daily:
+        cube, cube_stations, cube_years = D.build_cube(daily)
+        if len(cube_stations):
+            z = D.standardize_cube(cube, cube_years)
+            curves = []
+            for region, arr in D.regional_daily(z, cube_stations, stations).items():
+                cv = D.daily_enso_curve(arr, cube_years, enso, n_iter=min(args.n_boot, 2000))
+                cv["region"] = region
+                curves.append(cv)
+            curve = pd.concat(curves, ignore_index=True)
+            curve.to_csv(results / "daily_enso_curve.csv", index=False)
+            ctx["daily_periods"] = {r: D.period_summary(g) for r, g in curve.groupby("region")
+                                    if r in STATES}
+            climatology = np.nanmean(cube, axis=(0, 1))
+            F.fig_daily_curve(curve, climatology, results)
+            ctx["have_daily"] = True
+            log.info("daily curve: %d region-days", len(curve))
+            del cube, z
+
+    # --- ski season: sub-seasonal, by ski region and window of winter
+    if daily is not None and not args.no_ski:
+        region_map = SKI.assign_regions(stations)
+        sub = daily[daily["stationTriplet"].isin(set(region_map["stationTriplet"]))]
+        if not sub.empty:
+            wm = SKI.station_window_metrics(sub)
+            wm.to_csv(derived / "ski_window_metrics.csv", index=False)
+            grid = SKI.test_grid(wm, region_map, enso, n_iter=min(args.n_boot, 10000),
+                                 n_perm=args.n_perm)
+            grid.to_csv(results / "ski_region_window_grid.csv", index=False)
+            region_map.to_csv(results / "ski_region_stations.csv", index=False)
+            ctx["ski_grid"] = grid
+            ctx["ski_window_signs"] = SKI.window_sign_summary(grid)
+            F.fig_ski_heatmap(grid, results)
+            log.info("ski grid: %d tests, %d survive FDR", len(grid),
+                     int(grid["fdr_significant"].sum()) if len(grid) else 0)
+            del sub
+
     # --- figures
     F.fig_oni_timeseries(enso, results)
     F.fig_scatter_by_state(reg, enso, results, "April-1 SWE anomaly (station z, detrended)", "fig2_scatter_apr1")
@@ -324,6 +362,8 @@ def main(argv=None) -> int:
         sp.add_argument("--max-stations", type=int, default=None, help="limit stations (smoke runs)")
         sp.add_argument("--no-snow-courses", dest="snow_courses", action="store_false")
         sp.add_argument("--fixture", action="store_true", help="use the synthetic fixture (offline)")
+        sp.add_argument("--no-daily", action="store_true", help="skip the day-by-day seasonal analysis")
+        sp.add_argument("--no-ski", action="store_true", help="skip the ski region x window analysis")
         sp.add_argument("--fixture-stations", type=int, default=12)
         sp.add_argument("--n-boot", type=int, default=10000, help="bootstrap resamples / iterations")
         sp.add_argument("--n-perm", type=int, default=5000, help="permutations for null p-values")
