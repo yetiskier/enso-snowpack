@@ -1,0 +1,1105 @@
+region,window,metric,phase,strength,n_winters,mean,all_winters,diff,pct_change
+Beartooth & Absaroka (Red Lodge),Early season,big_storm_days_per_window,El Nino,moderate,4,0.7091228061952647,1.1179725446452495,-0.40884973844998485,-36.57064213323051
+Beartooth & Absaroka (Red Lodge),Early season,big_storm_days_per_window,El Nino,strong,3,0.8366636496150419,1.1179725446452495,-0.2813088950302076,-25.162415336368692
+Beartooth & Absaroka (Red Lodge),Early season,big_storm_days_per_window,El Nino,very strong,3,0.7014600420891366,1.1179725446452495,-0.41651250255611294,-37.25605825930895
+Beartooth & Absaroka (Red Lodge),Early season,big_storm_days_per_window,El Nino,weak,8,1.3510708931693873,1.1179725446452495,0.2330983485241378,20.85009597423554
+Beartooth & Absaroka (Red Lodge),Early season,big_storm_days_per_window,La Nina,moderate,4,1.4202222985240818,1.1179725446452495,0.30224975387883224,27.035525633121956
+Beartooth & Absaroka (Red Lodge),Early season,big_storm_days_per_window,La Nina,strong,6,1.9201830761989536,1.1179725446452495,0.802210531553704,71.75583473816508
+Beartooth & Absaroka (Red Lodge),Early season,big_storm_days_per_window,La Nina,weak,8,0.9424408393608326,1.1179725446452495,-0.17553170528441697,-15.700895887395514
+Beartooth & Absaroka (Red Lodge),Early season,big_storm_days_per_window,Neutral,neutral,16,0.9512300441302917,1.1179725446452495,-0.16674250051495787,-14.914722308128587
+Beartooth & Absaroka (Red Lodge),Holidays,big_storm_days_per_window,El Nino,moderate,4,0.19799358010733822,0.43048831804464227,-0.23249473793730405,-54.00721185497861
+Beartooth & Absaroka (Red Lodge),Holidays,big_storm_days_per_window,El Nino,strong,3,0.08203763812767166,0.43048831804464227,-0.3484506799169706,-80.94312094221236
+Beartooth & Absaroka (Red Lodge),Holidays,big_storm_days_per_window,El Nino,very strong,3,0.4688233405996239,0.43048831804464227,0.03833502255498161,8.905008788416465
+Beartooth & Absaroka (Red Lodge),Holidays,big_storm_days_per_window,El Nino,weak,8,0.42709589193499975,0.43048831804464227,-0.0033924261096425212,-0.7880413863613186
+Beartooth & Absaroka (Red Lodge),Holidays,big_storm_days_per_window,La Nina,moderate,4,0.5589576791401618,0.43048831804464227,0.12846936109551954,29.842705530094566
+Beartooth & Absaroka (Red Lodge),Holidays,big_storm_days_per_window,La Nina,strong,6,0.45077192007562333,0.43048831804464227,0.020283602030981063,4.711765959901756
+Beartooth & Absaroka (Red Lodge),Holidays,big_storm_days_per_window,La Nina,weak,8,0.45096740961525816,0.43048831804464227,0.020479091570615893,4.7571770736162415
+Beartooth & Absaroka (Red Lodge),Holidays,big_storm_days_per_window,Neutral,neutral,16,0.5253971843961468,0.43048831804464227,0.09490886635150453,22.0467925314671
+Beartooth & Absaroka (Red Lodge),Midwinter,big_storm_days_per_window,El Nino,moderate,4,1.5335423076273853,1.1795637869998097,0.3539785206275756,30.00927330330401
+Beartooth & Absaroka (Red Lodge),Midwinter,big_storm_days_per_window,El Nino,strong,3,0.5209204622119891,1.1795637869998097,-0.6586433247878206,-55.83787261416892
+Beartooth & Absaroka (Red Lodge),Midwinter,big_storm_days_per_window,El Nino,very strong,3,0.7150887813186881,1.1795637869998097,-0.46447500568112154,-39.37684513548028
+Beartooth & Absaroka (Red Lodge),Midwinter,big_storm_days_per_window,El Nino,weak,8,0.7541437763976995,1.1795637869998097,-0.4254200106021102,-36.065875817038695
+Beartooth & Absaroka (Red Lodge),Midwinter,big_storm_days_per_window,La Nina,moderate,4,1.366960819019067,1.1795637869998097,0.18739703201925728,15.88697737965463
+Beartooth & Absaroka (Red Lodge),Midwinter,big_storm_days_per_window,La Nina,strong,6,1.2338841997830758,1.1795637869998097,0.05432041278326616,4.605127198879913
+Beartooth & Absaroka (Red Lodge),Midwinter,big_storm_days_per_window,La Nina,weak,8,1.5161339727367513,1.1795637869998097,0.33657018573694164,28.533445113044657
+Beartooth & Absaroka (Red Lodge),Midwinter,big_storm_days_per_window,Neutral,neutral,16,1.1793490231237,1.1795637869998097,-0.000214763876109636,-0.018207059124448234
+Beartooth & Absaroka (Red Lodge),Spring,big_storm_days_per_window,El Nino,moderate,4,1.0746614128514425,1.0012620184568253,0.07339939439461718,7.330687975934861
+Beartooth & Absaroka (Red Lodge),Spring,big_storm_days_per_window,El Nino,strong,3,1.1992541029868333,1.0012620184568253,0.19799208453000805,19.77425298076914
+Beartooth & Absaroka (Red Lodge),Spring,big_storm_days_per_window,El Nino,very strong,3,0.9654502170987111,1.0012620184568253,-0.035811801358114126,-3.5766663169055724
+Beartooth & Absaroka (Red Lodge),Spring,big_storm_days_per_window,El Nino,weak,8,0.6968378553203278,1.0012620184568253,-0.30442416313649745,-30.404045846629135
+Beartooth & Absaroka (Red Lodge),Spring,big_storm_days_per_window,La Nina,moderate,4,0.867394537603607,1.0012620184568253,-0.1338674808532183,-13.369875056235413
+Beartooth & Absaroka (Red Lodge),Spring,big_storm_days_per_window,La Nina,strong,6,0.8873563965498162,1.0012620184568253,-0.11390562190700904,-11.376205209757558
+Beartooth & Absaroka (Red Lodge),Spring,big_storm_days_per_window,La Nina,weak,8,0.8338743507928976,1.0012620184568253,-0.16738766766392765,-16.717668759862725
+Beartooth & Absaroka (Red Lodge),Spring,big_storm_days_per_window,Neutral,neutral,16,1.112364278229272,1.0012620184568253,0.1111022597724467,11.096222339850742
+Bighorn Mtns,Early season,big_storm_days_per_window,El Nino,moderate,4,0.5948684416149465,0.3299968570858894,0.26487158452905707,80.26488096525054
+Bighorn Mtns,Early season,big_storm_days_per_window,El Nino,strong,3,0.23827203918656614,0.3299968570858894,-0.09172481789932324,-27.795664088840006
+Bighorn Mtns,Early season,big_storm_days_per_window,El Nino,very strong,3,0.34000338713669703,0.3299968570858894,0.01000653005080765,3.032310713251192
+Bighorn Mtns,Early season,big_storm_days_per_window,El Nino,weak,6,0.14564190050246784,0.3299968570858894,-0.18435495658342155,-55.86567042226068
+Bighorn Mtns,Early season,big_storm_days_per_window,La Nina,moderate,4,0.2610695277088624,0.3299968570858894,-0.068927329377027,-20.887268438161836
+Bighorn Mtns,Early season,big_storm_days_per_window,La Nina,strong,5,0.1935000587822749,0.3299968570858894,-0.1364967983036145,-41.36306009365659
+Bighorn Mtns,Early season,big_storm_days_per_window,La Nina,weak,7,0.4073860756442122,0.3299968570858894,0.07738921855832281,23.4515017026906
+Bighorn Mtns,Early season,big_storm_days_per_window,Neutral,neutral,16,0.3742635473388749,0.3299968570858894,0.04426669025298552,13.414276318839025
+Bighorn Mtns,Holidays,big_storm_days_per_window,El Nino,moderate,4,0.02085556619692617,0.1298733528028874,-0.10901778660596123,-83.94161254265973
+Bighorn Mtns,Holidays,big_storm_days_per_window,El Nino,strong,3,0.0,0.1298733528028874,-0.1298733528028874,-100.0
+Bighorn Mtns,Holidays,big_storm_days_per_window,El Nino,very strong,3,0.03936331049955996,0.1298733528028874,-0.09051004230332743,-69.69100308105327
+Bighorn Mtns,Holidays,big_storm_days_per_window,El Nino,weak,6,0.10683296536101194,0.1298733528028874,-0.02304038744187545,-17.74065806774429
+Bighorn Mtns,Holidays,big_storm_days_per_window,La Nina,moderate,4,0.18053547406204137,0.1298733528028874,0.05066212125915398,39.00886530283496
+Bighorn Mtns,Holidays,big_storm_days_per_window,La Nina,strong,5,0.25760205933797564,0.1298733528028874,0.12772870653508825,98.34866335432632
+Bighorn Mtns,Holidays,big_storm_days_per_window,La Nina,weak,7,0.05460493333068171,0.1298733528028874,-0.07526841947220568,-57.95524474250139
+Bighorn Mtns,Holidays,big_storm_days_per_window,Neutral,neutral,16,0.18743901373958266,0.1298733528028874,0.05756566093669527,44.32445893967515
+Bighorn Mtns,Midwinter,big_storm_days_per_window,El Nino,moderate,4,0.36188547179726144,0.40444169210611003,-0.04255622030884859,-10.522213990164857
+Bighorn Mtns,Midwinter,big_storm_days_per_window,El Nino,strong,3,0.03802954797971464,0.40444169210611003,-0.3664121441263954,-90.59702579581308
+Bighorn Mtns,Midwinter,big_storm_days_per_window,El Nino,very strong,3,0.5887191632689889,0.40444169210611003,0.18427747116287885,45.56342107146844
+Bighorn Mtns,Midwinter,big_storm_days_per_window,El Nino,weak,6,0.3208997992272501,0.40444169210611003,-0.08354189287885994,-20.656103094569623
+Bighorn Mtns,Midwinter,big_storm_days_per_window,La Nina,moderate,4,0.5484012900692774,0.40444169210611003,0.14395959796316737,35.594648319639084
+Bighorn Mtns,Midwinter,big_storm_days_per_window,La Nina,strong,5,0.48987767843551155,0.40444169210611003,0.08543598632940153,21.124426090816176
+Bighorn Mtns,Midwinter,big_storm_days_per_window,La Nina,weak,7,0.41299632614616405,0.40444169210611003,0.008554634040054021,2.1151711623760123
+Bighorn Mtns,Midwinter,big_storm_days_per_window,Neutral,neutral,16,0.4141279105823005,0.40444169210611003,0.009686218476190445,2.3949604269900915
+Bighorn Mtns,Spring,big_storm_days_per_window,El Nino,moderate,4,1.0847730782603235,0.8241693778350269,0.2606037004252967,31.620162970609844
+Bighorn Mtns,Spring,big_storm_days_per_window,El Nino,strong,3,0.9998946674554592,0.8241693778350269,0.17572528962043232,21.32150190802249
+Bighorn Mtns,Spring,big_storm_days_per_window,El Nino,very strong,3,1.2152072394003748,0.8241693778350269,0.3910378615653479,47.44629830733915
+Bighorn Mtns,Spring,big_storm_days_per_window,El Nino,weak,6,0.8226992673189909,0.8241693778350269,-0.0014701105160359607,-0.17837480444829523
+Bighorn Mtns,Spring,big_storm_days_per_window,La Nina,moderate,4,0.643074387638249,0.8241693778350269,-0.18109499019677788,-21.97303067392386
+Bighorn Mtns,Spring,big_storm_days_per_window,La Nina,strong,5,0.5471117166391691,0.8241693778350269,-0.27705766119585773,-33.61659249263155
+Bighorn Mtns,Spring,big_storm_days_per_window,La Nina,weak,7,0.6445804036567211,0.8241693778350269,-0.17958897417830577,-21.790299301104817
+Bighorn Mtns,Spring,big_storm_days_per_window,Neutral,neutral,16,0.8637260962007911,0.8241693778350269,0.03955671836576424,4.799586035297015
+Bitterroot & Lolo (Montana Snowbowl),Early season,big_storm_days_per_window,El Nino,moderate,4,0.6517424633541042,0.9254210538356303,-0.2736785904815261,-29.573413026124626
+Bitterroot & Lolo (Montana Snowbowl),Early season,big_storm_days_per_window,El Nino,strong,4,0.6624900093512966,0.9254210538356303,-0.2629310444843337,-28.412044808636313
+Bitterroot & Lolo (Montana Snowbowl),Early season,big_storm_days_per_window,El Nino,very strong,3,0.48228897423060885,0.9254210538356303,-0.4431320796050215,-47.8843741201212
+Bitterroot & Lolo (Montana Snowbowl),Early season,big_storm_days_per_window,El Nino,weak,9,1.0152345064143509,0.9254210538356303,0.08981345257872053,9.705144723741379
+Bitterroot & Lolo (Montana Snowbowl),Early season,big_storm_days_per_window,La Nina,moderate,5,0.8486586420247166,0.9254210538356303,-0.0767624118109137,-8.294863348175774
+Bitterroot & Lolo (Montana Snowbowl),Early season,big_storm_days_per_window,La Nina,strong,6,1.3884857035892815,0.9254210538356303,0.46306464975365114,50.038266131332136
+Bitterroot & Lolo (Montana Snowbowl),Early season,big_storm_days_per_window,La Nina,weak,10,0.7254201953845911,0.9254210538356303,-0.2000008584510392,-21.611876844825122
+Bitterroot & Lolo (Montana Snowbowl),Early season,big_storm_days_per_window,Neutral,neutral,17,1.045155028488141,0.9254210538356303,0.11973397465251068,12.938324037068792
+Bitterroot & Lolo (Montana Snowbowl),Holidays,big_storm_days_per_window,El Nino,moderate,4,0.23619237337550333,0.6103346222752787,-0.3741422488997753,-61.301167465316475
+Bitterroot & Lolo (Montana Snowbowl),Holidays,big_storm_days_per_window,El Nino,strong,4,0.38331886439639595,0.6103346222752787,-0.22701575787888273,-37.19529412121275
+Bitterroot & Lolo (Montana Snowbowl),Holidays,big_storm_days_per_window,El Nino,very strong,3,0.47212593847743584,0.6103346222752787,-0.13820868379784285,-22.644739255101065
+Bitterroot & Lolo (Montana Snowbowl),Holidays,big_storm_days_per_window,El Nino,weak,9,0.669229154044134,0.6103346222752787,0.058894531768855285,9.649547906900837
+Bitterroot & Lolo (Montana Snowbowl),Holidays,big_storm_days_per_window,La Nina,moderate,5,0.6849241333249895,0.6103346222752787,0.07458951104971079,12.22108468493022
+Bitterroot & Lolo (Montana Snowbowl),Holidays,big_storm_days_per_window,La Nina,strong,6,0.6257672641810144,0.6103346222752787,0.015432641905735678,2.528554229514954
+Bitterroot & Lolo (Montana Snowbowl),Holidays,big_storm_days_per_window,La Nina,weak,10,0.9161514707655194,0.6103346222752787,0.3058168484902407,50.106423153610386
+Bitterroot & Lolo (Montana Snowbowl),Holidays,big_storm_days_per_window,Neutral,neutral,17,0.5484482257634878,0.6103346222752787,-0.06188639651179084,-10.139748631837943
+Bitterroot & Lolo (Montana Snowbowl),Midwinter,big_storm_days_per_window,El Nino,moderate,4,1.2016933103918863,1.5171594876709855,-0.3154661772790992,-20.793211250544008
+Bitterroot & Lolo (Montana Snowbowl),Midwinter,big_storm_days_per_window,El Nino,strong,4,0.6938916348601761,1.5171594876709855,-0.8232678528108094,-54.26376458777056
+Bitterroot & Lolo (Montana Snowbowl),Midwinter,big_storm_days_per_window,El Nino,very strong,3,0.6045939618586016,1.5171594876709855,-0.9125655258123839,-60.14961071846685
+Bitterroot & Lolo (Montana Snowbowl),Midwinter,big_storm_days_per_window,El Nino,weak,9,0.8130939976687571,1.5171594876709855,-0.7040654900022284,-46.40682114990099
+Bitterroot & Lolo (Montana Snowbowl),Midwinter,big_storm_days_per_window,La Nina,moderate,5,2.073804044884149,1.5171594876709855,0.5566445572131633,36.68991702828005
+Bitterroot & Lolo (Montana Snowbowl),Midwinter,big_storm_days_per_window,La Nina,strong,6,1.894813304123904,1.5171594876709855,0.3776538164529184,24.892163251251883
+Bitterroot & Lolo (Montana Snowbowl),Midwinter,big_storm_days_per_window,La Nina,weak,10,2.0319836553974144,1.5171594876709855,0.5148241677264289,33.933424396715424
+Bitterroot & Lolo (Montana Snowbowl),Midwinter,big_storm_days_per_window,Neutral,neutral,17,1.6331449417194428,1.5171594876709855,0.11598545404845728,7.644908461569081
+Bitterroot & Lolo (Montana Snowbowl),Spring,big_storm_days_per_window,El Nino,moderate,4,0.9475359669774772,0.6813058263657208,0.2662301406117564,39.07645147141979
+Bitterroot & Lolo (Montana Snowbowl),Spring,big_storm_days_per_window,El Nino,strong,4,0.6218185577072112,0.6813058263657208,-0.05948726865850962,-8.731360624909321
+Bitterroot & Lolo (Montana Snowbowl),Spring,big_storm_days_per_window,El Nino,very strong,3,0.25599996059947894,0.6813058263657208,-0.42530586576624185,-62.42510328070207
+Bitterroot & Lolo (Montana Snowbowl),Spring,big_storm_days_per_window,El Nino,weak,9,0.5065001440271542,0.6813058263657208,-0.17480568233856664,-25.65744715130794
+Bitterroot & Lolo (Montana Snowbowl),Spring,big_storm_days_per_window,La Nina,moderate,5,0.5790511229489372,0.6813058263657208,-0.10225470341678355,-15.008634809750454
+Bitterroot & Lolo (Montana Snowbowl),Spring,big_storm_days_per_window,La Nina,strong,6,0.48762177883717966,0.6813058263657208,-0.19368404752854113,-28.428356258408495
+Bitterroot & Lolo (Montana Snowbowl),Spring,big_storm_days_per_window,La Nina,weak,10,0.8312743929179998,0.6813058263657208,0.14996856655227897,22.011930729002277
+Bitterroot & Lolo (Montana Snowbowl),Spring,big_storm_days_per_window,Neutral,neutral,17,0.8095394355692537,0.6813058263657208,0.12823360920353288,18.82173970059341
+Black Hills (Terry Peak),Early season,big_storm_days_per_window,El Nino,moderate,2,0.0,0.25716640086726844,-0.25716640086726844,-100.0
+Black Hills (Terry Peak),Early season,big_storm_days_per_window,El Nino,strong,2,0.0,0.25716640086726844,-0.25716640086726844,-100.0
+Black Hills (Terry Peak),Early season,big_storm_days_per_window,El Nino,weak,4,0.22564254001873651,0.25716640086726844,-0.031523860848531926,-12.258156875167519
+Black Hills (Terry Peak),Early season,big_storm_days_per_window,La Nina,moderate,2,0.0,0.25716640086726844,-0.25716640086726844,-100.0
+Black Hills (Terry Peak),Early season,big_storm_days_per_window,La Nina,strong,2,0.1959390656185084,0.25716640086726844,-0.061227335248760034,-23.808450498306488
+Black Hills (Terry Peak),Early season,big_storm_days_per_window,La Nina,weak,6,0.6666666666666666,0.25716640086726844,0.4095002657993982,159.23552393251947
+Black Hills (Terry Peak),Early season,big_storm_days_per_window,Neutral,neutral,7,0.19883973303385957,0.25716640086726844,-0.05832666783340887,-22.68051644254767
+Black Hills (Terry Peak),Holidays,big_storm_days_per_window,El Nino,moderate,2,0.0,0.11007541601000116,-0.11007541601000116,-100.00000000000001
+Black Hills (Terry Peak),Holidays,big_storm_days_per_window,El Nino,strong,2,0.8431632112744898,0.11007541601000116,0.7330877952644886,665.98684959581
+Black Hills (Terry Peak),Holidays,big_storm_days_per_window,El Nino,weak,4,0.1959390656185084,0.11007541601000116,0.08586364960850724,78.0043834680633
+Black Hills (Terry Peak),Holidays,big_storm_days_per_window,La Nina,moderate,2,0.0,0.11007541601000116,-0.11007541601000116,-100.00000000000001
+Black Hills (Terry Peak),Holidays,big_storm_days_per_window,La Nina,strong,2,0.0,0.11007541601000116,-0.11007541601000116,-100.00000000000001
+Black Hills (Terry Peak),Holidays,big_storm_days_per_window,La Nina,weak,6,0.06531302187283614,0.11007541601000116,-0.044762394137165026,-40.66520551064556
+Black Hills (Terry Peak),Holidays,big_storm_days_per_window,Neutral,neutral,7,0.0,0.11007541601000116,-0.11007541601000116,-100.00000000000001
+Black Hills (Terry Peak),Midwinter,big_storm_days_per_window,El Nino,moderate,2,0.0,0.19148522855092853,-0.19148522855092853,-100.0
+Black Hills (Terry Peak),Midwinter,big_storm_days_per_window,El Nino,strong,2,0.1959390656185084,0.19148522855092853,0.004453837067579874,2.325942894543067
+Black Hills (Terry Peak),Midwinter,big_storm_days_per_window,El Nino,weak,4,0.25,0.19148522855092853,0.05851477144907147,30.5583735580463
+Black Hills (Terry Peak),Midwinter,big_storm_days_per_window,La Nina,moderate,2,0.8723269927905177,0.19148522855092853,0.6808417642395892,355.5583735580463
+Black Hills (Terry Peak),Midwinter,big_storm_days_per_window,La Nina,strong,2,0.3918781312370168,0.19148522855092853,0.20039290268608828,104.65188578908612
+Black Hills (Terry Peak),Midwinter,big_storm_days_per_window,La Nina,weak,6,0.0587959757240031,0.19148522855092853,-0.13268925282692542,-69.29477215086312
+Black Hills (Terry Peak),Midwinter,big_storm_days_per_window,Neutral,neutral,7,0.10079310124114817,0.19148522855092853,-0.09069212730978037,-47.36246654433678
+Black Hills (Terry Peak),Spring,big_storm_days_per_window,El Nino,moderate,2,0.951285080037473,0.4282701942267745,0.5230148858106985,122.12264427016267
+Black Hills (Terry Peak),Spring,big_storm_days_per_window,El Nino,strong,2,0.7154902040650075,0.4282701942267745,0.28722000983823304,67.06514105115296
+Black Hills (Terry Peak),Spring,big_storm_days_per_window,El Nino,weak,4,0.3479695328092542,0.4282701942267745,-0.08030066141752029,-18.750000000000018
+Black Hills (Terry Peak),Spring,big_storm_days_per_window,La Nina,moderate,2,0.3723269927905177,0.4282701942267745,-0.055943201436256806,-13.062595107105253
+Black Hills (Terry Peak),Spring,big_storm_days_per_window,La Nina,strong,2,0.548714919962527,0.4282701942267745,0.12044472573575249,28.12353681376563
+Black Hills (Terry Peak),Spring,big_storm_days_per_window,La Nina,weak,6,0.42140170800917814,0.4282701942267745,-0.006868486217596337,-1.6037740450271416
+Black Hills (Terry Peak),Spring,big_storm_days_per_window,Neutral,neutral,7,0.2913003252704284,0.4282701942267745,-0.1369698689563461,-31.98211568368422
+Blues & Wallowas (Anthony Lakes),Early season,big_storm_days_per_window,El Nino,moderate,4,0.3344451675886755,0.6532507154751611,-0.31880554788648563,-48.802938953475625
+Blues & Wallowas (Anthony Lakes),Early season,big_storm_days_per_window,El Nino,strong,3,0.7616733557508045,0.6532507154751611,0.10842264027564341,16.597400922366997
+Blues & Wallowas (Anthony Lakes),Early season,big_storm_days_per_window,El Nino,very strong,3,0.5719492352749757,0.6532507154751611,-0.08130148020018546,-12.445677941745297
+Blues & Wallowas (Anthony Lakes),Early season,big_storm_days_per_window,El Nino,weak,6,0.4750876812380229,0.6532507154751611,-0.1781630342371382,-27.273301049130282
+Blues & Wallowas (Anthony Lakes),Early season,big_storm_days_per_window,La Nina,moderate,4,0.8191918505295964,0.6532507154751611,0.1659411350544353,25.40236560379932
+Blues & Wallowas (Anthony Lakes),Early season,big_storm_days_per_window,La Nina,strong,5,1.0121705174096973,0.6532507154751611,0.3589198019345362,54.94365232703424
+Blues & Wallowas (Anthony Lakes),Early season,big_storm_days_per_window,La Nina,weak,7,0.5309531961760899,0.6532507154751611,-0.12229751929907118,-18.721375484466858
+Blues & Wallowas (Anthony Lakes),Early season,big_storm_days_per_window,Neutral,neutral,16,0.6945354655967533,0.6532507154751611,0.04128475012159216,6.31989359423242
+Blues & Wallowas (Anthony Lakes),Holidays,big_storm_days_per_window,El Nino,moderate,4,0.4191886321726868,0.45687849981858375,-0.037689867645896935,-8.249429040951313
+Blues & Wallowas (Anthony Lakes),Holidays,big_storm_days_per_window,El Nino,strong,3,0.09927324004772753,0.45687849981858375,-0.3576052597708562,-78.27141349677284
+Blues & Wallowas (Anthony Lakes),Holidays,big_storm_days_per_window,El Nino,very strong,3,0.6182810861626352,0.45687849981858375,0.16140258634405147,35.32724486009756
+Blues & Wallowas (Anthony Lakes),Holidays,big_storm_days_per_window,El Nino,weak,6,0.3349710491941134,0.45687849981858375,-0.12190745062447034,-26.682684931087163
+Blues & Wallowas (Anthony Lakes),Holidays,big_storm_days_per_window,La Nina,moderate,4,0.2677293521240709,0.45687849981858375,-0.18914914769451285,-41.400317101728305
+Blues & Wallowas (Anthony Lakes),Holidays,big_storm_days_per_window,La Nina,strong,5,0.6156719817767654,0.45687849981858375,0.15879348195818166,34.75617303533325
+Blues & Wallowas (Anthony Lakes),Holidays,big_storm_days_per_window,La Nina,weak,7,0.6527942744875234,0.45687849981858375,0.1959157746689396,42.881373219955286
+Blues & Wallowas (Anthony Lakes),Holidays,big_storm_days_per_window,Neutral,neutral,16,0.4607554343757956,0.45687849981858375,0.0038769345572118308,0.848570146932122
+Blues & Wallowas (Anthony Lakes),Midwinter,big_storm_days_per_window,El Nino,moderate,4,0.7995335719709297,0.8432887743644669,-0.04375520239353725,-5.188638070809464
+Blues & Wallowas (Anthony Lakes),Midwinter,big_storm_days_per_window,El Nino,strong,3,0.4207036193368767,0.8432887743644669,-0.4225851550275902,-50.11155939388209
+Blues & Wallowas (Anthony Lakes),Midwinter,big_storm_days_per_window,El Nino,very strong,3,0.5896518060527173,0.8432887743644669,-0.25363696831174964,-30.077119015713173
+Blues & Wallowas (Anthony Lakes),Midwinter,big_storm_days_per_window,El Nino,weak,6,0.651168191787271,0.8432887743644669,-0.1921205825771959,-22.78230049036108
+Blues & Wallowas (Anthony Lakes),Midwinter,big_storm_days_per_window,La Nina,moderate,4,0.938554563933141,0.8432887743644669,0.09526578956867404,11.296935577076761
+Blues & Wallowas (Anthony Lakes),Midwinter,big_storm_days_per_window,La Nina,strong,5,1.421329862241024,0.8432887743644669,0.5780410878765571,68.54604323556778
+Blues & Wallowas (Anthony Lakes),Midwinter,big_storm_days_per_window,La Nina,weak,7,0.44528215160114265,0.8432887743644669,-0.39800662276332427,-47.19695492961785
+Blues & Wallowas (Anthony Lakes),Midwinter,big_storm_days_per_window,Neutral,neutral,16,1.0227380516607871,0.8432887743644669,0.1794492772963202,21.27969477971051
+Blues & Wallowas (Anthony Lakes),Spring,big_storm_days_per_window,El Nino,moderate,4,0.2442021911270203,0.3826790819923201,-0.1384768908652998,-36.186166786111094
+Blues & Wallowas (Anthony Lakes),Spring,big_storm_days_per_window,El Nino,strong,3,0.3280760747731135,0.3826790819923201,-0.05460300721920658,-14.268615607346522
+Blues & Wallowas (Anthony Lakes),Spring,big_storm_days_per_window,El Nino,very strong,3,0.47177206493835205,0.3826790819923201,0.08909298294603196,23.28138305396582
+Blues & Wallowas (Anthony Lakes),Spring,big_storm_days_per_window,El Nino,weak,6,0.2720329170502674,0.3826790819923201,-0.1106461649420527,-28.91356495526276
+Blues & Wallowas (Anthony Lakes),Spring,big_storm_days_per_window,La Nina,moderate,4,0.2539182319928854,0.3826790819923201,-0.1287608499994347,-33.647214091001395
+Blues & Wallowas (Anthony Lakes),Spring,big_storm_days_per_window,La Nina,strong,5,0.46033626206746947,0.3826790819923201,0.07765718007514938,20.293029781206556
+Blues & Wallowas (Anthony Lakes),Spring,big_storm_days_per_window,La Nina,weak,7,0.6054202836657104,0.3826790819923201,0.22274120167339034,58.20574265876923
+Blues & Wallowas (Anthony Lakes),Spring,big_storm_days_per_window,Neutral,neutral,16,0.36279681410740144,0.3826790819923201,-0.019882267884918647,-5.1955460385780015
+Bridger/Gallatin/Madison (Big Sky),Early season,big_storm_days_per_window,El Nino,moderate,4,0.4499146799105831,0.8462446911707322,-0.3963300112601491,-46.83397312801439
+Bridger/Gallatin/Madison (Big Sky),Early season,big_storm_days_per_window,El Nino,strong,4,0.5139799386264436,0.8462446911707322,-0.33226475254428856,-39.2634371607837
+Bridger/Gallatin/Madison (Big Sky),Early season,big_storm_days_per_window,El Nino,very strong,3,0.840394363809799,0.8462446911707322,-0.005850327360933161,-0.691328101903902
+Bridger/Gallatin/Madison (Big Sky),Early season,big_storm_days_per_window,El Nino,weak,9,0.84158884923611,0.8462446911707322,-0.004655841934622207,-0.550176796758525
+Bridger/Gallatin/Madison (Big Sky),Early season,big_storm_days_per_window,La Nina,moderate,5,1.0554521706415148,0.8462446911707322,0.20920747947078255,24.72186610486805
+Bridger/Gallatin/Madison (Big Sky),Early season,big_storm_days_per_window,La Nina,strong,6,1.4436668594307216,0.8462446911707322,0.5974221682599894,70.59685862649125
+Bridger/Gallatin/Madison (Big Sky),Early season,big_storm_days_per_window,La Nina,weak,10,0.9029421567428708,0.8462446911707322,0.05669746557213862,6.6998902520381955
+Bridger/Gallatin/Madison (Big Sky),Early season,big_storm_days_per_window,Neutral,neutral,18,0.6985246548319038,0.8462446911707322,-0.14772003633882835,-17.455948365769473
+Bridger/Gallatin/Madison (Big Sky),Holidays,big_storm_days_per_window,El Nino,moderate,4,0.10509715449193707,0.415724790655473,-0.31062763616353595,-74.719536372553
+Bridger/Gallatin/Madison (Big Sky),Holidays,big_storm_days_per_window,El Nino,strong,4,0.06683400292087566,0.415724790655473,-0.34889078773459736,-83.92349832794467
+Bridger/Gallatin/Madison (Big Sky),Holidays,big_storm_days_per_window,El Nino,very strong,3,0.30032484598643827,0.415724790655473,-0.11539994466903475,-27.75873540932782
+Bridger/Gallatin/Madison (Big Sky),Holidays,big_storm_days_per_window,El Nino,weak,9,0.4893189492404128,0.415724790655473,0.07359415858493978,17.702614864248034
+Bridger/Gallatin/Madison (Big Sky),Holidays,big_storm_days_per_window,La Nina,moderate,5,0.3412092221782089,0.415724790655473,-0.0745155684772641,-17.924254254786067
+Bridger/Gallatin/Madison (Big Sky),Holidays,big_storm_days_per_window,La Nina,strong,6,0.2612805419728267,0.415724790655473,-0.15444424868264633,-37.150598702361286
+Bridger/Gallatin/Madison (Big Sky),Holidays,big_storm_days_per_window,La Nina,weak,10,0.5600586384513265,0.415724790655473,0.1443338477958535,34.718604961778304
+Bridger/Gallatin/Madison (Big Sky),Holidays,big_storm_days_per_window,Neutral,neutral,18,0.5181792984545625,0.415724790655473,0.10245450779908943,24.644791482737766
+Bridger/Gallatin/Madison (Big Sky),Midwinter,big_storm_days_per_window,El Nino,moderate,4,1.210267291990224,0.9622671514257509,0.24800014056447306,25.77248326486274
+Bridger/Gallatin/Madison (Big Sky),Midwinter,big_storm_days_per_window,El Nino,strong,4,0.1452766513245114,0.9622671514257509,-0.8169905001012395,-84.90266958512913
+Bridger/Gallatin/Madison (Big Sky),Midwinter,big_storm_days_per_window,El Nino,very strong,3,0.4954207304178384,0.9622671514257509,-0.4668464210079125,-48.5152611014733
+Bridger/Gallatin/Madison (Big Sky),Midwinter,big_storm_days_per_window,El Nino,weak,9,0.9704740393997489,0.9622671514257509,0.008206887973997934,0.852870012432424
+Bridger/Gallatin/Madison (Big Sky),Midwinter,big_storm_days_per_window,La Nina,moderate,5,1.3848069644462402,0.9622671514257509,0.42253981302048926,43.91086325605418
+Bridger/Gallatin/Madison (Big Sky),Midwinter,big_storm_days_per_window,La Nina,strong,6,0.9599377722173535,0.9622671514257509,-0.0023293792083973752,-0.24207198644846514
+Bridger/Gallatin/Madison (Big Sky),Midwinter,big_storm_days_per_window,La Nina,weak,10,0.9186134731576102,0.9622671514257509,-0.043653678268140705,-4.536544576364358
+Bridger/Gallatin/Madison (Big Sky),Midwinter,big_storm_days_per_window,Neutral,neutral,18,1.0762490712864552,0.9622671514257509,0.11398191986070427,11.845142972180028
+Bridger/Gallatin/Madison (Big Sky),Spring,big_storm_days_per_window,El Nino,moderate,4,1.0513870879913498,1.3122454476159815,-0.26085835962463166,-19.878778021180825
+Bridger/Gallatin/Madison (Big Sky),Spring,big_storm_days_per_window,El Nino,strong,4,1.1120097365614123,1.3122454476159815,-0.20023571105456917,-15.259013579993505
+Bridger/Gallatin/Madison (Big Sky),Spring,big_storm_days_per_window,El Nino,very strong,3,1.2652260244404465,1.3122454476159815,-0.04701942317553498,-3.5831271703748255
+Bridger/Gallatin/Madison (Big Sky),Spring,big_storm_days_per_window,El Nino,weak,9,1.1051459479162253,1.3122454476159815,-0.20709949969975616,-15.782070349415473
+Bridger/Gallatin/Madison (Big Sky),Spring,big_storm_days_per_window,La Nina,moderate,5,1.4906810167552071,1.3122454476159815,0.17843556913922565,13.597728188990711
+Bridger/Gallatin/Madison (Big Sky),Spring,big_storm_days_per_window,La Nina,strong,6,0.7538997959911087,1.3122454476159815,-0.5583456516248728,-42.548873203503646
+Bridger/Gallatin/Madison (Big Sky),Spring,big_storm_days_per_window,La Nina,weak,10,1.596663230726518,1.3122454476159815,0.28441778311053656,21.674129914281803
+Bridger/Gallatin/Madison (Big Sky),Spring,big_storm_days_per_window,Neutral,neutral,18,1.2689761559012414,1.3122454476159815,-0.04326929171474014,-3.297347443144079
+Central Cascades (Stevens/Snoqualmie),Early season,big_storm_days_per_window,El Nino,moderate,4,1.8727339564809,2.3107069826341986,-0.4379730261532986,-18.954070310291385
+Central Cascades (Stevens/Snoqualmie),Early season,big_storm_days_per_window,El Nino,strong,3,2.711899975996637,2.3107069826341986,0.4011929933624385,17.36234825001826
+Central Cascades (Stevens/Snoqualmie),Early season,big_storm_days_per_window,El Nino,very strong,3,1.6829439356779872,2.3107069826341986,-0.6277630469562114,-27.16757475846477
+Central Cascades (Stevens/Snoqualmie),Early season,big_storm_days_per_window,El Nino,weak,5,2.1850421853807296,2.3107069826341986,-0.12566479725346902,-5.438370083177381
+Central Cascades (Stevens/Snoqualmie),Early season,big_storm_days_per_window,La Nina,moderate,4,3.243481400969425,2.3107069826341986,0.9327744183352262,40.367490354483046
+Central Cascades (Stevens/Snoqualmie),Early season,big_storm_days_per_window,La Nina,strong,5,2.834484526866108,2.3107069826341986,0.5237775442319093,22.667415131744853
+Central Cascades (Stevens/Snoqualmie),Early season,big_storm_days_per_window,La Nina,weak,7,1.8610179072187751,2.3107069826341986,-0.44968907541542347,-19.461103410990667
+Central Cascades (Stevens/Snoqualmie),Early season,big_storm_days_per_window,Neutral,neutral,14,2.3005472958534403,2.3107069826341986,-0.010159686780758292,-0.43967871552351834
+Central Cascades (Stevens/Snoqualmie),Holidays,big_storm_days_per_window,El Nino,moderate,4,1.2031927180016384,1.4876355572170246,-0.28444283921538616,-19.12046521309991
+Central Cascades (Stevens/Snoqualmie),Holidays,big_storm_days_per_window,El Nino,strong,3,0.3315268227446549,1.4876355572170246,-1.1561087344723697,-77.71451340106077
+Central Cascades (Stevens/Snoqualmie),Holidays,big_storm_days_per_window,El Nino,very strong,3,2.1085908701670064,1.4876355572170246,0.6209553129499819,41.74109108494463
+Central Cascades (Stevens/Snoqualmie),Holidays,big_storm_days_per_window,El Nino,weak,5,1.5076061675045915,1.4876355572170246,0.01997061028756697,1.34243969839809
+Central Cascades (Stevens/Snoqualmie),Holidays,big_storm_days_per_window,La Nina,moderate,4,1.9290429008736676,1.4876355572170246,0.441407343656643,29.671739258666296
+Central Cascades (Stevens/Snoqualmie),Holidays,big_storm_days_per_window,La Nina,strong,5,1.613206629934227,1.4876355572170246,0.12557107271720236,8.440983553264408
+Central Cascades (Stevens/Snoqualmie),Holidays,big_storm_days_per_window,La Nina,weak,7,1.7991634299711712,1.4876355572170246,0.3115278727541466,20.941141884033307
+Central Cascades (Stevens/Snoqualmie),Holidays,big_storm_days_per_window,Neutral,neutral,14,1.3497211802526876,1.4876355572170246,-0.13791437696433695,-9.270709905747246
+Central Cascades (Stevens/Snoqualmie),Midwinter,big_storm_days_per_window,El Nino,moderate,4,2.785684052400539,3.6956531267057704,-0.9099690743052316,-24.622686250761834
+Central Cascades (Stevens/Snoqualmie),Midwinter,big_storm_days_per_window,El Nino,strong,3,2.1897995074817835,3.6956531267057704,-1.5058536192239869,-40.74661683863913
+Central Cascades (Stevens/Snoqualmie),Midwinter,big_storm_days_per_window,El Nino,very strong,3,2.5884002077220054,3.6956531267057704,-1.107252918983765,-29.960953612839404
+Central Cascades (Stevens/Snoqualmie),Midwinter,big_storm_days_per_window,El Nino,weak,5,2.8454263930482875,3.6956531267057704,-0.8502267336574829,-23.00612921471225
+Central Cascades (Stevens/Snoqualmie),Midwinter,big_storm_days_per_window,La Nina,moderate,4,4.375734991621707,3.6956531267057704,0.6800818649159366,18.402210423956852
+Central Cascades (Stevens/Snoqualmie),Midwinter,big_storm_days_per_window,La Nina,strong,5,5.744475875841225,3.6956531267057704,2.0488227491354545,55.43871891899479
+Central Cascades (Stevens/Snoqualmie),Midwinter,big_storm_days_per_window,La Nina,weak,7,3.4491642676938983,3.6956531267057704,-0.24648885901187212,-6.669696818423737
+Central Cascades (Stevens/Snoqualmie),Midwinter,big_storm_days_per_window,Neutral,neutral,14,4.0164610115538935,3.6956531267057704,0.32080788484812306,8.680681704943575
+Central Cascades (Stevens/Snoqualmie),Spring,big_storm_days_per_window,El Nino,moderate,4,1.9166148848893287,1.742516776625589,0.17409810826373984,9.99118691992645
+Central Cascades (Stevens/Snoqualmie),Spring,big_storm_days_per_window,El Nino,strong,3,0.6662775723256799,1.742516776625589,-1.0762392042999092,-61.76349167691018
+Central Cascades (Stevens/Snoqualmie),Spring,big_storm_days_per_window,El Nino,very strong,3,1.3119760447594322,1.742516776625589,-0.4305407318661567,-24.707982020116074
+Central Cascades (Stevens/Snoqualmie),Spring,big_storm_days_per_window,El Nino,weak,5,0.9057155105044348,1.742516776625589,-0.8368012661211541,-48.02256582812551
+Central Cascades (Stevens/Snoqualmie),Spring,big_storm_days_per_window,La Nina,moderate,4,1.7330806398704353,1.742516776625589,-0.009436136755153646,-0.5415234379221802
+Central Cascades (Stevens/Snoqualmie),Spring,big_storm_days_per_window,La Nina,strong,5,1.9952040336499244,1.742516776625589,0.2526872570243355,14.501281159178756
+Central Cascades (Stevens/Snoqualmie),Spring,big_storm_days_per_window,La Nina,weak,7,2.137077749472801,1.742516776625589,0.3945609728472119,22.64316637520618
+Central Cascades (Stevens/Snoqualmie),Spring,big_storm_days_per_window,Neutral,neutral,14,2.0296835736268375,1.742516776625589,0.2871667970012486,16.480001848668085
+Central Oregon (Mt Bachelor),Early season,big_storm_days_per_window,El Nino,moderate,4,1.4266283958968284,2.400896235507218,-0.9742678396103897,-40.57933971496956
+Central Oregon (Mt Bachelor),Early season,big_storm_days_per_window,El Nino,strong,3,1.601542864008619,2.400896235507218,-0.7993533714985992,-33.29395746791723
+Central Oregon (Mt Bachelor),Early season,big_storm_days_per_window,El Nino,very strong,3,1.8102080600911867,2.400896235507218,-0.5906881754160314,-24.60281984203459
+Central Oregon (Mt Bachelor),Early season,big_storm_days_per_window,El Nino,weak,5,2.530342519154554,2.400896235507218,0.129446283647336,5.3915817657146246
+Central Oregon (Mt Bachelor),Early season,big_storm_days_per_window,La Nina,moderate,4,3.2526515222506354,2.400896235507218,0.8517552867434173,35.47655555232581
+Central Oregon (Mt Bachelor),Early season,big_storm_days_per_window,La Nina,strong,5,2.418023813205505,2.400896235507218,0.017127577698286878,0.7133826712285412
+Central Oregon (Mt Bachelor),Early season,big_storm_days_per_window,La Nina,weak,7,2.5384894047310906,2.400896235507218,0.13759316922387255,5.730908616082042
+Central Oregon (Mt Bachelor),Early season,big_storm_days_per_window,Neutral,neutral,15,2.598506459568322,2.400896235507218,0.19761022406110396,8.230685738876026
+Central Oregon (Mt Bachelor),Holidays,big_storm_days_per_window,El Nino,moderate,4,0.9013967933317424,1.5562799620564574,-0.654883168724715,-42.08003602766671
+Central Oregon (Mt Bachelor),Holidays,big_storm_days_per_window,El Nino,strong,3,0.3924141564285624,1.5562799620564574,-1.163865805627895,-74.78511797388761
+Central Oregon (Mt Bachelor),Holidays,big_storm_days_per_window,El Nino,very strong,3,1.8507543941903093,1.5562799620564574,0.29447443213385194,18.921687569936676
+Central Oregon (Mt Bachelor),Holidays,big_storm_days_per_window,El Nino,weak,5,0.8902399697644453,1.5562799620564574,-0.666039992292012,-42.796926551178586
+Central Oregon (Mt Bachelor),Holidays,big_storm_days_per_window,La Nina,moderate,4,0.7776606109978476,1.5562799620564574,-0.7786193510586098,-50.03080230049018
+Central Oregon (Mt Bachelor),Holidays,big_storm_days_per_window,La Nina,strong,5,2.537528993350858,1.5562799620564574,0.9812490312944007,63.05093268680175
+Central Oregon (Mt Bachelor),Holidays,big_storm_days_per_window,La Nina,weak,7,2.2047109897754353,1.5562799620564574,0.648431027718978,41.66544860361409
+Central Oregon (Mt Bachelor),Holidays,big_storm_days_per_window,Neutral,neutral,15,1.7047547494278332,1.5562799620564574,0.14847478737137587,9.54036490807106
+Central Oregon (Mt Bachelor),Midwinter,big_storm_days_per_window,El Nino,moderate,4,2.841172050494962,3.3764050157941674,-0.5352329652992056,-15.852155259676776
+Central Oregon (Mt Bachelor),Midwinter,big_storm_days_per_window,El Nino,strong,3,3.003874713242926,3.3764050157941674,-0.3725303025512412,-11.03334169948856
+Central Oregon (Mt Bachelor),Midwinter,big_storm_days_per_window,El Nino,very strong,3,2.8854194585221933,3.3764050157941674,-0.4909855572719741,-14.54166650550627
+Central Oregon (Mt Bachelor),Midwinter,big_storm_days_per_window,El Nino,weak,5,2.079989190875555,3.3764050157941674,-1.2964158249186126,-38.396336306048326
+Central Oregon (Mt Bachelor),Midwinter,big_storm_days_per_window,La Nina,moderate,4,4.5181902457449405,3.3764050157941674,1.1417852299507731,33.81659559826868
+Central Oregon (Mt Bachelor),Midwinter,big_storm_days_per_window,La Nina,strong,5,6.726797587753208,3.3764050157941674,3.350392571959041,99.22958164931502
+Central Oregon (Mt Bachelor),Midwinter,big_storm_days_per_window,La Nina,weak,7,2.2841094926792858,3.3764050157941674,-1.0922955231148817,-32.35084410801829
+Central Oregon (Mt Bachelor),Midwinter,big_storm_days_per_window,Neutral,neutral,15,3.212439912291865,3.3764050157941674,-0.16396510350230242,-4.856203646639118
+Central Oregon (Mt Bachelor),Spring,big_storm_days_per_window,El Nino,moderate,4,1.3699219690311506,1.9017662554075678,-0.5318442863764172,-27.965807304874993
+Central Oregon (Mt Bachelor),Spring,big_storm_days_per_window,El Nino,strong,3,1.4782290342329503,1.9017662554075678,-0.42353722117461756,-22.2707296425264
+Central Oregon (Mt Bachelor),Spring,big_storm_days_per_window,El Nino,very strong,3,1.6569183475596783,1.9017662554075678,-0.24484790784788957,-12.87476350743305
+Central Oregon (Mt Bachelor),Spring,big_storm_days_per_window,El Nino,weak,5,1.2120947294576316,1.9017662554075678,-0.6896715259499362,-36.264789323550836
+Central Oregon (Mt Bachelor),Spring,big_storm_days_per_window,La Nina,moderate,4,1.685145198035766,1.9017662554075678,-0.21662105737180193,-11.390519563371779
+Central Oregon (Mt Bachelor),Spring,big_storm_days_per_window,La Nina,strong,5,2.999189732488016,1.9017662554075678,1.097423477080448,57.7054868840997
+Central Oregon (Mt Bachelor),Spring,big_storm_days_per_window,La Nina,weak,7,2.4776844250508456,1.9017662554075678,0.5759181696432778,30.283330982747543
+Central Oregon (Mt Bachelor),Spring,big_storm_days_per_window,Neutral,neutral,15,1.8303549100012269,1.9017662554075678,-0.07141134540634098,-3.7550011839408097
+Chugach (Alyeska),Early season,big_storm_days_per_window,El Nino,moderate,4,2.6248536474207103,2.431909893503905,0.19294375391680507,7.933836464590839
+Chugach (Alyeska),Early season,big_storm_days_per_window,El Nino,strong,3,2.901573480473194,2.431909893503905,0.4696635869692889,19.312540658839783
+Chugach (Alyeska),Early season,big_storm_days_per_window,El Nino,very strong,3,3.5891498920914198,2.431909893503905,1.1572399985875146,47.58564458653353
+Chugach (Alyeska),Early season,big_storm_days_per_window,El Nino,weak,5,2.0901597284450952,2.431909893503905,-0.34175016505880995,-14.052747841179881
+Chugach (Alyeska),Early season,big_storm_days_per_window,La Nina,moderate,4,2.463678150468482,2.431909893503905,0.031768256964576747,1.306308965206146
+Chugach (Alyeska),Early season,big_storm_days_per_window,La Nina,strong,5,3.961568171600997,2.431909893503905,1.529658278097092,62.89946359374172
+Chugach (Alyeska),Early season,big_storm_days_per_window,La Nina,weak,6,2.0268642903513996,2.431909893503905,-0.4050456031525056,-16.655452746602972
+Chugach (Alyeska),Early season,big_storm_days_per_window,Neutral,neutral,13,1.7173848360829576,2.431909893503905,-0.7145250574209476,-29.381230749115343
+Chugach (Alyeska),Holidays,big_storm_days_per_window,El Nino,moderate,4,1.6164836401694087,1.3438468239965895,0.2726368161728192,20.287789598073353
+Chugach (Alyeska),Holidays,big_storm_days_per_window,El Nino,strong,3,1.3780203292998225,1.3438468239965895,0.03417350530323304,2.5429613474548622
+Chugach (Alyeska),Holidays,big_storm_days_per_window,El Nino,very strong,3,2.062352725314901,1.3438468239965895,0.7185059013183117,53.4663540879965
+Chugach (Alyeska),Holidays,big_storm_days_per_window,El Nino,weak,5,1.4861359030724617,1.3438468239965895,0.14228907907587218,10.588191789054173
+Chugach (Alyeska),Holidays,big_storm_days_per_window,La Nina,moderate,4,1.1006498014107982,1.3438468239965895,-0.24319702258579134,-18.097079089901435
+Chugach (Alyeska),Holidays,big_storm_days_per_window,La Nina,strong,5,1.3666410375408584,1.3438468239965895,0.022794213544268915,1.6961913469035936
+Chugach (Alyeska),Holidays,big_storm_days_per_window,La Nina,weak,6,0.9015224266953012,1.3438468239965895,-0.44232439730128825,-32.91479277272235
+Chugach (Alyeska),Holidays,big_storm_days_per_window,Neutral,neutral,13,1.3017493260346111,1.3438468239965895,-0.04209749796197837,-3.1326113371151
+Chugach (Alyeska),Midwinter,big_storm_days_per_window,El Nino,moderate,4,3.3399191607121375,3.096054095068618,0.2438650656435195,7.87664098091654
+Chugach (Alyeska),Midwinter,big_storm_days_per_window,El Nino,strong,3,3.192200783291355,3.096054095068618,0.09614668822273709,3.105458925148599
+Chugach (Alyeska),Midwinter,big_storm_days_per_window,El Nino,very strong,3,5.558818714006288,3.096054095068618,2.4627646189376704,79.54527095829339
+Chugach (Alyeska),Midwinter,big_storm_days_per_window,El Nino,weak,5,1.7076433683284038,3.096054095068618,-1.3884107267402142,-44.84452416227704
+Chugach (Alyeska),Midwinter,big_storm_days_per_window,La Nina,moderate,4,3.0705163640513127,3.096054095068618,-0.025537731017305276,-0.8248477007550246
+Chugach (Alyeska),Midwinter,big_storm_days_per_window,La Nina,strong,5,3.024042415967582,3.096054095068618,-0.07201167910103612,-2.3259179875356835
+Chugach (Alyeska),Midwinter,big_storm_days_per_window,La Nina,weak,6,3.2708773721330604,3.096054095068618,0.17482327706444245,5.64664801377018
+Chugach (Alyeska),Midwinter,big_storm_days_per_window,Neutral,neutral,13,2.9193717186711967,3.096054095068618,-0.17668237639742124,-5.706695392656097
+Chugach (Alyeska),Spring,big_storm_days_per_window,El Nino,moderate,4,3.964407659465295,2.215497639623402,1.748910019841893,78.9398277192107
+Chugach (Alyeska),Spring,big_storm_days_per_window,El Nino,strong,3,3.2583622186493497,2.215497639623402,1.0428645790259479,47.0713468782218
+Chugach (Alyeska),Spring,big_storm_days_per_window,El Nino,very strong,3,2.2171674106656893,2.215497639623402,0.0016697710422874934,0.0753677644437178
+Chugach (Alyeska),Spring,big_storm_days_per_window,El Nino,weak,5,1.7549912313970975,2.215497639623402,-0.4605064082263044,-20.78568715174
+Chugach (Alyeska),Spring,big_storm_days_per_window,La Nina,moderate,4,2.1663996250731516,2.215497639623402,-0.0490980145502502,-2.2161167618574424
+Chugach (Alyeska),Spring,big_storm_days_per_window,La Nina,strong,5,2.3800736531045352,2.215497639623402,0.16457601348113338,7.428399405070392
+Chugach (Alyeska),Spring,big_storm_days_per_window,La Nina,weak,6,2.4129587500986465,2.215497639623402,0.19746111047524462,8.912720417468364
+Chugach (Alyeska),Spring,big_storm_days_per_window,Neutral,neutral,13,1.4741156580467185,2.215497639623402,-0.7413819815766833,-33.46345165606703
+E Cascades rain shadow (Mission Ridge),Early season,big_storm_days_per_window,El Nino,moderate,4,0.6859803473491775,0.9778282094305983,-0.2918478620814209,-29.84653738424744
+E Cascades rain shadow (Mission Ridge),Early season,big_storm_days_per_window,El Nino,strong,3,0.8563223644119441,0.9778282094305983,-0.12150584501865425,-12.426093238750866
+E Cascades rain shadow (Mission Ridge),Early season,big_storm_days_per_window,El Nino,very strong,3,1.3178958893470025,0.9778282094305983,0.3400676799164042,34.77785531616334
+E Cascades rain shadow (Mission Ridge),Early season,big_storm_days_per_window,El Nino,weak,5,1.3663619744058504,0.9778282094305983,0.38853376497525205,39.73435836970792
+E Cascades rain shadow (Mission Ridge),Early season,big_storm_days_per_window,La Nina,moderate,4,1.2584209323583182,0.9778282094305983,0.28059272292771986,28.69550297501772
+E Cascades rain shadow (Mission Ridge),Early season,big_storm_days_per_window,La Nina,strong,5,1.1602330895795248,0.9778282094305983,0.18240488014892642,18.65408242365426
+E Cascades rain shadow (Mission Ridge),Early season,big_storm_days_per_window,La Nina,weak,7,0.5376192060706318,0.9778282094305983,-0.4402090033599665,-45.01905335869843
+E Cascades rain shadow (Mission Ridge),Early season,big_storm_days_per_window,Neutral,neutral,14,0.9504071272749146,0.9778282094305983,-0.02742108215568373,-2.804284217945744
+E Cascades rain shadow (Mission Ridge),Holidays,big_storm_days_per_window,El Nino,moderate,4,0.5598663162705667,0.5702160422773438,-0.010349726006777082,-1.8150534603414654
+E Cascades rain shadow (Mission Ridge),Holidays,big_storm_days_per_window,El Nino,strong,3,0.1101157830591103,0.5702160422773438,-0.4601002592182335,-80.68876094412795
+E Cascades rain shadow (Mission Ridge),Holidays,big_storm_days_per_window,El Nino,very strong,3,0.6905073118830373,0.5702160422773438,0.12029126960569347,21.09573577152811
+E Cascades rain shadow (Mission Ridge),Holidays,big_storm_days_per_window,El Nino,weak,5,0.7609049360146253,0.5702160422773438,0.19068889373728148,33.44151682855206
+E Cascades rain shadow (Mission Ridge),Holidays,big_storm_days_per_window,La Nina,moderate,4,0.7742413162705668,0.5702160422773438,0.204025273993223,35.78034619622092
+E Cascades rain shadow (Mission Ridge),Holidays,big_storm_days_per_window,La Nina,strong,5,0.6721160877513712,0.5702160422773438,0.10190004547402742,17.87042768334899
+E Cascades rain shadow (Mission Ridge),Holidays,big_storm_days_per_window,La Nina,weak,7,0.5524269735849447,0.5702160422773438,-0.017789068692399046,-3.119706808204237
+E Cascades rain shadow (Mission Ridge),Holidays,big_storm_days_per_window,Neutral,neutral,14,0.4920948681117786,0.5702160422773438,-0.07812117416556519,-13.70027645198525
+E Cascades rain shadow (Mission Ridge),Midwinter,big_storm_days_per_window,El Nino,moderate,4,0.9054330438756857,1.2354225689925173,-0.32998952511683166,-26.710660254971454
+E Cascades rain shadow (Mission Ridge),Midwinter,big_storm_days_per_window,El Nino,strong,3,0.8762492382693482,1.2354225689925173,-0.35917333072316915,-29.07291316655108
+E Cascades rain shadow (Mission Ridge),Midwinter,big_storm_days_per_window,El Nino,very strong,3,1.2026787586157097,1.2354225689925173,-0.032743810376807625,-2.65041380970643
+E Cascades rain shadow (Mission Ridge),Midwinter,big_storm_days_per_window,El Nino,weak,5,1.2042733089579527,1.2354225689925173,-0.03114926003456464,-2.521344584142311
+E Cascades rain shadow (Mission Ridge),Midwinter,big_storm_days_per_window,La Nina,moderate,4,1.5057769166439772,1.2354225689925173,0.2703543476514598,21.883552594634306
+E Cascades rain shadow (Mission Ridge),Midwinter,big_storm_days_per_window,La Nina,strong,5,1.7040859232175507,1.2354225689925173,0.46866335422503336,37.93546969173686
+E Cascades rain shadow (Mission Ridge),Midwinter,big_storm_days_per_window,La Nina,weak,7,1.3310277456001096,1.2354225689925173,0.09560517660759227,7.738661977460713
+E Cascades rain shadow (Mission Ridge),Midwinter,big_storm_days_per_window,Neutral,neutral,14,1.1323858137036555,1.2354225689925173,-0.1030367552888618,-8.340203415005435
+E Cascades rain shadow (Mission Ridge),Spring,big_storm_days_per_window,El Nino,moderate,4,0.3986060329067642,0.4990425439176002,-0.100436511010836,-20.125841420730584
+E Cascades rain shadow (Mission Ridge),Spring,big_storm_days_per_window,El Nino,strong,3,0.06361974405850092,0.4990425439176002,-0.4354227998590993,-87.25163919711711
+E Cascades rain shadow (Mission Ridge),Spring,big_storm_days_per_window,El Nino,very strong,3,0.6972719525241002,0.4990425439176002,0.1982294086065,39.72194575844235
+E Cascades rain shadow (Mission Ridge),Spring,big_storm_days_per_window,El Nino,weak,5,0.3992413162705668,0.4990425439176002,-0.09980122764703342,-19.99854097880524
+E Cascades rain shadow (Mission Ridge),Spring,big_storm_days_per_window,La Nina,moderate,4,0.5583066727605119,0.4990425439176002,0.05926412884291171,11.875566435213017
+E Cascades rain shadow (Mission Ridge),Spring,big_storm_days_per_window,La Nina,strong,5,0.5524085923217552,0.4990425439176002,0.053366048404154987,10.693687152445776
+E Cascades rain shadow (Mission Ridge),Spring,big_storm_days_per_window,La Nina,weak,7,0.5053420999601855,0.4990425439176002,0.006299556042585308,1.262328456634644
+E Cascades rain shadow (Mission Ridge),Spring,big_storm_days_per_window,Neutral,neutral,14,0.5750674515137282,0.4990425439176002,0.07602490759612796,15.234153585246403
+Elk Mtns (Aspen/Crested Butte),Early season,big_storm_days_per_window,El Nino,moderate,4,0.8177359204455126,1.0821920292177427,-0.26445610877223014,-24.437077859776046
+Elk Mtns (Aspen/Crested Butte),Early season,big_storm_days_per_window,El Nino,strong,3,1.0288089947248802,1.0821920292177427,-0.053383034492862524,-4.932861548744745
+Elk Mtns (Aspen/Crested Butte),Early season,big_storm_days_per_window,El Nino,very strong,3,0.6765031565912772,1.0821920292177427,-0.40568887262646547,-37.48769734699633
+Elk Mtns (Aspen/Crested Butte),Early season,big_storm_days_per_window,El Nino,weak,5,1.0731047276222845,1.0821920292177427,-0.00908730159545823,-0.8397124863345133
+Elk Mtns (Aspen/Crested Butte),Early season,big_storm_days_per_window,La Nina,moderate,4,0.6504363102775371,1.0821920292177427,-0.4317557189402056,-39.89640537754636
+Elk Mtns (Aspen/Crested Butte),Early season,big_storm_days_per_window,La Nina,strong,5,1.1766567465576747,1.0821920292177427,0.094464717339932,8.729016181002123
+Elk Mtns (Aspen/Crested Butte),Early season,big_storm_days_per_window,La Nina,weak,7,1.4928903522889996,1.0821920292177427,0.41069832307125687,37.95059582615187
+Elk Mtns (Aspen/Crested Butte),Early season,big_storm_days_per_window,Neutral,neutral,15,1.1395445420168473,1.0821920292177427,0.05735251279910458,5.299661358674169
+Elk Mtns (Aspen/Crested Butte),Holidays,big_storm_days_per_window,El Nino,moderate,4,0.2649734387492477,0.594981452607856,-0.33000801385860823,-55.46526070891019
+Elk Mtns (Aspen/Crested Butte),Holidays,big_storm_days_per_window,El Nino,strong,3,0.0,0.594981452607856,-0.594981452607856,-100.0
+Elk Mtns (Aspen/Crested Butte),Holidays,big_storm_days_per_window,El Nino,very strong,3,0.24176366745411104,0.594981452607856,-0.3532177851537449,-59.36618420718164
+Elk Mtns (Aspen/Crested Butte),Holidays,big_storm_days_per_window,El Nino,weak,5,0.4612617277471556,0.594981452607856,-0.13371972486070033,-22.474603918255777
+Elk Mtns (Aspen/Crested Butte),Holidays,big_storm_days_per_window,La Nina,moderate,4,0.4000244359819023,0.594981452607856,-0.19495701662595366,-32.76690656010199
+Elk Mtns (Aspen/Crested Butte),Holidays,big_storm_days_per_window,La Nina,strong,5,0.7942798902508488,0.594981452607856,0.19929843764299282,33.4965798966422
+Elk Mtns (Aspen/Crested Butte),Holidays,big_storm_days_per_window,La Nina,weak,7,1.122076797539308,0.594981452607856,0.527095344931452,88.5902144715851
+Elk Mtns (Aspen/Crested Butte),Holidays,big_storm_days_per_window,Neutral,neutral,15,0.6567745763939505,0.594981452607856,0.061793123786094584,10.385722700304337
+Elk Mtns (Aspen/Crested Butte),Midwinter,big_storm_days_per_window,El Nino,moderate,4,0.9163775091412036,1.337474862740715,-0.4210973535995113,-31.484506014311982
+Elk Mtns (Aspen/Crested Butte),Midwinter,big_storm_days_per_window,El Nino,strong,3,0.6782980241285607,1.337474862740715,-0.6591768386121543,-49.28517589193326
+Elk Mtns (Aspen/Crested Butte),Midwinter,big_storm_days_per_window,El Nino,very strong,3,0.7976394121337735,1.337474862740715,-0.5398354506069414,-40.362287594753454
+Elk Mtns (Aspen/Crested Butte),Midwinter,big_storm_days_per_window,El Nino,weak,5,1.6495842039772388,1.337474862740715,0.3121093412365239,23.335716425874235
+Elk Mtns (Aspen/Crested Butte),Midwinter,big_storm_days_per_window,La Nina,moderate,4,1.8034902920656117,1.337474862740715,0.4660154293248968,34.84292993514296
+Elk Mtns (Aspen/Crested Butte),Midwinter,big_storm_days_per_window,La Nina,strong,5,2.2758990143820306,1.337474862740715,0.9384241516413157,70.16387206846818
+Elk Mtns (Aspen/Crested Butte),Midwinter,big_storm_days_per_window,La Nina,weak,7,0.7703878186844572,1.337474862740715,-0.5670870440562578,-42.3998282026923
+Elk Mtns (Aspen/Crested Butte),Midwinter,big_storm_days_per_window,Neutral,neutral,15,1.413095289991405,1.337474862740715,0.07562042725069018,5.653969981591354
+Elk Mtns (Aspen/Crested Butte),Spring,big_storm_days_per_window,El Nino,moderate,4,1.8692197711917151,1.164161291647941,0.7050584795437742,60.56364222054842
+Elk Mtns (Aspen/Crested Butte),Spring,big_storm_days_per_window,El Nino,strong,3,0.9768513378900704,1.164161291647941,-0.18730995375787052,-16.089690930431292
+Elk Mtns (Aspen/Crested Butte),Spring,big_storm_days_per_window,El Nino,very strong,3,1.38841135990447,1.164161291647941,0.22425006825652916,19.262800598625777
+Elk Mtns (Aspen/Crested Butte),Spring,big_storm_days_per_window,El Nino,weak,5,1.0079864206093003,1.164161291647941,-0.15617487103864058,-13.415226237041912
+Elk Mtns (Aspen/Crested Butte),Spring,big_storm_days_per_window,La Nina,moderate,4,0.9724781169691451,1.164161291647941,-0.1916831746787958,-16.465345141948216
+Elk Mtns (Aspen/Crested Butte),Spring,big_storm_days_per_window,La Nina,strong,5,1.1977917568549328,1.164161291647941,0.033630465206991866,2.888814930393872
+Elk Mtns (Aspen/Crested Butte),Spring,big_storm_days_per_window,La Nina,weak,7,1.215279312155479,1.164161291647941,0.05111802050753811,4.390974075007892
+Elk Mtns (Aspen/Crested Butte),Spring,big_storm_days_per_window,Neutral,neutral,15,1.0368662464912461,1.164161291647941,-0.12729504515669476,-10.934485287386673
+Front Range (Winter Park/Loveland/A-Basin),Early season,big_storm_days_per_window,El Nino,moderate,4,0.670919094681457,0.6843467129439298,-0.01342761826247274,-1.9621075119524827
+Front Range (Winter Park/Loveland/A-Basin),Early season,big_storm_days_per_window,El Nino,strong,3,0.637920845948342,0.6843467129439298,-0.04642586699558782,-6.783968727762649
+Front Range (Winter Park/Loveland/A-Basin),Early season,big_storm_days_per_window,El Nino,very strong,3,0.46601604027844656,0.6843467129439298,-0.21833067266548323,-31.903517403666058
+Front Range (Winter Park/Loveland/A-Basin),Early season,big_storm_days_per_window,El Nino,weak,6,0.7667559414537276,0.6843467129439298,0.08240922850979782,12.04202883583512
+Front Range (Winter Park/Loveland/A-Basin),Early season,big_storm_days_per_window,La Nina,moderate,4,0.7834820727368674,0.6843467129439298,0.09913535979293764,14.486130775214235
+Front Range (Winter Park/Loveland/A-Basin),Early season,big_storm_days_per_window,La Nina,strong,5,0.574495000595306,0.6843467129439298,-0.10985171234862379,-16.05205523324026
+Front Range (Winter Park/Loveland/A-Basin),Early season,big_storm_days_per_window,La Nina,weak,7,0.9184926834829198,0.6843467129439298,0.23414597053899,34.21452402857879
+Front Range (Winter Park/Loveland/A-Basin),Early season,big_storm_days_per_window,Neutral,neutral,16,0.6135479660547272,0.6843467129439298,-0.07079874688920262,-10.345449981726345
+Front Range (Winter Park/Loveland/A-Basin),Holidays,big_storm_days_per_window,El Nino,moderate,4,0.13535966848993625,0.36503412069284136,-0.2296744522029051,-62.918625734761136
+Front Range (Winter Park/Loveland/A-Basin),Holidays,big_storm_days_per_window,El Nino,strong,3,0.0,0.36503412069284136,-0.36503412069284136,-100.00000000000001
+Front Range (Winter Park/Loveland/A-Basin),Holidays,big_storm_days_per_window,El Nino,very strong,3,0.34979232819189865,0.36503412069284136,-0.015241792500942708,-4.1754432358305325
+Front Range (Winter Park/Loveland/A-Basin),Holidays,big_storm_days_per_window,El Nino,weak,6,0.4920989377214006,0.36503412069284136,0.12706481702855926,34.80902464333689
+Front Range (Winter Park/Loveland/A-Basin),Holidays,big_storm_days_per_window,La Nina,moderate,4,0.47245788484272727,0.36503412069284136,0.10742376414988591,29.428417252062264
+Front Range (Winter Park/Loveland/A-Basin),Holidays,big_storm_days_per_window,La Nina,strong,5,0.1709027422730188,0.36503412069284136,-0.19413137841982256,-53.18170752130176
+Front Range (Winter Park/Loveland/A-Basin),Holidays,big_storm_days_per_window,La Nina,weak,7,0.7161739426910062,0.36503412069284136,0.35113982199816485,96.19369864156674
+Front Range (Winter Park/Loveland/A-Basin),Holidays,big_storm_days_per_window,Neutral,neutral,16,0.32629160367621846,0.36503412069284136,-0.0387425170166229,-10.613396069137018
+Front Range (Winter Park/Loveland/A-Basin),Midwinter,big_storm_days_per_window,El Nino,moderate,4,0.5457794815678678,0.8120801748651821,-0.2663006932973143,-32.79241404231107
+Front Range (Winter Park/Loveland/A-Basin),Midwinter,big_storm_days_per_window,El Nino,strong,3,0.6484054322715197,0.8120801748651821,-0.16367474259366244,-20.154997949658725
+Front Range (Winter Park/Loveland/A-Basin),Midwinter,big_storm_days_per_window,El Nino,very strong,3,0.4183634526881594,0.8120801748651821,-0.39371672217702275,-48.48249401512429
+Front Range (Winter Park/Loveland/A-Basin),Midwinter,big_storm_days_per_window,El Nino,weak,6,1.1174106318554957,0.8120801748651821,0.3053304569903136,37.598560639779585
+Front Range (Winter Park/Loveland/A-Basin),Midwinter,big_storm_days_per_window,La Nina,moderate,4,1.386889725349669,0.8120801748651821,0.5748095504844869,70.78236463289036
+Front Range (Winter Park/Loveland/A-Basin),Midwinter,big_storm_days_per_window,La Nina,strong,5,0.9792635379602089,0.8120801748651821,0.1671833630950268,20.58705141062972
+Front Range (Winter Park/Loveland/A-Basin),Midwinter,big_storm_days_per_window,La Nina,weak,7,0.3822310798047373,0.8120801748651821,-0.42984909506044483,-52.931854312513714
+Front Range (Winter Park/Loveland/A-Basin),Midwinter,big_storm_days_per_window,Neutral,neutral,16,0.8607791169632737,0.8120801748651821,0.04869894209809156,5.99681455173762
+Front Range (Winter Park/Loveland/A-Basin),Spring,big_storm_days_per_window,El Nino,moderate,4,1.7181577071591516,1.0920917514625414,0.6260659556966102,57.327230505877885
+Front Range (Winter Park/Loveland/A-Basin),Spring,big_storm_days_per_window,El Nino,strong,3,1.2787670520085932,1.0920917514625414,0.18667530054605175,17.093371531838244
+Front Range (Winter Park/Loveland/A-Basin),Spring,big_storm_days_per_window,El Nino,very strong,3,1.900309838604178,1.0920917514625414,0.8082180871416365,74.0064272126643
+Front Range (Winter Park/Loveland/A-Basin),Spring,big_storm_days_per_window,El Nino,weak,6,0.6810378018373657,1.0920917514625414,-0.4110539496251757,-37.6391405827109
+Front Range (Winter Park/Loveland/A-Basin),Spring,big_storm_days_per_window,La Nina,moderate,4,0.7778029030115313,1.0920917514625414,-0.3142888484510101,-28.778612056185846
+Front Range (Winter Park/Loveland/A-Basin),Spring,big_storm_days_per_window,La Nina,strong,5,1.1844241731293557,1.0920917514625414,0.09233242166681421,8.454639598107175
+Front Range (Winter Park/Loveland/A-Basin),Spring,big_storm_days_per_window,La Nina,weak,7,0.7672775597370318,1.0920917514625414,-0.3248141917255096,-29.74239035232295
+Front Range (Winter Park/Loveland/A-Basin),Spring,big_storm_days_per_window,Neutral,neutral,16,1.0950025226781719,1.0920917514625414,0.0029107712156304366,0.26653174623215486
+Gore & Tenmile (Vail/Summit/Copper),Early season,big_storm_days_per_window,El Nino,moderate,4,0.6416971444649194,0.718413234506725,-0.07671609004180557,-10.678546323618352
+Gore & Tenmile (Vail/Summit/Copper),Early season,big_storm_days_per_window,El Nino,strong,3,0.664224920330562,0.718413234506725,-0.05418831417616299,-7.54277782944375
+Gore & Tenmile (Vail/Summit/Copper),Early season,big_storm_days_per_window,El Nino,very strong,3,0.4346575291854926,0.718413234506725,-0.2837557053212324,-39.497560970750214
+Gore & Tenmile (Vail/Summit/Copper),Early season,big_storm_days_per_window,El Nino,weak,6,0.8755394229577477,0.718413234506725,0.15712618845102266,21.87128255772017
+Gore & Tenmile (Vail/Summit/Copper),Early season,big_storm_days_per_window,La Nina,moderate,4,0.709813852986847,0.718413234506725,-0.008599381519878047,-1.1969965344224944
+Gore & Tenmile (Vail/Summit/Copper),Early season,big_storm_days_per_window,La Nina,strong,5,0.6579432218926284,0.718413234506725,-0.06047001261409657,-8.417162951572896
+Gore & Tenmile (Vail/Summit/Copper),Early season,big_storm_days_per_window,La Nina,weak,7,0.9100066308842616,0.718413234506725,0.19159339637753658,26.6689681056736
+Gore & Tenmile (Vail/Summit/Copper),Early season,big_storm_days_per_window,Neutral,neutral,16,0.679259053410507,0.718413234506725,-0.039154181096218044,-5.450091843464157
+Gore & Tenmile (Vail/Summit/Copper),Holidays,big_storm_days_per_window,El Nino,moderate,4,0.19613444470919078,0.3752702674359378,-0.179135822726747,-47.73514937666283
+Gore & Tenmile (Vail/Summit/Copper),Holidays,big_storm_days_per_window,El Nino,strong,3,0.0,0.3752702674359378,-0.3752702674359378,-100.0
+Gore & Tenmile (Vail/Summit/Copper),Holidays,big_storm_days_per_window,El Nino,very strong,3,0.11288341501171872,0.3752702674359378,-0.26238685242421905,-69.91943545567756
+Gore & Tenmile (Vail/Summit/Copper),Holidays,big_storm_days_per_window,El Nino,weak,6,0.4480913626210974,0.3752702674359378,0.07282109518515961,19.404973296369892
+Gore & Tenmile (Vail/Summit/Copper),Holidays,big_storm_days_per_window,La Nina,moderate,4,0.4142869406492552,0.3752702674359378,0.03901667321331742,10.396952969363058
+Gore & Tenmile (Vail/Summit/Copper),Holidays,big_storm_days_per_window,La Nina,strong,5,0.09973160042346896,0.3752702674359378,-0.2755386670124688,-73.42406018337329
+Gore & Tenmile (Vail/Summit/Copper),Holidays,big_storm_days_per_window,La Nina,weak,7,0.6830402860363678,0.3752702674359378,0.30777001860043,82.01289718561817
+Gore & Tenmile (Vail/Summit/Copper),Holidays,big_storm_days_per_window,Neutral,neutral,16,0.454009304397348,0.3752702674359378,0.07873903696141021,20.981954552221946
+Gore & Tenmile (Vail/Summit/Copper),Midwinter,big_storm_days_per_window,El Nino,moderate,4,0.4384246238065129,0.7883335766985814,-0.34990895289206847,-44.38589998379022
+Gore & Tenmile (Vail/Summit/Copper),Midwinter,big_storm_days_per_window,El Nino,strong,3,0.6267990423324873,0.7883335766985814,-0.1615345343660941,-20.49063228317328
+Gore & Tenmile (Vail/Summit/Copper),Midwinter,big_storm_days_per_window,El Nino,very strong,3,0.30691385128508314,0.7883335766985814,-0.48141972541349826,-61.06802242644659
+Gore & Tenmile (Vail/Summit/Copper),Midwinter,big_storm_days_per_window,El Nino,weak,6,1.3091510851682753,0.7883335766985814,0.5208175084696939,66.06562549965165
+Gore & Tenmile (Vail/Summit/Copper),Midwinter,big_storm_days_per_window,La Nina,moderate,4,1.413580441834359,0.7883335766985814,0.6252468651357775,79.31247426428472
+Gore & Tenmile (Vail/Summit/Copper),Midwinter,big_storm_days_per_window,La Nina,strong,5,1.0155467719106692,0.7883335766985814,0.22721319521208783,28.821960896759137
+Gore & Tenmile (Vail/Summit/Copper),Midwinter,big_storm_days_per_window,La Nina,weak,7,0.3453974159230172,0.7883335766985814,-0.4429361607755642,-56.18638782715714
+Gore & Tenmile (Vail/Summit/Copper),Midwinter,big_storm_days_per_window,Neutral,neutral,16,0.767526903505724,0.7883335766985814,-0.02080667319285745,-2.639323480295304
+Gore & Tenmile (Vail/Summit/Copper),Spring,big_storm_days_per_window,El Nino,moderate,4,1.6077770586783828,1.0055223965918325,0.6022546620865503,59.89470389996903
+Gore & Tenmile (Vail/Summit/Copper),Spring,big_storm_days_per_window,El Nino,strong,3,0.9332151268218704,1.0055223965918325,-0.07230726976996216,-7.191015338399623
+Gore & Tenmile (Vail/Summit/Copper),Spring,big_storm_days_per_window,El Nino,very strong,3,1.385813030055946,1.0055223965918325,0.3802906334641134,37.82020517425463
+Gore & Tenmile (Vail/Summit/Copper),Spring,big_storm_days_per_window,El Nino,weak,6,0.5838051432464275,1.0055223965918325,-0.421717253345405,-41.94011538428128
+Gore & Tenmile (Vail/Summit/Copper),Spring,big_storm_days_per_window,La Nina,moderate,4,0.8334429847294514,1.0055223965918325,-0.17207941186238107,-17.113434016550556
+Gore & Tenmile (Vail/Summit/Copper),Spring,big_storm_days_per_window,La Nina,strong,5,1.2420289249009597,1.0055223965918325,0.23650652830912722,23.52076185580293
+Gore & Tenmile (Vail/Summit/Copper),Spring,big_storm_days_per_window,La Nina,weak,7,0.8381426226134968,1.0055223965918325,-0.1673797739783357,-16.646051300862222
+Gore & Tenmile (Vail/Summit/Copper),Spring,big_storm_days_per_window,Neutral,neutral,16,0.9976960343665835,1.0055223965918325,-0.007826362225249017,-0.7783379317831286
+Jemez & N New Mexico,Early season,big_storm_days_per_window,El Nino,moderate,4,0.42159317143125613,0.48515358229804584,-0.06356041086678971,-13.101090703220336
+Jemez & N New Mexico,Early season,big_storm_days_per_window,El Nino,strong,3,0.9324377726695725,0.48515358229804584,0.44728419037152667,92.19434972588644
+Jemez & N New Mexico,Early season,big_storm_days_per_window,El Nino,very strong,3,0.664009609544677,0.48515358229804584,0.1788560272466312,36.86585728161315
+Jemez & N New Mexico,Early season,big_storm_days_per_window,El Nino,weak,5,0.4570459934101397,0.48515358229804584,-0.028107588887906154,-5.793544542074253
+Jemez & N New Mexico,Early season,big_storm_days_per_window,La Nina,moderate,4,0.423074437089491,0.48515358229804584,-0.06207914520855484,-12.795771787255932
+Jemez & N New Mexico,Early season,big_storm_days_per_window,La Nina,strong,5,0.6029943167611747,0.48515358229804584,0.11784073446312882,24.289367071134055
+Jemez & N New Mexico,Early season,big_storm_days_per_window,La Nina,weak,7,0.24304503697827481,0.48515358229804584,-0.24210854531977102,-49.90348503106296
+Jemez & N New Mexico,Early season,big_storm_days_per_window,Neutral,neutral,15,0.4765023596853251,0.48515358229804584,-0.008651222612720721,-1.7831925658967906
+Jemez & N New Mexico,Holidays,big_storm_days_per_window,El Nino,moderate,4,0.4126277857599161,0.39601816437670356,0.016609621383212536,4.194156449705928
+Jemez & N New Mexico,Holidays,big_storm_days_per_window,El Nino,strong,3,0.27494316406481295,0.39601816437670356,-0.12107500031189061,-30.57309265155845
+Jemez & N New Mexico,Holidays,big_storm_days_per_window,El Nino,very strong,3,0.3411697412624514,0.39601816437670356,-0.05484842311425214,-13.849976604123336
+Jemez & N New Mexico,Holidays,big_storm_days_per_window,El Nino,weak,5,0.5535217814551762,0.39601816437670356,0.1575036170784726,39.77181635755746
+Jemez & N New Mexico,Holidays,big_storm_days_per_window,La Nina,moderate,4,0.06338210205242206,0.39601816437670356,-0.3326360623242815,-83.99515281017989
+Jemez & N New Mexico,Holidays,big_storm_days_per_window,La Nina,strong,5,0.3001465091148411,0.39601816437670356,-0.09587165526186248,-24.208903501372394
+Jemez & N New Mexico,Holidays,big_storm_days_per_window,La Nina,weak,7,0.8957808750515008,0.39601816437670356,0.4997627106747973,126.19691610898155
+Jemez & N New Mexico,Holidays,big_storm_days_per_window,Neutral,neutral,15,0.2617099810591081,0.39601816437670356,-0.13430818331759548,-33.91465225565709
+Jemez & N New Mexico,Midwinter,big_storm_days_per_window,El Nino,moderate,4,1.4289610348233546,0.7308774691071116,0.698083565716243,95.51307780346112
+Jemez & N New Mexico,Midwinter,big_storm_days_per_window,El Nino,strong,3,0.5749890594143507,0.7308774691071116,-0.15588840969276085,-21.328939019450754
+Jemez & N New Mexico,Midwinter,big_storm_days_per_window,El Nino,very strong,3,0.7999835513530004,0.7308774691071116,0.06910608224588877,9.455221315046604
+Jemez & N New Mexico,Midwinter,big_storm_days_per_window,El Nino,weak,5,1.1727302709326703,0.7308774691071116,0.44185280182555875,60.45511327163435
+Jemez & N New Mexico,Midwinter,big_storm_days_per_window,La Nina,moderate,4,0.49636634917033756,0.7308774691071116,-0.23451111993677404,-32.086242886002275
+Jemez & N New Mexico,Midwinter,big_storm_days_per_window,La Nina,strong,5,0.9945446827023824,0.7308774691071116,0.2636672135952708,36.075433262073894
+Jemez & N New Mexico,Midwinter,big_storm_days_per_window,La Nina,weak,7,0.5599911933547764,0.7308774691071116,-0.17088627575233517,-23.380974646968003
+Jemez & N New Mexico,Midwinter,big_storm_days_per_window,Neutral,neutral,15,0.4691882059327739,0.7308774691071116,-0.2616892631743377,-35.80480644642592
+Jemez & N New Mexico,Spring,big_storm_days_per_window,El Nino,moderate,4,0.5261530570178614,0.519632455971866,0.006520601045995389,1.2548486860390466
+Jemez & N New Mexico,Spring,big_storm_days_per_window,El Nino,strong,3,0.7978623203956432,0.519632455971866,0.2782298644237772,53.54358859348099
+Jemez & N New Mexico,Spring,big_storm_days_per_window,El Nino,very strong,3,0.6641692527630917,0.519632455971866,0.14453679679122566,27.815198055883403
+Jemez & N New Mexico,Spring,big_storm_days_per_window,El Nino,weak,5,0.4498629589679247,0.519632455971866,-0.0697694970039413,-13.426701161968753
+Jemez & N New Mexico,Spring,big_storm_days_per_window,La Nina,moderate,4,0.5313833528716112,0.519632455971866,0.011750896899745178,2.2613862480486393
+Jemez & N New Mexico,Spring,big_storm_days_per_window,La Nina,strong,5,0.4806830843205221,0.519632455971866,-0.038949371651343934,-7.495561757876943
+Jemez & N New Mexico,Spring,big_storm_days_per_window,La Nina,weak,7,0.41930797511860946,0.519632455971866,-0.10032448085325657,-19.30681575030185
+Jemez & N New Mexico,Spring,big_storm_days_per_window,Neutral,neutral,15,0.5132644382266159,0.519632455971866,-0.0063680177452500875,-1.2254849888735329
+Mt Hood,Early season,big_storm_days_per_window,El Nino,moderate,4,1.2079498977302139,2.2899153894392987,-1.0819654917090848,-47.24914713875133
+Mt Hood,Early season,big_storm_days_per_window,El Nino,strong,3,2.068877496736826,2.2899153894392987,-0.22103789270247276,-9.652666370201363
+Mt Hood,Early season,big_storm_days_per_window,El Nino,very strong,3,1.2618188415730283,2.2899153894392987,-1.0280965478662705,-44.896704594749544
+Mt Hood,Early season,big_storm_days_per_window,El Nino,weak,6,2.0625106546531042,2.2899153894392987,-0.2274047347861945,-9.930704681707741
+Mt Hood,Early season,big_storm_days_per_window,La Nina,moderate,4,3.185584308845779,2.2899153894392987,0.8956689194064804,39.11362505082736
+Mt Hood,Early season,big_storm_days_per_window,La Nina,strong,5,3.1043589445183217,2.2899153894392987,0.814443555079023,35.56653485255824
+Mt Hood,Early season,big_storm_days_per_window,La Nina,weak,7,2.1273199629092234,2.2899153894392987,-0.1625954265300753,-7.100499314513445
+Mt Hood,Early season,big_storm_days_per_window,Neutral,neutral,16,2.4726009038111254,2.2899153894392987,0.18268551437182667,7.9778281422248725
+Mt Hood,Holidays,big_storm_days_per_window,El Nino,moderate,4,0.9082001855502584,1.5268442079558433,-0.6186440224055849,-40.51782226254981
+Mt Hood,Holidays,big_storm_days_per_window,El Nino,strong,3,0.24394503119821928,1.5268442079558433,-1.282899176757624,-84.02292585405189
+Mt Hood,Holidays,big_storm_days_per_window,El Nino,very strong,3,1.541872345416553,1.5268442079558433,0.015028137460709745,0.9842613530839266
+Mt Hood,Holidays,big_storm_days_per_window,El Nino,weak,6,0.7597850621508577,1.5268442079558433,-0.7670591458049856,-50.238206478965736
+Mt Hood,Holidays,big_storm_days_per_window,La Nina,moderate,4,1.3677484304388026,1.5268442079558433,-0.15909577751704074,-10.41990903119317
+Mt Hood,Holidays,big_storm_days_per_window,La Nina,strong,5,2.2223158473905977,1.5268442079558433,0.6954716394347544,45.54961375960288
+Mt Hood,Holidays,big_storm_days_per_window,La Nina,weak,7,2.6204045836601675,1.5268442079558433,1.0935603757043242,71.62226309705791
+Mt Hood,Holidays,big_storm_days_per_window,Neutral,neutral,16,1.550884605787539,1.5268442079558433,0.024040397831695648,1.5745154421407022
+Mt Hood,Midwinter,big_storm_days_per_window,El Nino,moderate,4,3.2927208204466214,3.8595500554947377,-0.5668292350481163,-14.686407143266267
+Mt Hood,Midwinter,big_storm_days_per_window,El Nino,strong,3,3.192719861944418,3.8595500554947377,-0.6668301935503198,-17.277407572444137
+Mt Hood,Midwinter,big_storm_days_per_window,El Nino,very strong,3,3.233507198168114,3.8595500554947377,-0.6260428573266239,-16.220617645192696
+Mt Hood,Midwinter,big_storm_days_per_window,El Nino,weak,6,2.9912867927335753,3.8595500554947377,-0.8682632627611624,-22.49648923519049
+Mt Hood,Midwinter,big_storm_days_per_window,La Nina,moderate,4,5.789994130668568,3.8595500554947377,1.9304440751738299,50.017334855536035
+Mt Hood,Midwinter,big_storm_days_per_window,La Nina,strong,5,6.278425808245674,3.8595500554947377,2.4188757527509366,62.67248041795049
+Mt Hood,Midwinter,big_storm_days_per_window,La Nina,weak,7,2.921117168424029,3.8595500554947377,-0.9384328870707086,-24.314567075887172
+Mt Hood,Midwinter,big_storm_days_per_window,Neutral,neutral,16,3.741324481396938,3.8595500554947377,-0.11822557409779977,-3.0631957714730293
+Mt Hood,Spring,big_storm_days_per_window,El Nino,moderate,4,2.1768643626994324,1.843821448935907,0.33304291376352535,18.062644512337606
+Mt Hood,Spring,big_storm_days_per_window,El Nino,strong,3,1.0165526208032005,1.843821448935907,-0.8272688281327065,-44.867079109538174
+Mt Hood,Spring,big_storm_days_per_window,El Nino,very strong,3,1.350239847740447,1.843821448935907,-0.49358160119546013,-26.76949015211383
+Mt Hood,Spring,big_storm_days_per_window,El Nino,weak,6,1.4966479500589809,1.843821448935907,-0.34717349887692617,-18.82901943012348
+Mt Hood,Spring,big_storm_days_per_window,La Nina,moderate,4,1.8492412155487712,1.843821448935907,0.005419766612864141,0.29394205257737716
+Mt Hood,Spring,big_storm_days_per_window,La Nina,strong,5,2.2491800693339563,1.843821448935907,0.40535862039804926,21.98470034243212
+Mt Hood,Spring,big_storm_days_per_window,La Nina,weak,7,2.4322022436069175,1.843821448935907,0.5883807946710105,31.91094208230263
+Mt Hood,Spring,big_storm_days_per_window,Neutral,neutral,16,1.7529641298767304,1.843821448935907,-0.0908573190591766,-4.927663636390146
+N Sierra / Tahoe (Palisades/Heavenly/Rose),Early season,big_storm_days_per_window,El Nino,moderate,4,1.816989148205438,2.1156930882931877,-0.2987039400877496,-14.118491086470662
+N Sierra / Tahoe (Palisades/Heavenly/Rose),Early season,big_storm_days_per_window,El Nino,strong,3,1.4891826700065165,2.1156930882931877,-0.6265104182866712,-29.612537931581638
+N Sierra / Tahoe (Palisades/Heavenly/Rose),Early season,big_storm_days_per_window,El Nino,very strong,3,2.6312854595793227,2.1156930882931877,0.515592371286135,24.369903845651052
+N Sierra / Tahoe (Palisades/Heavenly/Rose),Early season,big_storm_days_per_window,El Nino,weak,6,1.9891280046875284,2.1156930882931877,-0.12656508360565932,-5.982204333227005
+N Sierra / Tahoe (Palisades/Heavenly/Rose),Early season,big_storm_days_per_window,La Nina,moderate,4,1.8803805100015558,2.1156930882931877,-0.23531257829163188,-11.122245452031407
+N Sierra / Tahoe (Palisades/Heavenly/Rose),Early season,big_storm_days_per_window,La Nina,strong,5,2.2190634303448618,2.1156930882931877,0.10337034205167406,4.8858855106941315
+N Sierra / Tahoe (Palisades/Heavenly/Rose),Early season,big_storm_days_per_window,La Nina,weak,7,2.949262864171691,2.1156930882931877,0.8335697758785034,39.399371321431914
+N Sierra / Tahoe (Palisades/Heavenly/Rose),Early season,big_storm_days_per_window,Neutral,neutral,16,1.9204662492147613,2.1156930882931877,-0.19522683907842642,-9.227559524520805
+N Sierra / Tahoe (Palisades/Heavenly/Rose),Holidays,big_storm_days_per_window,El Nino,moderate,4,1.664443669004563,1.7338165219641348,-0.06937285295957185,-4.0011646031025005
+N Sierra / Tahoe (Palisades/Heavenly/Rose),Holidays,big_storm_days_per_window,El Nino,strong,3,0.284582428107267,1.7338165219641348,-1.4492340938568677,-83.58635850436579
+N Sierra / Tahoe (Palisades/Heavenly/Rose),Holidays,big_storm_days_per_window,El Nino,very strong,3,2.0066583385147267,1.7338165219641348,0.2728418165505919,15.73648728652707
+N Sierra / Tahoe (Palisades/Heavenly/Rose),Holidays,big_storm_days_per_window,El Nino,weak,6,1.499462780276347,1.7338165219641348,-0.2343537416877879,-13.516640239551002
+N Sierra / Tahoe (Palisades/Heavenly/Rose),Holidays,big_storm_days_per_window,La Nina,moderate,4,0.07622421538686039,1.7338165219641348,-1.6575923065772744,-95.60367464369813
+N Sierra / Tahoe (Palisades/Heavenly/Rose),Holidays,big_storm_days_per_window,La Nina,strong,5,2.3197727453377994,1.7338165219641348,0.5859562233736646,33.79574574072409
+N Sierra / Tahoe (Palisades/Heavenly/Rose),Holidays,big_storm_days_per_window,La Nina,weak,7,2.4663760506001595,1.7338165219641348,0.7325595286360247,42.251271651636635
+N Sierra / Tahoe (Palisades/Heavenly/Rose),Holidays,big_storm_days_per_window,Neutral,neutral,16,1.9704079033936621,1.7338165219641348,0.2365913814295273,13.645698863309212
+N Sierra / Tahoe (Palisades/Heavenly/Rose),Midwinter,big_storm_days_per_window,El Nino,moderate,4,4.415573174700465,4.287406812535121,0.12816636216534416,2.9893678806177966
+N Sierra / Tahoe (Palisades/Heavenly/Rose),Midwinter,big_storm_days_per_window,El Nino,strong,3,3.352797871129193,4.287406812535121,-0.9346089414059278,-21.798933067732342
+N Sierra / Tahoe (Palisades/Heavenly/Rose),Midwinter,big_storm_days_per_window,El Nino,very strong,3,8.373930860476174,4.287406812535121,4.086524047941053,95.31458587025739
+N Sierra / Tahoe (Palisades/Heavenly/Rose),Midwinter,big_storm_days_per_window,El Nino,weak,6,4.005492947020723,4.287406812535121,-0.28191386551439823,-6.575393421733732
+N Sierra / Tahoe (Palisades/Heavenly/Rose),Midwinter,big_storm_days_per_window,La Nina,moderate,4,3.8528168183677503,4.287406812535121,-0.43458999416737054,-10.136430088620395
+N Sierra / Tahoe (Palisades/Heavenly/Rose),Midwinter,big_storm_days_per_window,La Nina,strong,5,6.07093092814762,4.287406812535121,1.783524115612499,41.599134245856895
+N Sierra / Tahoe (Palisades/Heavenly/Rose),Midwinter,big_storm_days_per_window,La Nina,weak,7,2.8779123982126293,4.287406812535121,-1.4094944143224915,-32.875219822890216
+N Sierra / Tahoe (Palisades/Heavenly/Rose),Midwinter,big_storm_days_per_window,Neutral,neutral,16,3.9380488577653754,4.287406812535121,-0.3493579547697454,-8.148467594638445
+N Sierra / Tahoe (Palisades/Heavenly/Rose),Spring,big_storm_days_per_window,El Nino,moderate,4,1.544538544279,2.4604702767458675,-0.9159317324668674,-37.22588080512181
+N Sierra / Tahoe (Palisades/Heavenly/Rose),Spring,big_storm_days_per_window,El Nino,strong,3,2.416444486714207,2.4604702767458675,-0.04402579003166052,-1.7893241974004863
+N Sierra / Tahoe (Palisades/Heavenly/Rose),Spring,big_storm_days_per_window,El Nino,very strong,3,2.6114554690325478,2.4604702767458675,0.15098519228668028,6.136436343639479
+N Sierra / Tahoe (Palisades/Heavenly/Rose),Spring,big_storm_days_per_window,El Nino,weak,6,2.738703861254676,2.4604702767458675,0.27823358450880864,11.3081465416762
+N Sierra / Tahoe (Palisades/Heavenly/Rose),Spring,big_storm_days_per_window,La Nina,moderate,4,2.581570850717171,2.4604702767458675,0.12110057397130358,4.921846653293735
+N Sierra / Tahoe (Palisades/Heavenly/Rose),Spring,big_storm_days_per_window,La Nina,strong,5,2.83600962135515,2.4604702767458675,0.3755393446092823,15.262909215304873
+N Sierra / Tahoe (Palisades/Heavenly/Rose),Spring,big_storm_days_per_window,La Nina,weak,7,3.45922327302477,2.4604702767458675,0.9987529962789026,40.59195535577933
+N Sierra / Tahoe (Palisades/Heavenly/Rose),Spring,big_storm_days_per_window,Neutral,neutral,16,1.9804751031937182,2.4604702767458675,-0.47999517355214927,-19.508269540527603
+North Cascades (Mt Baker),Early season,big_storm_days_per_window,El Nino,moderate,4,3.4700748396283725,3.5894036888467427,-0.11932884921837017,-3.3244755832050177
+North Cascades (Mt Baker),Early season,big_storm_days_per_window,El Nino,strong,3,5.204765982641622,3.5894036888467427,1.6153622937948797,45.00363942941975
+North Cascades (Mt Baker),Early season,big_storm_days_per_window,El Nino,very strong,3,3.7434919900664987,3.5894036888467427,0.15408830121975603,4.292866296943709
+North Cascades (Mt Baker),Early season,big_storm_days_per_window,El Nino,weak,5,3.372883874989816,3.5894036888467427,-0.21651981385692665,-6.032194554480256
+North Cascades (Mt Baker),Early season,big_storm_days_per_window,La Nina,moderate,4,3.9838406279674015,3.5894036888467427,0.3944369391206588,10.988926666183636
+North Cascades (Mt Baker),Early season,big_storm_days_per_window,La Nina,strong,5,4.37289359600158,3.5894036888467427,0.7834899071548374,21.827857078025367
+North Cascades (Mt Baker),Early season,big_storm_days_per_window,La Nina,weak,7,2.1427540346740743,3.5894036888467427,-1.4466496541726683,-40.30334227013261
+North Cascades (Mt Baker),Early season,big_storm_days_per_window,Neutral,neutral,13,3.657320071005671,3.5894036888467427,0.06791638215892837,1.8921355201690775
+North Cascades (Mt Baker),Holidays,big_storm_days_per_window,El Nino,moderate,4,1.9406838446959886,2.012557318492489,-0.07187347379650033,-3.5712510215777273
+North Cascades (Mt Baker),Holidays,big_storm_days_per_window,El Nino,strong,3,0.7704561654186177,2.012557318492489,-1.2421011530738713,-61.71755416160123
+North Cascades (Mt Baker),Holidays,big_storm_days_per_window,El Nino,very strong,3,1.6150373167359782,2.012557318492489,-0.3975200017565108,-19.751984110160606
+North Cascades (Mt Baker),Holidays,big_storm_days_per_window,El Nino,weak,5,2.7344273357919335,2.012557318492489,0.7218700172994446,35.868296056291356
+North Cascades (Mt Baker),Holidays,big_storm_days_per_window,La Nina,moderate,4,2.4918649062475673,2.012557318492489,0.4793075877550783,23.815847794790006
+North Cascades (Mt Baker),Holidays,big_storm_days_per_window,La Nina,strong,5,2.3138704853284624,2.012557318492489,0.3013131668359734,14.971656412830656
+North Cascades (Mt Baker),Holidays,big_storm_days_per_window,La Nina,weak,7,2.4263016603747682,2.012557318492489,0.41374434188227927,20.558139541198035
+North Cascades (Mt Baker),Holidays,big_storm_days_per_window,Neutral,neutral,13,1.6492496796312415,2.012557318492489,-0.3633076388612475,-18.05203933935079
+North Cascades (Mt Baker),Midwinter,big_storm_days_per_window,El Nino,moderate,4,2.3081955357294763,4.589713911782585,-2.281518376053109,-49.709381018195025
+North Cascades (Mt Baker),Midwinter,big_storm_days_per_window,El Nino,strong,3,3.5310813330785806,4.589713911782585,-1.0586325787040045,-23.065328232906033
+North Cascades (Mt Baker),Midwinter,big_storm_days_per_window,El Nino,very strong,3,4.877465729065073,4.589713911782585,0.287751817282488,6.2694935417168285
+North Cascades (Mt Baker),Midwinter,big_storm_days_per_window,El Nino,weak,5,3.787161384187624,4.589713911782585,-0.802552527594961,-17.485894393867788
+North Cascades (Mt Baker),Midwinter,big_storm_days_per_window,La Nina,moderate,4,4.545308236637755,4.589713911782585,-0.04440567514483007,-0.9675042061082079
+North Cascades (Mt Baker),Midwinter,big_storm_days_per_window,La Nina,strong,5,6.113339351095357,4.589713911782585,1.523625439312772,33.19652310792974
+North Cascades (Mt Baker),Midwinter,big_storm_days_per_window,La Nina,weak,7,4.782464866221405,4.589713911782585,0.19275095443881973,4.199628956044403
+North Cascades (Mt Baker),Midwinter,big_storm_days_per_window,Neutral,neutral,13,5.1021537001976265,4.589713911782585,0.5124397884150413,11.16496143908927
+North Cascades (Mt Baker),Spring,big_storm_days_per_window,El Nino,moderate,4,2.133436975100566,2.688717500619235,-0.5552805255186688,-20.652244997504678
+North Cascades (Mt Baker),Spring,big_storm_days_per_window,El Nino,strong,3,1.9809502478139385,2.688717500619235,-0.7077672528052965,-26.323600476520554
+North Cascades (Mt Baker),Spring,big_storm_days_per_window,El Nino,very strong,3,1.9464857340009225,2.688717500619235,-0.7422317666183125,-27.605420296009903
+North Cascades (Mt Baker),Spring,big_storm_days_per_window,El Nino,weak,5,1.8985355507957937,2.688717500619235,-0.7901819498234413,-29.388805244190046
+North Cascades (Mt Baker),Spring,big_storm_days_per_window,La Nina,moderate,4,2.672301396245379,2.688717500619235,-0.016416104373855767,-0.6105551948122104
+North Cascades (Mt Baker),Spring,big_storm_days_per_window,La Nina,strong,5,3.920780477750211,2.688717500619235,1.2320629771309761,45.823444703551836
+North Cascades (Mt Baker),Spring,big_storm_days_per_window,La Nina,weak,7,2.8146832439452596,2.688717500619235,0.12596574332602462,4.684975022367118
+North Cascades (Mt Baker),Spring,big_storm_days_per_window,Neutral,neutral,13,2.9614573650823948,2.688717500619235,0.2727398644631598,10.143864664113856
+Park Range (Steamboat),Early season,big_storm_days_per_window,El Nino,moderate,4,1.1467972520595449,1.6678849144876295,-0.5210876624280847,-31.242423137339884
+Park Range (Steamboat),Early season,big_storm_days_per_window,El Nino,strong,3,1.5794474067921553,1.6678849144876295,-0.0884375076954742,-5.302374697875482
+Park Range (Steamboat),Early season,big_storm_days_per_window,El Nino,very strong,3,1.0692006097855884,1.6678849144876295,-0.5986843047020411,-35.894821009635166
+Park Range (Steamboat),Early season,big_storm_days_per_window,El Nino,weak,6,1.6476772007863978,1.6678849144876295,-0.020207713701231755,-1.2115772212880478
+Park Range (Steamboat),Early season,big_storm_days_per_window,La Nina,moderate,4,2.2146442787413854,1.6678849144876295,0.5467593642537558,32.78160018742774
+Park Range (Steamboat),Early season,big_storm_days_per_window,La Nina,strong,5,1.2872050171420177,1.6678849144876295,-0.3806798973456118,-22.82411058694393
+Park Range (Steamboat),Early season,big_storm_days_per_window,La Nina,weak,7,2.0425915048428616,1.6678849144876295,0.374706590355232,22.465973947029852
+Park Range (Steamboat),Early season,big_storm_days_per_window,Neutral,neutral,15,1.7585767989102086,1.6678849144876295,0.09069188442257903,5.4375385036946255
+Park Range (Steamboat),Holidays,big_storm_days_per_window,El Nino,moderate,4,0.7123041742862684,0.8470303027265967,-0.13472612844032839,-15.905703492147092
+Park Range (Steamboat),Holidays,big_storm_days_per_window,El Nino,strong,3,0.04601416258495653,0.8470303027265967,-0.8010161401416402,-94.56758956121918
+Park Range (Steamboat),Holidays,big_storm_days_per_window,El Nino,very strong,3,0.4307738894146221,0.8470303027265967,-0.41625641331197466,-49.14303679243142
+Park Range (Steamboat),Holidays,big_storm_days_per_window,El Nino,weak,6,0.5308630578374269,0.8470303027265967,-0.3161672448891698,-37.32655654365908
+Park Range (Steamboat),Holidays,big_storm_days_per_window,La Nina,moderate,4,0.7019220265619317,0.8470303027265967,-0.14510827616466504,-17.13141497979003
+Park Range (Steamboat),Holidays,big_storm_days_per_window,La Nina,strong,5,0.9794138304396413,0.8470303027265967,0.1323835277130445,15.629137149745526
+Park Range (Steamboat),Holidays,big_storm_days_per_window,La Nina,weak,7,1.4584517961361487,0.8470303027265967,0.611421493409552,72.18413455119395
+Park Range (Steamboat),Holidays,big_storm_days_per_window,Neutral,neutral,15,0.9621163464388468,0.8470303027265967,0.11508604371225006,13.587004306904635
+Park Range (Steamboat),Midwinter,big_storm_days_per_window,El Nino,moderate,4,1.9358522161704763,2.0853056203425466,-0.14945340417207031,-7.1669784377946515
+Park Range (Steamboat),Midwinter,big_storm_days_per_window,El Nino,strong,3,1.828454489358221,2.0853056203425466,-0.25685113098432555,-12.317193627576442
+Park Range (Steamboat),Midwinter,big_storm_days_per_window,El Nino,very strong,3,1.7486370984173887,2.0853056203425466,-0.33666852192515795,-16.144804801794688
+Park Range (Steamboat),Midwinter,big_storm_days_per_window,El Nino,weak,6,3.151648273290666,2.0853056203425466,1.0663426529481193,51.13603696962915
+Park Range (Steamboat),Midwinter,big_storm_days_per_window,La Nina,moderate,4,2.486140342264815,2.0853056203425466,0.4008347219222683,19.221869351525772
+Park Range (Steamboat),Midwinter,big_storm_days_per_window,La Nina,strong,5,2.6585599092456915,2.0853056203425466,0.5732542889031449,27.49018097447885
+Park Range (Steamboat),Midwinter,big_storm_days_per_window,La Nina,weak,7,1.3984365779529402,2.0853056203425466,-0.6868690423896064,-32.93853120084991
+Park Range (Steamboat),Midwinter,big_storm_days_per_window,Neutral,neutral,15,1.8398915951592438,2.0853056203425466,-0.2454140251833028,-11.768731776735413
+Park Range (Steamboat),Spring,big_storm_days_per_window,El Nino,moderate,4,1.5093062675494986,1.2655200878768986,0.24378617967259997,19.263714737360523
+Park Range (Steamboat),Spring,big_storm_days_per_window,El Nino,strong,3,1.0020197244299585,1.2655200878768986,-0.26350036344694017,-20.821507771480885
+Park Range (Steamboat),Spring,big_storm_days_per_window,El Nino,very strong,3,1.2895037368256332,1.2655200878768986,0.023983648948734615,1.895161458003469
+Park Range (Steamboat),Spring,big_storm_days_per_window,El Nino,weak,6,0.9949039358958204,1.2655200878768986,-0.27061615198107825,-21.383789524437955
+Park Range (Steamboat),Spring,big_storm_days_per_window,La Nina,moderate,4,0.9514315790367234,1.2655200878768986,-0.31408850884017525,-24.818927162753003
+Park Range (Steamboat),Spring,big_storm_days_per_window,La Nina,strong,5,1.4549755900948393,1.2655200878768986,0.18945550221794072,14.970564594970671
+Park Range (Steamboat),Spring,big_storm_days_per_window,La Nina,weak,7,1.2903644161790304,1.2655200878768986,0.02484432830213179,1.9631713901761851
+Park Range (Steamboat),Spring,big_storm_days_per_window,Neutral,neutral,15,1.3656713254000166,1.2655200878768986,0.10015123752311794,7.913840205502924
+Ruby Mtns & NE Nevada,Early season,big_storm_days_per_window,El Nino,moderate,4,0.9439438584773261,1.0082458515094168,-0.06430199303209072,-6.377610474253476
+Ruby Mtns & NE Nevada,Early season,big_storm_days_per_window,El Nino,strong,3,0.9981437160093778,1.0082458515094168,-0.010102135500039022,-1.0019516058425033
+Ruby Mtns & NE Nevada,Early season,big_storm_days_per_window,El Nino,very strong,3,1.5079645944000746,1.0082458515094168,0.49971874289065776,49.563183636465524
+Ruby Mtns & NE Nevada,Early season,big_storm_days_per_window,El Nino,weak,5,0.9879852403665106,1.0082458515094168,-0.020260611142906226,-2.009491148669209
+Ruby Mtns & NE Nevada,Early season,big_storm_days_per_window,La Nina,moderate,4,0.8295735392684539,1.0082458515094168,-0.17867231224096292,-17.721105618582765
+Ruby Mtns & NE Nevada,Early season,big_storm_days_per_window,La Nina,strong,5,0.580767959817593,1.0082458515094168,-0.4274778916918238,-42.39818007203883
+Ruby Mtns & NE Nevada,Early season,big_storm_days_per_window,La Nina,weak,7,1.5049964002204306,1.0082458515094168,0.49675054871101376,49.26879173044375
+Ruby Mtns & NE Nevada,Early season,big_storm_days_per_window,Neutral,neutral,15,0.8925449229838777,1.0082458515094168,-0.11570092852553915,-11.475467848672674
+Ruby Mtns & NE Nevada,Holidays,big_storm_days_per_window,El Nino,moderate,4,0.49708624235790533,0.646080974916773,-0.14899473255886764,-23.061309393619105
+Ruby Mtns & NE Nevada,Holidays,big_storm_days_per_window,El Nino,strong,3,0.10628657869421865,0.646080974916773,-0.5397943962225543,-83.54903134117046
+Ruby Mtns & NE Nevada,Holidays,big_storm_days_per_window,El Nino,very strong,3,0.5454198863386998,0.646080974916773,-0.10066108857807321,-15.580258897275254
+Ruby Mtns & NE Nevada,Holidays,big_storm_days_per_window,El Nino,weak,5,0.38019943649905524,0.646080974916773,-0.2658815384177177,-41.152974432031236
+Ruby Mtns & NE Nevada,Holidays,big_storm_days_per_window,La Nina,moderate,4,0.333113035049457,0.646080974916773,-0.31296793986731597,-48.440977527256855
+Ruby Mtns & NE Nevada,Holidays,big_storm_days_per_window,La Nina,strong,5,0.7715903333113034,0.646080974916773,0.12550935839453048,19.42625820404298
+Ruby Mtns & NE Nevada,Holidays,big_storm_days_per_window,La Nina,weak,7,0.9598150460007995,0.646080974916773,0.3137340710840265,48.55955882688563
+Ruby Mtns & NE Nevada,Holidays,big_storm_days_per_window,Neutral,neutral,15,0.7977436113590639,0.646080974916773,0.15166263644229094,23.474245850038823
+Ruby Mtns & NE Nevada,Midwinter,big_storm_days_per_window,El Nino,moderate,4,0.7299063007597892,1.3193324631199388,-0.5894261623601496,-44.67609028328484
+Ruby Mtns & NE Nevada,Midwinter,big_storm_days_per_window,El Nino,strong,3,1.3245575836617896,1.3193324631199388,0.0052251205418507585,0.39604274797380995
+Ruby Mtns & NE Nevada,Midwinter,big_storm_days_per_window,El Nino,very strong,3,1.9347988815808002,1.3193324631199388,0.6154664184608614,46.64983509959386
+Ruby Mtns & NE Nevada,Midwinter,big_storm_days_per_window,El Nino,weak,5,0.97324191248348,1.3193324631199388,-0.34609055063645877,-26.232247012101006
+Ruby Mtns & NE Nevada,Midwinter,big_storm_days_per_window,La Nina,moderate,4,1.3825834962526338,1.3193324631199388,0.06325103313269498,4.794169392536573
+Ruby Mtns & NE Nevada,Midwinter,big_storm_days_per_window,La Nina,strong,5,1.347749653030203,1.3193324631199388,0.028417189910264318,2.1539066690638196
+Ruby Mtns & NE Nevada,Midwinter,big_storm_days_per_window,La Nina,weak,7,1.375502253032631,1.3193324631199388,0.05616978991269228,4.257440143621022
+Ruby Mtns & NE Nevada,Midwinter,big_storm_days_per_window,Neutral,neutral,15,1.4151860747295262,1.3193324631199388,0.09585361160958739,7.265311382008605
+Ruby Mtns & NE Nevada,Spring,big_storm_days_per_window,El Nino,moderate,4,0.7838060526335074,1.169121048362849,-0.38531499572934147,-32.95766475754655
+Ruby Mtns & NE Nevada,Spring,big_storm_days_per_window,El Nino,strong,3,1.480014617056952,1.169121048362849,0.310893568694103,26.592076939291744
+Ruby Mtns & NE Nevada,Spring,big_storm_days_per_window,El Nino,very strong,3,1.7937681957942413,1.169121048362849,0.6246471474313924,53.42878295674364
+Ruby Mtns & NE Nevada,Spring,big_storm_days_per_window,El Nino,weak,5,1.0692682318806352,1.169121048362849,-0.09985281648221367,-8.54084498966469
+Ruby Mtns & NE Nevada,Spring,big_storm_days_per_window,La Nina,moderate,4,1.1887918456857145,1.169121048362849,0.019670797322865585,1.682528712523919
+Ruby Mtns & NE Nevada,Spring,big_storm_days_per_window,La Nina,strong,5,1.0035512083360871,1.169121048362849,-0.16556984002676178,-14.161907379788738
+Ruby Mtns & NE Nevada,Spring,big_storm_days_per_window,La Nina,weak,7,1.8858492598351797,1.169121048362849,0.7167282114723308,61.304876212431914
+Ruby Mtns & NE Nevada,Spring,big_storm_days_per_window,Neutral,neutral,15,0.8335190781953804,1.169121048362849,-0.3356019701674685,-28.705493809851493
+S Utah (Brian Head/Eagle Point),Early season,big_storm_days_per_window,El Nino,moderate,4,0.7791657239574021,0.9745259093888224,-0.1953601854314203,-20.046689733876978
+S Utah (Brian Head/Eagle Point),Early season,big_storm_days_per_window,El Nino,strong,3,0.9933951434412358,0.9745259093888224,0.018869234052413364,1.936247550795984
+S Utah (Brian Head/Eagle Point),Early season,big_storm_days_per_window,El Nino,very strong,3,1.6154329175424673,0.9745259093888224,0.6409070081536449,65.76603063899985
+S Utah (Brian Head/Eagle Point),Early season,big_storm_days_per_window,El Nino,weak,6,1.0871335696680349,0.9745259093888224,0.11260766027921243,11.555122259379921
+S Utah (Brian Head/Eagle Point),Early season,big_storm_days_per_window,La Nina,moderate,4,0.5694501991386226,0.9745259093888224,-0.40507571025019984,-41.56643823910691
+S Utah (Brian Head/Eagle Point),Early season,big_storm_days_per_window,La Nina,strong,5,0.9322505625525732,0.9745259093888224,-0.04227534683624923,-4.338042367982023
+S Utah (Brian Head/Eagle Point),Early season,big_storm_days_per_window,La Nina,weak,7,0.9660725233050075,0.9745259093888224,-0.008453386083814962,-0.8674357451528953
+S Utah (Brian Head/Eagle Point),Early season,big_storm_days_per_window,Neutral,neutral,15,0.9756805314688878,0.9745259093888224,0.0011546220800653373,0.11848038814991207
+S Utah (Brian Head/Eagle Point),Holidays,big_storm_days_per_window,El Nino,moderate,4,0.5118260685053938,0.6746131716125369,-0.16278710310714306,-24.130436516386254
+S Utah (Brian Head/Eagle Point),Holidays,big_storm_days_per_window,El Nino,strong,3,0.14459579135852596,0.6746131716125369,-0.5300173802540109,-78.56611797055537
+S Utah (Brian Head/Eagle Point),Holidays,big_storm_days_per_window,El Nino,very strong,3,0.6372285264455153,0.6746131716125369,-0.03738464516702156,-5.541641749694946
+S Utah (Brian Head/Eagle Point),Holidays,big_storm_days_per_window,El Nino,weak,6,0.6126208447136036,0.6746131716125369,-0.0619923268989333,-9.189314633562848
+S Utah (Brian Head/Eagle Point),Holidays,big_storm_days_per_window,La Nina,moderate,4,0.3011387500497959,0.6746131716125369,-0.37347442156274097,-55.36127032177864
+S Utah (Brian Head/Eagle Point),Holidays,big_storm_days_per_window,La Nina,strong,5,1.2124185613947849,0.6746131716125369,0.537805389782248,79.7205587457957
+S Utah (Brian Head/Eagle Point),Holidays,big_storm_days_per_window,La Nina,weak,7,1.0871651296401315,0.6746131716125369,0.4125519580275946,61.15385459217556
+S Utah (Brian Head/Eagle Point),Holidays,big_storm_days_per_window,Neutral,neutral,15,0.5841008703613256,0.6746131716125369,-0.09051230125121124,-13.416918770627984
+S Utah (Brian Head/Eagle Point),Midwinter,big_storm_days_per_window,El Nino,moderate,4,1.421587830227978,1.7000428847499396,-0.2784550545219615,-16.37929590011017
+S Utah (Brian Head/Eagle Point),Midwinter,big_storm_days_per_window,El Nino,strong,3,2.1058437393239227,1.7000428847499396,0.40580085457398307,23.87003635109314
+S Utah (Brian Head/Eagle Point),Midwinter,big_storm_days_per_window,El Nino,very strong,3,1.9641544709423986,1.7000428847499396,0.264111586192459,15.535583752718528
+S Utah (Brian Head/Eagle Point),Midwinter,big_storm_days_per_window,El Nino,weak,6,2.1931389029008437,1.7000428847499396,0.4930960181509041,29.004916439118766
+S Utah (Brian Head/Eagle Point),Midwinter,big_storm_days_per_window,La Nina,moderate,4,1.4806700016970153,1.7000428847499396,-0.21937288305292424,-12.903961718894633
+S Utah (Brian Head/Eagle Point),Midwinter,big_storm_days_per_window,La Nina,strong,5,1.6725211939833131,1.7000428847499396,-0.027521690766626472,-1.6188821478273858
+S Utah (Brian Head/Eagle Point),Midwinter,big_storm_days_per_window,La Nina,weak,7,1.3065551103200765,1.7000428847499396,-0.39348777442986305,-23.145755790021816
+S Utah (Brian Head/Eagle Point),Midwinter,big_storm_days_per_window,Neutral,neutral,16,1.6947317093709997,1.7000428847499396,-0.005311175378939881,-0.31241420005243603
+S Utah (Brian Head/Eagle Point),Spring,big_storm_days_per_window,El Nino,moderate,4,1.6862192859208425,1.5089192336536896,0.17730005226715284,11.750135349381118
+S Utah (Brian Head/Eagle Point),Spring,big_storm_days_per_window,El Nino,strong,3,1.4116263240914197,1.5089192336536896,-0.09729290956226988,-6.447854026400426
+S Utah (Brian Head/Eagle Point),Spring,big_storm_days_per_window,El Nino,very strong,3,2.2285219059504286,1.5089192336536896,0.719602672296739,47.68993967651248
+S Utah (Brian Head/Eagle Point),Spring,big_storm_days_per_window,El Nino,weak,6,1.7285799203241463,1.5089192336536896,0.21966068667045668,14.557484706359755
+S Utah (Brian Head/Eagle Point),Spring,big_storm_days_per_window,La Nina,moderate,4,1.2536634160762739,1.5089192336536896,-0.2552558175774158,-16.916466559932474
+S Utah (Brian Head/Eagle Point),Spring,big_storm_days_per_window,La Nina,strong,5,1.2653715860656907,1.5089192336536896,-0.24354764758799896,-16.140535699732176
+S Utah (Brian Head/Eagle Point),Spring,big_storm_days_per_window,La Nina,weak,7,1.6970161073343324,1.5089192336536896,0.18809687368064276,12.46566877043418
+S Utah (Brian Head/Eagle Point),Spring,big_storm_days_per_window,Neutral,neutral,15,1.3107852186663824,1.5089192336536896,-0.1981340149873072,-13.130856216044544
+S Washington Cascades (Crystal/White Pass),Early season,big_storm_days_per_window,El Nino,moderate,4,2.5004613418217123,2.8413394576806157,-0.3408781158589034,-11.997092249482996
+S Washington Cascades (Crystal/White Pass),Early season,big_storm_days_per_window,El Nino,strong,3,3.018054768074887,2.8413394576806157,0.17671531039427135,6.219436748980497
+S Washington Cascades (Crystal/White Pass),Early season,big_storm_days_per_window,El Nino,very strong,3,2.0765044528682948,2.8413394576806157,-0.7648350048123209,-26.918114368378053
+S Washington Cascades (Crystal/White Pass),Early season,big_storm_days_per_window,El Nino,weak,5,2.6998225936561253,2.8413394576806157,-0.14151686402449037,-4.980639101109395
+S Washington Cascades (Crystal/White Pass),Early season,big_storm_days_per_window,La Nina,moderate,4,3.312067219277047,2.8413394576806157,0.47072776159643137,16.5671074719346
+S Washington Cascades (Crystal/White Pass),Early season,big_storm_days_per_window,La Nina,strong,5,3.4354115966153387,2.8413394576806157,0.594072138934723,20.908171930279103
+S Washington Cascades (Crystal/White Pass),Early season,big_storm_days_per_window,La Nina,weak,7,2.4217761024620663,2.8413394576806157,-0.41956335521854937,-14.76639315603067
+S Washington Cascades (Crystal/White Pass),Early season,big_storm_days_per_window,Neutral,neutral,14,2.978420001415095,2.8413394576806157,0.1370805437344793,4.824504279625149
+S Washington Cascades (Crystal/White Pass),Holidays,big_storm_days_per_window,El Nino,moderate,4,1.3275444133864385,1.6663336479725888,-0.3387892345861503,-20.33141652023601
+S Washington Cascades (Crystal/White Pass),Holidays,big_storm_days_per_window,El Nino,strong,3,0.5317471834814789,1.6663336479725888,-1.13458646449111,-68.08879277397715
+S Washington Cascades (Crystal/White Pass),Holidays,big_storm_days_per_window,El Nino,very strong,3,2.3639941589667264,1.6663336479725888,0.6976605109941376,41.86799635493012
+S Washington Cascades (Crystal/White Pass),Holidays,big_storm_days_per_window,El Nino,weak,5,1.5197223904765134,1.6663336479725888,-0.1466112574960754,-8.798433475460081
+S Washington Cascades (Crystal/White Pass),Holidays,big_storm_days_per_window,La Nina,moderate,4,1.7197973994559843,1.6663336479725888,0.05346375148339555,3.208466176533394
+S Washington Cascades (Crystal/White Pass),Holidays,big_storm_days_per_window,La Nina,strong,5,2.0095834545293774,1.6663336479725888,0.3432498065567886,20.599104325500306
+S Washington Cascades (Crystal/White Pass),Holidays,big_storm_days_per_window,La Nina,weak,7,2.2231284315218294,1.6663336479725888,0.5567947835492406,33.414363577587665
+S Washington Cascades (Crystal/White Pass),Holidays,big_storm_days_per_window,Neutral,neutral,14,1.4928567595978521,1.6663336479725888,-0.17347688837473663,-10.410693475811653
+S Washington Cascades (Crystal/White Pass),Midwinter,big_storm_days_per_window,El Nino,moderate,4,2.882702543286009,3.926538001496304,-1.0438354582102947,-26.584117046938438
+S Washington Cascades (Crystal/White Pass),Midwinter,big_storm_days_per_window,El Nino,strong,3,3.13412589935621,3.926538001496304,-0.7924121021400938,-20.180935517194172
+S Washington Cascades (Crystal/White Pass),Midwinter,big_storm_days_per_window,El Nino,very strong,3,3.093567918579014,3.926538001496304,-0.8329700829172899,-21.21385512122552
+S Washington Cascades (Crystal/White Pass),Midwinter,big_storm_days_per_window,El Nino,weak,5,3.123227674639279,3.926538001496304,-0.8033103268570247,-20.458488534961422
+S Washington Cascades (Crystal/White Pass),Midwinter,big_storm_days_per_window,La Nina,moderate,4,4.577740345228664,3.926538001496304,0.65120234373236,16.58464386398918
+S Washington Cascades (Crystal/White Pass),Midwinter,big_storm_days_per_window,La Nina,strong,5,5.495600295809367,3.926538001496304,1.569062294313063,39.960451005825824
+S Washington Cascades (Crystal/White Pass),Midwinter,big_storm_days_per_window,La Nina,weak,7,3.2277108289316367,3.926538001496304,-0.6988271725646671,-17.797540028859057
+S Washington Cascades (Crystal/White Pass),Midwinter,big_storm_days_per_window,Neutral,neutral,14,4.462945814621759,3.926538001496304,0.536407813125455,13.661088035339112
+S Washington Cascades (Crystal/White Pass),Spring,big_storm_days_per_window,El Nino,moderate,4,2.1918195514575687,2.086421135134203,0.10539841632336566,5.051636726091074
+S Washington Cascades (Crystal/White Pass),Spring,big_storm_days_per_window,El Nino,strong,3,1.4531648274478786,2.086421135134203,-0.6332563076863245,-30.351317719257672
+S Washington Cascades (Crystal/White Pass),Spring,big_storm_days_per_window,El Nino,very strong,3,1.6587155656662504,2.086421135134203,-0.4277055694679526,-20.49948412933622
+S Washington Cascades (Crystal/White Pass),Spring,big_storm_days_per_window,El Nino,weak,5,1.175582427269401,2.086421135134203,-0.9108387078648019,-43.65555412216503
+S Washington Cascades (Crystal/White Pass),Spring,big_storm_days_per_window,La Nina,moderate,4,1.866415464515621,2.086421135134203,-0.220005670618582,-10.544643500480586
+S Washington Cascades (Crystal/White Pass),Spring,big_storm_days_per_window,La Nina,strong,5,2.432838783737012,2.086421135134203,0.346417648602809,16.603438431931274
+S Washington Cascades (Crystal/White Pass),Spring,big_storm_days_per_window,La Nina,weak,7,2.038374403087174,2.086421135134203,-0.04804673204702903,-2.3028300105835804
+S Washington Cascades (Crystal/White Pass),Spring,big_storm_days_per_window,Neutral,neutral,14,2.5721173543686935,2.086421135134203,0.48569621923449047,23.278915797756692
+San Francisco Peaks (AZ Snowbowl),Early season,big_storm_days_per_window,El Nino,moderate,4,0.14539389348560772,0.6084659108434962,-0.4630720173578885,-76.10484155405634
+San Francisco Peaks (AZ Snowbowl),Early season,big_storm_days_per_window,El Nino,strong,3,0.7891584747738792,0.6084659108434962,0.18069256393038302,29.696415314359168
+San Francisco Peaks (AZ Snowbowl),Early season,big_storm_days_per_window,El Nino,very strong,3,1.1538717132710512,0.6084659108434962,0.545405802427555,89.6362134193314
+San Francisco Peaks (AZ Snowbowl),Early season,big_storm_days_per_window,El Nino,weak,5,0.6755199368584026,0.6084659108434962,0.0670540260149064,11.020177929434308
+San Francisco Peaks (AZ Snowbowl),Early season,big_storm_days_per_window,La Nina,moderate,4,0.5469246411833469,0.6084659108434962,-0.06154126966014928,-10.114168857025474
+San Francisco Peaks (AZ Snowbowl),Early season,big_storm_days_per_window,La Nina,strong,5,0.629193368514891,0.6084659108434962,0.020727457671394833,3.4065109157324924
+San Francisco Peaks (AZ Snowbowl),Early season,big_storm_days_per_window,La Nina,weak,7,0.45516771088797203,0.6084659108434962,-0.15329819995552418,-25.194213385432217
+San Francisco Peaks (AZ Snowbowl),Early season,big_storm_days_per_window,Neutral,neutral,15,0.6454217795271961,0.6084659108434962,0.03695586868369993,6.073613661029791
+San Francisco Peaks (AZ Snowbowl),Holidays,big_storm_days_per_window,El Nino,moderate,4,0.09837883959044368,0.48900676369442525,-0.39062792410398156,-79.88190616277048
+San Francisco Peaks (AZ Snowbowl),Holidays,big_storm_days_per_window,El Nino,strong,3,0.19589694351538559,0.48900676369442525,-0.29310982017903964,-59.939829454424604
+San Francisco Peaks (AZ Snowbowl),Holidays,big_storm_days_per_window,El Nino,very strong,3,0.3749876276901021,0.48900676369442525,-0.11401913600432317,-23.31647422275174
+San Francisco Peaks (AZ Snowbowl),Holidays,big_storm_days_per_window,El Nino,weak,5,1.274596940133589,0.48900676369442525,0.7855901764391637,160.65016575723072
+San Francisco Peaks (AZ Snowbowl),Holidays,big_storm_days_per_window,La Nina,moderate,4,0.0,0.48900676369442525,-0.48900676369442525,-100.0
+San Francisco Peaks (AZ Snowbowl),Holidays,big_storm_days_per_window,La Nina,strong,5,0.6860271660342141,0.48900676369442525,0.19702040233978885,40.28991354870188
+San Francisco Peaks (AZ Snowbowl),Holidays,big_storm_days_per_window,La Nina,weak,7,0.8892034259549509,0.48900676369442525,0.4001966622605257,81.83867626636838
+San Francisco Peaks (AZ Snowbowl),Holidays,big_storm_days_per_window,Neutral,neutral,15,0.29070650302944323,0.48900676369442525,-0.19830026066498202,-40.551639647442094
+San Francisco Peaks (AZ Snowbowl),Midwinter,big_storm_days_per_window,El Nino,moderate,4,2.157430606759007,1.6642501224051265,0.49318048435388073,29.63379588887459
+San Francisco Peaks (AZ Snowbowl),Midwinter,big_storm_days_per_window,El Nino,strong,3,2.8718996600517896,1.6642501224051265,1.2076495376466632,72.56418499770952
+San Francisco Peaks (AZ Snowbowl),Midwinter,big_storm_days_per_window,El Nino,very strong,3,2.455757211179662,1.6642501224051265,0.7915070887745355,47.55938293882606
+San Francisco Peaks (AZ Snowbowl),Midwinter,big_storm_days_per_window,El Nino,weak,5,1.2988425597937274,1.6642501224051265,-0.36540756261139906,-21.956288762852697
+San Francisco Peaks (AZ Snowbowl),Midwinter,big_storm_days_per_window,La Nina,moderate,4,0.7124430302658662,1.6642501224051265,-0.9518070921392603,-57.19134878378354
+San Francisco Peaks (AZ Snowbowl),Midwinter,big_storm_days_per_window,La Nina,strong,5,1.9804627733388274,1.6642501224051265,0.3162126509337009,19.000308107336622
+San Francisco Peaks (AZ Snowbowl),Midwinter,big_storm_days_per_window,La Nina,weak,7,1.3911530394728335,1.6642501224051265,-0.27309708293229296,-16.409617716453635
+San Francisco Peaks (AZ Snowbowl),Midwinter,big_storm_days_per_window,Neutral,neutral,15,1.5305628351246239,1.6642501224051265,-0.1336872872805026,-8.032884329147688
+San Francisco Peaks (AZ Snowbowl),Spring,big_storm_days_per_window,El Nino,moderate,4,0.5273643890602023,0.8386829987268635,-0.31131860966666114,-37.119938062324934
+San Francisco Peaks (AZ Snowbowl),Spring,big_storm_days_per_window,El Nino,strong,3,1.1583142408020868,0.8386829987268635,0.3196312420752233,38.11109114652729
+San Francisco Peaks (AZ Snowbowl),Spring,big_storm_days_per_window,El Nino,very strong,3,1.249598653111312,0.8386829987268635,0.41091565438444844,48.99534806455194
+San Francisco Peaks (AZ Snowbowl),Spring,big_storm_days_per_window,El Nino,weak,5,0.9813681135112953,0.8386829987268635,0.1426851147844318,17.012997163532646
+San Francisco Peaks (AZ Snowbowl),Spring,big_storm_days_per_window,La Nina,moderate,4,0.6040211208024756,0.8386829987268635,-0.23466187792438786,-27.979806229601532
+San Francisco Peaks (AZ Snowbowl),Spring,big_storm_days_per_window,La Nina,strong,5,1.3695325226362223,0.8386829987268635,0.5308495239093588,63.29561046488344
+San Francisco Peaks (AZ Snowbowl),Spring,big_storm_days_per_window,La Nina,weak,7,0.8998776575097095,0.8386829987268635,0.06119465878284602,7.296518335979227
+San Francisco Peaks (AZ Snowbowl),Spring,big_storm_days_per_window,Neutral,neutral,15,0.5850993624626167,0.8386829987268635,-0.25358363626424674,-30.23593379729784
+San Juans (Telluride/Purgatory/Wolf Ck),Early season,big_storm_days_per_window,El Nino,moderate,4,1.1870469613625418,1.6611078100987762,-0.47406084873623433,-28.53883690475483
+San Juans (Telluride/Purgatory/Wolf Ck),Early season,big_storm_days_per_window,El Nino,strong,3,2.206944751890582,1.6611078100987762,0.5458369417918056,32.85981430424723
+San Juans (Telluride/Purgatory/Wolf Ck),Early season,big_storm_days_per_window,El Nino,very strong,3,2.385985584025222,1.6611078100987762,0.724877773926446,43.63821357768114
+San Juans (Telluride/Purgatory/Wolf Ck),Early season,big_storm_days_per_window,El Nino,weak,6,1.820056129764377,1.6611078100987762,0.15894831966560075,9.568814179264441
+San Juans (Telluride/Purgatory/Wolf Ck),Early season,big_storm_days_per_window,La Nina,moderate,4,1.1953740397311114,1.6611078100987762,-0.4657337703676647,-28.03754022082229
+San Juans (Telluride/Purgatory/Wolf Ck),Early season,big_storm_days_per_window,La Nina,strong,5,1.7661705179649672,1.6611078100987762,0.10506270786619099,6.324857858560278
+San Juans (Telluride/Purgatory/Wolf Ck),Early season,big_storm_days_per_window,La Nina,weak,7,1.2066502320209818,1.6611078100987762,-0.4544575780777944,-27.358704553364934
+San Juans (Telluride/Purgatory/Wolf Ck),Early season,big_storm_days_per_window,Neutral,neutral,16,1.7641849300038293,1.6611078100987762,0.10307711990505308,6.20532389760564
+San Juans (Telluride/Purgatory/Wolf Ck),Holidays,big_storm_days_per_window,El Nino,moderate,4,0.4616480278210419,0.9984409641117813,-0.5367929362907393,-53.763112250534846
+San Juans (Telluride/Purgatory/Wolf Ck),Holidays,big_storm_days_per_window,El Nino,strong,3,0.07157565328990885,0.9984409641117813,-0.9268653108218724,-92.83125834549638
+San Juans (Telluride/Purgatory/Wolf Ck),Holidays,big_storm_days_per_window,El Nino,very strong,3,0.6374563130432738,0.9984409641117813,-0.3609846510685075,-36.154831787139415
+San Juans (Telluride/Purgatory/Wolf Ck),Holidays,big_storm_days_per_window,El Nino,weak,6,1.2079768697186724,0.9984409641117813,0.20953590560689106,20.98630896953386
+San Juans (Telluride/Purgatory/Wolf Ck),Holidays,big_storm_days_per_window,La Nina,moderate,4,0.7734492672827402,0.9984409641117813,-0.22499169682904108,-22.534301467608046
+San Juans (Telluride/Purgatory/Wolf Ck),Holidays,big_storm_days_per_window,La Nina,strong,5,1.7673939577498878,0.9984409641117813,0.7689529936381065,77.01536908816351
+San Juans (Telluride/Purgatory/Wolf Ck),Holidays,big_storm_days_per_window,La Nina,weak,7,1.5540038257402649,0.9984409641117813,0.5555628616284836,55.64303565235982
+San Juans (Telluride/Purgatory/Wolf Ck),Holidays,big_storm_days_per_window,Neutral,neutral,15,0.8597588297730479,0.9984409641117813,-0.13868213433873344,-13.889868236937359
+San Juans (Telluride/Purgatory/Wolf Ck),Midwinter,big_storm_days_per_window,El Nino,moderate,4,2.765403769489937,2.2101276537589665,0.5552761157309707,25.1241648773799
+San Juans (Telluride/Purgatory/Wolf Ck),Midwinter,big_storm_days_per_window,El Nino,strong,3,2.7660347818331767,2.2101276537589665,0.5559071280742103,25.152715822940277
+San Juans (Telluride/Purgatory/Wolf Ck),Midwinter,big_storm_days_per_window,El Nino,very strong,3,1.0283101849685945,2.2101276537589665,-1.181817468790372,-53.47281487475833
+San Juans (Telluride/Purgatory/Wolf Ck),Midwinter,big_storm_days_per_window,El Nino,weak,6,2.7783165182652394,2.2101276537589665,0.5681888645062729,25.708418404697216
+San Juans (Telluride/Purgatory/Wolf Ck),Midwinter,big_storm_days_per_window,La Nina,moderate,4,2.097181073145422,2.2101276537589665,-0.11294658061354435,-5.110409818249446
+San Juans (Telluride/Purgatory/Wolf Ck),Midwinter,big_storm_days_per_window,La Nina,strong,5,2.6994664772929653,2.2101276537589665,0.4893388235339988,22.140749322860852
+San Juans (Telluride/Purgatory/Wolf Ck),Midwinter,big_storm_days_per_window,La Nina,weak,7,1.89598459410149,2.2101276537589665,-0.3141430596574766,-14.213797068381309
+San Juans (Telluride/Purgatory/Wolf Ck),Midwinter,big_storm_days_per_window,Neutral,neutral,15,1.9735667867305307,2.2101276537589665,-0.23656086702843582,-10.7034933763258
+San Juans (Telluride/Purgatory/Wolf Ck),Spring,big_storm_days_per_window,El Nino,moderate,4,2.230346356479846,1.737176674006798,0.49316968247304804,28.389149466044362
+San Juans (Telluride/Purgatory/Wolf Ck),Spring,big_storm_days_per_window,El Nino,strong,3,1.2210050502473606,1.737176674006798,-0.5161716237594374,-29.71324859945808
+San Juans (Telluride/Purgatory/Wolf Ck),Spring,big_storm_days_per_window,El Nino,very strong,3,2.3431470086091024,1.737176674006798,0.6059703346023044,34.882481653672784
+San Juans (Telluride/Purgatory/Wolf Ck),Spring,big_storm_days_per_window,El Nino,weak,6,1.8927477322330202,1.737176674006798,0.1555710582262222,8.955396451841455
+San Juans (Telluride/Purgatory/Wolf Ck),Spring,big_storm_days_per_window,La Nina,moderate,4,1.4433623163532854,1.737176674006798,-0.2938143576535126,-16.913326206241866
+San Juans (Telluride/Purgatory/Wolf Ck),Spring,big_storm_days_per_window,La Nina,strong,5,1.5582924070703006,1.737176674006798,-0.1788842669364974,-10.297413591439772
+San Juans (Telluride/Purgatory/Wolf Ck),Spring,big_storm_days_per_window,La Nina,weak,7,2.1662412786765457,1.737176674006798,0.4290646046697477,24.698961889702918
+San Juans (Telluride/Purgatory/Wolf Ck),Spring,big_storm_days_per_window,Neutral,neutral,16,1.4803470065586843,1.737176674006798,-0.25682966744811364,-14.784314761476505
+Sangre de Cristo (Taos/Santa Fe),Early season,big_storm_days_per_window,El Nino,moderate,4,0.5199329446066732,0.6544615486031679,-0.1345286039964947,-20.55561618304729
+Sangre de Cristo (Taos/Santa Fe),Early season,big_storm_days_per_window,El Nino,strong,3,1.2141764190039577,0.6544615486031679,0.5597148704007898,85.52295724560167
+Sangre de Cristo (Taos/Santa Fe),Early season,big_storm_days_per_window,El Nino,very strong,3,0.738993339511348,0.6544615486031679,0.0845317909081802,12.916234893951875
+Sangre de Cristo (Taos/Santa Fe),Early season,big_storm_days_per_window,El Nino,weak,6,1.026783328022392,0.6544615486031679,0.37232177941922406,56.889786758882764
+Sangre de Cristo (Taos/Santa Fe),Early season,big_storm_days_per_window,La Nina,moderate,4,0.45199025536406456,0.6544615486031679,-0.2024712932391033,-30.937080057834166
+Sangre de Cristo (Taos/Santa Fe),Early season,big_storm_days_per_window,La Nina,strong,5,0.6923344099826446,0.6544615486031679,0.03787286137947676,5.786873416827875
+Sangre de Cristo (Taos/Santa Fe),Early season,big_storm_days_per_window,La Nina,weak,7,0.37644970733315347,0.6544615486031679,-0.2780118412700144,-42.47947673371818
+Sangre de Cristo (Taos/Santa Fe),Early season,big_storm_days_per_window,Neutral,neutral,15,0.5836647159693585,0.6544615486031679,-0.07079683263380931,-10.817569463769507
+Sangre de Cristo (Taos/Santa Fe),Holidays,big_storm_days_per_window,El Nino,moderate,4,0.08630802842219834,0.3861555456578659,-0.2998475172356676,-77.64941371613311
+Sangre de Cristo (Taos/Santa Fe),Holidays,big_storm_days_per_window,El Nino,strong,3,0.1765963134623377,0.3861555456578659,-0.20955923219552822,-54.26808822297682
+Sangre de Cristo (Taos/Santa Fe),Holidays,big_storm_days_per_window,El Nino,very strong,3,0.15238820158785765,0.3861555456578659,-0.23376734407000826,-60.53709358796216
+Sangre de Cristo (Taos/Santa Fe),Holidays,big_storm_days_per_window,El Nino,weak,6,0.49404800280475536,0.3861555456578659,0.10789245714688944,27.94015477961884
+Sangre de Cristo (Taos/Santa Fe),Holidays,big_storm_days_per_window,La Nina,moderate,4,0.22279789573985176,0.3861555456578659,-0.16335764991801416,-42.30358770057627
+Sangre de Cristo (Taos/Santa Fe),Holidays,big_storm_days_per_window,La Nina,strong,5,0.1538456189841563,0.3861555456578659,-0.23230992667370962,-60.159676401368166
+Sangre de Cristo (Taos/Santa Fe),Holidays,big_storm_days_per_window,La Nina,weak,7,0.6649813258096334,0.3861555456578659,0.2788257801517675,72.20556153783878
+Sangre de Cristo (Taos/Santa Fe),Holidays,big_storm_days_per_window,Neutral,neutral,15,0.5025032007802779,0.3861555456578659,0.11634765512241196,30.129738244260793
+Sangre de Cristo (Taos/Santa Fe),Midwinter,big_storm_days_per_window,El Nino,moderate,4,0.9902611734674132,0.8534638642253362,0.136797309242077,16.028482865673976
+Sangre de Cristo (Taos/Santa Fe),Midwinter,big_storm_days_per_window,El Nino,strong,3,1.0665079773847175,0.8534638642253362,0.21304411315938132,24.96228863219126
+Sangre de Cristo (Taos/Santa Fe),Midwinter,big_storm_days_per_window,El Nino,very strong,3,0.579662729168155,0.8534638642253362,-0.2738011350571812,-32.08116319086366
+Sangre de Cristo (Taos/Santa Fe),Midwinter,big_storm_days_per_window,El Nino,weak,6,1.2516747191006676,0.8534638642253362,0.3982108548753315,46.65819744304882
+Sangre de Cristo (Taos/Santa Fe),Midwinter,big_storm_days_per_window,La Nina,moderate,4,0.6457227600385693,0.8534638642253362,-0.20774110418676683,-24.340937313769842
+Sangre de Cristo (Taos/Santa Fe),Midwinter,big_storm_days_per_window,La Nina,strong,5,1.2760493952478142,0.8534638642253362,0.4225855310224781,49.514167937976666
+Sangre de Cristo (Taos/Santa Fe),Midwinter,big_storm_days_per_window,La Nina,weak,7,0.3471506063137276,0.8534638642253362,-0.5063132579116085,-59.32451028505748
+Sangre de Cristo (Taos/Santa Fe),Midwinter,big_storm_days_per_window,Neutral,neutral,15,0.8206669486579392,0.8534638642253362,-0.032796915567396945,-3.8428007256248313
+Sangre de Cristo (Taos/Santa Fe),Spring,big_storm_days_per_window,El Nino,moderate,4,1.1587434829051908,0.9792057337310345,0.17953774917415632,18.335038591948365
+Sangre de Cristo (Taos/Santa Fe),Spring,big_storm_days_per_window,El Nino,strong,3,1.568649337105789,0.9792057337310345,0.5894436033747545,60.196093943283756
+Sangre de Cristo (Taos/Santa Fe),Spring,big_storm_days_per_window,El Nino,very strong,3,1.1360193005012567,0.9792057337310345,0.15681356677022218,16.01436361822768
+Sangre de Cristo (Taos/Santa Fe),Spring,big_storm_days_per_window,El Nino,weak,6,1.1361868799789787,0.9792057337310345,0.15698114624794424,16.031477435268307
+Sangre de Cristo (Taos/Santa Fe),Spring,big_storm_days_per_window,La Nina,moderate,4,1.2098780990294224,0.9792057337310345,0.23067236529838797,23.55708890913709
+Sangre de Cristo (Taos/Santa Fe),Spring,big_storm_days_per_window,La Nina,strong,5,0.7663935832786867,0.9792057337310345,-0.2128121504523478,-21.733139739845768
+Sangre de Cristo (Taos/Santa Fe),Spring,big_storm_days_per_window,La Nina,weak,7,0.558715241542287,0.9792057337310345,-0.42049049218874746,-42.941996528815935
+Sangre de Cristo (Taos/Santa Fe),Spring,big_storm_days_per_window,Neutral,neutral,15,0.9249387571823805,0.9792057337310345,-0.05426697654865398,-5.541938193303093
+Sawtooth & Smoky (Sun Valley),Early season,big_storm_days_per_window,El Nino,moderate,4,0.694296271947944,1.2282913631048276,-0.5339950911568836,-43.47462720954672
+Sawtooth & Smoky (Sun Valley),Early season,big_storm_days_per_window,El Nino,strong,3,0.44348568647543324,1.2282913631048276,-0.7848056766293943,-63.89409713389115
+Sawtooth & Smoky (Sun Valley),Early season,big_storm_days_per_window,El Nino,very strong,3,1.4352340293191308,1.2282913631048276,0.20694266621430324,16.84801118288429
+Sawtooth & Smoky (Sun Valley),Early season,big_storm_days_per_window,El Nino,weak,5,1.0953905066290122,1.2282913631048276,-0.1329008564758154,-10.819978098671454
+Sawtooth & Smoky (Sun Valley),Early season,big_storm_days_per_window,La Nina,moderate,4,1.5482901351241571,1.2282913631048276,0.3199987720193296,26.052350576694526
+Sawtooth & Smoky (Sun Valley),Early season,big_storm_days_per_window,La Nina,strong,5,0.8523039102884683,1.2282913631048276,-0.37598745281635926,-30.61060788264054
+Sawtooth & Smoky (Sun Valley),Early season,big_storm_days_per_window,La Nina,weak,7,1.5364643990064322,1.2282913631048276,0.3081730359016046,25.08957118469161
+Sawtooth & Smoky (Sun Valley),Early season,big_storm_days_per_window,Neutral,neutral,15,1.4267450033011706,1.2282913631048276,0.19845364019634304,16.15688639987662
+Sawtooth & Smoky (Sun Valley),Holidays,big_storm_days_per_window,El Nino,moderate,4,0.5675318864914581,0.7668733739254512,-0.19934148743399305,-25.994055108943098
+Sawtooth & Smoky (Sun Valley),Holidays,big_storm_days_per_window,El Nino,strong,3,0.09190470224672177,0.7668733739254512,-0.6749686716787294,-88.01566133711458
+Sawtooth & Smoky (Sun Valley),Holidays,big_storm_days_per_window,El Nino,very strong,3,1.4176472060845233,0.7668733739254512,0.6507738321590721,84.86066334887965
+Sawtooth & Smoky (Sun Valley),Holidays,big_storm_days_per_window,El Nino,weak,5,0.3113661989476322,0.7668733739254512,-0.455507174977819,-59.39796457480078
+Sawtooth & Smoky (Sun Valley),Holidays,big_storm_days_per_window,La Nina,moderate,4,0.38826645948400146,0.7668733739254512,-0.3786069144414497,-49.370199476798454
+Sawtooth & Smoky (Sun Valley),Holidays,big_storm_days_per_window,La Nina,strong,5,0.8047593584491342,0.7668733739254512,0.03788598452368297,4.940318155754084
+Sawtooth & Smoky (Sun Valley),Holidays,big_storm_days_per_window,La Nina,weak,7,1.1224015327266075,0.7668733739254512,0.3555281588011563,46.36073840734464
+Sawtooth & Smoky (Sun Valley),Holidays,big_storm_days_per_window,Neutral,neutral,15,0.899125838373673,0.7668733739254512,0.1322524644482218,17.245671703432784
+Sawtooth & Smoky (Sun Valley),Midwinter,big_storm_days_per_window,El Nino,moderate,4,1.7861114461858754,1.4470203538521604,0.3390910923337149,23.433747246955402
+Sawtooth & Smoky (Sun Valley),Midwinter,big_storm_days_per_window,El Nino,strong,3,0.6707985739250168,1.4470203538521604,-0.7762217799271436,-53.64276859414852
+Sawtooth & Smoky (Sun Valley),Midwinter,big_storm_days_per_window,El Nino,very strong,3,1.6656554274769892,1.4470203538521604,0.2186350736248288,15.109329529663713
+Sawtooth & Smoky (Sun Valley),Midwinter,big_storm_days_per_window,El Nino,weak,5,0.8671307105485753,1.4470203538521604,-0.5798896433035852,-40.074739913632996
+Sawtooth & Smoky (Sun Valley),Midwinter,big_storm_days_per_window,La Nina,moderate,4,1.4541404370439819,1.4470203538521604,0.007120083191821447,0.4920513504089172
+Sawtooth & Smoky (Sun Valley),Midwinter,big_storm_days_per_window,La Nina,strong,5,1.9217447965223997,1.4470203538521604,0.4747244426702393,32.807032838650805
+Sawtooth & Smoky (Sun Valley),Midwinter,big_storm_days_per_window,La Nina,weak,7,0.6818754415587073,1.4470203538521604,-0.7651449122934532,-52.87727365109521
+Sawtooth & Smoky (Sun Valley),Midwinter,big_storm_days_per_window,Neutral,neutral,15,1.8583374075872072,1.4470203538521604,0.4113170537350468,28.42510491577165
+Sawtooth & Smoky (Sun Valley),Spring,big_storm_days_per_window,El Nino,moderate,4,0.4632738367153365,0.8136568898917702,-0.3503830531764337,-43.06275255937923
+Sawtooth & Smoky (Sun Valley),Spring,big_storm_days_per_window,El Nino,strong,3,0.8765528558598265,0.8136568898917702,0.06289596596805624,7.730035442386833
+Sawtooth & Smoky (Sun Valley),Spring,big_storm_days_per_window,El Nino,very strong,3,1.5383327206054114,0.8136568898917702,0.7246758307136412,89.06405632600678
+Sawtooth & Smoky (Sun Valley),Spring,big_storm_days_per_window,El Nino,weak,5,0.6487186157833151,0.8136568898917702,-0.16493827410845507,-20.271231787933928
+Sawtooth & Smoky (Sun Valley),Spring,big_storm_days_per_window,La Nina,moderate,4,0.8929032893547988,0.8136568898917702,0.07924639946302858,9.739535232543739
+Sawtooth & Smoky (Sun Valley),Spring,big_storm_days_per_window,La Nina,strong,5,0.5049349499227525,0.8136568898917702,-0.30872193996901776,-37.94252144906962
+Sawtooth & Smoky (Sun Valley),Spring,big_storm_days_per_window,La Nina,weak,7,1.1635754081637288,0.8136568898917702,0.34991851827195863,43.00566032428037
+Sawtooth & Smoky (Sun Valley),Spring,big_storm_days_per_window,Neutral,neutral,15,0.7230370677112492,0.8136568898917702,-0.090619822180521,-11.137350805518889
+Selkirk & Cabinet (Schweitzer/Silver),Early season,big_storm_days_per_window,El Nino,moderate,4,1.6565243632099358,2.0142845919350476,-0.3577602287251118,-17.761156003354273
+Selkirk & Cabinet (Schweitzer/Silver),Early season,big_storm_days_per_window,El Nino,strong,3,1.249998225953554,2.0142845919350476,-0.7642863659814936,-37.943315906878496
+Selkirk & Cabinet (Schweitzer/Silver),Early season,big_storm_days_per_window,El Nino,very strong,3,1.7349574308332398,2.0142845919350476,-0.2793271611018078,-13.867313597105396
+Selkirk & Cabinet (Schweitzer/Silver),Early season,big_storm_days_per_window,El Nino,weak,5,1.5837297828376184,2.0142845919350476,-0.43055480909742916,-21.375073354645053
+Selkirk & Cabinet (Schweitzer/Silver),Early season,big_storm_days_per_window,La Nina,moderate,4,2.358932540833349,2.0142845919350476,0.3446479488983014,17.110191393918726
+Selkirk & Cabinet (Schweitzer/Silver),Early season,big_storm_days_per_window,La Nina,strong,5,3.1585681877750718,2.0142845919350476,1.1442835958400241,56.80843712063317
+Selkirk & Cabinet (Schweitzer/Silver),Early season,big_storm_days_per_window,La Nina,weak,7,0.9935011961663783,2.0142845919350476,-1.0207833957686692,-50.67721809796702
+Selkirk & Cabinet (Schweitzer/Silver),Early season,big_storm_days_per_window,Neutral,neutral,15,2.4649598944167033,2.0142845919350476,0.45067530248165566,22.373963653701427
+Selkirk & Cabinet (Schweitzer/Silver),Holidays,big_storm_days_per_window,El Nino,moderate,4,0.8013495489040068,1.1070346333252805,-0.30568508442127373,-27.6129648720262
+Selkirk & Cabinet (Schweitzer/Silver),Holidays,big_storm_days_per_window,El Nino,strong,3,0.38890792454266837,1.1070346333252805,-0.7181267087826122,-64.86939858652143
+Selkirk & Cabinet (Schweitzer/Silver),Holidays,big_storm_days_per_window,El Nino,very strong,3,1.3993907483848143,1.1070346333252805,0.29235611505953374,26.408940267872413
+Selkirk & Cabinet (Schweitzer/Silver),Holidays,big_storm_days_per_window,El Nino,weak,5,1.100490942961222,1.1070346333252805,-0.006543690364058552,-0.5911007810480864
+Selkirk & Cabinet (Schweitzer/Silver),Holidays,big_storm_days_per_window,La Nina,moderate,4,1.516255965027964,1.1070346333252805,0.4092213317026834,36.96554013612704
+Selkirk & Cabinet (Schweitzer/Silver),Holidays,big_storm_days_per_window,La Nina,strong,5,1.4949736516398695,1.1070346333252805,0.387939018314589,35.04307874716695
+Selkirk & Cabinet (Schweitzer/Silver),Holidays,big_storm_days_per_window,La Nina,weak,7,1.2754573676785574,1.1070346333252805,0.16842273435327693,15.213863169517404
+Selkirk & Cabinet (Schweitzer/Silver),Holidays,big_storm_days_per_window,Neutral,neutral,15,0.9588500341131492,1.1070346333252805,-0.14818459921213134,-13.385723874511356
+Selkirk & Cabinet (Schweitzer/Silver),Midwinter,big_storm_days_per_window,El Nino,moderate,4,1.6280044971726197,2.534860180046602,-0.9068556828739824,-35.77537293821509
+Selkirk & Cabinet (Schweitzer/Silver),Midwinter,big_storm_days_per_window,El Nino,strong,3,1.6245787284654656,2.534860180046602,-0.9102814515811366,-35.91051919733109
+Selkirk & Cabinet (Schweitzer/Silver),Midwinter,big_storm_days_per_window,El Nino,very strong,3,1.9315301424346132,2.534860180046602,-0.603330037611989,-23.801314264240684
+Selkirk & Cabinet (Schweitzer/Silver),Midwinter,big_storm_days_per_window,El Nino,weak,5,1.9230905034746173,2.534860180046602,-0.6117696765719849,-24.134257241783562
+Selkirk & Cabinet (Schweitzer/Silver),Midwinter,big_storm_days_per_window,La Nina,moderate,4,2.7445734769704226,2.534860180046602,0.20971329692382046,8.273170195918459
+Selkirk & Cabinet (Schweitzer/Silver),Midwinter,big_storm_days_per_window,La Nina,strong,5,4.004069277639216,2.534860180046602,1.4692090975926138,57.96016321364136
+Selkirk & Cabinet (Schweitzer/Silver),Midwinter,big_storm_days_per_window,La Nina,weak,7,2.89278369302887,2.534860180046602,0.35792351298226777,14.120049531713718
+Selkirk & Cabinet (Schweitzer/Silver),Midwinter,big_storm_days_per_window,Neutral,neutral,15,2.570643001073335,2.534860180046602,0.035782821026733025,1.411628984841096
+Selkirk & Cabinet (Schweitzer/Silver),Spring,big_storm_days_per_window,El Nino,moderate,4,1.7512732472991548,1.1184448879221913,0.6328283593769635,56.58109453677332
+Selkirk & Cabinet (Schweitzer/Silver),Spring,big_storm_days_per_window,El Nino,strong,3,0.4115149942944258,1.1184448879221913,-0.7069298936277655,-63.20650228381621
+Selkirk & Cabinet (Schweitzer/Silver),Spring,big_storm_days_per_window,El Nino,very strong,3,0.7443849724908675,1.1184448879221913,-0.3740599154313238,-33.44464438710427
+Selkirk & Cabinet (Schweitzer/Silver),Spring,big_storm_days_per_window,El Nino,weak,5,0.6520571948658175,1.1184448879221913,-0.46638769305637384,-41.699657988764464
+Selkirk & Cabinet (Schweitzer/Silver),Spring,big_storm_days_per_window,La Nina,moderate,4,1.3085165219897454,1.1184448879221913,0.19007163406755412,16.9942780480371
+Selkirk & Cabinet (Schweitzer/Silver),Spring,big_storm_days_per_window,La Nina,strong,5,0.8958346742244915,1.1184448879221913,-0.22261021369769984,-19.903547872730456
+Selkirk & Cabinet (Schweitzer/Silver),Spring,big_storm_days_per_window,La Nina,weak,7,0.7518671177158774,1.1184448879221913,-0.3665777702063139,-32.77566683570162
+Selkirk & Cabinet (Schweitzer/Silver),Spring,big_storm_days_per_window,Neutral,neutral,15,1.515938446496442,1.1184448879221913,0.3974935585742507,35.53984312206037
+Snowy Range & Sierra Madre,Early season,big_storm_days_per_window,El Nino,moderate,4,1.0244601708911083,1.4447271816377272,-0.4202670107466189,-29.089714382628884
+Snowy Range & Sierra Madre,Early season,big_storm_days_per_window,El Nino,strong,3,1.2982963722735825,1.4447271816377272,-0.14643080936414465,-10.135533630519243
+Snowy Range & Sierra Madre,Early season,big_storm_days_per_window,El Nino,very strong,3,1.183373473310948,1.4447271816377272,-0.2613537083267792,-18.09017727696598
+Snowy Range & Sierra Madre,Early season,big_storm_days_per_window,El Nino,weak,5,1.2638274800758895,1.4447271816377272,-0.18089970156183766,-12.521374544692357
+Snowy Range & Sierra Madre,Early season,big_storm_days_per_window,La Nina,moderate,4,1.4392795683601733,1.4447271816377272,-0.005447613277553831,-0.37706864983176097
+Snowy Range & Sierra Madre,Early season,big_storm_days_per_window,La Nina,strong,5,1.3461372001219547,1.4447271816377272,-0.09858998151577247,-6.824124496917952
+Snowy Range & Sierra Madre,Early season,big_storm_days_per_window,La Nina,weak,7,1.8108302898834998,1.4447271816377272,0.36610310824577263,25.34063959610437
+Snowy Range & Sierra Madre,Early season,big_storm_days_per_window,Neutral,neutral,15,1.5621230954268677,1.4447271816377272,0.1173959137891405,8.125818859174625
+Snowy Range & Sierra Madre,Holidays,big_storm_days_per_window,El Nino,moderate,4,0.4336459156783906,0.8546713421424997,-0.4210254264641091,-49.261675886859365
+Snowy Range & Sierra Madre,Holidays,big_storm_days_per_window,El Nino,strong,3,0.14050633257577624,0.8546713421424997,-0.7141650095667235,-83.56019142708665
+Snowy Range & Sierra Madre,Holidays,big_storm_days_per_window,El Nino,very strong,3,0.3011898892562192,0.8546713421424997,-0.5534814528862806,-64.75956611564945
+Snowy Range & Sierra Madre,Holidays,big_storm_days_per_window,El Nino,weak,5,0.7023033426573344,0.8546713421424997,-0.15236799948516533,-17.82767152379387
+Snowy Range & Sierra Madre,Holidays,big_storm_days_per_window,La Nina,moderate,4,0.5947070001584369,0.8546713421424997,-0.2599643419840628,-30.41687829761336
+Snowy Range & Sierra Madre,Holidays,big_storm_days_per_window,La Nina,strong,5,0.9777477182159648,0.8546713421424997,0.12307637607346511,14.400433243138334
+Snowy Range & Sierra Madre,Holidays,big_storm_days_per_window,La Nina,weak,7,1.5071233521361618,0.8546713421424997,0.652452009993662,76.33952114950854
+Snowy Range & Sierra Madre,Holidays,big_storm_days_per_window,Neutral,neutral,15,0.9950841760261373,0.8546713421424997,0.14041283388363757,16.428868848187783
+Snowy Range & Sierra Madre,Midwinter,big_storm_days_per_window,El Nino,moderate,4,1.623794810217258,1.727185345458026,-0.10339053524076802,-5.986070661880834
+Snowy Range & Sierra Madre,Midwinter,big_storm_days_per_window,El Nino,strong,3,2.207635437573405,1.727185345458026,0.4804500921153789,27.81693889302715
+Snowy Range & Sierra Madre,Midwinter,big_storm_days_per_window,El Nino,very strong,3,2.0832206051650703,1.727185345458026,0.3560352597070444,20.613610498914273
+Snowy Range & Sierra Madre,Midwinter,big_storm_days_per_window,El Nino,weak,5,1.562920590902299,1.727185345458026,-0.16426475455572698,-9.510545870927722
+Snowy Range & Sierra Madre,Midwinter,big_storm_days_per_window,La Nina,moderate,4,1.6776468552849586,1.727185345458026,-0.04953849017306733,-2.8681629509733013
+Snowy Range & Sierra Madre,Midwinter,big_storm_days_per_window,La Nina,strong,5,1.9370162554768968,1.727185345458026,0.2098309100188709,12.148719914203916
+Snowy Range & Sierra Madre,Midwinter,big_storm_days_per_window,La Nina,weak,7,1.4739706055803212,1.727185345458026,-0.2532147398777047,-14.660542398856194
+Snowy Range & Sierra Madre,Midwinter,big_storm_days_per_window,Neutral,neutral,15,1.703647508659111,1.727185345458026,-0.02353783679891497,-1.3627858099197256
+Snowy Range & Sierra Madre,Spring,big_storm_days_per_window,El Nino,moderate,4,1.7273188940088007,1.3061920507288762,0.42112684327992445,32.24080586349679
+Snowy Range & Sierra Madre,Spring,big_storm_days_per_window,El Nino,strong,3,1.6166355980327796,1.3061920507288762,0.31044354730390333,23.767067571010774
+Snowy Range & Sierra Madre,Spring,big_storm_days_per_window,El Nino,very strong,3,2.479522192742851,1.3061920507288762,1.1733301420139746,89.82830215198733
+Snowy Range & Sierra Madre,Spring,big_storm_days_per_window,El Nino,weak,5,0.8047602719282343,1.3061920507288762,-0.5014317788006419,-38.388824868504976
+Snowy Range & Sierra Madre,Spring,big_storm_days_per_window,La Nina,moderate,4,0.9935790614567712,1.3061920507288762,-0.312612989272105,-23.93315662100852
+Snowy Range & Sierra Madre,Spring,big_storm_days_per_window,La Nina,strong,5,1.429496493772182,1.3061920507288762,0.12330444304330568,9.439993374213218
+Snowy Range & Sierra Madre,Spring,big_storm_days_per_window,La Nina,weak,7,1.4038337784604724,1.3061920507288762,0.09764172773159618,7.475296429580208
+Snowy Range & Sierra Madre,Spring,big_storm_days_per_window,Neutral,neutral,15,1.0609765907742492,1.3061920507288762,-0.245215459954627,-18.773308244970014
+Spring Mtns (Lee Canyon),Early season,big_storm_days_per_window,El Nino,strong,2,0.971212869540676,0.575142877301912,0.39606999223876393,68.8646261424278
+Spring Mtns (Lee Canyon),Early season,big_storm_days_per_window,El Nino,weak,2,0.6762858957172088,0.575142877301912,0.10114301841529671,17.58572041955469
+Spring Mtns (Lee Canyon),Early season,big_storm_days_per_window,La Nina,moderate,2,0.3525365130882664,0.575142877301912,-0.22260636421364566,-38.704532908053736
+Spring Mtns (Lee Canyon),Early season,big_storm_days_per_window,La Nina,weak,4,0.8381253086855288,0.575142877301912,0.26298243138361677,45.72471324296143
+Spring Mtns (Lee Canyon),Early season,big_storm_days_per_window,Neutral,neutral,5,0.3410146052353066,0.575142877301912,-0.23412827206660547,-40.707845181868365
+Spring Mtns (Lee Canyon),Holidays,big_storm_days_per_window,El Nino,strong,2,0.17628589571720876,0.7222261420384612,-0.5459402463212525,-75.59131614654002
+Spring Mtns (Lee Canyon),Holidays,big_storm_days_per_window,El Nino,weak,2,0.0,0.7222261420384612,-0.7222261420384612,-100.0
+Spring Mtns (Lee Canyon),Holidays,big_storm_days_per_window,La Nina,moderate,2,0.0,0.7222261420384612,-0.7222261420384612,-100.0
+Spring Mtns (Lee Canyon),Holidays,big_storm_days_per_window,La Nina,weak,4,1.3381429478586044,0.7222261420384612,0.6159168058201432,85.28032564450476
+Spring Mtns (Lee Canyon),Holidays,big_storm_days_per_window,Neutral,neutral,5,0.27050024694842306,0.7222261420384612,-0.4517258950900382,-62.54632293080054
+Spring Mtns (Lee Canyon),Midwinter,big_storm_days_per_window,El Nino,strong,2,2.2949975305157695,1.5068048009909294,0.7881927295248401,52.308880951699656
+Spring Mtns (Lee Canyon),Midwinter,big_storm_days_per_window,El Nino,weak,2,0.0,1.5068048009909294,-1.5068048009909294,-100.0
+Spring Mtns (Lee Canyon),Midwinter,big_storm_days_per_window,La Nina,moderate,2,0.6474987652578846,1.5068048009909294,-0.8593060357330448,-57.02835796434508
+Spring Mtns (Lee Canyon),Midwinter,big_storm_days_per_window,La Nina,weak,4,1.5881429478586044,1.5068048009909294,0.08133814686767504,5.398054666018062
+Spring Mtns (Lee Canyon),Midwinter,big_storm_days_per_window,Neutral,neutral,5,1.7179849008678474,1.5068048009909294,0.211180099876918,14.015093377591995
+Spring Mtns (Lee Canyon),Spring,big_storm_days_per_window,El Nino,strong,2,0.8237141042827911,0.7514170135704039,0.07229709071238721,9.621433825255455
+Spring Mtns (Lee Canyon),Spring,big_storm_days_per_window,El Nino,weak,2,0.7050730261765328,0.7514170135704039,-0.04634398739387113,-6.167545657991538
+Spring Mtns (Lee Canyon),Spring,big_storm_days_per_window,La Nina,moderate,2,0.5,0.7514170135704039,-0.2514170135704039,-33.459052567332826
+Spring Mtns (Lee Canyon),Spring,big_storm_days_per_window,La Nina,weak,4,0.9262858957172088,0.7514170135704039,0.17486888214680485,23.271882189079623
+Spring Mtns (Lee Canyon),Spring,big_storm_days_per_window,Neutral,neutral,5,0.141028716573767,0.7514170135704039,-0.6103882969966369,-81.2316311679369
+Tetons (Jackson/Targhee),Early season,big_storm_days_per_window,El Nino,moderate,4,1.2162605755017855,1.487043232572149,-0.27078265707036353,-18.20946769664449
+Tetons (Jackson/Targhee),Early season,big_storm_days_per_window,El Nino,strong,3,1.171038482909117,1.487043232572149,-0.31600474966303205,-21.250542199532184
+Tetons (Jackson/Targhee),Early season,big_storm_days_per_window,El Nino,very strong,3,0.9513472390157126,1.487043232572149,-0.5356959935564364,-36.0242380196196
+Tetons (Jackson/Targhee),Early season,big_storm_days_per_window,El Nino,weak,5,1.9056442052472917,1.487043232572149,0.41860097267514274,28.149885861158573
+Tetons (Jackson/Targhee),Early season,big_storm_days_per_window,La Nina,moderate,4,1.9433787767495516,1.487043232572149,0.45633554417740263,30.687442986312906
+Tetons (Jackson/Targhee),Early season,big_storm_days_per_window,La Nina,strong,5,1.335748726409315,1.487043232572149,-0.1512945061628339,-10.174183429834702
+Tetons (Jackson/Targhee),Early season,big_storm_days_per_window,La Nina,weak,7,1.3245050035503798,1.487043232572149,-0.16253822902176918,-10.930296138103913
+Tetons (Jackson/Targhee),Early season,big_storm_days_per_window,Neutral,neutral,15,1.5946516293602202,1.487043232572149,0.10760839678807121,7.236400020592557
+Tetons (Jackson/Targhee),Holidays,big_storm_days_per_window,El Nino,moderate,4,0.35400728064000625,0.8211905524097173,-0.46718327176971103,-56.89097011635113
+Tetons (Jackson/Targhee),Holidays,big_storm_days_per_window,El Nino,strong,3,0.1021702838063439,0.8211905524097173,-0.7190202686033734,-87.55827335001196
+Tetons (Jackson/Targhee),Holidays,big_storm_days_per_window,El Nino,very strong,3,0.8856900158740685,0.8211905524097173,0.0644994634643512,7.854384500050901
+Tetons (Jackson/Targhee),Holidays,big_storm_days_per_window,El Nino,weak,5,0.7075060652149311,0.8211905524097173,-0.11368448719478619,-13.84386204410027
+Tetons (Jackson/Targhee),Holidays,big_storm_days_per_window,La Nina,moderate,4,0.9092679975389034,0.8211905524097173,0.08807744512918614,10.725579449340959
+Tetons (Jackson/Targhee),Holidays,big_storm_days_per_window,La Nina,strong,5,0.7682996755052212,0.8211905524097173,-0.05289087690449612,-6.440755650353274
+Tetons (Jackson/Targhee),Holidays,big_storm_days_per_window,La Nina,weak,7,0.9766433551705926,0.8211905524097173,0.15545280276087536,18.930174282291933
+Tetons (Jackson/Targhee),Holidays,big_storm_days_per_window,Neutral,neutral,15,1.036170080619681,0.8211905524097173,0.2149795282099637,26.179006514276576
+Tetons (Jackson/Targhee),Midwinter,big_storm_days_per_window,El Nino,moderate,4,1.9587623689336247,1.7595993489324204,0.19916302000120423,11.318657291049801
+Tetons (Jackson/Targhee),Midwinter,big_storm_days_per_window,El Nino,strong,3,0.7520959017735166,1.7595993489324204,-1.007503447158904,-57.25754830326425
+Tetons (Jackson/Targhee),Midwinter,big_storm_days_per_window,El Nino,very strong,3,1.7015150315439163,1.7595993489324204,-0.05808431738850417,-3.3009967538204044
+Tetons (Jackson/Targhee),Midwinter,big_storm_days_per_window,El Nino,weak,5,1.1150220643764883,1.7595993489324204,-0.6445772845559321,-36.63204836640843
+Tetons (Jackson/Targhee),Midwinter,big_storm_days_per_window,La Nina,moderate,4,1.9947117883274088,1.7595993489324204,0.23511243939498838,13.361703022772497
+Tetons (Jackson/Targhee),Midwinter,big_storm_days_per_window,La Nina,strong,5,2.013695898641653,1.7595993489324204,0.25409654970923246,14.440591255242124
+Tetons (Jackson/Targhee),Midwinter,big_storm_days_per_window,La Nina,weak,7,1.1190438704405576,1.7595993489324204,-0.6405554784918628,-36.403484627366964
+Tetons (Jackson/Targhee),Midwinter,big_storm_days_per_window,Neutral,neutral,15,2.2859962475813527,1.7595993489324204,0.5263968986489322,29.915724790890973
+Tetons (Jackson/Targhee),Spring,big_storm_days_per_window,El Nino,moderate,4,0.9191163070267085,0.8567194535297764,0.062396853496932136,7.28323061182402
+Tetons (Jackson/Targhee),Spring,big_storm_days_per_window,El Nino,strong,3,1.266106990945034,0.8567194535297764,0.4093875374152576,47.78548400278957
+Tetons (Jackson/Targhee),Spring,big_storm_days_per_window,El Nino,very strong,3,1.0618213016376206,0.8567194535297764,0.20510184810784415,23.940374793965802
+Tetons (Jackson/Targhee),Spring,big_storm_days_per_window,El Nino,weak,5,0.6270698668361893,0.8567194535297764,-0.22964958669358715,-26.805693012736683
+Tetons (Jackson/Targhee),Spring,big_storm_days_per_window,La Nina,moderate,4,0.3812657594813136,0.8567194535297764,-0.4754536940484628,-55.49701154672541
+Tetons (Jackson/Targhee),Spring,big_storm_days_per_window,La Nina,strong,5,1.088364952735023,0.8567194535297764,0.23164549920524657,27.03866455358778
+Tetons (Jackson/Targhee),Spring,big_storm_days_per_window,La Nina,weak,7,0.7056927439468186,0.8567194535297764,-0.15102670958295783,-17.628490745799166
+Tetons (Jackson/Targhee),Spring,big_storm_days_per_window,Neutral,neutral,15,0.913783894207058,0.8567194535297764,0.05706444067728156,6.660808324378525
+Uinta Mtns,Early season,big_storm_days_per_window,El Nino,moderate,4,0.5637682554890742,0.8506287256160546,-0.28686047012698046,-33.72334621302922
+Uinta Mtns,Early season,big_storm_days_per_window,El Nino,strong,3,0.5907759714984878,0.8506287256160546,-0.2598527541175668,-30.548316356160264
+Uinta Mtns,Early season,big_storm_days_per_window,El Nino,very strong,3,0.9267792252979015,0.8506287256160546,0.07615049968184684,8.952260532548559
+Uinta Mtns,Early season,big_storm_days_per_window,El Nino,weak,6,1.00811555334736,0.8506287256160546,0.1574868277313054,18.51416757848708
+Uinta Mtns,Early season,big_storm_days_per_window,La Nina,moderate,4,1.038422965815737,0.8506287256160546,0.18779424019968227,22.077110088620064
+Uinta Mtns,Early season,big_storm_days_per_window,La Nina,strong,5,0.6253287501152329,0.8506287256160546,-0.2252999755008217,-26.486288167337836
+Uinta Mtns,Early season,big_storm_days_per_window,La Nina,weak,7,0.9843295606292797,0.8506287256160546,0.13370083501322505,15.717883841319171
+Uinta Mtns,Early season,big_storm_days_per_window,Neutral,neutral,16,0.8626940224310577,0.8506287256160546,0.012065296815003124,1.4183975278127388
+Uinta Mtns,Holidays,big_storm_days_per_window,El Nino,moderate,4,0.12918913293563583,0.5354594349597072,-0.40627030202407133,-75.87321755842117
+Uinta Mtns,Holidays,big_storm_days_per_window,El Nino,strong,3,0.0,0.5354594349597072,-0.5354594349597072,-100.0
+Uinta Mtns,Holidays,big_storm_days_per_window,El Nino,very strong,3,0.27027071087100724,0.5354594349597072,-0.2651887240886999,-49.525455482665116
+Uinta Mtns,Holidays,big_storm_days_per_window,El Nino,weak,6,0.3844266108465517,0.5354594349597072,-0.15103282411315544,-28.20621213342156
+Uinta Mtns,Holidays,big_storm_days_per_window,La Nina,moderate,4,0.30732629116361854,0.5354594349597072,-0.22813314379608862,-42.60512167709874
+Uinta Mtns,Holidays,big_storm_days_per_window,La Nina,strong,5,0.8731944187292762,0.5354594349597072,0.337734983769569,63.07386922689732
+Uinta Mtns,Holidays,big_storm_days_per_window,La Nina,weak,7,0.9915978281793256,0.5354594349597072,0.45613839321961847,85.18635837539075
+Uinta Mtns,Holidays,big_storm_days_per_window,Neutral,neutral,16,0.5957164058171833,0.5354594349597072,0.060256970857476166,11.253321339273898
+Uinta Mtns,Midwinter,big_storm_days_per_window,El Nino,moderate,4,1.0856805465917791,1.260229137656927,-0.17454859106514786,-13.850543988347724
+Uinta Mtns,Midwinter,big_storm_days_per_window,El Nino,strong,3,0.8792521411650008,1.260229137656927,-0.3809769964919262,-30.230771937257003
+Uinta Mtns,Midwinter,big_storm_days_per_window,El Nino,very strong,3,0.8714409451456696,1.260229137656927,-0.3887881925112574,-30.850595411093998
+Uinta Mtns,Midwinter,big_storm_days_per_window,El Nino,weak,6,2.0037166316299784,1.260229137656927,0.7434874939730514,58.99621519268915
+Uinta Mtns,Midwinter,big_storm_days_per_window,La Nina,moderate,4,1.111193771404088,1.260229137656927,-0.14903536625283897,-11.826053040634502
+Uinta Mtns,Midwinter,big_storm_days_per_window,La Nina,strong,5,1.816408542948872,1.260229137656927,0.5561794052919451,44.13319678721428
+Uinta Mtns,Midwinter,big_storm_days_per_window,La Nina,weak,7,0.5736061666630545,1.260229137656927,-0.6866229709938725,-54.483978387491646
+Uinta Mtns,Midwinter,big_storm_days_per_window,Neutral,neutral,16,1.333239775340713,1.260229137656927,0.07301063768378602,5.793441486326096
+Uinta Mtns,Spring,big_storm_days_per_window,El Nino,moderate,4,1.0581964340480727,1.0350200696088379,0.023176364439234876,2.2392188441325445
+Uinta Mtns,Spring,big_storm_days_per_window,El Nino,strong,3,0.7623967003116766,1.0350200696088379,-0.27262336929716124,-26.339911399031422
+Uinta Mtns,Spring,big_storm_days_per_window,El Nino,very strong,3,1.168802488206136,1.0350200696088379,0.13378241859729822,12.925586906528125
+Uinta Mtns,Spring,big_storm_days_per_window,El Nino,weak,6,0.6818861795187315,1.0350200696088379,-0.3531338900901063,-34.1185548434404
+Uinta Mtns,Spring,big_storm_days_per_window,La Nina,moderate,4,1.0240045646459341,1.0350200696088379,-0.01101550496290371,-1.0642793590530828
+Uinta Mtns,Spring,big_storm_days_per_window,La Nina,strong,5,0.8143400885535497,1.0350200696088379,-0.2206799810552882,-21.321323859805844
+Uinta Mtns,Spring,big_storm_days_per_window,La Nina,weak,7,1.5158404879304708,1.0350200696088379,0.4808204183216329,46.45517825594899
+Uinta Mtns,Spring,big_storm_days_per_window,Neutral,neutral,16,1.0490413028438317,1.0350200696088379,0.014021233234993824,1.3546822565762255
+W Central Idaho (Brundage/Tamarack),Early season,big_storm_days_per_window,El Nino,moderate,4,0.8703586440713532,1.6279422666649968,-0.7575836225936435,-46.536270855945624
+W Central Idaho (Brundage/Tamarack),Early season,big_storm_days_per_window,El Nino,strong,3,1.2317861890927324,1.6279422666649968,-0.39615607757226434,-24.334774376478958
+W Central Idaho (Brundage/Tamarack),Early season,big_storm_days_per_window,El Nino,very strong,3,2.171108454248331,1.6279422666649968,0.5431661875833345,33.3651996576061
+W Central Idaho (Brundage/Tamarack),Early season,big_storm_days_per_window,El Nino,weak,5,1.3993667250956217,1.6279422666649968,-0.2285755415693751,-14.040764605100835
+W Central Idaho (Brundage/Tamarack),Early season,big_storm_days_per_window,La Nina,moderate,4,1.68214258641639,1.6279422666649968,0.05420031975139317,3.329376038772429
+W Central Idaho (Brundage/Tamarack),Early season,big_storm_days_per_window,La Nina,strong,5,2.062056805384566,1.6279422666649968,0.43411453871956907,26.66645787193033
+W Central Idaho (Brundage/Tamarack),Early season,big_storm_days_per_window,La Nina,weak,7,1.5780328841593898,1.6279422666649968,-0.04990938250560695,-3.0657956075955526
+W Central Idaho (Brundage/Tamarack),Early season,big_storm_days_per_window,Neutral,neutral,15,1.740887171539934,1.6279422666649968,0.11294490487493736,6.937893756288811
+W Central Idaho (Brundage/Tamarack),Holidays,big_storm_days_per_window,El Nino,moderate,4,1.1178904708009634,1.060804322970243,0.0570861478307203,5.381402261906284
+W Central Idaho (Brundage/Tamarack),Holidays,big_storm_days_per_window,El Nino,strong,3,0.12695077892022505,1.060804322970243,-0.933853544050018,-88.03259223484648
+W Central Idaho (Brundage/Tamarack),Holidays,big_storm_days_per_window,El Nino,very strong,3,2.044419821263436,1.060804322970243,0.9836154982931928,92.72355673844521
+W Central Idaho (Brundage/Tamarack),Holidays,big_storm_days_per_window,El Nino,weak,5,0.9467153108121801,1.060804322970243,-0.114089012158063,-10.754953546815752
+W Central Idaho (Brundage/Tamarack),Holidays,big_storm_days_per_window,La Nina,moderate,4,0.9133396055820333,1.060804322970243,-0.14746471738820977,-13.901217613377536
+W Central Idaho (Brundage/Tamarack),Holidays,big_storm_days_per_window,La Nina,strong,5,1.228045544196753,1.060804322970243,0.16724122122650997,15.765510905747062
+W Central Idaho (Brundage/Tamarack),Holidays,big_storm_days_per_window,La Nina,weak,7,1.0748566119736478,1.060804322970243,0.014052289003404717,1.324682479051219
+W Central Idaho (Brundage/Tamarack),Holidays,big_storm_days_per_window,Neutral,neutral,15,1.0506777461125343,1.060804322970243,-0.010126576857708791,-0.9546130835283987
+W Central Idaho (Brundage/Tamarack),Midwinter,big_storm_days_per_window,El Nino,moderate,4,2.9450926364697483,2.244421784939096,0.7006708515306523,31.218323411063558
+W Central Idaho (Brundage/Tamarack),Midwinter,big_storm_days_per_window,El Nino,strong,3,1.0881708462082715,2.244421784939096,-1.1562509387308244,-51.516651036346985
+W Central Idaho (Brundage/Tamarack),Midwinter,big_storm_days_per_window,El Nino,very strong,3,2.241063115252563,2.244421784939096,-0.003358669686532867,-0.14964520969591313
+W Central Idaho (Brundage/Tamarack),Midwinter,big_storm_days_per_window,El Nino,weak,5,1.4615147461269387,2.244421784939096,-0.7829070388121573,-34.882348944648214
+W Central Idaho (Brundage/Tamarack),Midwinter,big_storm_days_per_window,La Nina,moderate,4,2.9034001593680356,2.244421784939096,0.6589783744289397,29.36071904358305
+W Central Idaho (Brundage/Tamarack),Midwinter,big_storm_days_per_window,La Nina,strong,5,3.1137532138118003,2.244421784939096,0.8693314288727043,38.73297945627873
+W Central Idaho (Brundage/Tamarack),Midwinter,big_storm_days_per_window,La Nina,weak,7,1.4185538819384875,2.244421784939096,-0.8258679030006084,-36.7964661786162
+W Central Idaho (Brundage/Tamarack),Midwinter,big_storm_days_per_window,Neutral,neutral,15,2.4703674710801113,2.244421784939096,0.2259456861410154,10.066988640780218
+W Central Idaho (Brundage/Tamarack),Spring,big_storm_days_per_window,El Nino,moderate,4,0.5094794527855245,1.0532212507841825,-0.543741797998658,-51.626550223308875
+W Central Idaho (Brundage/Tamarack),Spring,big_storm_days_per_window,El Nino,strong,3,1.0304800915546062,1.0532212507841825,-0.022741159229576313,-2.1592005680329978
+W Central Idaho (Brundage/Tamarack),Spring,big_storm_days_per_window,El Nino,very strong,3,1.187122522053987,1.0532212507841825,0.13390127126980444,12.713498818041074
+W Central Idaho (Brundage/Tamarack),Spring,big_storm_days_per_window,El Nino,weak,5,0.7505443612525659,1.0532212507841825,-0.30267688953161664,-28.73820570048854
+W Central Idaho (Brundage/Tamarack),Spring,big_storm_days_per_window,La Nina,moderate,4,1.0971480026664286,1.0532212507841825,0.04392675188224615,4.170705048871755
+W Central Idaho (Brundage/Tamarack),Spring,big_storm_days_per_window,La Nina,strong,5,0.7606767234439695,1.0532212507841825,-0.29254452734021297,-27.776170213276373
+W Central Idaho (Brundage/Tamarack),Spring,big_storm_days_per_window,La Nina,weak,7,1.2376328239649435,1.0532212507841825,0.18441157318076096,17.509290953202488
+W Central Idaho (Brundage/Tamarack),Spring,big_storm_days_per_window,Neutral,neutral,15,1.2766216454801007,1.0532212507841825,0.22340039469591821,21.21115525627536
+Wasatch (Alta/Snowbird/Park City),Early season,big_storm_days_per_window,El Nino,moderate,4,0.9092744318019361,1.5474853215473734,-0.6382108897454373,-41.24180571272059
+Wasatch (Alta/Snowbird/Park City),Early season,big_storm_days_per_window,El Nino,strong,3,1.372920347112632,1.5474853215473734,-0.1745649744347415,-11.280557689567559
+Wasatch (Alta/Snowbird/Park City),Early season,big_storm_days_per_window,El Nino,very strong,3,1.0979950021752998,1.5474853215473734,-0.4494903193720736,-29.04649970589807
+Wasatch (Alta/Snowbird/Park City),Early season,big_storm_days_per_window,El Nino,weak,6,1.6238214589048867,1.5474853215473734,0.07633613735751332,4.932915116841477
+Wasatch (Alta/Snowbird/Park City),Early season,big_storm_days_per_window,La Nina,moderate,4,1.5187622721944574,1.5474853215473734,-0.02872304935291603,-1.8561112634137982
+Wasatch (Alta/Snowbird/Park City),Early season,big_storm_days_per_window,La Nina,strong,5,1.2534540191925205,1.5474853215473734,-0.29403130235485286,-19.000587486079855
+Wasatch (Alta/Snowbird/Park City),Early season,big_storm_days_per_window,La Nina,weak,7,1.8229491759617684,1.5474853215473734,0.275463854414395,17.80074102020891
+Wasatch (Alta/Snowbird/Park City),Early season,big_storm_days_per_window,Neutral,neutral,16,1.7739724680812659,1.5474853215473734,0.22648714653389246,14.635818729926413
+Wasatch (Alta/Snowbird/Park City),Holidays,big_storm_days_per_window,El Nino,moderate,4,0.602257582690313,0.9693095001682203,-0.3670519174779072,-37.867359952028394
+Wasatch (Alta/Snowbird/Park City),Holidays,big_storm_days_per_window,El Nino,strong,3,0.02761222302257253,0.9693095001682203,-0.9416972771456478,-97.1513512435625
+Wasatch (Alta/Snowbird/Park City),Holidays,big_storm_days_per_window,El Nino,very strong,3,0.6979946249779111,0.9693095001682203,-0.27131487519030917,-27.99053090300089
+Wasatch (Alta/Snowbird/Park City),Holidays,big_storm_days_per_window,El Nino,weak,6,0.5354231716313704,0.9693095001682203,-0.43388632853684983,-44.76241370393567
+Wasatch (Alta/Snowbird/Park City),Holidays,big_storm_days_per_window,La Nina,moderate,4,0.43668741033783404,0.9693095001682203,-0.5326220898303862,-54.94860926648831
+Wasatch (Alta/Snowbird/Park City),Holidays,big_storm_days_per_window,La Nina,strong,5,1.5487757618139633,0.9693095001682203,0.579466261645743,59.78134553980732
+Wasatch (Alta/Snowbird/Park City),Holidays,big_storm_days_per_window,La Nina,weak,7,1.7222041094412555,0.9693095001682203,0.7528946092730352,77.67329311663333
+Wasatch (Alta/Snowbird/Park City),Holidays,big_storm_days_per_window,Neutral,neutral,16,1.0739005554383567,0.9693095001682203,0.10459105527013646,10.790264126368827
+Wasatch (Alta/Snowbird/Park City),Midwinter,big_storm_days_per_window,El Nino,moderate,4,1.9634856967846603,2.468390165796569,-0.5049044690119084,-20.454807996246082
+Wasatch (Alta/Snowbird/Park City),Midwinter,big_storm_days_per_window,El Nino,strong,3,2.379997596386886,2.468390165796569,-0.08839256940968276,-3.5809804557845415
+Wasatch (Alta/Snowbird/Park City),Midwinter,big_storm_days_per_window,El Nino,very strong,3,2.6248261258682177,2.468390165796569,0.15643596007164895,6.337570220434169
+Wasatch (Alta/Snowbird/Park City),Midwinter,big_storm_days_per_window,El Nino,weak,6,2.9813429345915288,2.468390165796569,0.51295276879496,20.780862600359054
+Wasatch (Alta/Snowbird/Park City),Midwinter,big_storm_days_per_window,La Nina,moderate,4,2.6154379174341775,2.468390165796569,0.14704775163760875,5.957232923513747
+Wasatch (Alta/Snowbird/Park City),Midwinter,big_storm_days_per_window,La Nina,strong,5,3.334525136517155,2.468390165796569,0.8661349707205863,35.08906260939821
+Wasatch (Alta/Snowbird/Park City),Midwinter,big_storm_days_per_window,La Nina,weak,7,1.6282580778908897,2.468390165796569,-0.8401320879056791,-34.03562773612663
+Wasatch (Alta/Snowbird/Park City),Midwinter,big_storm_days_per_window,Neutral,neutral,16,2.4496295312014658,2.468390165796569,-0.01876063459510302,-0.7600352187049334
+Wasatch (Alta/Snowbird/Park City),Spring,big_storm_days_per_window,El Nino,moderate,4,1.432634059170145,1.702156237564625,-0.2695221783944801,-15.834162131914596
+Wasatch (Alta/Snowbird/Park City),Spring,big_storm_days_per_window,El Nino,strong,3,1.6249469316639964,1.702156237564625,-0.07720930590062869,-4.535970564670173
+Wasatch (Alta/Snowbird/Park City),Spring,big_storm_days_per_window,El Nino,very strong,3,1.91111325644131,1.702156237564625,0.20895701887668494,12.276018749938727
+Wasatch (Alta/Snowbird/Park City),Spring,big_storm_days_per_window,El Nino,weak,6,1.4133232305363588,1.702156237564625,-0.2888330070282663,-16.968654266515315
+Wasatch (Alta/Snowbird/Park City),Spring,big_storm_days_per_window,La Nina,moderate,4,1.3436927546998527,1.702156237564625,-0.35846348286477236,-21.059376040453675
+Wasatch (Alta/Snowbird/Park City),Spring,big_storm_days_per_window,La Nina,strong,5,1.831613726154424,1.702156237564625,0.129457488589799,7.605499761586013
+Wasatch (Alta/Snowbird/Park City),Spring,big_storm_days_per_window,La Nina,weak,7,2.7340111053331593,1.702156237564625,1.0318548677685342,60.620455690064595
+Wasatch (Alta/Snowbird/Park City),Spring,big_storm_days_per_window,Neutral,neutral,16,1.4508703644989813,1.702156237564625,-0.25128587306564376,-14.762797181601451
+White Mtns AZ (Sunrise Park),Early season,big_storm_days_per_window,El Nino,moderate,4,0.6097925259342584,0.4657099866746955,0.14408253925956288,30.938254145751532
+White Mtns AZ (Sunrise Park),Early season,big_storm_days_per_window,El Nino,strong,3,0.7785673636899938,0.4657099866746955,0.3128573770152983,67.1785845197761
+White Mtns AZ (Sunrise Park),Early season,big_storm_days_per_window,El Nino,very strong,3,1.02759732718592,0.4657099866746955,0.5618873405112246,120.65176968251494
+White Mtns AZ (Sunrise Park),Early season,big_storm_days_per_window,El Nino,weak,5,0.4677494876181488,0.4657099866746955,0.0020395009434532874,0.4379336930298438
+White Mtns AZ (Sunrise Park),Early season,big_storm_days_per_window,La Nina,moderate,4,0.5915320724637518,0.4657099866746955,0.12582208578905635,27.01726168413578
+White Mtns AZ (Sunrise Park),Early season,big_storm_days_per_window,La Nina,strong,5,0.5223210866578064,0.4657099866746955,0.056611099983110924,12.15586987672964
+White Mtns AZ (Sunrise Park),Early season,big_storm_days_per_window,La Nina,weak,7,0.25205326271985806,0.4657099866746955,-0.21365672395483742,-45.877634164645784
+White Mtns AZ (Sunrise Park),Early season,big_storm_days_per_window,Neutral,neutral,15,0.2989427473598285,0.4657099866746955,-0.16676723931486698,-35.809246974846616
+White Mtns AZ (Sunrise Park),Holidays,big_storm_days_per_window,El Nino,moderate,4,0.4152804659859217,0.4286596732169223,-0.013379207231000556,-3.1211723581541664
+White Mtns AZ (Sunrise Park),Holidays,big_storm_days_per_window,El Nino,strong,3,0.545997635539324,0.4286596732169223,0.11733796232240173,27.37322161467312
+White Mtns AZ (Sunrise Park),Holidays,big_storm_days_per_window,El Nino,very strong,3,0.5286574562961239,0.4286596732169223,0.09999778307920165,23.328012716651795
+White Mtns AZ (Sunrise Park),Holidays,big_storm_days_per_window,El Nino,weak,5,0.5712963466378305,0.4286596732169223,0.1426366734209082,33.275038995498704
+White Mtns AZ (Sunrise Park),Holidays,big_storm_days_per_window,La Nina,moderate,4,0.22820897387826525,0.4286596732169223,-0.20045069933865703,-46.76220131330605
+White Mtns AZ (Sunrise Park),Holidays,big_storm_days_per_window,La Nina,strong,5,0.3136777835481358,0.4286596732169223,-0.11498188966878647,-26.823584501404717
+White Mtns AZ (Sunrise Park),Holidays,big_storm_days_per_window,La Nina,weak,7,0.6407284197972458,0.4286596732169223,0.21206874658032354,49.47252093690806
+White Mtns AZ (Sunrise Park),Holidays,big_storm_days_per_window,Neutral,neutral,15,0.3340301562336521,0.4286596732169223,-0.09462951698327016,-22.075675155797338
+White Mtns AZ (Sunrise Park),Midwinter,big_storm_days_per_window,El Nino,moderate,4,1.5398213930225162,0.9180087860219913,0.6218126070005249,67.73492982513014
+White Mtns AZ (Sunrise Park),Midwinter,big_storm_days_per_window,El Nino,strong,3,1.669916576946676,0.9180087860219913,0.7519077909246846,81.90638285532404
+White Mtns AZ (Sunrise Park),Midwinter,big_storm_days_per_window,El Nino,very strong,3,0.844285790857997,0.9180087860219913,-0.07372299516399428,-8.030750498963984
+White Mtns AZ (Sunrise Park),Midwinter,big_storm_days_per_window,El Nino,weak,5,0.6769688874478256,0.9180087860219913,-0.24103989857416575,-26.25681826191057
+White Mtns AZ (Sunrise Park),Midwinter,big_storm_days_per_window,La Nina,moderate,4,0.6615410980159536,0.9180087860219913,-0.2564676880060377,-27.93738926153305
+White Mtns AZ (Sunrise Park),Midwinter,big_storm_days_per_window,La Nina,strong,5,0.8025245117736717,0.9180087860219913,-0.11548427424831964,-12.5798659018012
+White Mtns AZ (Sunrise Park),Midwinter,big_storm_days_per_window,La Nina,weak,7,0.3544044929832572,0.9180087860219913,-0.5636042930387342,-61.39421556965717
+White Mtns AZ (Sunrise Park),Midwinter,big_storm_days_per_window,Neutral,neutral,15,1.0668032428302276,0.9180087860219913,0.14879445680823633,16.208391365512693
+White Mtns AZ (Sunrise Park),Spring,big_storm_days_per_window,El Nino,moderate,4,0.277139608952583,0.4172952086136659,-0.14015559966108293,-33.58667839170895
+White Mtns AZ (Sunrise Park),Spring,big_storm_days_per_window,El Nino,strong,3,0.3956643885917675,0.4172952086136659,-0.021630820021898423,-5.183577375297483
+White Mtns AZ (Sunrise Park),Spring,big_storm_days_per_window,El Nino,very strong,3,1.0810726026276183,0.4172952086136659,0.6637773940139524,159.06662245635343
+White Mtns AZ (Sunrise Park),Spring,big_storm_days_per_window,El Nino,weak,5,0.20378877464970163,0.4172952086136659,-0.2135064339639643,-51.16436267583165
+White Mtns AZ (Sunrise Park),Spring,big_storm_days_per_window,La Nina,moderate,4,0.18362486085147073,0.4172952086136659,-0.2336703477621952,-55.996412836488716
+White Mtns AZ (Sunrise Park),Spring,big_storm_days_per_window,La Nina,strong,5,0.5944735081475482,0.4172952086136659,0.17717829953388226,42.45874284598241
+White Mtns AZ (Sunrise Park),Spring,big_storm_days_per_window,La Nina,weak,7,0.5009501774670224,0.4172952086136659,0.08365496885335649,20.046951684701632
+White Mtns AZ (Sunrise Park),Spring,big_storm_days_per_window,Neutral,neutral,15,0.36162320580659,0.4172952086136659,-0.055672002807075904,-13.341155531602888
+Whitefish & Flathead Range,Early season,big_storm_days_per_window,El Nino,moderate,4,0.7388282113838757,1.2954421815598218,-0.5566139701759462,-42.96710251519956
+Whitefish & Flathead Range,Early season,big_storm_days_per_window,El Nino,strong,3,0.8515687354036182,1.2954421815598218,-0.4438734461562036,-34.264242161834076
+Whitefish & Flathead Range,Early season,big_storm_days_per_window,El Nino,very strong,3,1.0734888500450472,1.2954421815598218,-0.2219533315147746,-17.133403147913867
+Whitefish & Flathead Range,Early season,big_storm_days_per_window,El Nino,weak,8,1.4993544264791938,1.2954421815598218,0.203912244919372,15.740744575249542
+Whitefish & Flathead Range,Early season,big_storm_days_per_window,La Nina,moderate,4,1.2022936706132683,1.2954421815598218,-0.09314851094655352,-7.1904799976788505
+Whitefish & Flathead Range,Early season,big_storm_days_per_window,La Nina,strong,6,1.7193288495197054,1.2954421815598218,0.4238866679598836,32.72138841808349
+Whitefish & Flathead Range,Early season,big_storm_days_per_window,La Nina,weak,8,0.9193414123621027,1.2954421815598218,-0.3761007691977192,-29.032617167434065
+Whitefish & Flathead Range,Early season,big_storm_days_per_window,Neutral,neutral,16,1.5098620843079726,1.2954421815598218,0.21441990274815081,16.55186976310831
+Whitefish & Flathead Range,Holidays,big_storm_days_per_window,El Nino,moderate,4,0.30428146686212615,0.6520598454399902,-0.34777837857786403,-53.33534659586249
+Whitefish & Flathead Range,Holidays,big_storm_days_per_window,El Nino,strong,3,0.3468014854781469,0.6520598454399902,-0.3052583599618433,-46.81446988287773
+Whitefish & Flathead Range,Holidays,big_storm_days_per_window,El Nino,very strong,3,0.8049410557375706,0.6520598454399902,0.1528812102975804,23.445886350266026
+Whitefish & Flathead Range,Holidays,big_storm_days_per_window,El Nino,weak,8,0.6719985469812149,0.6520598454399902,0.01993870154122468,3.0578023904800715
+Whitefish & Flathead Range,Holidays,big_storm_days_per_window,La Nina,moderate,4,0.6006882483899914,0.6520598454399902,-0.05137159704999883,-7.8783561676512734
+Whitefish & Flathead Range,Holidays,big_storm_days_per_window,La Nina,strong,6,0.7052889975316967,0.6520598454399902,0.05322915209170653,8.16323109971434
+Whitefish & Flathead Range,Holidays,big_storm_days_per_window,La Nina,weak,8,0.9279703207999521,0.6520598454399902,0.27591047535996194,42.313673704870745
+Whitefish & Flathead Range,Holidays,big_storm_days_per_window,Neutral,neutral,16,0.6125325344240224,0.6520598454399902,-0.03952731101596774,-6.061914606825069
+Whitefish & Flathead Range,Midwinter,big_storm_days_per_window,El Nino,moderate,4,0.8523636918349439,1.542608662600046,-0.690244970765102,-44.74530627889146
+Whitefish & Flathead Range,Midwinter,big_storm_days_per_window,El Nino,strong,3,0.8756636944662547,1.542608662600046,-0.6669449681337912,-43.2348776655814
+Whitefish & Flathead Range,Midwinter,big_storm_days_per_window,El Nino,very strong,3,1.2158939873308656,1.542608662600046,-0.3267146752691803,-21.179362153879463
+Whitefish & Flathead Range,Midwinter,big_storm_days_per_window,El Nino,weak,8,0.9300365517919293,1.542608662600046,-0.6125721108081166,-39.7101433214847
+Whitefish & Flathead Range,Midwinter,big_storm_days_per_window,La Nina,moderate,4,1.5924942368066686,1.542608662600046,0.04988557420662265,3.23384507140918
+Whitefish & Flathead Range,Midwinter,big_storm_days_per_window,La Nina,strong,6,2.110334797865993,1.542608662600046,0.5677261352659473,36.802991518863415
+Whitefish & Flathead Range,Midwinter,big_storm_days_per_window,La Nina,weak,8,2.1864031727664006,1.542608662600046,0.6437945101663547,41.7341433232488
+Whitefish & Flathead Range,Midwinter,big_storm_days_per_window,Neutral,neutral,16,1.660501194473874,1.542608662600046,0.11789253187382798,7.642413447563669
+Whitefish & Flathead Range,Spring,big_storm_days_per_window,El Nino,moderate,4,0.9222464871071703,0.7072578974779263,0.21498858962924394,30.397481653565244
+Whitefish & Flathead Range,Spring,big_storm_days_per_window,El Nino,strong,3,0.5328274578674929,0.7072578974779263,-0.17443043961043347,-24.66291860896152
+Whitefish & Flathead Range,Spring,big_storm_days_per_window,El Nino,very strong,3,0.8736224885289223,0.7072578974779263,0.166364591050996,23.52247909061889
+Whitefish & Flathead Range,Spring,big_storm_days_per_window,El Nino,weak,8,0.5848420296784875,0.7072578974779263,-0.1224158677994388,-17.30851903329357
+Whitefish & Flathead Range,Spring,big_storm_days_per_window,La Nina,moderate,4,0.5952519584375475,0.7072578974779263,-0.11200593904037881,-15.836647344595333
+Whitefish & Flathead Range,Spring,big_storm_days_per_window,La Nina,strong,6,0.6558214668358745,0.7072578974779263,-0.051436430642051834,-7.272655537035862
+Whitefish & Flathead Range,Spring,big_storm_days_per_window,La Nina,weak,8,0.6162350202359143,0.7072578974779263,-0.09102287724201208,-12.86982832805383
+Whitefish & Flathead Range,Spring,big_storm_days_per_window,Neutral,neutral,16,0.8090326154470993,0.7072578974779263,0.10177471796917292,14.390043339508885
+Yellowstone & Wind River,Early season,big_storm_days_per_window,El Nino,moderate,4,0.6580902632144765,0.8088408180192718,-0.15075055480479527,-18.63785202803692
+Yellowstone & Wind River,Early season,big_storm_days_per_window,El Nino,strong,3,0.5301903241843181,0.8088408180192718,-0.27865049383495366,-34.4505974015167
+Yellowstone & Wind River,Early season,big_storm_days_per_window,El Nino,very strong,3,0.41136968813007463,0.8088408180192718,-0.39747112988919714,-49.140834764316615
+Yellowstone & Wind River,Early season,big_storm_days_per_window,El Nino,weak,6,0.8064158119255972,0.8088408180192718,-0.0024250060936745754,-0.29981252672349634
+Yellowstone & Wind River,Early season,big_storm_days_per_window,La Nina,moderate,4,1.0707234750011874,0.8088408180192718,0.2618826569819156,32.377527338843564
+Yellowstone & Wind River,Early season,big_storm_days_per_window,La Nina,strong,5,0.7925494792950272,0.8088408180192718,-0.016291338724244597,-2.014158825977602
+Yellowstone & Wind River,Early season,big_storm_days_per_window,La Nina,weak,7,0.6994306940734641,0.8088408180192718,-0.10941012394580762,-13.526780734648925
+Yellowstone & Wind River,Early season,big_storm_days_per_window,Neutral,neutral,16,0.961697946786015,0.8088408180192718,0.15285712876674318,18.89829560544027
+Yellowstone & Wind River,Holidays,big_storm_days_per_window,El Nino,moderate,4,0.21046688809707326,0.41316354832053315,-0.2026966602234599,-49.05966681896327
+Yellowstone & Wind River,Holidays,big_storm_days_per_window,El Nino,strong,3,0.018858472576839792,0.41316354832053315,-0.39430507574369333,-95.43559138905222
+Yellowstone & Wind River,Holidays,big_storm_days_per_window,El Nino,very strong,3,0.4208809188519494,0.41316354832053315,0.0077173705314162455,1.8678730402976145
+Yellowstone & Wind River,Holidays,big_storm_days_per_window,El Nino,weak,6,0.3356846704313796,0.41316354832053315,-0.07747887788915353,-18.752592818049198
+Yellowstone & Wind River,Holidays,big_storm_days_per_window,La Nina,moderate,4,0.38763230168468354,0.41316354832053315,-0.025531246635849603,-6.179452843705953
+Yellowstone & Wind River,Holidays,big_storm_days_per_window,La Nina,strong,5,0.4366644797594188,0.41316354832053315,0.023500931438885653,5.688045698710473
+Yellowstone & Wind River,Holidays,big_storm_days_per_window,La Nina,weak,7,0.4818744675007368,0.41316354832053315,0.06871091918020367,16.630440768433328
+Yellowstone & Wind River,Holidays,big_storm_days_per_window,Neutral,neutral,16,0.5343552307551042,0.41316354832053315,0.12119168243457101,29.332617295790637
+Yellowstone & Wind River,Midwinter,big_storm_days_per_window,El Nino,moderate,4,1.0219583824801295,0.9982690121390858,0.02368937034104368,2.373044745752672
+Yellowstone & Wind River,Midwinter,big_storm_days_per_window,El Nino,strong,3,0.30546479489702294,0.9982690121390858,-0.6928042172420629,-69.40055323940443
+Yellowstone & Wind River,Midwinter,big_storm_days_per_window,El Nino,very strong,3,0.8602805233931418,0.9982690121390858,-0.13798848874594405,-13.822775931936725
+Yellowstone & Wind River,Midwinter,big_storm_days_per_window,El Nino,weak,6,0.6796813943603173,0.9982690121390858,-0.31858761777876854,-31.914004532315452
+Yellowstone & Wind River,Midwinter,big_storm_days_per_window,La Nina,moderate,4,1.0959528625996198,0.9982690121390858,0.09768385046053396,9.785323321938792
+Yellowstone & Wind River,Midwinter,big_storm_days_per_window,La Nina,strong,5,1.136453948478183,0.9982690121390858,0.13818493633909723,13.842454755055979
+Yellowstone & Wind River,Midwinter,big_storm_days_per_window,La Nina,weak,7,0.4887014794618586,0.9982690121390858,-0.5095675326772272,-51.0451117364976
+Yellowstone & Wind River,Midwinter,big_storm_days_per_window,Neutral,neutral,16,1.4229226989188,0.9982690121390858,0.42465368677971416,42.539003176084606
+Yellowstone & Wind River,Spring,big_storm_days_per_window,El Nino,moderate,4,0.7124898597356603,0.6437986608405305,0.06869119889512976,10.669670981522067
+Yellowstone & Wind River,Spring,big_storm_days_per_window,El Nino,strong,3,0.9456402092874695,0.6437986608405305,0.301841548446939,46.8844635453048
+Yellowstone & Wind River,Spring,big_storm_days_per_window,El Nino,very strong,3,0.9492256457766794,0.6437986608405305,0.30542698493614895,47.44138245602898
+Yellowstone & Wind River,Spring,big_storm_days_per_window,El Nino,weak,6,0.5061060815966401,0.6437986608405305,-0.13769257924389045,-21.387521847920873
+Yellowstone & Wind River,Spring,big_storm_days_per_window,La Nina,moderate,4,0.2461815234859968,0.6437986608405305,-0.3976171373545337,-61.761100409157855
+Yellowstone & Wind River,Spring,big_storm_days_per_window,La Nina,strong,5,0.6506506230816776,0.6437986608405305,0.006851962241147147,1.0643020338379336
+Yellowstone & Wind River,Spring,big_storm_days_per_window,La Nina,weak,7,0.41409251105595646,0.6437986608405305,-0.22970614978457404,-35.67981167973763
+Yellowstone & Wind River,Spring,big_storm_days_per_window,Neutral,neutral,16,0.7621572149929037,0.6437986608405305,0.11835855415237317,18.384405148939987

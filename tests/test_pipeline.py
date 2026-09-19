@@ -146,23 +146,29 @@ def test_station_metrics_april1_and_peak():
 def test_pipeline_recovers_planted_dipole(tmp_path: Path):
     rc = main(["--root", str(tmp_path), "analyze", "--fixture", "--n-boot", "300", "--n-perm", "300"])
     assert rc == 0
-    corr = pd.read_csv(tmp_path / "results" / "corr_apr1_zd.csv").set_index("region")
+    results = tmp_path / "results"
+    corr = pd.read_csv(results / "corr_apr1_zd.csv").set_index("region")
     # planted: north dry in El Niño (negative r), south wet (positive r)
     for region in ("MT", "ID", "North (MT+ID)"):
         assert corr.loc[region, "pearson_r"] < -0.5 and corr.loc[region, "pearson_p"] < 0.01
     for region in ("CO", "UT", "South (CO+UT)"):
         assert corr.loc[region, "pearson_r"] > 0.4 and corr.loc[region, "pearson_p"] < 0.01
-    sc = pd.read_csv(tmp_path / "results" / "station_corr_apr1.csv")
+    sc = pd.read_csv(results / "station_corr_apr1.csv")
     assert (sc[sc.stateCode == "MT"].r < 0).mean() > 0.8
     assert (sc[sc.stateCode == "UT"].r > 0).mean() > 0.8
     assert "WY" in set(sc.stateCode) and "WY" in set(corr.index)
-    assert (tmp_path / "results" / "corr_apr1_depth_zd.csv").exists()
-    assert (tmp_path / "results" / "summary.md").exists()
-    for i in range(1, 8):
-        assert list((tmp_path / "results").glob(f"fig{i}_*.png")), f"figure {i} missing"
-    nc = pd.read_csv(tmp_path / "results" / "corr_nclimdiv_precip.csv").set_index("region")
+    assert (results / "corr_apr1_depth_zd.csv").exists()
+    assert (results / "summary.md").exists()
+    # every figure must be about the snowpack a skier meets; the water-supply
+    # figures (April-1 scatter, phase boxes, statewide precipitation) are gone
+    assert list(results.glob("fig8_*.png")) and list(results.glob("fig9_*.png"))
+    for gone in ("fig2_scatter_apr1", "fig3_station_map_apr1", "fig4_phase_boxes_apr1",
+                 "fig5_nino_strength_apr1", "fig6_regional_timeseries_apr1",
+                 "fig7_nclimdiv_precip"):
+        assert not (results / f"{gone}.png").exists(), f"{gone} should have been removed"
+    nc = pd.read_csv(results / "corr_nclimdiv_precip.csv").set_index("region")
     assert nc.loc["MT", "pearson_r"] < 0 and nc.loc["UT", "pearson_r"] > 0
-    bh = pd.read_csv(tmp_path / "results" / "bootstrap_apr1_brown_harper_2026.csv").set_index("region")
+    bh = pd.read_csv(results / "bootstrap_apr1_brown_harper_2026.csv").set_index("region")
     assert bool(bh.loc["MT", "bh_slope_significant"]) and bh.loc["MT", "bh_slope_mean"] < 0
     assert bool(bh.loc["UT", "bh_slope_significant"]) and bh.loc["UT", "bh_slope_mean"] > 0
 
@@ -408,9 +414,11 @@ def test_stuart_mountain_anchors_the_snowbowl_region():
         "longitude": [-113.92667, -113.8, -113.3],
         "elevation": [7270.0, 4770.0, 4690.0]})
     rm = SKI.assign_regions(st)
-    sb = rm[rm.region.str.startswith("Montana Snowbowl")].sort_values("weight", ascending=False)
+    sb = rm[rm.region.str.contains("Snowbowl")].sort_values("weight", ascending=False)
     assert sb.iloc[0].stationTriplet == "901:MT:SNTL"
     assert sb.iloc[0].elev_gap_ft == 0, "Stuart Mountain sits inside Snowbowl's band"
+    # the region is a RANGE that crosses a state line, not a state box
+    assert set(SKI.REGION_META[sb.iloc[0].region].states) == {"MT", "ID"}
 
 
 def test_strength_effect_separates_phase_from_magnitude():
@@ -481,3 +489,64 @@ def test_test_grid_applies_fdr_across_the_whole_grid():
     assert noise.fdr_significant.sum() <= 1, "pure noise must not survive FDR"
     signs = SKI.window_sign_summary(grid)
     assert len(signs) == len(SKI.SKI_WINDOWS) and set(signs.columns) >= {"sign_test_p", "mean_r"}
+
+
+def test_physical_composites_are_in_real_units():
+    """Composites must be actual days and inches, with a % change that matches."""
+    oni = FX.synthetic_oni(1985, 2025)
+    enso = A.enso_by_water_year(oni)
+    rng = np.random.default_rng(21)
+    rows, rmap = [], []
+    region = SKI.SKI_REGIONS_FULL[0].name
+    x = enso.set_index("water_year")["oni_djf"]
+    for st in range(4):
+        trip = f"P{st}:MT:SNTL"
+        rmap.append({"stationTriplet": trip, "region": region, "weight": 1.0})
+        for yv in enso.water_year:
+            # 10 powder days normally, 3 fewer per +1 degree of ONI
+            rows.append({"stationTriplet": trip, "water_year": yv, "window": "Midwinter",
+                         "big_storm_days_per_window": 10.0 - 3.0 * x[yv] + rng.normal(0, 0.5),
+                         "storm_days_per_window": np.nan, "days_with_base_per_window": np.nan,
+                         "new_snow_in_total": np.nan,
+                         "mean_swe_in": np.nan, "mean_depth_in": np.nan})
+    comp = SKI.physical_composites(pd.DataFrame(rows), pd.DataFrame(rmap), enso)
+    r = comp[comp.metric == "big_storm_days_per_window"].iloc[0]
+    assert r.unit == "days"
+    assert 8.0 < r.all_winters < 12.0, "a normal winter should be about 10 powder days"
+    assert r.mean_nino < r.all_winters < r.mean_nina, "El Nino must lose days, La Nina gain"
+    assert r.nino_minus_all == pytest.approx(r.mean_nino - r.all_winters)
+    assert r.pct_change_nino == pytest.approx(100 * r.nino_minus_all / r.all_winters)
+    assert r.pct_change_nino < -8, "a 3-day-per-degree signal must show as a clear % loss"
+
+
+def test_new_snow_ratio_converts_water_to_snow_depth():
+    """A powder day is 6 inches of SNOW; a fixed water threshold would count a
+    dry continental storm as nothing. The ratio comes from each station's own
+    paired depth and water record."""
+    days = pd.date_range("2009-11-01", "2010-03-31", freq="D")
+    n = len(days)
+    # a dry site: 12 inches of snow per inch of water
+    swe = np.zeros(n); dep = np.zeros(n)
+    for k in range(5, n, 10):
+        swe[k:] += 8.0                     # 8 mm water per storm
+        dep[k:] += 8.0 * 12.0              # 12x depth ratio
+    long = pd.concat([
+        pd.DataFrame({"stationTriplet": "DRY:CO:SNTL", "element": "WTEQ",
+                      "date": days, "value": swe}),
+        pd.DataFrame({"stationTriplet": "DRY:CO:SNTL", "element": "SNWD",
+                      "date": days, "value": dep})], ignore_index=True)
+    ratios = SKI.new_snow_ratios(long, min_events=5)
+    assert ratios["DRY:CO:SNTL"] == pytest.approx(12.0, rel=0.05)
+
+    m = SKI.station_window_metrics(long, ratios=ratios)
+    mid = m[m.window == "Midwinter"].iloc[0]
+    # 8 mm of water = 0.315 in x 12 = 3.8 in of snow: a storm day, not a powder day
+    assert mid.storm_days_per_window > 0, "2-inch storms must be counted"
+    assert mid.big_storm_days_per_window == 0, "3.8 inches is not a 6-inch powder day"
+    # the same water at a maritime ratio would still not reach 6 inches, but
+    # doubling the storm size must
+    big = long.copy()
+    big.loc[big.element == "WTEQ", "value"] *= 3
+    big.loc[big.element == "SNWD", "value"] *= 3
+    m2 = SKI.station_window_metrics(big, ratios=ratios)
+    assert m2[m2.window == "Midwinter"].iloc[0].big_storm_days_per_window > 0

@@ -25,7 +25,8 @@ import requests
 
 from . import STATES
 from .sources import (find_nclimdiv_files, parse_awdb_data, parse_awdb_stations,
-                      parse_mei_v2, parse_nclimdiv, parse_oni_ascii, parse_oni_psl)
+                      parse_mei_v2, parse_nclimdiv, parse_oni_ascii, parse_oni_psl,
+                      to_metric)
 
 log = logging.getLogger("enso_snowpack.fetch")
 
@@ -160,32 +161,68 @@ def fetch_station_series(raw_dir: Path, triplet: str, elements, duration: str,
 
 def fetch_all_stations(raw_dir: Path, stations: pd.DataFrame, network: str,
                        end: str, force: bool = False, max_stations: int | None = None,
-                       progress: bool = True) -> pd.DataFrame:
-    """Loop over stations, tolerate individual failures, return long-form data."""
+                       progress: bool = True, sink=None) -> pd.DataFrame | int:
+    """Loop over stations, tolerate individual failures.
+
+    With ``sink`` the converted frames are handed off one station at a time and
+    the row count is returned; nothing accumulates. Without it every frame is
+    concatenated and returned, which is fine for a few hundred stations but
+    costs many gigabytes at the full western-US scale — hence the sink.
+    """
     if network == "SNTL":
         elements, duration = SNOTEL_ELEMENTS, "DAILY"
-    else:  # snow courses: manual measurements near the 1st of the month
+    else:  # snow courses: manual measurements, semimonthly
         elements, duration = ["WTEQ"], "SEMIMONTHLY"
-    rows = stations.itertuples()
-    frames, failed = [], []
+    frames, failed, n_rows = [], [], 0
     n = len(stations) if max_stations is None else min(max_stations, len(stations))
-    for i, st in enumerate(rows):
+    for i, st in enumerate(stations.itertuples()):
         if max_stations is not None and i >= max_stations:
             break
         begin = str(st.beginDate)[:10] if isinstance(st.beginDate, str) else "1900-01-01"
         try:
             df = fetch_station_series(raw_dir, st.stationTriplet, elements, duration,
                                       begin, end, force)
-            frames.append(df)
+            if sink is not None:
+                if len(df):
+                    sink(df)
+                    n_rows += len(df)
+            else:
+                frames.append(df)
         except (FetchError, ValueError) as exc:
             failed.append((st.stationTriplet, str(exc)[:120]))
             log.warning("station %s failed: %s", st.stationTriplet, exc)
-        if progress and (i + 1) % 25 == 0:
-            log.info("%s: %d/%d stations fetched", network, i + 1, n)
+        if progress and (i + 1) % 50 == 0:
+            log.info("%s: %d/%d stations", network, i + 1, n)
     if failed:
         (raw_dir / f"failed_{network}.txt").write_text(
             "\n".join(f"{t}\t{m}" for t, m in failed), encoding="utf-8")
         log.warning("%d %s stations failed — see failed_%s.txt", len(failed), network, network)
+    if sink is not None:
+        return n_rows
     if not frames:
         return pd.DataFrame(columns=["stationTriplet", "element", "date", "value", "unit"])
     return pd.concat(frames, ignore_index=True)
+
+
+class ParquetSink:
+    """Stream station frames straight to parquet so nothing piles up in RAM."""
+
+    def __init__(self, path: Path):
+        import pyarrow as pa
+        import pyarrow.parquet as pq
+        self._pa, self._pq, self.path = pa, pq, path
+        self.schema = pa.schema([("stationTriplet", pa.string()), ("element", pa.string()),
+                                 ("date", pa.timestamp("ns")), ("value", pa.float64()),
+                                 ("unit", pa.string())])
+        path.parent.mkdir(parents=True, exist_ok=True)
+        self.writer = pq.ParquetWriter(path, self.schema, compression="zstd")
+
+    def __call__(self, df: pd.DataFrame) -> None:
+        df = to_metric(df)
+        table = self._pa.Table.from_pandas(
+            df[["stationTriplet", "element", "date", "value", "unit"]],
+            schema=self.schema, preserve_index=False)
+        self.writer.write_table(table)
+
+    def close(self):
+        self.writer.close()

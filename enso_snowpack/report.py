@@ -58,6 +58,26 @@ def composite_table(comp: pd.DataFrame) -> str:
     return "\n".join(out)
 
 
+def physical_table(comp, window: str = "Midwinter",
+                   metric: str = "big_storm_days_per_window", top: int = 40) -> str:
+    """Actual powder-day counts per region: normal, El Niño, La Niña."""
+    if comp is None or len(comp) == 0:
+        return "_physical composites not run_"
+    d = comp[(comp["window"] == window) & (comp["metric"] == metric)].dropna(subset=["mean_nino"])
+    if d.empty:
+        return "_no region had enough winters in every phase_"
+    d = d.sort_values("pct_change_nino")
+    out = [f"**Powder days in the {window.lower()} window** "
+           "(days with at least 25 mm of new snow water, roughly 25–40 cm of snow):", "",
+           "| Ski region | winters | a normal winter | an El Niño winter | change | "
+           "a La Niña winter | change |", "|---|---|---|---|---|---|---|"]
+    for r in d.head(top).itertuples():
+        out.append(f"| {r.region} | {int(r.n_winters)} | {r.all_winters:.1f} d | "
+                   f"**{r.mean_nino:.1f} d** | {r.nino_minus_all:+.1f} d ({r.pct_change_nino:+.0f} %) | "
+                   f"{r.mean_nina:.1f} d | {r.nina_minus_all:+.1f} d ({r.pct_change_nina:+.0f} %) |")
+    return "\n".join(out)
+
+
 def ski_strength_table(sv) -> str:
     """Phase versus magnitude, as shares of variance explained."""
     if sv is None or len(sv) == 0:
@@ -235,6 +255,21 @@ def write_report(out_dir: Path, ctx: dict) -> Path:
         "",
         enso_years_table(e),
         "",
+        "## The numbers, in days and inches",
+        "",
+        "These are actual averages over the record, not anomalies: what a normal winter "
+        "delivers, what an El Niño winter delivered, and the difference.",
+        "",
+        physical_table(ctx.get("ski_physical")),
+        "",
+        "![](fig_powder_days.png)",
+        "",
+        "![](fig_window_change.png)",
+        "",
+        "![](fig_region_map.png)",
+        "",
+        "![](fig_season_shape.png)",
+        "",
         "## The ski season: by region and window of winter",
         "",
         "Skiing is not water supply. What matters is the base underfoot and how often it storms "
@@ -258,6 +293,8 @@ def write_report(out_dir: Path, ctx: dict) -> Path:
         "",
         ski_strength_table(ctx.get("ski_strength")),
         "",
+        "![](fig_strength_powder.png)",
+        "",
         "![](fig10_distributions.png)",
         "",
         "## When in the season the signal acts",
@@ -278,10 +315,6 @@ def write_report(out_dir: Path, ctx: dict) -> Path:
         "`slope` is in station-z units per °C of ONI. `r within El Niño` is the correlation using "
         "El Niño winters only — this is the direct test of whether *stronger* events matter more. "
         "Stars: * p<0.05, ** p<0.01, *** p<0.001.",
-        "",
-        "![](fig2_scatter_apr1.png)",
-        "",
-        "![](fig3_station_map_apr1.png)",
         "",
         "### Per-station correlations (April-1 SWE)",
         "",
@@ -311,10 +344,6 @@ def write_report(out_dir: Path, ctx: dict) -> Path:
         "",
         "## By phase and event strength (April-1 SWE, state means)",
         "",
-        "![](fig4_phase_boxes_apr1.png)",
-        "",
-        "![](fig5_nino_strength_apr1.png)",
-        "",
     ]
     for region, comp in ctx["composites"].items():
         lines += [f"### {region}", "", composite_table(comp), ""]
@@ -331,7 +360,7 @@ def write_report(out_dir: Path, ctx: dict) -> Path:
         lines += ["## Snow courses (longer record, April-1 SWE)", "", corr_table(ctx["corr_courses"]), ""]
     if ctx.get("corr_precip"):
         lines += ["## Weather: nClimDiv statewide Nov–Mar precipitation (% of normal) vs DJF ONI", "",
-                  corr_table(ctx["corr_precip"]), "", "![](fig7_nclimdiv_precip.png)", ""]
+                  corr_table(ctx["corr_precip"]), "", ""]
     if ctx.get("corr_temp"):
         lines += ["## Weather: nClimDiv statewide DJF temperature anomaly (°C) vs DJF ONI", "",
                   corr_table(ctx["corr_temp"]), ""]
@@ -341,8 +370,6 @@ def write_report(out_dir: Path, ctx: dict) -> Path:
     if ctx.get("corr_mei"):
         lines += ["## Sensitivity: MEI v2 (Dec–Jan) instead of ONI", "", corr_table(ctx["corr_mei"]), ""]
     lines += [
-        "![](fig6_regional_timeseries_apr1.png)",
-        "",
         "## How to read this",
         "",
         "- A negative r means El Niño winters have *less* snow than average (and La Niña more); "

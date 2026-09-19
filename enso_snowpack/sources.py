@@ -110,7 +110,9 @@ def parse_mei_v2(text: str) -> pd.DataFrame:
 # ------------------------------------------------------------ nClimDiv -----
 
 # NCEI nClimDiv state codes (alphabetical order of the 48 contiguous states).
-NCLIMDIV_STATE_CODES = {"CO": 5, "ID": 10, "MT": 24, "UT": 42, "WY": 48}
+# NCEI nClimDiv statewide codes (Alaska has no nClimDiv division record).
+NCLIMDIV_STATE_CODES = {"AZ": 2, "CA": 4, "CO": 5, "ID": 10, "MT": 24, "NV": 26,
+                        "NM": 29, "OR": 35, "SD": 39, "UT": 42, "WA": 45, "WY": 48}
 NCLIMDIV_ELEMENTS = {"01": "pcpn", "02": "tavg", "27": "tmax", "28": "tmin", "05": "pdsi"}
 NCLIMDIV_MISSING = {"pcpn": -9.99, "tavg": -99.9, "tmax": -99.9, "tmin": -99.9, "pdsi": -99.99}
 
@@ -138,7 +140,8 @@ def parse_nclimdiv(text: str, states: Iterable[str] | None = None,
         raise ValueError(f"layout must be 'statewide' or 'divisional', not {layout!r}")
     want = None
     if states is not None:
-        want = {NCLIMDIV_STATE_CODES[s] for s in states}
+        # Alaska has no nClimDiv statewide record; skip silently rather than fail.
+        want = {NCLIMDIV_STATE_CODES[s] for s in states if s in NCLIMDIV_STATE_CODES}
     code_to_state = {v: k for k, v in NCLIMDIV_STATE_CODES.items()}
     rows = []
     for line in text.splitlines():

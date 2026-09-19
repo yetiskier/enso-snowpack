@@ -14,7 +14,11 @@ import pandas as pd
 from . import STATES
 from .sources import ONI_SEASONS
 
-FIXTURE_SIGNAL = {"MT": -0.5, "ID": -0.4, "WY": -0.1, "CO": +0.3, "UT": +0.45}  # z per °C of ONI
+# z per °C of ONI. Northern and maritime states lean negative, southern
+# positive, matching the published dipole so the pipeline has a known answer.
+FIXTURE_SIGNAL = {"AK": -0.2, "WA": -0.45, "OR": -0.4, "CA": +0.2, "NV": +0.15,
+                  "ID": -0.4, "MT": -0.5, "WY": -0.1, "UT": +0.45, "CO": +0.3,
+                  "AZ": +0.4, "NM": +0.35, "SD": -0.15}
 
 
 def synthetic_oni(y0: int = 1950, y1: int = 2025, seed: int = 1) -> pd.DataFrame:
@@ -34,9 +38,13 @@ def synthetic_oni(y0: int = 1950, y1: int = 2025, seed: int = 1) -> pd.DataFrame
 
 def synthetic_stations(n_per_state: int = 12, seed: int = 2) -> pd.DataFrame:
     rng = np.random.default_rng(seed)
-    boxes = {"MT": (44.5, 48.9, -115.5, -109.0), "ID": (42.2, 48.5, -116.8, -111.2),
-             "WY": (41.2, 44.9, -110.9, -104.5),
-             "CO": (37.2, 40.9, -108.8, -105.0), "UT": (37.2, 41.8, -113.5, -109.2)}
+    boxes = {"AK": (60.0, 63.0, -150.5, -145.0), "WA": (45.6, 49.0, -122.5, -117.5),
+             "OR": (42.0, 46.0, -122.5, -117.5), "CA": (36.5, 41.9, -122.5, -118.5),
+             "NV": (36.0, 41.9, -120.0, -114.5), "ID": (42.2, 48.5, -116.8, -111.2),
+             "MT": (44.5, 48.9, -115.5, -109.0), "WY": (41.2, 44.9, -110.9, -104.5),
+             "UT": (37.2, 41.8, -113.5, -109.2), "CO": (37.2, 40.9, -108.8, -105.0),
+             "AZ": (33.5, 36.5, -112.5, -109.0), "NM": (33.0, 37.0, -108.5, -105.0),
+             "SD": (43.5, 44.8, -104.5, -103.2)}
     rows = []
     k = 300
     for st in STATES:

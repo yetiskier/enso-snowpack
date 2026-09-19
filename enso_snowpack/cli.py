@@ -11,9 +11,9 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from . import STATES, analysis as A, figures as F, fixture as FX, bootstrap as B, daily as D, ski as SKI
+from . import STATES, analysis as A, figures as F, figures_ski as FS, fixture as FX, bootstrap as B, daily as D, ski as SKI
 from .fetch import (fetch_all_stations, fetch_mei, fetch_nclimdiv, fetch_oni, fetch_stations,
-                    FetchError)
+                    FetchError, ParquetSink)
 from .report import write_report
 from .sources import to_metric
 
@@ -47,10 +47,20 @@ def cmd_fetch(args) -> int:
     stations = fetch_stations(raw, "SNTL", args.force)
     stations.to_csv(derived / "stations_SNTL.csv", index=False)
     log.info("SNOTEL stations: %d", len(stations))
-    daily = fetch_all_stations(raw, stations, "SNTL", end, args.force, args.max_stations)
-    to_metric(daily).to_parquet(derived / "snotel_daily.parquet") if _have_parquet() \
-        else to_metric(daily).to_csv(derived / "snotel_daily.csv.gz", index=False)
-    log.info("SNOTEL daily rows: %d", len(daily))
+    if _have_parquet():
+        # Stream to parquet: 932 stations x 4 elements is tens of millions of
+        # rows and will not fit in memory as one frame.
+        sink = ParquetSink(derived / "snotel_daily.parquet")
+        try:
+            n_rows = fetch_all_stations(raw, stations, "SNTL", end, args.force,
+                                        args.max_stations, sink=sink)
+        finally:
+            sink.close()
+    else:
+        daily = fetch_all_stations(raw, stations, "SNTL", end, args.force, args.max_stations)
+        to_metric(daily).to_csv(derived / "snotel_daily.csv.gz", index=False)
+        n_rows = len(daily)
+    log.info("SNOTEL daily rows: %d", n_rows)
     if args.snow_courses:
         try:
             courses = fetch_stations(raw, "SNOW", args.force)
@@ -71,11 +81,22 @@ def _have_parquet() -> bool:
         return False
 
 
-def _load_daily(derived: Path) -> pd.DataFrame:
+def _load_daily(derived: Path, columns=("stationTriplet", "element", "date", "value")) -> pd.DataFrame:
+    """Load the daily table with the string columns as categories.
+
+    At 40 million rows the station and element columns dominate memory as
+    Python objects; as categories the whole table fits comfortably.
+    """
     p = derived / "snotel_daily.parquet"
     if p.exists():
-        return pd.read_parquet(p)
-    return pd.read_csv(derived / "snotel_daily.csv.gz", parse_dates=["date"])
+        df = pd.read_parquet(p, columns=list(columns))
+    else:
+        df = pd.read_csv(derived / "snotel_daily.csv.gz", parse_dates=["date"],
+                         usecols=list(columns))
+    for c in ("stationTriplet", "element", "unit"):
+        if c in df:
+            df[c] = df[c].astype("category")
+    return df
 
 
 # ---------------------------------------------------------------- analyze ---
@@ -276,8 +297,9 @@ def cmd_analyze(args) -> int:
         ctx["corr_temp"] = _corr_set(regt[["region", "water_year", "value"]], enso,
                                      "nclimdiv_tavg_djf_anom", n_boot=args.n_boot)
         pd.DataFrame(ctx["corr_temp"]).to_csv(results / "corr_nclimdiv_temp.csv", index=False)
-        F.fig_scatter_by_state(regn, enso, results, "Nov–Mar precipitation, % of normal − 100",
-                               "fig7_nclimdiv_precip")
+        # No figure here: statewide precipitation is a water-supply view and its
+        # units mean nothing on a chairlift. The table stays as a long-record
+        # cross-check of the ski results.
 
     # --- MEI sensitivity
     if mei is not None:
@@ -287,7 +309,11 @@ def cmd_analyze(args) -> int:
 
     # --- day-by-day seasonal signal (Brown & Harper 2026 frame)
     if daily is not None and not args.no_daily:
-        cube, cube_stations, cube_years = D.build_cube(daily)
+        dd = daily[daily["element"] == "WTEQ"].copy()
+        dd["stationTriplet"] = dd["stationTriplet"].astype(str)
+        dd["element"] = dd["element"].astype(str)
+        cube, cube_stations, cube_years = D.build_cube(dd)
+        del dd
         if len(cube_stations):
             z = D.standardize_cube(cube, cube_years)
             curves = []
@@ -308,9 +334,16 @@ def cmd_analyze(args) -> int:
     # --- ski season: sub-seasonal, by ski region and window of winter
     if daily is not None and not args.no_ski:
         region_map = SKI.assign_regions(stations)
-        sub = daily[daily["stationTriplet"].isin(set(region_map["stationTriplet"]))]
+        keep = set(region_map["stationTriplet"])
+        sub = daily[daily["stationTriplet"].isin(keep)].copy()
+        sub["stationTriplet"] = sub["stationTriplet"].astype(str)
+        sub["element"] = sub["element"].astype(str)
         if not sub.empty:
-            wm = SKI.station_window_metrics(sub)
+            ratios = SKI.new_snow_ratios(sub)
+            ratios.to_csv(results / "new_snow_ratios.csv", header=["in_snow_per_in_water"])
+            log.info("new-snow ratios from %d stations, median %.1f in snow per in water",
+                     len(ratios), float(ratios.median()) if len(ratios) else float("nan"))
+            wm = SKI.station_window_metrics(sub, ratios=ratios)
             wm.to_csv(derived / "ski_window_metrics.csv", index=False)
             grid = SKI.test_grid(wm, region_map, enso, n_iter=min(args.n_boot, 10000),
                                  n_perm=args.n_perm)
@@ -325,6 +358,22 @@ def cmd_analyze(args) -> int:
             SKI.region_elevation_table(region_map).to_csv(
                 results / "ski_region_elevations.csv", index=False)
             F.fig_ski_heatmap(grid, results)
+            comp = SKI.physical_composites(wm, region_map, enso)
+            comp.to_csv(results / "ski_physical_composites.csv", index=False)
+            ctx["ski_physical"] = comp
+            strength_phys = SKI.strength_composites_physical(wm, region_map, enso)
+            strength_phys.to_csv(results / "ski_strength_physical.csv", index=False)
+            ctx["ski_strength_physical"] = strength_phys
+            meta = SKI.REGION_META
+            FS.fig_powder_days(comp, meta, results, window="Midwinter")
+            FS.fig_powder_days(comp, meta, results, window="Holidays",
+                               name="fig_powder_days_holidays")
+            FS.fig_window_bars(comp, results)
+            FS.fig_region_map(comp, grid, meta, results)
+            FS.fig_strength(strength_phys, results)
+            shapes = SKI.season_shapes(sub, region_map, enso)
+            if shapes:
+                FS.fig_season_shape(shapes, results)
             # probability distributions behind the strongest findings
             top = grid.nsmallest(6, "p_perm")[["region", "window", "metric"]]
             dists = [SKI.distributions_for(wm, region_map, enso, r.region, r.window, r.metric,
@@ -336,13 +385,11 @@ def cmd_analyze(args) -> int:
                      int(grid["fdr_significant"].sum()) if len(grid) else 0)
             del sub
 
-    # --- figures
+    # --- figures: every one is about the snowpack as a skier meets it,
+    # in days and inches. The water-supply figures (April-1 scatter, phase
+    # boxes, statewide precipitation) were removed: they answer a different
+    # question and their units mean nothing on a chairlift.
     F.fig_oni_timeseries(enso, results)
-    F.fig_scatter_by_state(reg, enso, results, "April-1 SWE anomaly (station z, detrended)", "fig2_scatter_apr1")
-    F.fig_station_map(sc, results, "Per-station correlation of April-1 SWE with DJF ONI", "fig3_station_map_apr1")
-    F.fig_phase_boxes(reg, enso, results, "April-1 SWE anomaly (z)", "fig4_phase_boxes_apr1")
-    F.fig_nino_strength(reg, enso, results, "April-1 SWE anomaly (z)", "fig5_nino_strength_apr1")
-    F.fig_regional_timeseries(reg, enso, results, "April-1 SWE anomaly (z)", "fig6_regional_timeseries_apr1")
 
     p = write_report(results, ctx)
     log.info("report written: %s", p)
