@@ -1,0 +1,4 @@
+# Downloaded and derived data are regenerable and large; results are committed.
+/data/
+__pycache__/
+.pytest_cache/
