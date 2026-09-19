@@ -102,7 +102,8 @@ def fetch_nclimdiv(raw_dir: Path, force: bool = False,
         if prod not in names:
             raise FetchError(f"nClimDiv product {prod!r} not in directory listing")
         text = _cached_text(raw_dir / names[prod], NCLIMDIV_BASE + names[prod], force)
-        frames.append(parse_nclimdiv(text, STATES))
+        layout = "divisional" if prod.endswith("dv") else "statewide"
+        frames.append(parse_nclimdiv(text, STATES, layout))
     return pd.concat(frames, ignore_index=True)
 
 

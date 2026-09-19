@@ -115,19 +115,30 @@ NCLIMDIV_ELEMENTS = {"01": "pcpn", "02": "tavg", "27": "tmax", "28": "tmin", "05
 NCLIMDIV_MISSING = {"pcpn": -9.99, "tavg": -99.9, "tmax": -99.9, "tmin": -99.9, "pdsi": -99.99}
 
 
-def parse_nclimdiv(text: str, states: Iterable[str] | None = None) -> pd.DataFrame:
+def parse_nclimdiv(text: str, states: Iterable[str] | None = None,
+                   layout: str = "statewide") -> pd.DataFrame:
     """Parse an nClimDiv fixed-width file (statewide or divisional).
 
-    Each line is an ID token followed by 12 monthly values. The ID is
-    ``SSSEEYYYY`` (3-digit state, 2-digit element, year) for the statewide
-    files and ``SSDDEEYYYY`` (2-digit state, 2-digit division, element, year)
-    for the divisional files. Returns long-form ``state, division, element,
-    year, month, value`` with missing values dropped. ``division`` is 0 for
-    statewide rows.
+    Both layouts use a 10-character id followed by 12 monthly values, so the
+    layout CANNOT be inferred from its length — the caller says which file
+    this is:
+
+    * ``statewide`` (``climdiv-pcpnst`` / ``climdiv-tmpcst``):
+      ``SSS`` 3-digit state, ``D`` division (always 0), ``EE`` element,
+      ``YYYY`` year.
+    * ``divisional`` (``climdiv-pcpndv`` / ``climdiv-tmpcdv``):
+      ``SS`` 2-digit state, ``DD`` division, ``EE`` element, ``YYYY`` year.
+
+    Element codes differ per file: the statewide precipitation file uses 01
+    and the statewide temperature file 02. Returns long-form ``state,
+    division, element, year, month, value`` with missing values dropped;
+    ``division`` is 0 for statewide rows.
     """
+    if layout not in ("statewide", "divisional"):
+        raise ValueError(f"layout must be 'statewide' or 'divisional', not {layout!r}")
     want = None
     if states is not None:
-        want = {NCLIMDIV_STATE_CODES[s]: s for s in states}
+        want = {NCLIMDIV_STATE_CODES[s] for s in states}
     code_to_state = {v: k for k, v in NCLIMDIV_STATE_CODES.items()}
     rows = []
     for line in text.splitlines():
@@ -135,12 +146,13 @@ def parse_nclimdiv(text: str, states: Iterable[str] | None = None) -> pd.DataFra
         if len(parts) != 13:
             continue
         ident = parts[0]
-        if len(ident) == 9:      # statewide
-            st, div, el, yr = int(ident[0:3]), 0, ident[3:5], int(ident[5:9])
-        elif len(ident) == 10:   # divisional
-            st, div, el, yr = int(ident[0:2]), int(ident[2:4]), ident[4:6], int(ident[6:10])
-        else:
+        if len(ident) != 10 or not ident.isdigit():
             continue
+        if layout == "statewide":
+            st, div = int(ident[0:3]), int(ident[3:4])
+        else:
+            st, div = int(ident[0:2]), int(ident[2:4])
+        el, yr = ident[4:6], int(ident[6:10])
         if want is not None and st not in want:
             continue
         elem = NCLIMDIV_ELEMENTS.get(el)
@@ -201,8 +213,10 @@ def parse_awdb_data(payload: str | list) -> pd.DataFrame:
             if not vals:
                 continue
             df = pd.DataFrame(vals)
-            if "value" not in df or "date" not in df:
+            if "value" not in df:
                 continue
+            if "date" not in df:
+                df["date"] = _derive_date(df)
             df = df[["date", "value"]].copy()
             df["stationTriplet"] = trip
             df["element"] = elem
@@ -215,6 +229,31 @@ def parse_awdb_data(payload: str | list) -> pd.DataFrame:
     out["value"] = pd.to_numeric(out["value"], errors="coerce")
     out = out.dropna(subset=["date", "value"])
     return out[["stationTriplet", "element", "date", "value", "unit"]].reset_index(drop=True)
+
+
+def _derive_date(df: pd.DataFrame) -> pd.Series:
+    """Build a date for AWDB records that carry no ``date`` key.
+
+    DAILY records have ``date``. SEMIMONTHLY / MONTHLY records (snow courses,
+    and any monthly element) instead carry ``collectionDate`` — the actual day
+    the course was measured — plus ``year``/``month`` and, semimonthly, a
+    ``monthPart`` of "1" (mid-month) or "2" (end of month). The real
+    collection date is preferred because a snow course read on 27 January is
+    the February-1 measurement, and the analysis matches on proximity to the
+    target day.
+    """
+    out = pd.Series(pd.NaT, index=df.index, dtype="datetime64[ns]")
+    if "collectionDate" in df:
+        out = pd.to_datetime(df["collectionDate"].astype(str).str.slice(0, 10), errors="coerce")
+    if out.isna().any() and {"year", "month"} <= set(df.columns):
+        y = pd.to_numeric(df["year"], errors="coerce")
+        m = pd.to_numeric(df["month"], errors="coerce")
+        part = pd.to_numeric(df["monthPart"], errors="coerce") if "monthPart" in df else pd.Series(1, index=df.index)
+        # part 1 -> mid-month (15th), part 2 -> end of month (28th, safe in Feb)
+        day = pd.Series(np.where(part.fillna(1).to_numpy() >= 2, 28, 15), index=df.index)
+        fallback = pd.to_datetime(dict(year=y, month=m, day=day), errors="coerce")
+        out = out.fillna(fallback)
+    return out
 
 
 def to_metric(df: pd.DataFrame) -> pd.DataFrame:

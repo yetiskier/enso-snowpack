@@ -33,12 +33,17 @@ MEI_SAMPLE = """1979 1980
 1980  0.83  0.68  0.69  0.90  0.94  0.90  0.86 -999 -999 -999 -999 -999
 """
 
-# statewide: SSS EE YYYY; divisional: SS DD EE YYYY
-NCLIMDIV_SAMPLE = """024011950   0.85   0.60   1.10   1.50   2.40   2.90   1.20   1.10   1.40   0.90   0.70   0.80
-024021950  15.20  20.10  30.00  42.00  52.00  60.00  68.00  66.00  55.00  44.00  30.00  20.00
-005011950   0.50 -9.99   1.00   1.60   2.10   1.20   1.90   1.80   1.20   1.10   0.60   0.50
-048011950   0.50   0.40   1.00   1.60   2.10   1.20   1.90   1.80   1.20   1.10   0.60   0.50
-2401011950   0.85   0.60   1.10   1.50   2.40   2.90   1.20   1.10   1.40   0.90   0.70   0.80
+# Real nClimDiv layout: BOTH files use a 10-char id, so length cannot pick the
+# layout. statewide = SSS D EE YYYY (division always 0); divisional = SS DD EE YYYY.
+NCLIMDIV_STATEWIDE = """0240011950   0.85   0.60   1.10   1.50   2.40   2.90   1.20   1.10   1.40   0.90   0.70   0.80
+0240021950  15.20  20.10  30.00  42.00  52.00  60.00  68.00  66.00  55.00  44.00  30.00  20.00
+0050011950   0.50  -9.99   1.00   1.60   2.10   1.20   1.90   1.80   1.20   1.10   0.60   0.50
+0480011950   0.70   0.55   0.95   1.40   2.00   1.80   1.30   1.25   1.15   0.95   0.65   0.70
+0360011950   0.50   0.40   1.00   1.60   2.10   1.20   1.90   1.80   1.20   1.10   0.60   0.50
+"""
+
+# divisional: state 24 (MT), division 01
+NCLIMDIV_DIVISIONAL = """2401011950   0.85   0.60   1.10   1.50   2.40   2.90   1.20   1.10   1.40   0.90   0.70   0.80
 """
 
 NCLIMDIV_INDEX = """<a href="climdiv-pcpnst-v1.0.0-20260805">climdiv-pcpnst-v1.0.0-20260805</a>
@@ -82,14 +87,19 @@ def test_parse_mei():
 
 
 def test_parse_nclimdiv_statewide_and_divisional():
-    df = parse_nclimdiv(NCLIMDIV_SAMPLE, ["MT", "CO", "UT", "ID"])
-    assert set(df.state) == {"MT", "CO"}          # WY (48) filtered out when not requested
-    assert set(parse_nclimdiv(NCLIMDIV_SAMPLE, ["WY"]).state) == {"WY"}
-    st = df[(df.state == "MT") & (df.division == 0)]
-    assert set(st.element) == {"pcpn", "tavg"}
+    df = parse_nclimdiv(NCLIMDIV_STATEWIDE, ["MT", "CO", "UT", "ID"], "statewide")
+    assert set(df.state) == {"MT", "CO"}          # WY(048) and NY(036) not requested
+    assert (df.division == 0).all()
+    assert set(df[df.state == "MT"].element) == {"pcpn", "tavg"}
     assert len(df[(df.state == "CO") & (df.element == "pcpn")]) == 11   # one -9.99 dropped
-    dv = df[df.division == 1]
-    assert len(dv) == 12 and dv.state.iloc[0] == "MT"
+    assert set(parse_nclimdiv(NCLIMDIV_STATEWIDE, ["WY"], "statewide").state) == {"WY"}
+
+    dv = parse_nclimdiv(NCLIMDIV_DIVISIONAL, ["MT"], "divisional")
+    assert len(dv) == 12 and dv.state.iloc[0] == "MT" and (dv.division == 1).all()
+    # the SAME line read with the wrong layout must not silently become Montana
+    assert "MT" not in set(parse_nclimdiv(NCLIMDIV_DIVISIONAL, None, "statewide").state)
+    with pytest.raises(ValueError):
+        parse_nclimdiv(NCLIMDIV_STATEWIDE, ["MT"], "county")
 
 
 def test_find_nclimdiv_files_picks_newest():
@@ -253,3 +263,28 @@ def test_real_oni_classifies_canonical_winters():
         assert enso.loc[wy, "phase"] == "La Nina" and enso.loc[wy, "strength"] in ("strong", "very strong"), wy
     for wy in (1990, 2013, 2014):                # neutral winters
         assert enso.loc[wy, "phase"] == "Neutral", wy
+
+
+# ------------------------------------------- snow course (monthly) schema ---
+AWDB_SEMIMONTHLY = [{"stationTriplet": "15A21:MT:SNOW", "data": [
+    {"stationElement": {"elementCode": "WTEQ", "storedUnitCode": "in", "durationName": "SEMIMONTHLY"},
+     "values": [{"month": 1, "monthPart": "2", "year": 1994, "collectionDate": "1994-01-27 00:00", "value": 10.1},
+                {"month": 3, "monthPart": "2", "year": 1994, "collectionDate": "1994-03-29 00:00", "value": 22.4},
+                {"month": 4, "monthPart": "1", "year": 1995, "collectionDate": "1995-04-03 00:00", "value": 18.0},
+                {"month": 5, "monthPart": "1", "year": 1994, "value": 9.9}]}]}]
+
+
+def test_parse_awdb_semimonthly_without_date_key():
+    d = parse_awdb_data(json.dumps(AWDB_SEMIMONTHLY))
+    assert len(d) == 4, "rows with collectionDate/year-month must not be dropped"
+    got = set(d["date"].dt.strftime("%Y-%m-%d"))
+    assert {"1994-01-27", "1994-03-29", "1995-04-03"} <= got
+    assert "1994-05-15" in got          # no collectionDate -> monthPart 1 = mid-month
+
+
+def test_snowcourse_picks_measurement_nearest_april_1():
+    long = parse_awdb_data(json.dumps(AWDB_SEMIMONTHLY))
+    m = A.snowcourse_water_year_metrics(long)
+    assert set(zip(m.water_year, m.apr1_swe)) == {(1994, 22.4), (1995, 18.0)}, m
+    # a late-January reading is never mistaken for April
+    assert 10.1 not in set(m.apr1_swe)

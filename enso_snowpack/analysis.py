@@ -140,17 +140,27 @@ def station_water_year_metrics(long: pd.DataFrame) -> pd.DataFrame:
     return df[cols]
 
 
-def snowcourse_water_year_metrics(long: pd.DataFrame) -> pd.DataFrame:
-    """Snow courses: the April-1 measurement (semimonthly series)."""
-    w = long[long["element"] == "WTEQ"].copy()
+def snowcourse_water_year_metrics(long: pd.DataFrame, tol_days: int = 12) -> pd.DataFrame:
+    """Snow courses: the measurement nearest 1 April of each water year.
+
+    Courses are read by hand on no fixed day — a "April 1" reading is often
+    collected in the last week of March — so the value is chosen by proximity
+    to 1 April within ``tol_days``, not by an exact date match.
+    """
+    w = long[long["element"] == "WTEQ"].dropna(subset=["date", "value"]).copy()
     if w.empty:
         return pd.DataFrame(columns=["stationTriplet", "water_year", "apr1_swe"])
-    w = w[(w["date"].dt.month == 4) & (w["date"].dt.day <= 7)]
+    w = w[w["date"].dt.month.isin([3, 4])]
+    if w.empty:
+        return pd.DataFrame(columns=["stationTriplet", "water_year", "apr1_swe"])
     w["water_year"] = w["date"].dt.year
-    out = (w.sort_values("date").groupby(["stationTriplet", "water_year"], as_index=False)
+    target = pd.to_datetime(dict(year=w["water_year"], month=4, day=1))
+    w["_gap"] = (w["date"] - target).dt.days.abs()
+    w = w[w["_gap"] <= tol_days]
+    out = (w.sort_values("_gap").groupby(["stationTriplet", "water_year"], as_index=False)
             .first()[["stationTriplet", "water_year", "value"]]
             .rename(columns={"value": "apr1_swe"}))
-    return out
+    return out.sort_values(["stationTriplet", "water_year"]).reset_index(drop=True)
 
 
 # -------------------------------------------------------------- anomalies ---
