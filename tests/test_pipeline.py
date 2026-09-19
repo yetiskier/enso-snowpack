@@ -147,3 +147,55 @@ def test_pipeline_recovers_planted_dipole(tmp_path: Path):
         assert list((tmp_path / "results").glob(f"fig{i}_*.png")), f"figure {i} missing"
     nc = pd.read_csv(tmp_path / "results" / "corr_nclimdiv_precip.csv").set_index("region")
     assert nc.loc["MT", "pearson_r"] < 0 and nc.loc["UT", "pearson_r"] > 0
+
+
+# ------------------------------------------------------------ bootstrap ---
+from enso_snowpack import bootstrap as B  # noqa: E402
+
+
+def test_permutation_p_detects_signal_and_null():
+    rng = np.random.default_rng(0)
+    x = rng.normal(size=40)
+    y = -0.8 * x + rng.normal(size=40) * 0.6
+    r, p = B.permutation_p(x, y, B._stat_r, 999, rng)
+    assert r < -0.6 and p < 0.01
+    y0 = rng.normal(size=40)
+    r0, p0 = B.permutation_p(x, y0, B._stat_r, 999, rng)
+    assert p0 > 0.05
+
+
+def test_moving_block_indices_shape_and_range():
+    rng = np.random.default_rng(1)
+    idx = B.moving_block_indices(37, 2, rng)
+    assert len(idx) == 37 and idx.min() >= 0 and idx.max() < 37
+    # blocks are contiguous pairs
+    assert all(idx[i + 1] == idx[i] + 1 for i in range(0, 36, 2))
+
+
+def test_fdr_field_significance():
+    p = np.array([0.001, 0.002, 0.5, 0.6, 0.7, np.nan])
+    m = B.fdr_field_significance(p, 0.10)
+    assert m.tolist() == [True, True, False, False, False, False]
+    assert not B.fdr_field_significance(np.full(10, 0.5)).any()
+
+
+def test_run_bootstrap_schemes_agree_on_sign():
+    oni = FX.synthetic_oni(1985, 2025)
+    enso = A.enso_by_water_year(oni)
+    rng = np.random.default_rng(2)
+    years = enso["water_year"].to_numpy()
+    x = enso["oni_djf"].to_numpy()
+    station_rows = []
+    for yv, xv in zip(years, x):
+        for k in range(8):
+            station_rows.append({"water_year": yv, "value": -0.5 * xv + rng.normal(0, 1)})
+    tab = pd.DataFrame(station_rows)
+    series = tab.groupby("water_year", as_index=False)["value"].mean()
+    for scheme in ("permutation", "block_bootstrap", "two_level"):
+        b = B.run_bootstrap(series, enso, "MT", "test", scheme=scheme, n_boot=300, n_perm=300,
+                            station_table=tab)
+        assert b is not None and b.r_obs < -0.4, scheme
+        assert b.r_ci_high < 0, scheme          # CI excludes zero
+        assert b.p_perm < 0.05 and b.p_perm_diff < 0.05, scheme
+    with pytest.raises(NotImplementedError):
+        B.run_bootstrap(series, enso, "MT", "test", scheme="brown_harper_2026")

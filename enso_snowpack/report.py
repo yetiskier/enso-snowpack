@@ -58,17 +58,34 @@ def composite_table(comp: pd.DataFrame) -> str:
     return "\n".join(out)
 
 
+def boot_table(rows: list[dict]) -> str:
+    hdr = ("| Region | n | r | permutation p | r 95% CI | slope 95% CI | "
+           "El Niño − rest (z) | 95% CI | permutation p |")
+    out = [hdr, "|" + "---|" * 9]
+    for b in rows:
+        out.append(
+            f"| {b['region']} | {b['n']} | {_f(b['r_obs'], plus=True)} | {_f(b['p_perm'], 3)}{_stars(b['p_perm'])} | "
+            f"[{_f(b['r_ci_low'], plus=True)}, {_f(b['r_ci_high'], plus=True)}] | "
+            f"[{_f(b['slope_ci_low'], plus=True)}, {_f(b['slope_ci_high'], plus=True)}] | "
+            f"{_f(b['diff_nino_rest_obs'], plus=True)} | "
+            f"[{_f(b['diff_ci_low'], plus=True)}, {_f(b['diff_ci_high'], plus=True)}] | "
+            f"{_f(b['p_perm_diff'], 3)}{_stars(b['p_perm_diff'])} |")
+    return "\n".join(out)
+
+
 def station_summary(sc: pd.DataFrame) -> str:
     if sc.empty:
         return "_no stations met the record-length criterion_"
-    out = ["| State | stations | median r | share r<0 | significant negative | significant positive |",
-           "|---|---|---|---|---|---|"]
+    has_fdr = "fdr_significant" in sc
+    out = ["| State | stations | median r | share r<0 | p<0.05 negative | p<0.05 positive | FDR-significant (α=0.10) |",
+           "|---|---|---|---|---|---|---|"]
     for st, g in sc.groupby("stateCode"):
         neg = (g["r"] < 0).mean()
         sn = ((g["p"] < 0.05) & (g["r"] < 0)).sum()
         sp = ((g["p"] < 0.05) & (g["r"] > 0)).sum()
+        fdr = int(g["fdr_significant"].fillna(False).astype(bool).sum()) if has_fdr else "—"
         out.append(f"| {STATE_NAMES.get(st, st)} | {len(g)} | {_f(g['r'].median(), plus=True)} | "
-                   f"{100*neg:.0f}% | {sn} | {sp} |")
+                   f"{100*neg:.0f}% | {sn} | {sp} | {fdr} |")
     return "\n".join(out)
 
 
@@ -123,6 +140,14 @@ def write_report(out_dir: Path, ctx: dict) -> Path:
         "### Per-station correlations (April-1 SWE)",
         "",
         station_summary(ctx["station_corr_apr1"]),
+        "",
+        f"## Resampling significance (April-1 SWE, scheme `{ctx.get('boot_scheme', '')}`)",
+        "",
+        "Permutation p-values shuffle the ENSO index across water years (no normality assumed); "
+        "the CIs come from the selected bootstrap scheme with water years as the exchangeable unit. "
+        "These, not the parametric p-values above, are the significance test to quote.",
+        "",
+        boot_table(ctx.get("boot_apr1", [])),
         "",
         "## Peak SWE",
         "",

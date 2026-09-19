@@ -26,13 +26,12 @@ Useful flags: `--max-stations 40` for a quick real-data smoke run,
 `--no-snow-courses` to skip the manual snow-course network, `--force` to
 re-download, `--n-boot 500` for a faster bootstrap.
 
-**Network note.** The Claude Code cloud session that wrote this could not
-reach `cpc.ncep.noaa.gov`, `psl.noaa.gov`, `ncei.noaa.gov` or
-`wcc.sc.egov.usda.gov` (egress policy), so the pipeline has only been run on
-the synthetic fixture. The first real run is on Joel's Linux box; if the AWDB
-API rejects a parameter, the failure lands in `data/raw/failed_SNTL.txt` and
-the log, and the parser functions in `enso_snowpack/sources.py` are the place
-to adjust.
+**Status.** The code was developed in a sandbox without access to the NOAA
+and NRCS servers, so it has been exercised only on the synthetic fixture and
+the offline tests. Once a real run exists its `results/` are committed here.
+If the AWDB API rejects a parameter, the failure lands in
+`data/raw/failed_SNTL.txt` and the log; the parsers in
+`enso_snowpack/sources.py` are the place to adjust.
 
 ## Data
 
@@ -72,6 +71,39 @@ committed once a real run exists.
 6. **Weather cross-check**: nClimDiv statewide Nov–Mar precipitation (% of
    1991–2020 normal) and DJF temperature anomaly against the same index over
    70+ winters; SNOTEL Oct–Mar precipitation the same way.
+7. **Bootstrap / permutation significance** (`enso_snowpack/bootstrap.py`),
+   because ~40 winters and ~15 El Niño winters are too few for parametric
+   p-values on skewed, serially correlated series. See below.
+
+## Bootstrap
+
+All resampling treats the **water year** as the exchangeable unit; stations
+are never resampled as if independent (stations within a state co-vary, and
+resampling them would inflate the effective sample size).
+
+| scheme | what it does | gives |
+|---|---|---|
+| `permutation` | shuffles the ENSO index across years, snowpack untouched | two-sided p for r, and for the El Niño-minus-rest composite difference |
+| `block_bootstrap` (default) | moving-block bootstrap of (ONI, snowpack) year pairs, block length 2 (ENSO's persistence scale) | 95 % CI on r, slope, composite difference that respects serial dependence |
+| `two_level` | resamples years, then the contributing stations within each year | CI that also carries station-sampling uncertainty of the state mean |
+| `brown_harper_2026` | the modified bootstrap of Brown & Harper (2026) | **not yet implemented** — see below |
+
+The per-station map uses per-station permutation p-values with
+Benjamini–Hochberg false-discovery-rate control (α_FDR = 0.10), the
+field-significance procedure recommended by Wilks (2016).
+
+**Brown & Harper (2026).** J. Brown and J. Harper, *Historical evolution of
+snowpack capacity to buffer rain-on-snow runoff in a large Columbia River
+headwaters basin*, Hydrol. Earth Syst. Sci. 30, 5735–5748, 2026,
+doi:10.5194/hess-30-5735-2026 (preprint egusphere-2025-4971). Its modified
+bootstrap is the intended primary significance test. The authoring sandbox
+could not fetch the paper, so `bootstrap.brown_harper_2026` is a stub that
+raises `NotImplementedError`; transcribe the resampling scheme from the
+Methods into that function and register it in `run_bootstrap`. Run with
+`python3 -m enso_snowpack analyze --bootstrap brown_harper_2026` once done.
+
+Select a scheme with `--bootstrap <scheme>`; `--n-boot` and `--n-perm` set
+the resample counts (5000 each by default).
 
 ## What to expect (from the literature, to be confirmed by the run)
 
@@ -94,7 +126,14 @@ enso_snowpack/
   analysis.py  water-year metrics, standardisation, statistics
   figures.py   matplotlib figures
   report.py    results/summary.md
+  bootstrap.py permutation, moving-block and two-level bootstraps; FDR field significance
   fixture.py   synthetic data with a planted north-negative / south-positive signal
   cli.py       fetch | analyze | run
 tests/         parser tests on spec-shaped samples + end-to-end fixture test
 ```
+
+## Citation and licence
+
+MIT licence (see `LICENSE`). If you use the results, cite the data providers
+(NOAA CPC, NRCS AWDB, NCEI nClimDiv) and Brown & Harper (2026) for the
+bootstrap.

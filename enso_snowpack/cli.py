@@ -11,7 +11,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from . import STATES, analysis as A, figures as F, fixture as FX
+from . import STATES, analysis as A, figures as F, fixture as FX, bootstrap as B
 from .fetch import (fetch_all_stations, fetch_mei, fetch_nclimdiv, fetch_oni, fetch_stations,
                     FetchError)
 from .report import write_report
@@ -129,8 +129,34 @@ def cmd_analyze(args) -> int:
     ctx["corr_apr1"] = _corr_set(reg, enso, "apr1_swe_zd", n_boot=args.n_boot)
     pd.DataFrame(ctx["corr_apr1"]).to_csv(results / "corr_apr1_zd.csv", index=False)
     sc = A.station_correlations(std, stations, enso, "apr1_swe_zd")
+    sp = B.station_permutation_p(std, enso, "apr1_swe_zd", n_perm=min(args.n_perm, 2000))
+    sc = sc.merge(sp[["stationTriplet", "p_perm", "fdr_significant"]], on="stationTriplet", how="left")
     sc.to_csv(results / "station_corr_apr1.csv", index=False)
     ctx["station_corr_apr1"] = sc
+
+    # --- resampling significance (water years as the exchangeable unit)
+    st_tab = std.merge(stations[["stationTriplet", "stateCode"]], on="stationTriplet")
+    boots = []
+    for region in ["MT", "ID", "CO", "UT", "North (MT+ID)", "South (CO+UT)", "ALL"]:
+        s_ = reg[reg["region"] == region][["water_year", "value"]]
+        if s_.empty:
+            continue
+        if region in ("MT", "ID", "CO", "UT"):
+            tab = st_tab[st_tab["stateCode"] == region]
+        elif region.startswith("North"):
+            tab = st_tab[st_tab["stateCode"].isin(["MT", "ID"])]
+        elif region.startswith("South"):
+            tab = st_tab[st_tab["stateCode"].isin(["CO", "UT"])]
+        else:
+            tab = st_tab
+        tab = tab[["water_year", "apr1_swe_zd"]].rename(columns={"apr1_swe_zd": "value"})
+        b = B.run_bootstrap(s_, enso, region, "apr1_swe_zd", scheme=args.bootstrap,
+                            n_boot=args.n_boot, n_perm=args.n_perm, station_table=tab)
+        if b is not None:
+            boots.append(b.as_dict())
+    ctx["boot_apr1"] = boots
+    ctx["boot_scheme"] = args.bootstrap
+    pd.DataFrame(boots).to_csv(results / f"bootstrap_apr1_{args.bootstrap}.csv", index=False)
     for region in ["MT", "ID", "CO", "UT"]:
         s = reg[reg["region"] == region][["water_year", "value"]]
         if not s.empty:
@@ -222,7 +248,10 @@ def main(argv=None) -> int:
         sp.add_argument("--no-snow-courses", dest="snow_courses", action="store_false")
         sp.add_argument("--fixture", action="store_true", help="use the synthetic fixture (offline)")
         sp.add_argument("--fixture-stations", type=int, default=12)
-        sp.add_argument("--n-boot", type=int, default=2000)
+        sp.add_argument("--n-boot", type=int, default=5000, help="bootstrap resamples")
+        sp.add_argument("--n-perm", type=int, default=5000, help="permutations for null p-values")
+        sp.add_argument("--bootstrap", default="block_bootstrap",
+                        choices=["permutation", "block_bootstrap", "two_level", "brown_harper_2026"])
         sp.set_defaults(fn=fn)
     args = ap.parse_args(argv)
     return args.fn(args)
