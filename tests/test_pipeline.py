@@ -371,17 +371,64 @@ def test_ski_windows_tile_the_season_without_overlap():
     assert mask.sum() == 21                      # 16 Dec - 5 Jan inclusive
 
 
-def test_assign_regions_uses_real_distance():
-    st = pd.DataFrame({"stationTriplet": ["A", "B", "C"],
-                       "latitude": [40.60, 40.60, 48.45],
-                       "longitude": [-111.60, -105.00, -114.35],
-                       "elevation": [9000.0, 9000.0, 6000.0]})
+def test_assign_regions_uses_distance_and_elevation():
+    st = pd.DataFrame({"stationTriplet": ["AT_BAND", "FAR", "TOO_LOW"],
+                       "latitude": [40.60, 40.60, 40.62],
+                       "longitude": [-111.60, -105.00, -111.62],
+                       "elevation": [9000.0, 9000.0, 3000.0]})
     rm = SKI.assign_regions(st)
-    wasatch = set(rm[rm.region.str.startswith("Wasatch")].stationTriplet)
-    assert wasatch == {"A"}, "only the station at the Wasatch centre may join it"
-    assert "C" in set(rm[rm.region.str.startswith("NW Montana")].stationTriplet)
-    assert "B" not in set(rm.stationTriplet) or "Wasatch" not in {
-        r for r in rm[rm.stationTriplet == "B"].region}
+    was = rm[rm.region.str.startswith("Wasatch")]
+    assert set(was.stationTriplet) == {"AT_BAND"}, \
+        "only the in-band station near the centre may represent the Wasatch"
+    # a station 6000 ft below the served band is excluded even when it is close
+    assert "TOO_LOW" not in set(was.stationTriplet)
+
+
+def test_station_weights_prefer_the_served_elevation_band():
+    base, summit, radius = 5000.0, 7600.0, 85.0
+    km = np.array([5.0, 5.0, 5.0, 60.0])
+    elev = np.array([7270.0, 4000.0, 9000.0, 7270.0])   # in band, low, high, in band but far
+    w = SKI.station_weights(km, elev, base, summit, radius)
+    assert w[0] == pytest.approx(max(w)), "the in-band, nearby station must rank first"
+    assert w[1] < w[0] and w[2] < w[0], "out-of-band stations are downweighted"
+    assert w[3] < w[0], "distance still matters for an in-band station"
+    # anywhere inside the band is weighted equally at equal distance
+    inside = SKI.station_weights(np.array([5.0, 5.0]), np.array([5100.0, 7500.0]),
+                                 base, summit, radius)
+    assert inside[0] == pytest.approx(inside[1])
+
+
+def test_stuart_mountain_anchors_the_snowbowl_region():
+    """The station nearest Snowbowl in both distance and elevation must carry
+    the most weight there."""
+    st = pd.DataFrame({
+        "stationTriplet": ["901:MT:SNTL", "562:MT:SNTL", "604:MT:SNTL"],
+        "name": ["Stuart Mountain", "Kraft Creek", "Lubrecht Flume"],
+        "latitude": [46.99521, 47.4, 46.9],
+        "longitude": [-113.92667, -113.8, -113.3],
+        "elevation": [7270.0, 4770.0, 4690.0]})
+    rm = SKI.assign_regions(st)
+    sb = rm[rm.region.str.startswith("Montana Snowbowl")].sort_values("weight", ascending=False)
+    assert sb.iloc[0].stationTriplet == "901:MT:SNTL"
+    assert sb.iloc[0].elev_gap_ft == 0, "Stuart Mountain sits inside Snowbowl's band"
+
+
+def test_strength_effect_separates_phase_from_magnitude():
+    rng = np.random.default_rng(3)
+    n = 120
+    x = rng.normal(0, 1.0, n)
+    # y depends ONLY on phase, not on how far the index goes past the threshold
+    phase = np.where(x >= 0.5, -1.0, np.where(x <= -0.5, 1.0, 0.0))
+    y = phase + rng.normal(0, 0.5, n)
+    out = SKI.strength_effect(x, y)
+    assert out["r2_phase"] > 0.4
+    assert out["r2_strength_gain"] < 0.05, "magnitude must add nothing when only phase drives y"
+    assert out["r2_within_nino"] < 0.15, "within one phase the index should explain little"
+    # now make magnitude genuinely matter
+    y2 = -x * 1.5 + rng.normal(0, 0.5, n)
+    out2 = SKI.strength_effect(x, y2)
+    assert out2["r2_index"] > out2["r2_phase"], "a linear response must favour the index"
+    assert out2["r2_within_nino"] > out["r2_within_nino"]
 
 
 def test_storm_days_counted_from_swe_gain_and_normalised():
@@ -412,7 +459,7 @@ def test_test_grid_applies_fdr_across_the_whole_grid():
         for s in range(4):
             trip = f"{reg_i}{s}:XX:SNTL"
             rmap.append({"stationTriplet": trip, "region": region, "state": state,
-                         "km": 1.0, "elevation": 9000.0})
+                         "km": 1.0, "elevation": 9000.0, "weight": 1.0})
             for yv, xv in zip(years, x):
                 for w, *_ in SKI.SKI_WINDOWS:
                     rows.append({"stationTriplet": trip, "water_year": yv, "window": w,
@@ -420,9 +467,13 @@ def test_test_grid_applies_fdr_across_the_whole_grid():
                                  "mean_depth": np.nan, "storm_days": 3.0 + rng.normal(0, 1),
                                  "big_storm_days": 0.5 + rng.normal(0, 0.3),
                                  "days_with_base": 10.0 + rng.normal(0, 3)})
-    grid = SKI.test_grid(pd.DataFrame(rows), pd.DataFrame(rmap), enso,
-                         n_iter=500, n_perm=400)
+    rmap_df = pd.DataFrame(rmap)
+    rmap_df["weight"] = 1.0
+    grid = SKI.test_grid(pd.DataFrame(rows), rmap_df, enso, n_iter=500, n_perm=400)
     assert len(grid) > 0 and "fdr_significant" in grid
+    assert {"r2", "signed_r2", "r2_phase", "r2_strength_gain"} <= set(grid.columns)
+    assert np.allclose(grid["r2"], grid["r"] ** 2)
+    assert (np.sign(grid["signed_r2"]) == np.sign(grid["r"])).all()
     base = grid[grid.metric == "mean_swe"]
     assert (base.r < -0.4).all(), "planted strong negative base signal must be recovered"
     assert base.fdr_significant.all()

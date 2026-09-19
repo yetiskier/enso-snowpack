@@ -318,7 +318,20 @@ def cmd_analyze(args) -> int:
             region_map.to_csv(results / "ski_region_stations.csv", index=False)
             ctx["ski_grid"] = grid
             ctx["ski_window_signs"] = SKI.window_sign_summary(grid)
+            SKI.window_sign_summary(grid).to_csv(results / "ski_window_signs.csv", index=False)
+            sv = SKI.strength_verdict(grid)
+            sv.to_csv(results / "ski_strength_verdict.csv", index=False)
+            ctx["ski_strength"] = sv
+            SKI.region_elevation_table(region_map).to_csv(
+                results / "ski_region_elevations.csv", index=False)
             F.fig_ski_heatmap(grid, results)
+            # probability distributions behind the strongest findings
+            top = grid.nsmallest(6, "p_perm")[["region", "window", "metric"]]
+            dists = [SKI.distributions_for(wm, region_map, enso, r.region, r.window, r.metric,
+                                           n_iter=min(args.n_boot, 10000),
+                                           n_perm=min(args.n_perm, 10000))
+                     for r in top.itertuples()]
+            F.fig_distributions(dists, results)
             log.info("ski grid: %d tests, %d survive FDR", len(grid),
                      int(grid["fdr_significant"].sum()) if len(grid) else 0)
             del sub

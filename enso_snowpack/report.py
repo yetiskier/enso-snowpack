@@ -58,6 +58,19 @@ def composite_table(comp: pd.DataFrame) -> str:
     return "\n".join(out)
 
 
+def ski_strength_table(sv) -> str:
+    """Phase versus magnitude, as shares of variance explained."""
+    if sv is None or len(sv) == 0:
+        return "_strength decomposition not run_"
+    out = ["| Window | r² from phase alone | r² from the continuous ONI | change from adding strength | "
+           "tests where strength helps | r² within El Niño winters only |", "|---|---|---|---|---|---|"]
+    for r in sv.itertuples():
+        out.append(f"| {r.window} | {r.mean_r2_phase:.1%} | {r.mean_r2_index:.1%} | "
+                   f"**{r.mean_r2_strength_gain:+.1%}** | {int(r.tests_where_strength_helps)} of "
+                   f"{int(r.tests)} | {r.mean_r2_within_nino:.1%} |")
+    return "\n".join(out)
+
+
 def ski_window_table(signs) -> str:
     """Sign consistency per ski window across all regions and metrics."""
     if signs is None or len(signs) == 0:
@@ -85,12 +98,15 @@ def ski_findings(grid) -> str:
         return ("No individual region-window-metric test survives false-discovery control across "
                 f"all {len(grid)} tests. Read the sign table above instead: it is the consistency "
                 "of direction, not any single cell, that carries the signal.")
+    sig = sig.sort_values("r2", ascending=False)
     out = [head, "",
-           "| Ski region | Window | What | n winters | r | mean z, El Niño | mean z, La Niña |",
-           "|---|---|---|---|---|---|---|"]
+           "| Ski region | Window | What | winters | r² (variance explained) | El Niño brings | "
+           "mean z, El Niño | mean z, La Niña |",
+           "|---|---|---|---|---|---|---|---|"]
     for r in sig.itertuples():
         out.append(f"| {r.region} | {r.window} | {r.metric_label} | {int(r.n_winters)} | "
-                   f"{_f(r.r, plus=True)} | {_f(r.mean_nino, plus=True)} | {_f(r.mean_nina, plus=True)} |")
+                   f"**{r.r2:.0%}** | {'less snow' if r.r < 0 else 'more snow'} | "
+                   f"{_f(r.mean_nino, plus=True)} | {_f(r.mean_nina, plus=True)} |")
     return "\n".join(out)
 
 
@@ -232,6 +248,17 @@ def write_report(out_dir: Path, ctx: dict) -> Path:
         ski_window_table(ctx.get("ski_window_signs")),
         "",
         ski_findings(ctx.get("ski_grid")),
+        "",
+        "### Does the STRENGTH of the event matter?",
+        "",
+        "Phase means which of El Niño / Neutral / La Niña a winter is. Strength means how far the "
+        "ONI actually went. `change from adding strength` is the variance explained by the "
+        "continuous index minus the variance explained by phase alone: at or below zero, knowing "
+        "the magnitude adds nothing and a strong El Niño is no worse for skiing than a weak one.",
+        "",
+        ski_strength_table(ctx.get("ski_strength")),
+        "",
+        "![](fig10_distributions.png)",
         "",
         "## When in the season the signal acts",
         "",

@@ -1,200 +1,241 @@
-# El Niño vs. snowpack — MT, ID, WY, CO, UT
+# El Niño and the ski season — MT, ID, WY, CO, UT
 
-Does El Niño affect the **ski season** in Montana, Idaho, Wyoming, Colorado
-and Utah, and if so where and when in the winter?
+**Does El Niño affect the ski season, where, and when in the winter?**
+Reproducible analysis of NOAA's Oceanic Niño Index against NRCS SNOTEL
+snowpack for 13 destination ski regions in the northern and central Rockies.
 
-This is deliberately not a water-supply study. April-1 SWE is a runoff
-metric; a ski operation cares about the base underfoot and how often it
-storms during the windows that carry a season. So the headline analysis
-scores destination ski regions inside ski windows, and controls the
-false-discovery rate across the whole grid. The seasonal and April-1
-analyses are kept as context and cross-checks. This directory is a self-contained, reproducible pipeline
-that downloads every public input, computes the correlations, and writes a
-report with figures.
+_Last updated 2026-09-19. Results below are from real data:
+534 SNOTEL stations, 24.4 million daily observations, water years 1964–2026,
+with 25 El Niño, 27 La Niña and 25 neutral winters._
 
-## Run it
+This is deliberately **not** a water-supply study. April-1 snow-water
+equivalent is a runoff metric. A ski operation cares about the base underfoot
+and how often it storms during the windows that carry a season, so the
+headline analysis scores ski regions inside ski windows.
 
-```
-cd enso-snowpack
-./run.sh                 # downloads (~30–60 min first time, cached after), then analyses
-```
+---
 
-or step by step:
+## The answer in four points
 
-```
-python3 -m pip install -r requirements.txt
-python3 -m enso_snowpack fetch            # data/raw/ + data/derived/, resumable
-python3 -m enso_snowpack analyze          # results/summary.md + figures + CSV tables
-python3 -m enso_snowpack analyze --fixture   # offline smoke run on synthetic data
-python3 -m pytest tests -q                # offline tests
-```
+**1. The effect is real, and it is strongest at Montana Snowbowl.** Of 260
+tests, 20 survive false-discovery control across the whole grid, and 8 of
+those are Snowbowl. El Niño explains up to **28 %** of the year-to-year
+variance in its spring base.
 
-### Getting the real data into a sandbox that cannot reach NOAA/NRCS
+| Window | Measure | winters | r² | El Niño brings | mean z, El Niño | mean z, La Niña | survives FDR |
+|---|---|---|---|---|---|---|---|
+| Spring | Base (mean snow depth) | 26 | **29%** | less | -0.63 | +0.45 | yes |
+| Spring | Base (mean SWE in window) | 59 | **28%** | less | -0.58 | +0.55 | yes |
+| Midwinter | Base (mean snow depth) | 26 | **28%** | less | -0.57 | +0.43 | yes |
+| Spring | Days per 30 with a skiable base | 56 | **24%** | less | -0.49 | +0.43 | yes |
+| Midwinter | Powder days per 30 (SWE gain >= 25 mm) | 59 | **19%** | less | -0.41 | +0.48 | yes |
+| Midwinter | Storm days per 30 (SWE gain >= 10 mm) | 59 | **19%** | less | -0.47 | +0.40 | yes |
+| Holidays | Base (mean snow depth) | 26 | **18%** | less | -0.50 | +0.31 | no |
+| Midwinter | Base (mean SWE in window) | 59 | **16%** | less | -0.42 | +0.46 | yes |
 
-The fetch must run on a machine with internet access. It then reduces the
-large daily station tables to per-station water-year metrics and packs every
-small table into one archive (a few MB) that can be uploaded anywhere:
+**2. The holidays are hit everywhere, including Colorado and Utah.** Storm
+frequency over Christmas and New Year leans negative in **37 of 39** tests
+across all 13 regions. This is invisible in a seasonal average, and it lands
+on the highest-revenue window of the year.
 
-```
-python3 -m enso_snowpack fetch                 # on the connected machine, once
-python3 -m enso_snowpack bundle                # -> enso_snowpack_data_<date>.tar.gz
-# upload that file, then wherever the analysis runs:
-python3 -m enso_snowpack analyze --bundle enso_snowpack_data_<date>.tar.gz
-```
+| Window of winter | tests | leaning to less snow | mean r | sign-test p |
+|---|---|---|---|---|
+| Early season | 39 | 27 of 39 (69%) | -0.073 | 0.0237 |
+| Holidays | 39 | 37 of 39 (95%) | -0.196 | 0.0000 |
+| Midwinter | 39 | 34 of 39 (87%) | -0.160 | 0.0000 |
+| Spring | 39 | 23 of 39 (59%) | -0.050 | 0.3368 |
 
-The bundle holds `oni.csv`, `mei.csv`, `nclimdiv.csv`, `stations_SNTL.csv`,
-`stations_SNOW.csv`, `station_water_year_metrics.csv` and
-`snowcourse_water_year_metrics.csv`; `analyze` uses the precomputed metrics
-when no daily table is present.
+**3. ENSO *strength* tells you almost nothing. Phase is what matters.**
+This is the clearest negative result in the study. Knowing only whether a
+winter is El Niño, La Niña or neutral explains more variance than knowing the
+actual ONI value — adding magnitude makes the prediction *worse* in every
+window, and within El Niño winters alone the index explains about 4 %.
 
-Useful flags: `--max-stations 40` for a quick real-data smoke run,
-`--no-snow-courses` to skip the manual snow-course network, `--force` to
-re-download, `--n-boot 500` for a faster bootstrap.
+| Window | r² from phase alone | r² from the continuous ONI | change from adding strength | tests where strength helps | r² within El Niño winters only |
+|---|---|---|---|---|---|
+| Early season | 5.6% | 3.3% | **-2.3%** | 6 of 65 | 3.5% |
+| Holidays | 7.6% | 5.1% | **-2.5%** | 2 of 65 | 4.2% |
+| Midwinter | 7.7% | 6.4% | **-1.3%** | 9 of 65 | 3.9% |
+| Spring | 9.5% | 5.8% | **-3.7%** | 4 of 65 | 5.0% |
 
-**Status.** The code was developed in a sandbox without access to the NOAA
-and NRCS servers, so it has been exercised only on the synthetic fixture and
-the offline tests. Once a real run exists its `results/` are committed here.
-If the AWDB API rejects a parameter, the failure lands in
-`data/raw/failed_SNTL.txt` and the log; the parsers in
-`enso_snowpack/sources.py` are the place to adjust.
+A "very strong" El Niño is not a worse ski year than a weak one. The three
+very strong events (1983, 1998, 2016) were not the worst winters in the
+northern Rockies. Plan for the phase; ignore the magnitude.
 
-## Data
+**4. The south is not a mirror image — it is unpredictable.** The San Juans
+and southern Utah show weak positive tendencies that never reach
+significance. For water supply there is a clean north-negative /
+south-positive dipole; for skiing the honest statement about the southern
+Colorado Rockies is "no detectable ENSO signal", not "El Niño is good".
 
-| Source | What | Period | URL |
-|---|---|---|---|
-| NOAA CPC ONI | 3-month running Niño-3.4 SST anomaly, the official ENSO index | 1950– | cpc.ncep.noaa.gov/data/indices/oni.ascii.txt (fallback psl.noaa.gov/data/correlation/oni.data) |
-| NOAA PSL MEI v2 | Multivariate ENSO Index, sensitivity check | 1979– | psl.noaa.gov/enso/mei/data/meiv2.data |
-| NRCS SNOTEL (AWDB REST v1) | daily SWE (`WTEQ`), snow depth (`SNWD`), accumulated precipitation (`PREC`), mean air temperature (`TAVG`) for every SNOTEL station in the five states | ~1979– | wcc.sc.egov.usda.gov/awdbRestApi |
-| NRCS snow courses (AWDB, network `SNOW`) | manual April-1 SWE, extends the record before SNOTEL | ~1930s– | same |
-| NCEI nClimDiv | statewide monthly precipitation and mean temperature | 1895– | ncei.noaa.gov/pub/data/cirs/climdiv/ |
+### Every result that survives false-discovery control
 
-Raw downloads are cached under `data/raw/` (one CSV per station, so an
-interrupted fetch resumes); tidy inputs under `data/derived/`; everything
-reported under `results/`. `data/` is git-ignored, `results/` is meant to be
-committed once a real run exists.
+| Ski region | Window | Measure | winters | r² | permutation p |
+|---|---|---|---|---|---|
+| N Idaho (Schweitzer/Silver) | Spring | Base (mean snow depth) | 25 | **36%** | 0.0026 |
+| NW Montana (Whitefish) | Spring | Base (mean snow depth) | 25 | **34%** | 0.0032 |
+| NW Montana (Whitefish) | Midwinter | Base (mean snow depth) | 25 | **30%** | 0.0040 |
+| Montana Snowbowl (Missoula) | Spring | Base (mean snow depth) | 26 | **29%** | 0.0040 |
+| Montana Snowbowl (Missoula) | Spring | Base (mean SWE in window) | 59 | **28%** | 0.0002 |
+| Montana Snowbowl (Missoula) | Midwinter | Base (mean snow depth) | 26 | **28%** | 0.0062 |
+| Montana Snowbowl (Missoula) | Spring | Days per 30 with a skiable base | 56 | **24%** | 0.0002 |
+| S Wyoming (Snowy/Sierra Madre) | Holidays | Storm days per 30 (SWE gain >= 10 mm) | 46 | **21%** | 0.0012 |
+| N Colorado (Steamboat) | Holidays | Storm days per 30 (SWE gain >= 10 mm) | 47 | **19%** | 0.0018 |
+| Montana Snowbowl (Missoula) | Midwinter | Powder days per 30 (SWE gain >= 25 mm) | 59 | **19%** | 0.0004 |
+| Montana Snowbowl (Missoula) | Midwinter | Storm days per 30 (SWE gain >= 10 mm) | 59 | **19%** | 0.0010 |
+| NW Montana (Whitefish) | Spring | Days per 30 with a skiable base | 50 | **18%** | 0.0020 |
+| SW Montana (Big Sky/Bridger) | Spring | Base (mean SWE in window) | 60 | **16%** | 0.0016 |
+| NW Montana (Whitefish) | Spring | Base (mean SWE in window) | 52 | **16%** | 0.0042 |
+| N Idaho (Schweitzer/Silver) | Spring | Base (mean SWE in window) | 46 | **16%** | 0.0056 |
+| Montana Snowbowl (Missoula) | Midwinter | Base (mean SWE in window) | 59 | **16%** | 0.0022 |
+| Montana Snowbowl (Missoula) | Midwinter | Days per 30 with a skiable base | 59 | **15%** | 0.0020 |
+| SW Montana (Big Sky/Bridger) | Midwinter | Base (mean SWE in window) | 60 | **14%** | 0.0046 |
+| SW Montana (Big Sky/Bridger) | Midwinter | Days per 30 with a skiable base | 60 | **13%** | 0.0036 |
+| SW Montana (Big Sky/Bridger) | Spring | Days per 30 with a skiable base | 60 | **11%** | 0.0072 |
+
+---
+
+## Figures
+
+| File | What it shows |
+|---|---|
+| `results/fig9_ski_region_window.png` | The headline: r² by ski region (north to south) x window of winter x measure. |
+| `results/fig10_distributions.png` | The probability distributions behind each headline result: the subsampling distribution of the estimate against the permutation null. Separation between them is the significance, shown rather than asserted. |
+| `results/fig8_daily_enso_curve.png` | The correlation for every day of the water year, against the snowpack climatology. |
+| `results/fig3_station_map_apr1.png` | Per-station correlation across all 534 stations, showing the latitudinal dipole. |
+| `results/fig1_oni_timeseries.png` | The ONI record with El Niño and La Niña winters marked. |
+
+**Colour convention on every figure: red means less snow, blue means more.**
+
+---
+
+## Ski regions and elevation weighting
+
+A SNOTEL gauge only represents a ski area to the extent it shares its snow
+climate, and elevation is most of that. Each region therefore carries the
+served terrain's **base-to-summit band**, and every station is weighted by a
+Gaussian on its vertical gap to that band (scale 1,200 ft) times a Gaussian on
+horizontal distance (scale 0.6 x radius). A valley gauge 900 m below the lifts
+counts for little. "Eff. stations" is Kish's effective sample size of those
+weights.
+
+| Ski region | served band (ft) | stations | eff. stations | weighted elevation (ft) | in band |
+|---|---|---|---|---|---|
+| Montana Snowbowl (Missoula) | 5,000–7,600 | 13 | 10.9 | 5,978 | 10 |
+| NW Montana (Whitefish) | 4,464–6,817 | 14 | 12.4 | 5,469 | 12 |
+| SW Montana (Big Sky/Bridger) | 6,400–10,000 | 20 | 17.2 | 7,848 | 20 |
+| N Idaho (Schweitzer/Silver) | 4,000–6,400 | 14 | 12.3 | 5,238 | 13 |
+| C Idaho (Sun Valley) | 5,750–9,150 | 20 | 18.1 | 7,569 | 18 |
+| Tetons (Jackson/Targhee) | 6,300–10,450 | 15 | 12.3 | 7,943 | 15 |
+| S Wyoming (Snowy/Sierra Madre) | 8,798–9,663 | 21 | 19.1 | 9,324 | 6 |
+| Wasatch (Alta/Park City) | 6,800–11,000 | 31 | 27.8 | 8,173 | 29 |
+| S Utah (Brian Head) | 9,600–10,970 | 17 | 13.3 | 9,177 | 6 |
+| N Colorado (Steamboat) | 6,900–10,568 | 18 | 15.9 | 9,367 | 16 |
+| I-70 (Summit/Vail) | 8,120–12,998 | 27 | 24.1 | 10,365 | 27 |
+| Elk Mtns (Aspen/Crested Butte) | 7,945–12,162 | 14 | 12.8 | 10,172 | 14 |
+| San Juans (Telluride/Wolf Ck) | 8,725–13,150 | 27 | 25.5 | 10,495 | 27 |
+
+The Montana Snowbowl region is anchored on **Stuart Mountain SNOTEL**
+(901:MT:SNTL, 7,270 ft, 5.3 km from the ski area), which is both the closest
+station and the closest in elevation; it carries the highest weight in the
+region, 0.99.
+
+Two regions are poorly served and their results should be read with care:
+**S Utah (Brian Head)** and **S Wyoming (Snowy Range)** each have only 6
+stations inside the served band, because SNOTEL does not reach those
+elevations locally.
+
+---
 
 ## Method
 
-1. **Water year** N = 1 Oct N−1 … 30 Sep N. Snowpack metrics per station and
-   water year: April-1 SWE (nearest value within ±3 days), peak SWE and its
-   date, April-1 snow depth and bulk density (SWE/depth), Oct–Mar
-   precipitation, DJF mean temperature.
-2. **ENSO** per water year: DJF ONI (Dec N−1 … Feb N), winter mean
-   (NDJ/DJF/JFM), and the winter peak |ONI| (OND…FMA) for strength bins.
-   Phases use the CPC ±0.5 °C thresholds; strength bins weak 0.5–0.9,
-   moderate 1.0–1.4, strong 1.5–1.9, very strong ≥ 2.0.
-3. **Standardise per station**: z-score of the linearly detrended series
-   (so long-term trends cannot pose as ENSO signal) — plus percent-of-median
-   as a sensitivity. Stations need ≥ 15 valid years and a median April-1
-   SWE ≥ 50 mm.
-4. **Aggregate**: mean station z per state and water year (≥ 5 stations),
-   plus North (MT+ID), South (CO+UT), ALL. Wyoming straddles the ENSO node
-   and is deliberately in neither composite; it has its own row.
-5. **Statistics** per region: Pearson r with a bootstrap 95 % CI, Spearman ρ,
-   regression slope per °C of ONI, composite means by phase with a Welch
-   t-test (El Niño vs the rest), composites by strength bin, and — the direct
-   test of *strength* — r within El Niño winters only. Per-station r is
-   mapped so the latitude structure is visible rather than averaged away.
-6. **Weather cross-check**: nClimDiv statewide Nov–Mar precipitation (% of
-   1991–2020 normal) and DJF temperature anomaly against the same index over
-   70+ winters; SNOTEL Oct–Mar precipitation the same way.
-7. **Ski season** (`enso_snowpack/ski.py`): 12 destination ski regions
-   (stations within a radius of a real ski destination, since a state is not
-   a snow climate), four windows — Early season (1 Nov–15 Dec), Holidays
-   (16 Dec–5 Jan), Midwinter (6 Jan–28 Feb), Spring (1 Mar–15 Apr) — and
-   metrics that matter to skiing: base (mean SWE and, where the record
-   allows, mean depth), storm days and powder days counted from daily SWE
-   gain (>= 10 mm and >= 25 mm, per 30 days), and days with a skiable base.
-   Every region x window x metric is tested, then Benjamini-Hochberg
-   false-discovery control is applied across the whole grid, and a binomial
-   sign test asks whether a window leans consistently across regions.
-   Snow depth begins ~1993, so depth metrics have ~25 winters against ~45
-   for the SWE-derived ones; storm days come from SWE gain because that is
-   both longer and density-independent.
-8. **Day by day** (`enso_snowpack/daily.py`): the correlation for every day
-   of the water year, summarised over the Brown & Harper (2026) periods,
-   because April-1 SWE is one snapshot that mixes accumulation with melt.
-9. **Bootstrap / permutation significance** (`enso_snowpack/bootstrap.py`),
-   because ~40 winters and ~15 El Niño winters are too few for parametric
-   p-values on skewed, serially correlated series. See below.
+1. **Water year** N runs 1 Oct N-1 to 30 Sep N. ENSO phase comes from the DJF
+   ONI (El Niño at or above +0.5 °C, La Niña at or below -0.5 °C); strength
+   bins follow CPC (weak 0.5–0.9, moderate 1.0–1.4, strong 1.5–1.9, very
+   strong 2.0 and above) on the winter peak.
+2. **Ski windows**: Early season (1 Nov–15 Dec), Holidays (16 Dec–5 Jan),
+   Midwinter (6 Jan–28 Feb), Spring (1 Mar–15 Apr). They abut without gaps.
+3. **Measures**: base as mean SWE and, where the record allows, mean snow
+   depth; storm days and powder days counted from daily SWE gain (10 mm and
+   25 mm thresholds, normalised per 30 days); days with a skiable base. Storm
+   counts come from SWE gain because it runs longer than snow depth and is
+   density-independent — a 25 mm water gain is a big storm at any density.
+4. **Standardisation**: per station and window, the z-score of the linearly
+   detrended series, so a warming trend cannot pose as an ENSO signal.
+   Regional values are the elevation-weighted mean of those z-scores.
+5. **Significance**: the modified bootstrap of Brown & Harper (2026) — omit a
+   random 20 % of winters, refit, repeat 10,000 times, and require the 2σ
+   bounds of the near-Gaussian coefficient distribution to exclude zero.
+   Because the raw 2σ rule fires on about 30 % of pure noise (the subsample
+   spread is smaller than the sampling error by the delete-d factor
+   sqrt((n-d)/d) = 2), a calibrated version is reported alongside, plus a
+   permutation p-value. **Benjamini-Hochberg false-discovery control is then
+   applied across all 260 tests**, because asking that many questions at
+   p below 0.05 buys false positives for free.
+6. **Correlations are reported as r²**, the share of year-to-year variance
+   explained. Signed r² keeps the direction: negative means El Niño brings
+   less.
 
-## Bootstrap
+### Data
 
-All resampling treats the **water year** as the exchangeable unit; stations
-are never resampled as if independent (stations within a state co-vary, and
-resampling them would inflate the effective sample size).
-
-| scheme | what it does | gives |
+| Source | What | Period |
 |---|---|---|
-| `permutation` | shuffles the ENSO index across years, snowpack untouched | two-sided p for r, and for the El Niño-minus-rest composite difference |
-| `block_bootstrap` | moving-block bootstrap of (ONI, snowpack) year pairs, block length 2 (ENSO's persistence scale) | 95 % CI on r, slope, composite difference that respects serial dependence |
-| `two_level` | resamples years, then the contributing stations within each year | CI that also carries station-sampling uncertainty of the state mean |
-| `brown_harper_2026` (default) | the modified bootstrap regression of Brown & Harper (2026): drop a random 20 % of the water years, fit the regression to the remaining 80 %, repeat 10 000 times | mean and σ of the near-Gaussian coefficient distribution; significant when mean ± 2σ excludes zero |
+| NOAA CPC ONI | 3-month Niño-3.4 SST anomaly, the official ENSO index | 1950– |
+| NRCS SNOTEL (AWDB REST v1) | daily SWE, snow depth, precipitation, air temperature; 534 stations | ~1964– |
+| NRCS snow courses | manual April-1 SWE, 1,075 courses, extends the record | ~1930s– |
+| NCEI nClimDiv | statewide monthly precipitation and temperature | 1895– |
+| NOAA PSL MEI v2 | Multivariate ENSO Index, sensitivity check | 1979– |
 
-The per-station map uses per-station permutation p-values with
-Benjamini–Hochberg false-discovery-rate control (α_FDR = 0.10), the
-field-significance procedure recommended by Wilks (2016).
+---
 
-**Brown & Harper (2026).** J. Brown and J. Harper, *Historical evolution of
-snowpack capacity to buffer rain-on-snow runoff in a large Columbia River
-headwaters basin*, Hydrol. Earth Syst. Sci. 30, 5735–5748, 2026,
-doi:10.5194/hess-30-5735-2026, Sect. 2.5. Their modified bootstrap linear
-regression randomly omits 20 % of the data, fits a linear regression to the
-remaining 80 %, and repeats 10 000 times; the histogram of regression
-coefficients is near-Gaussian, the trend is its mean, and a trend is
-statistically significant only where the 2σ (95 %) bounds of the fitted
-normal exclude zero. It is the primary significance test here, with two
-substitutions: the sample unit is the water year and the regressor is the
-DJF ONI rather than time, so the coefficient is the snowpack response per °C
-of ONI. The same subsampling yields distributions for r and for the
-El Niño-minus-rest composite difference, reported with the same 2σ rule.
+## Running it
 
-*Calibration note.* The spread of a statistic over 80 % subsets is smaller
-than its full-sample sampling error: for a delete-d subsample the two are
-related by the jackknife factor sqrt((n−d)/d) (Shao & Wu 1989), which is 2
-for an 80/20 split. The raw 2σ bounds are therefore ≈ ±1 standard error, and
-in a Monte Carlo on pure noise (n = 40 and 72, 300 trials each) the raw rule
-declared significance in about 30 % of cases. The report shows both the raw
-rule, as published, and a *calibrated* column with σ scaled by that factor
-(≈ 5 % false-positive rate), and a permutation p-value as an independent
-check. Where all three agree the result is solid; where only the raw rule
-fires, treat it as suggestive.
+```
+python3 -m pip install -r requirements.txt
+python3 -m enso_snowpack fetch      # ~45 min, resumable, caches per station
+python3 -m enso_snowpack analyze    # results/summary.md, figures, CSV tables
+python3 -m pytest tests -q          # offline tests
+```
 
-Select a scheme with `--bootstrap <scheme>`; `--n-boot` (10 000 by default,
-the paper's count) and `--n-perm` (5000) set the resample counts;
-`--omit-fraction` (0.20) is the share of water years dropped per iteration.
+`analyze` flags: `--no-ski`, `--no-daily`, `--n-boot`, `--n-perm`,
+`--omit-fraction`, and `--bootstrap` to switch resampling scheme.
 
-## What to expect (from the literature, to be confirmed by the run)
+To move data to a machine that cannot reach NOAA or NRCS: `bundle` reduces the
+daily tables to per-station metrics in one small archive, and
+`analyze --bundle <file>.tar.gz` runs from it.
 
-The published ENSO–snowpack relation in the US Rockies is a **latitudinal
-dipole**: La Niña winters tend to be snow-rich in the northern Rockies
-(MT, ID) and El Niño winters snow-poor there, with the reverse and a weaker
-signal in the southern Rockies/Great Basin (southern UT, CO). Colorado sits
-near the node and is the least predictable. Correlations in the north are
-typically |r| ≈ 0.3–0.5; the relation is not strictly monotonic in strength
-— the 2015-16 "Godzilla" El Niño was not a dry year in Montana — which is
-exactly what the within-El-Niño rows and the strength composites are there to
-test. Treat these as hypotheses; the report's numbers are the finding.
-
-## Layout
+### Layout
 
 ```
 enso_snowpack/
-  sources.py   parsers for each raw format (pure functions, tested offline)
-  fetch.py     downloads + per-station cache
-  analysis.py  water-year metrics, standardisation, statistics
-  figures.py   matplotlib figures
-  report.py    results/summary.md
-  ski.py       ski regions x windows of winter, the headline analysis
+  ski.py       ski regions x windows of winter — the headline analysis
   daily.py     day-by-day correlation through the water year
-  bootstrap.py permutation, moving-block and two-level bootstraps; FDR field significance
-  fixture.py   synthetic data with a planted north-negative / south-positive signal
-  cli.py       fetch | bundle | analyze | run
-tests/         parser tests on spec-shaped samples + end-to-end fixture test
+  bootstrap.py Brown & Harper subsampling, permutation, FDR control
+  analysis.py  water-year metrics, standardisation, seasonal statistics
+  sources.py   parsers for each raw format (pure functions, tested offline)
+  fetch.py     downloads with a per-station cache
+  figures.py   all figures (red = less snow)
+  report.py    results/summary.md
+  fixture.py   synthetic data with a planted signal, for offline tests
 ```
 
-## Citation and licence
+## Caveats
 
-MIT licence (see `LICENSE`). If you use the results, cite the data providers
-(NOAA CPC, NRCS AWDB, NCEI nClimDiv) and Brown & Harper (2026) for the
-bootstrap.
+- **Snow depth starts around 1993**, so depth results rest on about 25 winters
+  against 45 to 60 for the SWE-derived ones. They agree in sign and are
+  stronger, which is reassuring, but they are the least certain numbers here.
+- **SNOTEL is not the ski area.** Even with elevation weighting these are
+  nearby mountain gauges, not on-mountain measurements, and they say nothing
+  about grooming, snowmaking or aspect.
+- **An r² of 15 to 28 % is real but leaves most of the variance
+  unexplained.** ENSO shifts the odds; it does not determine a season.
+- **Regions overlap** where radii intersect, so neighbouring rows are not
+  fully independent. The sign tests treat them as independent and will read
+  slightly optimistically.
+
+## Citation
+
+MIT licence. Cite the data providers (NOAA CPC, NRCS AWDB, NCEI nClimDiv) and
+Brown & Harper (2026), *Historical evolution of snowpack capacity to buffer
+rain-on-snow runoff in a large Columbia River headwaters basin*, Hydrol. Earth
+Syst. Sci. 30, 5735–5748, doi:10.5194/hess-30-5735-2026, for the bootstrap.

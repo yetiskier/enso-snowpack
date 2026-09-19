@@ -18,6 +18,12 @@ STATE_COLORS = {"MT": "#2a78d6", "ID": "#eb6834", "WY": "#e87ba4", "CO": "#1baf7
 PHASE_COLORS = {"La Nina": "#2a78d6", "Neutral": "#9a9892", "El Nino": "#e34948"}
 DIVERGING = LinearSegmentedColormap.from_list("bluered", ["#0d366b", "#2a78d6", "#f0efec",
                                                           "#e34948", "#7a1f1e"])
+# Snow convention, used on every ENSO figure: LESS SNOW IS RED, more snow is
+# blue. A negative correlation with the ONI means El Nino brings less snow, so
+# the scale is reversed relative to the generic diverging ramp above.
+SNOW_DIVERGING = LinearSegmentedColormap.from_list(
+    "lesssnow_red", ["#7a1f1e", "#e34948", "#f0efec", "#2a78d6", "#0d366b"])
+LESS_SNOW, MORE_SNOW = "#e34948", "#2a78d6"
 TEXT, MUTED, GRID = "#0b0b0b", "#52514e", "#e6e5e1"
 
 plt.rcParams.update({
@@ -93,12 +99,12 @@ def fig_station_map(sc: pd.DataFrame, out: Path, title: str, name: str) -> Path:
     fig, ax = plt.subplots(figsize=(7.5, 7))
     norm = TwoSlopeNorm(vmin=-0.8, vcenter=0, vmax=0.8)
     sig = d["p"] < 0.05
-    ax.scatter(d.loc[~sig, "longitude"], d.loc[~sig, "latitude"], c=d.loc[~sig, "r"], cmap=DIVERGING,
+    ax.scatter(d.loc[~sig, "longitude"], d.loc[~sig, "latitude"], c=d.loc[~sig, "r"], cmap=SNOW_DIVERGING,
                norm=norm, s=22, edgecolor="#bcbab4", linewidth=0.5, label="p ≥ 0.05")
-    s = ax.scatter(d.loc[sig, "longitude"], d.loc[sig, "latitude"], c=d.loc[sig, "r"], cmap=DIVERGING,
+    s = ax.scatter(d.loc[sig, "longitude"], d.loc[sig, "latitude"], c=d.loc[sig, "r"], cmap=SNOW_DIVERGING,
                    norm=norm, s=46, edgecolor=TEXT, linewidth=0.8, label="p < 0.05")
     cb = fig.colorbar(s, ax=ax, shrink=0.7, pad=0.02)
-    cb.set_label("Pearson r (April-1 SWE anomaly vs DJF ONI)")
+    cb.set_label("Correlation with DJF ONI\n(red = El Niño means less snow)")
     ax.set_xlabel("Longitude"); ax.set_ylabel("Latitude")
     ax.set_aspect(1 / np.cos(np.deg2rad(d["latitude"].mean())))
     ax.set_title(title)
@@ -234,7 +240,7 @@ def fig_daily_curve(curve: pd.DataFrame, climatology: np.ndarray, out: Path,
                     bbox=dict(boxstyle="round,pad=0.15", fc="#fcfcfb", ec="none", alpha=0.85))
 
     ax.axhline(0, color=TEXT, lw=0.9)
-    ax.set_ylabel("Correlation with DJF ONI")
+    ax.set_ylabel("Correlation with DJF ONI\n(below zero: El Niño means less snow)")
     ax.set_xlabel("Water year")
     ticks = [(pd.Timestamp(2001 if m >= 10 else 2002, m, 1) - pd.Timestamp(2001, 10, 1)).days
              for m in (10, 11, 12, 1, 2, 3, 4, 5, 6)]
@@ -249,7 +255,8 @@ def fig_daily_curve(curve: pd.DataFrame, climatology: np.ndarray, out: Path,
 
 
 def fig_ski_heatmap(grid: pd.DataFrame, out: Path, name: str = "fig9_ski_region_window",
-                    metrics=("mean_swe", "storm_days", "big_storm_days")) -> Path:
+                    metrics=("mean_swe", "storm_days", "big_storm_days"),
+                    value: str = "signed_r2") -> Path:
     """Ski region x window x metric, as small multiples of one measure.
 
     Rows are ski regions ordered north to south, so the ENSO dipole reads as a
@@ -267,7 +274,8 @@ def fig_ski_heatmap(grid: pd.DataFrame, out: Path, name: str = "fig9_ski_region_
 
     fig, axes = plt.subplots(1, len(metrics), figsize=(4.6 * len(metrics), 5.4), sharey=True)
     axes = np.atleast_1d(axes)
-    norm = TwoSlopeNorm(vmin=-0.6, vcenter=0, vmax=0.6)
+    lim = 0.25 if value == "signed_r2" else 0.6
+    norm = TwoSlopeNorm(vmin=-lim, vcenter=0, vmax=lim)
     for ax, metric in zip(axes, metrics):
         d = grid[grid["metric"] == metric]
         M = np.full((len(regions), len(windows)), np.nan)
@@ -275,16 +283,17 @@ def fig_ski_heatmap(grid: pd.DataFrame, out: Path, name: str = "fig9_ski_region_
             for j, win in enumerate(windows):
                 s = d[(d["region"] == reg) & (d["window"] == win)]
                 if not s.empty:
-                    M[i, j] = s["r"].iloc[0]
-        ax.imshow(M, cmap=DIVERGING, norm=norm, aspect="auto")
+                    M[i, j] = s[value].iloc[0]
+        ax.imshow(M, cmap=SNOW_DIVERGING, norm=norm, aspect="auto")
         for i, reg in enumerate(regions):
             for j, win in enumerate(windows):
                 s = d[(d["region"] == reg) & (d["window"] == win)]
                 if s.empty or not np.isfinite(M[i, j]):
                     continue
                 s = s.iloc[0]
-                strong = abs(M[i, j]) > 0.38
-                ax.text(j, i, f"{M[i, j]:+.2f}", ha="center", va="center", fontsize=8.5,
+                strong = abs(M[i, j]) > 0.62 * lim
+                txt = f"{100 * abs(M[i, j]):.0f}%" if value == "signed_r2" else f"{M[i, j]:+.2f}"
+                ax.text(j, i, txt, ha="center", va="center", fontsize=8.5,
                         color="#ffffff" if strong else TEXT,
                         fontweight="bold" if s["fdr_significant"] else "normal")
                 if s["fdr_significant"]:
@@ -300,12 +309,14 @@ def fig_ski_heatmap(grid: pd.DataFrame, out: Path, name: str = "fig9_ski_region_
         ax.tick_params(which="minor", length=0)
     axes[0].set_yticks(range(len(regions)))
     axes[0].set_yticklabels(regions, fontsize=8.5)
-    sm = plt.cm.ScalarMappable(cmap=DIVERGING, norm=norm)
+    sm = plt.cm.ScalarMappable(cmap=SNOW_DIVERGING, norm=norm)
     cb = fig.colorbar(sm, ax=axes, shrink=0.55, pad=0.015)
-    cb.set_label("Correlation with DJF ONI\n(negative = El Niño is worse)", fontsize=8.5)
+    cb.set_label("Variance explained by the ONI (r²), signed\n"
+                 "RED = El Niño means LESS snow   BLUE = more snow", fontsize=8.5)
     fig.suptitle("El Niño and the ski season, by region and window of winter", y=0.99,
                  fontsize=12, fontweight="bold")
-    fig.text(0.5, 0.005, "Bold value in a ring: survives false-discovery control across all "
+    fig.text(0.5, 0.005, "Cells show r² as a percentage of year-to-year variance explained. "
+             "Bold value in a ring: survives false-discovery control across all "
              f"{int(grid['n_tests'].iloc[0]) if 'n_tests' in grid else len(grid)} tests. "
              "Regions ordered north (top) to south (bottom).",
              ha="center", fontsize=8, color=MUTED)
@@ -314,3 +325,54 @@ def fig_ski_heatmap(grid: pd.DataFrame, out: Path, name: str = "fig9_ski_region_
     fig.savefig(p, bbox_inches="tight")
     plt.close(fig)
     return p
+
+
+def fig_distributions(dists: list, out: Path, name: str = "fig10_distributions") -> Path:
+    """Probability distributions behind the headline tests.
+
+    For each test, two distributions on one axis: the Brown & Harper (2026)
+    subsampling distribution of the estimate (how well pinned down it is, with
+    the Gaussian they fit to it) and the permutation null (what chance alone
+    produces from the same data). Separation between them IS the significance,
+    shown rather than asserted. x is signed r², so distance from zero is
+    variance explained and the side is the direction.
+    """
+    dists = [d for d in dists if d]
+    if not dists:
+        return out / f"{name}.png"
+    ncol = 2
+    nrow = int(np.ceil(len(dists) / ncol))
+    fig, axes = plt.subplots(nrow, ncol, figsize=(6.2 * ncol, 3.0 * nrow), squeeze=False)
+    for ax, d in zip(axes.ravel(), dists):
+        null, sub = d["null_signed_r2"], d["sub_signed_r2"]
+        lo = min(null.min(), sub.min(), -0.02)
+        hi = max(null.max(), sub.max(), 0.02)
+        bins = np.linspace(lo, hi, 70)
+        ax.hist(null, bins=bins, color=MUTED, alpha=0.45, density=True, lw=0,
+                label="chance alone (permutation null)")
+        colour = LESS_SNOW if d["r_obs"] < 0 else MORE_SNOW
+        ax.hist(sub, bins=bins, color=colour, alpha=0.75, density=True, lw=0,
+                label="estimate (80 % subsamples)")
+        mu, sd = float(np.mean(sub)), float(np.std(sub, ddof=1))
+        xs = np.linspace(lo, hi, 400)
+        ax.plot(xs, np.exp(-0.5 * ((xs - mu) / sd) ** 2) / (sd * np.sqrt(2 * np.pi)),
+                color=TEXT, lw=1.4, ls="--", label="fitted normal")
+        ax.axvline(0, color=TEXT, lw=0.9)
+        ax.axvline(d["signed_r2_obs"], color=colour, lw=2.0)
+        ax.set_yticks([])
+        ax.set_xlabel("signed r²   (left = El Niño means less snow)", fontsize=8.5)
+        r2 = abs(d["signed_r2_obs"])
+        if d["p_perm"] >= 0.05 or r2 < 0.02:
+            verdict = "no detectable effect"
+        else:
+            verdict = f"El Niño = {'less' if d['r_obs'] < 0 else 'more'} snow"
+        ax.set_title(f"{d['region']} — {d['window']}, {d['metric']}\n"
+                     f"r² = {r2:.0%} of year-to-year variance · {verdict} · "
+                     f"n = {d['n']} · p = {d['p_perm']:.4f}", fontsize=8.8, loc="left")
+    for ax in axes.ravel()[len(dists):]:
+        ax.set_visible(False)
+    axes.ravel()[0].legend(frameon=False, fontsize=8, loc="upper left")
+    fig.suptitle("Probability distributions behind each result", y=1.005,
+                 fontsize=12, fontweight="bold")
+    fig.tight_layout()
+    return _save(fig, out, name)

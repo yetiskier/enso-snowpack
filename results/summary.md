@@ -31,6 +31,59 @@ Phase from the DJF ONI (El Niño ≥ +0.5 °C, La Niña ≤ −0.5 °C); strengt
 | La Nina | strong | 7 | 1956 (-1.2), 1976 (-1.5), 1989 (-1.6), 1999 (-1.5), 2000 (-1.5), 2008 (-1.8), 2011 (-1.3) |
 | La Nina | very strong | 1 | 1974 (-1.9) |
 
+## The ski season: by region and window of winter
+
+Skiing is not water supply. What matters is the base underfoot and how often it storms during the windows that carry a season, so this section scores destination ski regions (not states, which are not snow climates) inside ski windows, and controls the false-discovery rate across the whole grid, because asking this many questions at p<0.05 buys false positives for free.
+
+![](fig9_ski_region_window.png)
+
+| Window of winter | tests | leaning to less snow | mean r | sign-test p |
+|---|---|---|---|---|
+| Early season | 39 | 27 (69%) | -0.07 | 0.0237* |
+| Holidays | 39 | 37 (95%) | -0.20 | 0.0000*** |
+| Midwinter | 39 | 34 (87%) | -0.16 | 0.0000*** |
+| Spring | 39 | 23 (59%) | -0.05 | 0.3368 |
+
+A negative correlation means El Niño winters bring less of that quantity. The sign test asks whether the direction is consistent across independent ski regions, which is the question that matters when each single correlation is modest.
+
+**20 of 260 tests survive false-discovery control at alpha = 0.10.** Each row is a real, sub-seasonal relationship:
+
+| Ski region | Window | What | winters | r² (variance explained) | El Niño brings | mean z, El Niño | mean z, La Niña |
+|---|---|---|---|---|---|---|---|
+| N Idaho (Schweitzer/Silver) | Spring | Base (mean snow depth) | 25 | **36%** | less snow | -0.69 | +0.71 |
+| NW Montana (Whitefish) | Spring | Base (mean snow depth) | 25 | **34%** | less snow | -0.67 | +0.62 |
+| NW Montana (Whitefish) | Midwinter | Base (mean snow depth) | 25 | **30%** | less snow | -0.54 | +0.51 |
+| Montana Snowbowl (Missoula) | Spring | Base (mean snow depth) | 26 | **29%** | less snow | -0.63 | +0.45 |
+| Montana Snowbowl (Missoula) | Spring | Base (mean SWE in window) | 59 | **28%** | less snow | -0.58 | +0.55 |
+| Montana Snowbowl (Missoula) | Midwinter | Base (mean snow depth) | 26 | **28%** | less snow | -0.57 | +0.43 |
+| Montana Snowbowl (Missoula) | Spring | Days per 30 with a skiable base | 56 | **24%** | less snow | -0.49 | +0.43 |
+| S Wyoming (Snowy/Sierra Madre) | Holidays | Storm days per 30 (SWE gain >= 10 mm) | 46 | **21%** | less snow | -0.49 | +0.39 |
+| N Colorado (Steamboat) | Holidays | Storm days per 30 (SWE gain >= 10 mm) | 47 | **19%** | less snow | -0.50 | +0.36 |
+| Montana Snowbowl (Missoula) | Midwinter | Powder days per 30 (SWE gain >= 25 mm) | 59 | **19%** | less snow | -0.41 | +0.48 |
+| Montana Snowbowl (Missoula) | Midwinter | Storm days per 30 (SWE gain >= 10 mm) | 59 | **19%** | less snow | -0.47 | +0.40 |
+| NW Montana (Whitefish) | Spring | Days per 30 with a skiable base | 50 | **18%** | less snow | -0.48 | +0.42 |
+| SW Montana (Big Sky/Bridger) | Spring | Base (mean SWE in window) | 60 | **16%** | less snow | -0.39 | +0.39 |
+| NW Montana (Whitefish) | Spring | Base (mean SWE in window) | 52 | **16%** | less snow | -0.54 | +0.33 |
+| N Idaho (Schweitzer/Silver) | Spring | Base (mean SWE in window) | 46 | **16%** | less snow | -0.56 | +0.34 |
+| Montana Snowbowl (Missoula) | Midwinter | Base (mean SWE in window) | 59 | **16%** | less snow | -0.42 | +0.46 |
+| Montana Snowbowl (Missoula) | Midwinter | Days per 30 with a skiable base | 59 | **15%** | less snow | -0.37 | +0.38 |
+| SW Montana (Big Sky/Bridger) | Midwinter | Base (mean SWE in window) | 60 | **14%** | less snow | -0.36 | +0.37 |
+| SW Montana (Big Sky/Bridger) | Midwinter | Days per 30 with a skiable base | 60 | **13%** | less snow | -0.32 | +0.33 |
+| SW Montana (Big Sky/Bridger) | Spring | Days per 30 with a skiable base | 60 | **11%** | less snow | -0.32 | +0.24 |
+
+### Does the STRENGTH of the event matter?
+
+Phase means which of El Niño / Neutral / La Niña a winter is. Strength means how far the ONI actually went. `change from adding strength` is the variance explained by the continuous index minus the variance explained by phase alone: at or below zero, knowing the magnitude adds nothing and a strong El Niño is no worse for skiing than a weak one.
+
+| Window | r² from phase alone | r² from the continuous ONI | change from adding strength | tests where strength helps | r² within El Niño winters only |
+|---|---|---|---|---|---|
+| Early season | 5.6% | 3.3% | **-2.3%** | 6 of 65 | 3.5% |
+| Holidays | 7.6% | 5.1% | **-2.5%** | 2 of 65 | 4.2% |
+| Midwinter | 7.7% | 6.4% | **-1.3%** | 9 of 65 | 3.9% |
+| Spring | 9.5% | 5.8% | **-3.7%** | 4 of 65 | 5.0% |
+
+![](fig10_distributions.png)
+
 ## When in the season the signal acts
 
 April-1 SWE is one snapshot and it mixes accumulation with melt already under way, so it cannot show *when* ENSO acts. Following Brown & Harper (2026), the correlation is computed for **every day of the water year** and summarised over their four seasonal periods. This is the primary result; the April-1 tables below are the conventional cross-section of it.
