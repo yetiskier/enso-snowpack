@@ -22,6 +22,24 @@ python3 -m enso_snowpack analyze --fixture   # offline smoke run on synthetic da
 python3 -m pytest tests -q                # offline tests
 ```
 
+### Getting the real data into a sandbox that cannot reach NOAA/NRCS
+
+The fetch must run on a machine with internet access. It then reduces the
+large daily station tables to per-station water-year metrics and packs every
+small table into one archive (a few MB) that can be uploaded anywhere:
+
+```
+python3 -m enso_snowpack fetch                 # on the connected machine, once
+python3 -m enso_snowpack bundle                # -> enso_snowpack_data_<date>.tar.gz
+# upload that file, then wherever the analysis runs:
+python3 -m enso_snowpack analyze --bundle enso_snowpack_data_<date>.tar.gz
+```
+
+The bundle holds `oni.csv`, `mei.csv`, `nclimdiv.csv`, `stations_SNTL.csv`,
+`stations_SNOW.csv`, `station_water_year_metrics.csv` and
+`snowcourse_water_year_metrics.csv`; `analyze` uses the precomputed metrics
+when no daily table is present.
+
 Useful flags: `--max-stations 40` for a quick real-data smoke run,
 `--no-snow-courses` to skip the manual snow-course network, `--force` to
 re-download, `--n-boot 500` for a faster bootstrap.
@@ -84,9 +102,9 @@ resampling them would inflate the effective sample size).
 | scheme | what it does | gives |
 |---|---|---|
 | `permutation` | shuffles the ENSO index across years, snowpack untouched | two-sided p for r, and for the El Niño-minus-rest composite difference |
-| `block_bootstrap` (default) | moving-block bootstrap of (ONI, snowpack) year pairs, block length 2 (ENSO's persistence scale) | 95 % CI on r, slope, composite difference that respects serial dependence |
+| `block_bootstrap` | moving-block bootstrap of (ONI, snowpack) year pairs, block length 2 (ENSO's persistence scale) | 95 % CI on r, slope, composite difference that respects serial dependence |
 | `two_level` | resamples years, then the contributing stations within each year | CI that also carries station-sampling uncertainty of the state mean |
-| `brown_harper_2026` | the modified bootstrap of Brown & Harper (2026) | **not yet implemented** — see below |
+| `brown_harper_2026` (default) | the modified bootstrap regression of Brown & Harper (2026): drop a random 20 % of the water years, fit the regression to the remaining 80 %, repeat 10 000 times | mean and σ of the near-Gaussian coefficient distribution; significant when mean ± 2σ excludes zero |
 
 The per-station map uses per-station permutation p-values with
 Benjamini–Hochberg false-discovery-rate control (α_FDR = 0.10), the
@@ -95,15 +113,31 @@ field-significance procedure recommended by Wilks (2016).
 **Brown & Harper (2026).** J. Brown and J. Harper, *Historical evolution of
 snowpack capacity to buffer rain-on-snow runoff in a large Columbia River
 headwaters basin*, Hydrol. Earth Syst. Sci. 30, 5735–5748, 2026,
-doi:10.5194/hess-30-5735-2026 (preprint egusphere-2025-4971). Its modified
-bootstrap is the intended primary significance test. The authoring sandbox
-could not fetch the paper, so `bootstrap.brown_harper_2026` is a stub that
-raises `NotImplementedError`; transcribe the resampling scheme from the
-Methods into that function and register it in `run_bootstrap`. Run with
-`python3 -m enso_snowpack analyze --bootstrap brown_harper_2026` once done.
+doi:10.5194/hess-30-5735-2026, Sect. 2.5. Their modified bootstrap linear
+regression randomly omits 20 % of the data, fits a linear regression to the
+remaining 80 %, and repeats 10 000 times; the histogram of regression
+coefficients is near-Gaussian, the trend is its mean, and a trend is
+statistically significant only where the 2σ (95 %) bounds of the fitted
+normal exclude zero. It is the primary significance test here, with two
+substitutions: the sample unit is the water year and the regressor is the
+DJF ONI rather than time, so the coefficient is the snowpack response per °C
+of ONI. The same subsampling yields distributions for r and for the
+El Niño-minus-rest composite difference, reported with the same 2σ rule.
 
-Select a scheme with `--bootstrap <scheme>`; `--n-boot` and `--n-perm` set
-the resample counts (5000 each by default).
+*Calibration note.* The spread of a statistic over 80 % subsets is smaller
+than its full-sample sampling error: for a delete-d subsample the two are
+related by the jackknife factor sqrt((n−d)/d) (Shao & Wu 1989), which is 2
+for an 80/20 split. The raw 2σ bounds are therefore ≈ ±1 standard error, and
+in a Monte Carlo on pure noise (n = 40 and 72, 300 trials each) the raw rule
+declared significance in about 30 % of cases. The report shows both the raw
+rule, as published, and a *calibrated* column with σ scaled by that factor
+(≈ 5 % false-positive rate), and a permutation p-value as an independent
+check. Where all three agree the result is solid; where only the raw rule
+fires, treat it as suggestive.
+
+Select a scheme with `--bootstrap <scheme>`; `--n-boot` (10 000 by default,
+the paper's count) and `--n-perm` (5000) set the resample counts;
+`--omit-fraction` (0.20) is the share of water years dropped per iteration.
 
 ## What to expect (from the literature, to be confirmed by the run)
 
@@ -128,7 +162,7 @@ enso_snowpack/
   report.py    results/summary.md
   bootstrap.py permutation, moving-block and two-level bootstraps; FDR field significance
   fixture.py   synthetic data with a planted north-negative / south-positive signal
-  cli.py       fetch | analyze | run
+  cli.py       fetch | bundle | analyze | run
 tests/         parser tests on spec-shaped samples + end-to-end fixture test
 ```
 

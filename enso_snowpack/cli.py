@@ -88,16 +88,69 @@ def _inputs(args):
         daily = to_metric(FX.synthetic_daily(stations, oni))
         nc = FX.synthetic_nclimdiv(oni)
         return oni, None, stations, daily, nc, None, None
+    if args.bundle:
+        _unpack_bundle(Path(args.bundle), derived)
     oni = pd.read_csv(derived / "oni.csv")
     mei = pd.read_csv(derived / "mei.csv") if (derived / "mei.csv").exists() else None
     stations = pd.read_csv(derived / "stations_SNTL.csv")
-    daily = _load_daily(derived)
+    daily = _load_daily(derived) if _have_daily(derived) else None
     nc = pd.read_csv(derived / "nclimdiv.csv") if (derived / "nclimdiv.csv").exists() else None
     courses = semi = None
     if (derived / "snowcourse_semimonthly.csv.gz").exists():
         courses = pd.read_csv(derived / "stations_SNOW.csv")
         semi = pd.read_csv(derived / "snowcourse_semimonthly.csv.gz", parse_dates=["date"])
+    elif (derived / "stations_SNOW.csv").exists():
+        courses = pd.read_csv(derived / "stations_SNOW.csv")
     return oni, mei, stations, daily, nc, courses, semi
+
+
+def _have_daily(derived: Path) -> bool:
+    return (derived / "snotel_daily.parquet").exists() or (derived / "snotel_daily.csv.gz").exists()
+
+
+BUNDLE_FILES = ["oni.csv", "mei.csv", "nclimdiv.csv", "stations_SNTL.csv", "stations_SNOW.csv",
+                "station_water_year_metrics.csv", "snowcourse_water_year_metrics.csv"]
+
+
+def _unpack_bundle(bundle: Path, derived: Path) -> None:
+    import tarfile
+    with tarfile.open(bundle, "r:gz") as tf:
+        names = [m.name for m in tf.getmembers() if m.isfile()]
+        for m in tf.getmembers():
+            if m.isfile() and Path(m.name).name in BUNDLE_FILES:
+                m.name = Path(m.name).name
+                tf.extract(m, derived)
+    log.info("unpacked %d files from %s into %s", len(names), bundle, derived)
+
+
+def cmd_bundle(args) -> int:
+    """Reduce the (large) daily station data to per-station water-year metrics
+    and pack every small derived table into one .tar.gz for transfer."""
+    import tarfile
+    raw, derived, results = _paths(args.root)
+    if args.fixture:
+        oni, _, stations, daily, nc, _, _ = _inputs(args)
+        oni.to_csv(derived / "oni.csv", index=False)
+        stations.to_csv(derived / "stations_SNTL.csv", index=False)
+        nc.to_csv(derived / "nclimdiv.csv", index=False)
+        A.station_water_year_metrics(daily).to_csv(derived / "station_water_year_metrics.csv", index=False)
+    elif _have_daily(derived):
+        metrics = A.station_water_year_metrics(_load_daily(derived))
+        metrics.to_csv(derived / "station_water_year_metrics.csv", index=False)
+        log.info("station metrics: %d station-years", len(metrics))
+    if (derived / "snowcourse_semimonthly.csv.gz").exists():
+        semi = pd.read_csv(derived / "snowcourse_semimonthly.csv.gz", parse_dates=["date"])
+        A.snowcourse_water_year_metrics(semi).to_csv(derived / "snowcourse_water_year_metrics.csv", index=False)
+    out = Path(args.out or (args.root / f"enso_snowpack_data_{date.today().isoformat()}.tar.gz"))
+    n = 0
+    with tarfile.open(out, "w:gz") as tf:
+        for name in BUNDLE_FILES:
+            p = derived / name
+            if p.exists():
+                tf.add(p, arcname=name); n += 1
+    log.info("bundle written: %s (%d files, %.1f MB)", out, n, out.stat().st_size / 1e6)
+    print(out)
+    return 0
 
 
 def _corr_set(regional, enso, metric, index_col="oni_djf", n_boot=2000):
@@ -116,8 +169,12 @@ def cmd_analyze(args) -> int:
     enso = A.enso_by_water_year(oni)
     enso.to_csv(results / "enso_water_years.csv", index=False)
 
-    metrics = A.station_water_year_metrics(daily)
-    metrics.to_csv(derived / "station_water_year_metrics.csv", index=False)
+    if daily is not None:
+        metrics = A.station_water_year_metrics(daily)
+        metrics.to_csv(derived / "station_water_year_metrics.csv", index=False)
+    else:
+        metrics = pd.read_csv(derived / "station_water_year_metrics.csv")
+        log.info("using precomputed station metrics (%d station-years)", len(metrics))
     ctx = {"enso": enso, "fixture": args.fixture, "min_years": A.MIN_YEARS_STATION,
            "n_stations_total": len(stations), "composites": {}}
 
@@ -151,7 +208,8 @@ def cmd_analyze(args) -> int:
             tab = st_tab
         tab = tab[["water_year", "apr1_swe_zd"]].rename(columns={"apr1_swe_zd": "value"})
         b = B.run_bootstrap(s_, enso, region, "apr1_swe_zd", scheme=args.bootstrap,
-                            n_boot=args.n_boot, n_perm=args.n_perm, station_table=tab)
+                            n_boot=args.n_boot, n_perm=args.n_perm, station_table=tab,
+                            omit_fraction=args.omit_fraction)
         if b is not None:
             boots.append(b.as_dict())
     ctx["boot_apr1"] = boots
@@ -181,8 +239,12 @@ def cmd_analyze(args) -> int:
         pd.DataFrame(ctx["corr_snotel_precip"]).to_csv(results / "corr_snotel_precip_zd.csv", index=False)
 
     # --- snow courses
+    cm = None
     if semi is not None and courses is not None and not semi.empty:
         cm = A.snowcourse_water_year_metrics(semi)
+    elif courses is not None and (derived / "snowcourse_water_year_metrics.csv").exists():
+        cm = pd.read_csv(derived / "snowcourse_water_year_metrics.csv")
+    if cm is not None and not cm.empty:
         stdc = A.standardize(cm, "apr1_swe")
         ctx["n_courses_used"] = stdc["stationTriplet"].nunique()
         regc = A.regional_means(stdc, courses, "apr1_swe_zd")
@@ -240,18 +302,24 @@ def main(argv=None) -> int:
     ap.add_argument("--root", type=Path, default=Path(__file__).resolve().parents[1],
                     help="directory holding data/ and results/ (default: package root)")
     sub = ap.add_subparsers(dest="cmd", required=True)
-    for name, fn in (("fetch", cmd_fetch), ("analyze", cmd_analyze), ("run", cmd_run)):
+    for name, fn in (("fetch", cmd_fetch), ("analyze", cmd_analyze), ("run", cmd_run),
+                     ("bundle", cmd_bundle)):
         sp = sub.add_parser(name)
+        sp.add_argument("--bundle", default=None,
+                        help="analyze: a .tar.gz from `bundle` to unpack into data/derived first")
+        sp.add_argument("--out", default=None, help="bundle: output .tar.gz path")
         sp.add_argument("--force", action="store_true", help="re-download cached inputs")
         sp.add_argument("--end", default=None, help="end date for station series (YYYY-MM-DD)")
         sp.add_argument("--max-stations", type=int, default=None, help="limit stations (smoke runs)")
         sp.add_argument("--no-snow-courses", dest="snow_courses", action="store_false")
         sp.add_argument("--fixture", action="store_true", help="use the synthetic fixture (offline)")
         sp.add_argument("--fixture-stations", type=int, default=12)
-        sp.add_argument("--n-boot", type=int, default=5000, help="bootstrap resamples")
+        sp.add_argument("--n-boot", type=int, default=10000, help="bootstrap resamples / iterations")
         sp.add_argument("--n-perm", type=int, default=5000, help="permutations for null p-values")
-        sp.add_argument("--bootstrap", default="block_bootstrap",
-                        choices=["permutation", "block_bootstrap", "two_level", "brown_harper_2026"])
+        sp.add_argument("--bootstrap", default="brown_harper_2026",
+                        choices=["brown_harper_2026", "permutation", "block_bootstrap", "two_level"])
+        sp.add_argument("--omit-fraction", type=float, default=0.20,
+                        help="Brown & Harper: share of water years omitted per iteration")
         sp.set_defaults(fn=fn)
     args = ap.parse_args(argv)
     return args.fn(args)

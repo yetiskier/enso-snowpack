@@ -59,6 +59,24 @@ def composite_table(comp: pd.DataFrame) -> str:
 
 
 def boot_table(rows: list[dict]) -> str:
+    if rows and rows[0].get("scheme") == "brown_harper_2026":
+        hdr = ("| Region | n | slope per +1 °C ONI: mean ± σ | 2σ bounds | significant (2σ) | "
+               "significant (calibrated 2σ) | r: mean ± σ | 2σ bounds | significant (2σ) | "
+               "El Niño − rest (z): mean ± σ | significant (2σ) | permutation p (r) |")
+        out = [hdr, "|" + "---|" * 12]
+        for b in rows:
+            out.append(
+                f"| {b['region']} | {b['n']} | {_f(b['bh_slope_mean'], plus=True)} ± {_f(b['bh_slope_sd'])} | "
+                f"[{_f(b['slope_ci_low'], plus=True)}, {_f(b['slope_ci_high'], plus=True)}] | "
+                f"{'**yes**' if b['bh_slope_significant'] else 'no'} | "
+                f"{'**yes**' if b['bh_slope_significant_cal'] else 'no'} | "
+                f"{_f(b['bh_r_mean'], plus=True)} ± {_f(b['bh_r_sd'])} | "
+                f"[{_f(b['r_ci_low'], plus=True)}, {_f(b['r_ci_high'], plus=True)}] | "
+                f"{'**yes**' if b['bh_r_significant'] else 'no'} | "
+                f"{_f(b['bh_diff_mean'], plus=True)} ± {_f(b['bh_diff_sd'])} | "
+                f"{'**yes**' if b['bh_diff_significant'] else 'no'} | "
+                f"{_f(b['p_perm'], 4)}{_stars(b['p_perm'])} |")
+        return "\n".join(out)
     hdr = ("| Region | n | r | permutation p | r 95% CI | slope 95% CI | "
            "El Niño − rest (z) | 95% CI | permutation p |")
     out = [hdr, "|" + "---|" * 9]
@@ -70,6 +88,21 @@ def boot_table(rows: list[dict]) -> str:
             f"{_f(b['diff_nino_rest_obs'], plus=True)} | "
             f"[{_f(b['diff_ci_low'], plus=True)}, {_f(b['diff_ci_high'], plus=True)}] | "
             f"{_f(b['p_perm_diff'], 3)}{_stars(b['p_perm_diff'])} |")
+    return "\n".join(out)
+
+
+def enso_years_table(enso: pd.DataFrame) -> str:
+    """Which water years fall in each phase × strength bin."""
+    order = [("El Nino", "very strong"), ("El Nino", "strong"), ("El Nino", "moderate"),
+             ("El Nino", "weak"), ("Neutral", "neutral"), ("La Nina", "weak"),
+             ("La Nina", "moderate"), ("La Nina", "strong"), ("La Nina", "very strong")]
+    out = ["| Phase | Strength (winter peak ONI) | n | Water years (DJF ONI) |", "|---|---|---|---|"]
+    for phase, strength in order:
+        g = enso[(enso["phase"] == phase) & (enso["strength"] == strength)].sort_values("water_year")
+        if g.empty:
+            continue
+        years = ", ".join(f"{int(r.water_year)} ({r.oni_djf:+.1f})" for r in g.itertuples())
+        out.append(f"| {phase} | {strength} | {len(g)} | {years} |")
     return "\n".join(out)
 
 
@@ -125,6 +158,14 @@ def write_report(out_dir: Path, ctx: dict) -> Path:
         "Peak SWE is analysed the same way. The ENSO index is the DJF ONI of the water year; "
         "El Niño ≥ +0.5 °C, La Niña ≤ −0.5 °C.",
         "",
+        "## ENSO classification of the water years",
+        "",
+        "Phase from the DJF ONI (El Niño ≥ +0.5 °C, La Niña ≤ −0.5 °C); strength from the peak "
+        "|ONI| over the OND…FMA seasons of the water year, in the CPC bins weak 0.5–0.9, moderate "
+        "1.0–1.4, strong 1.5–1.9, very strong ≥ 2.0. The value in parentheses is the DJF ONI.",
+        "",
+        enso_years_table(e),
+        "",
         "## Headline: correlation of April-1 SWE anomaly with DJF ONI",
         "",
         corr_table(ctx["corr_apr1"]),
@@ -143,9 +184,19 @@ def write_report(out_dir: Path, ctx: dict) -> Path:
         "",
         f"## Resampling significance (April-1 SWE, scheme `{ctx.get('boot_scheme', '')}`)",
         "",
-        "Permutation p-values shuffle the ENSO index across water years (no normality assumed); "
-        "the CIs come from the selected bootstrap scheme with water years as the exchangeable unit. "
-        "These, not the parametric p-values above, are the significance test to quote.",
+        ("Brown & Harper (2026) modified bootstrap regression: a random 20 % of the water years is "
+         "omitted, the regression of snowpack anomaly on DJF ONI is fitted to the remaining 80 %, "
+         "and this is repeated 10 000 times; the coefficient distribution is near-Gaussian and the "
+         "relation is significant only where its 2σ bounds exclude zero. The `calibrated 2σ` column "
+         "rescales σ by the delete-d jackknife factor sqrt((n−d)/d) (= 2 for 80/20), which turns the "
+         "subsample spread into a full-sample standard error; the raw 2σ rule flags ~30 % of "
+         "pure-noise cases, the calibrated one ~5 %. The permutation p shuffles the ENSO index across "
+         "years as an independent check. These, not the parametric p-values above, are the "
+         "significance test to quote."
+         if ctx.get("boot_scheme") == "brown_harper_2026" else
+         "Permutation p-values shuffle the ENSO index across water years (no normality assumed); "
+         "the CIs come from the selected bootstrap scheme with water years as the exchangeable unit. "
+         "These, not the parametric p-values above, are the significance test to quote."),
         "",
         boot_table(ctx.get("boot_apr1", [])),
         "",

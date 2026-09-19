@@ -21,10 +21,16 @@ them inflates the effective sample size):
                     resample the contributing stations, so the CI also carries
                     the station-sampling uncertainty of the state mean.
 
-``brown_harper_2026`` is the hook for the modified bootstrap of
-Brown & Harper (2026, HESS 30, 5735–5748, doi:10.5194/hess-30-5735-2026).
-The method text was not reachable from the session that wrote this file, so
-the hook raises until it is transcribed — see README "Bootstrap".
+``brown_harper_2026`` is the modified bootstrap regression of Brown & Harper
+(2026, HESS 30, 5735–5748, doi:10.5194/hess-30-5735-2026, Sect. 2.5): randomly
+omit 20 % of the points, fit a linear regression to the remaining 80 %,
+repeat 10 000 times; the regression coefficients are near-Gaussian, so the
+trend is reported as the mean of that distribution and is significant only
+when the 2σ (95 %) bounds of the fitted normal exclude zero. Here the
+"points" are water years and the regressor is the ENSO index instead of
+time, so the coefficient is the snowpack response per °C of ONI. The same
+subsampling gives a distribution for r and for the El Niño-minus-rest
+composite difference.
 
 Field significance for the per-station map uses the Benjamini–Hochberg
 false-discovery-rate control recommended for gridded/climate fields by
@@ -57,6 +63,23 @@ class BootResult:
     diff_ci_high: float
     p_perm_diff: float            # permutation p for that difference
     n_resamples: int
+    # Brown & Harper (2026) modified bootstrap: mean and sd of the subsampled
+    # regression coefficient (slope per °C ONI) and its 2σ significance.
+    bh_slope_mean: float = np.nan
+    bh_slope_sd: float = np.nan
+    bh_slope_significant: bool = False
+    bh_r_mean: float = np.nan
+    bh_r_sd: float = np.nan
+    bh_r_significant: bool = False
+    bh_diff_mean: float = np.nan
+    bh_diff_sd: float = np.nan
+    bh_diff_significant: bool = False
+    # delete-d jackknife calibrated versions (sd × sqrt((n−d)/d)); see
+    # delete_d_calibration().
+    bh_calibration: float = np.nan
+    bh_slope_significant_cal: bool = False
+    bh_r_significant_cal: bool = False
+    bh_diff_significant_cal: bool = False
 
     def as_dict(self):
         return self.__dict__.copy()
@@ -138,23 +161,47 @@ def two_level_bootstrap_ci(years: np.ndarray, x_by_year: dict, station_values: d
     return float(lo), float(hi)
 
 
-def brown_harper_2026(x: np.ndarray, y: np.ndarray, **kwargs):
-    """Modified bootstrap of Brown & Harper (2026, HESS 30, 5735).
+def brown_harper_2026(x: np.ndarray, y: np.ndarray, stat, n_iter: int = 10000,
+                      omit_fraction: float = 0.20, rng=None):
+    """Modified bootstrap regression of Brown & Harper (2026), Sect. 2.5.
 
-    NOT YET IMPLEMENTED: the paper (and its EGUsphere preprint
-    egusphere-2025-4971) could not be fetched from the authoring session.
-    Transcribe the resampling scheme from the Methods here and register it
-    in :func:`run_bootstrap` under scheme="brown_harper_2026".
+    Random 80/20 subsampling WITHOUT replacement: each iteration drops a
+    random 20 % of the points and evaluates ``stat`` on the rest. Returns
+    ``(mean, sd, lower_2sigma, upper_2sigma, significant, samples)`` where the
+    bounds are mean ± 2·sd of a normal fitted to the distribution and
+    ``significant`` is True when they exclude zero.
     """
-    raise NotImplementedError(
-        "Brown & Harper (2026) modified bootstrap: method text still to be transcribed "
-        "from doi:10.5194/hess-30-5735-2026 — see README 'Bootstrap'.")
+    rng = np.random.default_rng(0) if rng is None else rng
+    n = len(x)
+    keep = max(3, int(round(n * (1.0 - omit_fraction))))
+    vals = np.empty(n_iter)
+    for i in range(n_iter):
+        idx = rng.choice(n, keep, replace=False)
+        vals[i] = stat(x[idx], y[idx])
+    vals = vals[np.isfinite(vals)]
+    if len(vals) < 10:
+        return np.nan, np.nan, np.nan, np.nan, False, vals
+    mu, sd = float(vals.mean()), float(vals.std(ddof=1))
+    lo, hi = mu - 2 * sd, mu + 2 * sd
+    return mu, sd, lo, hi, bool(lo > 0 or hi < 0), vals
+
+
+def delete_d_calibration(n: int, omit_fraction: float = 0.20) -> float:
+    """Factor turning the spread of a statistic over (n−d)-point subsets into
+    its full-sample standard error: sqrt((n−d)/d), the delete-d jackknife
+    variance scaling of Shao & Wu (1989). For 80/20 it is 2.0, i.e. the raw
+    2σ bounds of the subsample distribution are ≈ ±1 SE (a ~68 % interval);
+    under pure noise the raw rule flags ~30 % of cases (Monte Carlo, n=40 and
+    n=72). The calibrated bounds are mean ± 2·sd·factor."""
+    d = max(1, int(round(n * omit_fraction)))
+    return float(np.sqrt((n - d) / d))
 
 
 def run_bootstrap(series: pd.DataFrame, enso: pd.DataFrame, region: str, metric: str,
                   index_col: str = "oni_djf", scheme: str = "block_bootstrap",
                   n_boot: int = 5000, n_perm: int = 5000, block: int = 2,
-                  station_table: pd.DataFrame | None = None, seed: int = 0) -> BootResult | None:
+                  station_table: pd.DataFrame | None = None, seed: int = 0,
+                  omit_fraction: float = 0.20) -> BootResult | None:
     """``series``: water_year, value. ``station_table`` (for ``two_level``):
     water_year, value per station-year."""
     rng = np.random.default_rng(seed)
@@ -187,7 +234,22 @@ def run_bootstrap(series: pd.DataFrame, enso: pd.DataFrame, region: str, metric:
         s_lo, s_hi = two_level_bootstrap_ci(years, xby, sv, _stat_slope, n_boot, rng)
         d_lo, d_hi = two_level_bootstrap_ci(years, xby, sv, _stat_diff, n_boot, rng)
     elif scheme == "brown_harper_2026":
-        return brown_harper_2026(x, y)
+        bh = {}
+        for name, stat in (("slope", _stat_slope), ("r", _stat_r), ("diff", _stat_diff)):
+            mu, sd, lo, hi, sig, _ = brown_harper_2026(x, y, stat, n_iter=n_boot,
+                                                       omit_fraction=omit_fraction, rng=rng)
+            bh[name] = (mu, sd, lo, hi, sig)
+        (s_mu, s_sd, s_lo, s_hi, s_sig) = bh["slope"]
+        (r_mu, r_sd, r_lo, r_hi, r_sig) = bh["r"]
+        (d_mu, d_sd, d_lo, d_hi, d_sig) = bh["diff"]
+        c = delete_d_calibration(n, omit_fraction)
+
+        def _cal(mu, sd):
+            return bool(np.isfinite(sd) and (mu - 2 * sd * c > 0 or mu + 2 * sd * c < 0))
+        return BootResult(region, metric, scheme, n, r_obs, p_r, r_lo, r_hi, slope_obs, s_lo, s_hi,
+                          d_obs, d_lo, d_hi, p_d, n_boot,
+                          s_mu, s_sd, s_sig, r_mu, r_sd, r_sig, d_mu, d_sd, d_sig,
+                          c, _cal(s_mu, s_sd), _cal(r_mu, r_sd), _cal(d_mu, d_sd))
     else:
         raise ValueError(f"unknown scheme {scheme!r}")
 

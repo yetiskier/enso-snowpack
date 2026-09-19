@@ -131,7 +131,7 @@ def test_station_metrics_april1_and_peak():
 
 
 def test_pipeline_recovers_planted_dipole(tmp_path: Path):
-    rc = main(["--root", str(tmp_path), "analyze", "--fixture", "--n-boot", "100"])
+    rc = main(["--root", str(tmp_path), "analyze", "--fixture", "--n-boot", "300", "--n-perm", "300"])
     assert rc == 0
     corr = pd.read_csv(tmp_path / "results" / "corr_apr1_zd.csv").set_index("region")
     # planted: north dry in El Niño (negative r), south wet (positive r)
@@ -147,6 +147,9 @@ def test_pipeline_recovers_planted_dipole(tmp_path: Path):
         assert list((tmp_path / "results").glob(f"fig{i}_*.png")), f"figure {i} missing"
     nc = pd.read_csv(tmp_path / "results" / "corr_nclimdiv_precip.csv").set_index("region")
     assert nc.loc["MT", "pearson_r"] < 0 and nc.loc["UT", "pearson_r"] > 0
+    bh = pd.read_csv(tmp_path / "results" / "bootstrap_apr1_brown_harper_2026.csv").set_index("region")
+    assert bool(bh.loc["MT", "bh_slope_significant"]) and bh.loc["MT", "bh_slope_mean"] < 0
+    assert bool(bh.loc["UT", "bh_slope_significant"]) and bh.loc["UT", "bh_slope_mean"] > 0
 
 
 # ------------------------------------------------------------ bootstrap ---
@@ -197,5 +200,51 @@ def test_run_bootstrap_schemes_agree_on_sign():
         assert b is not None and b.r_obs < -0.4, scheme
         assert b.r_ci_high < 0, scheme          # CI excludes zero
         assert b.p_perm < 0.05 and b.p_perm_diff < 0.05, scheme
-    with pytest.raises(NotImplementedError):
-        B.run_bootstrap(series, enso, "MT", "test", scheme="brown_harper_2026")
+    b = B.run_bootstrap(series, enso, "MT", "test", scheme="brown_harper_2026", n_boot=2000,
+                        n_perm=300)
+    assert b.scheme == "brown_harper_2026"
+    assert b.bh_slope_mean < 0 and b.bh_slope_significant and b.bh_r_significant
+    assert b.slope_ci_high < 0                      # 2σ bounds exclude zero
+    assert abs(b.bh_slope_mean - b.slope_obs) < 3 * b.bh_slope_sd
+
+
+def test_brown_harper_subsampling_mechanics():
+    rng = np.random.default_rng(5)
+    n = 40
+    x = rng.normal(size=n)
+    y = 0.6 * x + rng.normal(size=n) * 0.5
+    mu, sd, lo, hi, sig, samples = B.brown_harper_2026(x, y, B._stat_slope, n_iter=3000,
+                                                        omit_fraction=0.2, rng=rng)
+    assert len(samples) == 3000
+    assert sig and lo > 0 and abs(mu - 0.6) < 0.15
+    assert abs((hi - lo) - 4 * sd) < 1e-9          # bounds are mean ± 2σ
+    # each iteration keeps exactly 80 % of the points
+    keep = int(round(n * 0.8))
+    idx = np.random.default_rng(1).choice(n, keep, replace=False)
+    assert len(set(idx)) == keep == 32
+    # the distribution is centred on the full-sample coefficient
+    assert abs(mu - B._stat_slope(x, y)) < 0.5 * sd
+    # pure noise with a near-zero sample slope: not significant
+    y0 = rng.normal(size=n)
+    y0 = y0 - B._stat_slope(x, y0) * x            # remove the sample slope exactly
+    _, _, lo0, hi0, sig0, _ = B.brown_harper_2026(x, y0, B._stat_slope, n_iter=3000, rng=rng)
+    assert not sig0 and lo0 < 0 < hi0
+
+
+# ------------------------------------------------- real ONI, when present ---
+REAL_ONI = Path(__file__).resolve().parents[1] / "data" / "derived" / "oni.csv"
+
+
+@pytest.mark.skipif(not REAL_ONI.exists(), reason="real ONI not downloaded (run `fetch`)")
+def test_real_oni_classifies_canonical_winters():
+    """Pins the classification against winters whose CPC status is settled."""
+    enso = A.enso_by_water_year(pd.read_csv(REAL_ONI)).set_index("water_year")
+    very_strong_nino = [1983, 1998, 2016]
+    for wy in very_strong_nino:
+        assert enso.loc[wy, "phase"] == "El Nino" and enso.loc[wy, "strength"] == "very strong", wy
+    for wy in (1973, 1992):                      # strong El Niño winters
+        assert enso.loc[wy, "phase"] == "El Nino" and enso.loc[wy, "strength"] in ("strong", "very strong"), wy
+    for wy in (1989, 2000, 2011):                # strong La Niña winters
+        assert enso.loc[wy, "phase"] == "La Nina" and enso.loc[wy, "strength"] in ("strong", "very strong"), wy
+    for wy in (1990, 2013, 2014):                # neutral winters
+        assert enso.loc[wy, "phase"] == "Neutral", wy
