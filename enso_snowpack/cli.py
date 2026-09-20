@@ -371,6 +371,12 @@ def cmd_analyze(args) -> int:
             FS.fig_window_bars(comp, results)
             FS.fig_region_map(comp, grid, meta, results)
             FS.fig_strength(strength_phys, results)
+            sig_comp = SKI.significant_composites(comp, grid)
+            sig_comp.to_csv(results / "ski_significant_composites.csv", index=False)
+            ctx["ski_significant"] = sig_comp
+            FS.fig_significant_inches(sig_comp, results)
+            FS.fig_significant_days(sig_comp, results)
+            log.info("significant composites: %d region-window-measures", len(sig_comp))
             # Pick regions that span the seesaw, not the ones with most gauges:
             # worst-hit, a maritime case, the node, and a gainer.
             mid = comp[(comp["window"] == "Midwinter")

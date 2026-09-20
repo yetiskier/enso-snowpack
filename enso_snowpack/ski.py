@@ -327,6 +327,7 @@ METRICS = [
     ("storm_days", "Storm days per 30 (>= 2 in of new snow)"),
     ("big_storm_days", "Powder days per 30 (>= 6 in of new snow)"),
     ("days_with_base", "Days per 30 with a skiable base"),
+    ("new_snow_in_total", "Total new snow in the window (in)"),
 ]
 
 # The same quantities in the units a skier actually uses, for the composites.
@@ -694,3 +695,28 @@ def season_shapes(daily: pd.DataFrame, region_map: pd.DataFrame, enso: pd.DataFr
         if per_phase:
             out[region] = per_phase
     return out
+
+
+def significant_composites(comp: pd.DataFrame, grid: pd.DataFrame) -> pd.DataFrame:
+    """Physical composites joined to the test that backs them, keeping only
+    the region-window-measures that survive false-discovery control.
+
+    The statistics and the physical numbers are computed on different views of
+    the same data — the tests on detrended z-scores, the composites on raw
+    averages — so they are matched on (region, window, measure) and the test's
+    r2 and p-value are carried across. Anything unmatched or not significant
+    is dropped: this is the "only what survives" view.
+    """
+    if comp.empty or grid.empty or "fdr_significant" not in grid:
+        return comp.iloc[0:0]
+    g = grid[grid["fdr_significant"]].copy()
+    # composites use the per-window column names; tests use the per-30 names
+    g["metric_key"] = g["metric"].where(g["metric"].str.endswith("_in_total"),
+                                        g["metric"] + "_per_window")
+    swap = {"mean_swe": "mean_swe_in", "mean_depth": "mean_depth_in"}
+    g["metric_key"] = g["metric"].map(swap).fillna(g["metric_key"])
+    keep = g[["region", "window", "metric_key", "r2", "p_perm", "n_winters"]].rename(
+        columns={"metric_key": "metric", "n_winters": "n_test"})
+    out = comp.merge(keep, on=["region", "window", "metric"], how="inner",
+                     suffixes=("", "_test"))
+    return out.sort_values("r2", ascending=False).reset_index(drop=True)

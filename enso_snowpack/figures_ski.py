@@ -283,3 +283,103 @@ def fig_window_bars(comp: pd.DataFrame, out: Path, meta: dict | None = None,
     ax.set_title("El Niño's effect on powder days, by window of winter and latitude", pad=10)
     ax.grid(axis="y", color=GRID, lw=0.6); ax.grid(axis="x", visible=False)
     return _save(fig, out, name)
+
+
+def fig_significant_inches(sig: pd.DataFrame, out: Path,
+                           name: str = "fig_significant_inches") -> Path:
+    """Only what survives false-discovery control, measured in inches.
+
+    Two panels, because inches of falling snow and inches of standing base are
+    different quantities and must not share an axis. Each row is one
+    region-window that cleared the whole 800-test grid; the bar runs from a
+    normal winter to an El Niño one, so its length IS the loss or gain.
+    """
+    # Three separate axes. Inches of falling snow, inches of standing snow and
+    # inches of water in that snow are different quantities; sharing one axis
+    # would invite a 77-inch depth and a 27-inch water equivalent to be read
+    # as comparable, which they are not.
+    panels = [
+        ("Total new snow that fell in the window", sig[sig["metric"] == "new_snow_in_total"],
+         "new snow (in)"),
+        ("Standing base — measured snow depth", sig[sig["metric"] == "mean_depth_in"],
+         "snow depth (in)"),
+        ("Standing base — snow water equivalent", sig[sig["metric"] == "mean_swe_in"],
+         "water equivalent (in)"),
+    ]
+    panels = [(t, d, u) for t, d, u in panels if not d.empty]
+    if not panels:
+        return out / f"{name}.png"
+    panels = [(t, d, u) for t, d, u in panels if not d.empty]
+    heights = [max(1, len(d)) for _, d, _ in panels]
+    fig, axes = plt.subplots(len(panels), 1, figsize=(11.0, 0.52 * sum(heights) + 3.0),
+                             gridspec_kw={"height_ratios": heights})
+    axes = np.atleast_1d(axes)
+    for ax, (title, d, unit) in zip(axes, panels):
+        d = d.sort_values("nino_minus_all")
+        labels = []
+        for i, r in enumerate(d.itertuples()):
+            colour = LESS_SNOW if r.nino_minus_all < 0 else MORE_SNOW
+            ax.plot([r.all_winters, r.mean_nino], [i, i], color=colour, lw=3.4,
+                    solid_capstyle="round", zorder=2, alpha=0.9)
+            ax.scatter(r.all_winters, i, s=54, color="#fcfcfb", edgecolor=NEUTRAL_GREY,
+                       linewidth=2.0, zorder=3)
+            ax.scatter(r.mean_nino, i, s=64, color=colour, edgecolor="#fcfcfb",
+                       linewidth=1.2, zorder=4)
+            ax.text(max(r.all_winters, r.mean_nino) + 0.02 * d["all_winters"].max(), i,
+                    f"{r.nino_minus_all:+.1f} in  ({r.pct_change_nino:+.0f} %)   r² {r.r2:.0%}",
+                    va="center", fontsize=8.5, color=colour)
+            labels.append(f"{r.region.split(' (')[0]} — {r.window}")
+        ax.set_yticks(range(len(d)))
+        ax.set_yticklabels(labels, fontsize=8.5)
+        ax.invert_yaxis()
+        ax.set_xlim(left=0, right=d[["all_winters", "mean_nino"]].max().max() * 1.42)
+        ax.set_xlabel(unit)
+        ax.set_title(title, fontsize=10, loc="left", pad=6)
+        ax.grid(axis="x", color=GRID, lw=0.6); ax.grid(axis="y", visible=False)
+    axes[0].scatter([], [], s=54, color="#fcfcfb", edgecolor=NEUTRAL_GREY, linewidth=2.0,
+                    label="a normal winter")
+    axes[0].scatter([], [], s=64, color=LESS_SNOW, label="an El Niño winter")
+    axes[0].legend(frameon=False, loc="lower right", fontsize=9)
+    fig.suptitle("What El Niño changes, in inches — only results that survive "
+                 "false-discovery control", y=1.005, fontsize=12, fontweight="bold")
+    fig.tight_layout()
+    return _save(fig, out, name)
+
+
+def fig_significant_days(sig: pd.DataFrame, out: Path,
+                         name: str = "fig_significant_days") -> Path:
+    """The same surviving results counted in days rather than inches."""
+    d = sig[sig["unit"] == "days"].copy()
+    if d.empty:
+        return out / f"{name}.png"
+    label = {"big_storm_days_per_window": "powder days (≥6 in)",
+             "storm_days_per_window": "storm days (≥2 in)",
+             "days_with_base_per_window": "days with a skiable base"}
+    d["what"] = d["metric"].map(label).fillna(d["metric"])
+    d = d.sort_values("pct_change_nino")
+    fig, ax = plt.subplots(figsize=(11.0, 0.52 * len(d) + 2.2))
+    for i, r in enumerate(d.itertuples()):
+        colour = LESS_SNOW if r.nino_minus_all < 0 else MORE_SNOW
+        ax.plot([r.all_winters, r.mean_nino], [i, i], color=colour, lw=3.4,
+                solid_capstyle="round", zorder=2, alpha=0.9)
+        ax.scatter(r.all_winters, i, s=54, color="#fcfcfb", edgecolor=NEUTRAL_GREY,
+                   linewidth=2.0, zorder=3)
+        ax.scatter(r.mean_nino, i, s=64, color=colour, edgecolor="#fcfcfb",
+                   linewidth=1.2, zorder=4)
+        ax.text(max(r.all_winters, r.mean_nino) + 0.7, i,
+                f"{r.nino_minus_all:+.1f} d  ({r.pct_change_nino:+.0f} %)   r² {r.r2:.0%}",
+                va="center", fontsize=8.5, color=colour)
+    ax.set_yticks(range(len(d)))
+    ax.set_yticklabels([f"{r.region.split(' (')[0]} — {r.window}  ({r.what})"
+                        for r in d.itertuples()], fontsize=8.5)
+    ax.invert_yaxis()
+    ax.set_xlim(left=0, right=d[["all_winters", "mean_nino"]].max().max() * 1.45)
+    ax.set_xlabel("days in the window")
+    ax.grid(axis="x", color=GRID, lw=0.6); ax.grid(axis="y", visible=False)
+    ax.scatter([], [], s=54, color="#fcfcfb", edgecolor=NEUTRAL_GREY, linewidth=2.0,
+               label="a normal winter")
+    ax.scatter([], [], s=64, color=LESS_SNOW, label="an El Niño winter")
+    ax.legend(frameon=False, loc="lower right", fontsize=9)
+    ax.set_title("What El Niño changes, in days — only results that survive "
+                 "false-discovery control", pad=10)
+    return _save(fig, out, name)

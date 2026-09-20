@@ -474,6 +474,7 @@ def test_test_grid_applies_fdr_across_the_whole_grid():
                                  "mean_swe": 300 - 60 * xv + rng.normal(0, 40),
                                  "mean_depth": np.nan, "storm_days": 3.0 + rng.normal(0, 1),
                                  "big_storm_days": 0.5 + rng.normal(0, 0.3),
+                                 "new_snow_in_total": 40.0 + rng.normal(0, 8),
                                  "days_with_base": 10.0 + rng.normal(0, 3)})
     rmap_df = pd.DataFrame(rmap)
     rmap_df["weight"] = 1.0
@@ -485,8 +486,9 @@ def test_test_grid_applies_fdr_across_the_whole_grid():
     base = grid[grid.metric == "mean_swe"]
     assert (base.r < -0.4).all(), "planted strong negative base signal must be recovered"
     assert base.fdr_significant.all()
-    noise = grid[grid.metric == "big_storm_days"]
-    assert noise.fdr_significant.sum() <= 1, "pure noise must not survive FDR"
+    for noisy in ("big_storm_days", "new_snow_in_total"):
+        noise = grid[grid.metric == noisy]
+        assert noise.fdr_significant.sum() <= 1, f"pure noise ({noisy}) must not survive FDR"
     signs = SKI.window_sign_summary(grid)
     assert len(signs) == len(SKI.SKI_WINDOWS) and set(signs.columns) >= {"sign_test_p", "mean_r"}
 
@@ -550,3 +552,34 @@ def test_new_snow_ratio_converts_water_to_snow_depth():
     big.loc[big.element == "SNWD", "value"] *= 3
     m2 = SKI.station_window_metrics(big, ratios=ratios)
     assert m2[m2.window == "Midwinter"].iloc[0].big_storm_days_per_window > 0
+
+
+def test_significant_composites_keeps_only_surviving_tests():
+    """The physical numbers must be matched to the test that backs them, on the
+    same region, window and measure — and nothing else may come through."""
+    comp = pd.DataFrame([
+        {"region": "R1", "window": "Midwinter", "metric": "new_snow_in_total",
+         "metric_label": "x", "unit": "in", "n_winters": 40, "all_winters": 50.0,
+         "mean_nino": 40.0, "mean_nina": 60.0, "nino_minus_all": -10.0,
+         "nina_minus_all": 10.0, "nino_minus_nina": -20.0,
+         "pct_change_nino": -20.0, "pct_change_nina": 20.0},
+        {"region": "R2", "window": "Spring", "metric": "mean_swe_in",
+         "metric_label": "y", "unit": "in", "n_winters": 40, "all_winters": 20.0,
+         "mean_nino": 18.0, "mean_nina": 22.0, "nino_minus_all": -2.0,
+         "nina_minus_all": 2.0, "nino_minus_nina": -4.0,
+         "pct_change_nino": -10.0, "pct_change_nina": 10.0},
+    ])
+    grid = pd.DataFrame([
+        {"region": "R1", "window": "Midwinter", "metric": "new_snow_in_total",
+         "fdr_significant": True, "r2": 0.21, "p_perm": 0.001, "n_winters": 40},
+        {"region": "R2", "window": "Spring", "metric": "mean_swe",
+         "fdr_significant": False, "r2": 0.02, "p_perm": 0.6, "n_winters": 40},
+    ])
+    out = SKI.significant_composites(comp, grid)
+    assert list(out["region"]) == ["R1"], "a non-significant test must not come through"
+    assert out.iloc[0]["r2"] == pytest.approx(0.21), "the test's r2 must be carried across"
+    # the tested name (mean_swe) maps to the composite name (mean_swe_in)
+    grid.loc[1, "fdr_significant"] = True
+    out2 = SKI.significant_composites(comp, grid)
+    assert set(out2["region"]) == {"R1", "R2"}, "mean_swe must match mean_swe_in"
+    assert SKI.significant_composites(comp, grid.assign(fdr_significant=False)).empty

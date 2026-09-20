@@ -58,6 +58,25 @@ def composite_table(comp: pd.DataFrame) -> str:
     return "\n".join(out)
 
 
+def significant_table(sig) -> str:
+    """Only the results that survive FDR, in their own physical units."""
+    if sig is None or len(sig) == 0:
+        return "_no result survived false-discovery control_"
+    label = {"new_snow_in_total": "Total new snow", "mean_depth_in": "Base, snow depth",
+             "mean_swe_in": "Base, water equivalent",
+             "big_storm_days_per_window": "Powder days (≥6 in)",
+             "storm_days_per_window": "Storm days (≥2 in)",
+             "days_with_base_per_window": "Days with a skiable base"}
+    out = ["| Ski region | Window | Measure | winters | a normal winter | an El Niño winter | "
+           "difference | r² |", "|---|---|---|---|---|---|---|---|"]
+    for r in sig.sort_values(["unit", "pct_change_nino"]).itertuples():
+        u = "in" if r.unit == "in" else "d"
+        out.append(f"| {r.region} | {r.window} | {label.get(r.metric, r.metric)} | "
+                   f"{int(r.n_winters)} | {r.all_winters:.1f} {u} | **{r.mean_nino:.1f} {u}** | "
+                   f"**{r.nino_minus_all:+.1f} {u}** ({r.pct_change_nino:+.0f} %) | {r.r2:.0%} |")
+    return "\n".join(out)
+
+
 def physical_table(comp, window: str = "Midwinter",
                    metric: str = "big_storm_days_per_window", top: int = 40) -> str:
     """Actual powder-day counts per region: normal, El Niño, La Niña."""
@@ -254,6 +273,18 @@ def write_report(out_dir: Path, ctx: dict) -> Path:
         "1.0–1.4, strong 1.5–1.9, very strong ≥ 2.0. The value in parentheses is the DJF ONI.",
         "",
         enso_years_table(e),
+        "",
+        "## What survives statistical scrutiny, in inches and days",
+        "",
+        "These are the only region-window-measures that clear Benjamini-Hochberg "
+        "false-discovery control across the whole grid. Everything else in this report is "
+        "context; this table is the result.",
+        "",
+        significant_table(ctx.get("ski_significant")),
+        "",
+        "![](fig_significant_inches.png)",
+        "",
+        "![](fig_significant_days.png)",
         "",
         "## The numbers, in days and inches",
         "",

@@ -1,6 +1,6 @@
 # El Niño and snowpack in Montana, Idaho, Wyoming, Colorado and Utah
 
-_Generated 2026-09-19 by `enso_snowpack` (real data)._
+_Generated 2026-09-20 by `enso_snowpack` (real data)._
 
 ## Question
 
@@ -98,7 +98,7 @@ Skiing is not water supply. What matters is the base underfoot and how often it 
 
 A negative correlation means El Niño winters bring less of that quantity. The sign test asks whether the direction is consistent across independent ski regions, which is the question that matters when each single correlation is modest.
 
-**24 of 670 tests survive false-discovery control at alpha = 0.10.** Each row is a real, sub-seasonal relationship:
+**31 of 806 tests survive false-discovery control at alpha = 0.10.** Each row is a real, sub-seasonal relationship:
 
 | Ski region | Window | What | winters | r² (variance explained) | El Niño brings | mean z, El Niño | mean z, La Niña |
 |---|---|---|---|---|---|---|---|
@@ -106,17 +106,23 @@ A negative correlation means El Niño winters bring less of that quantity. The s
 | Whitefish & Flathead Range | Spring | Base (mean snow depth) | 25 | **34%** | less snow | -0.68 | +0.62 |
 | Bitterroot & Lolo (Montana Snowbowl) | Spring | Base (mean SWE in window) | 59 | **28%** | less snow | -0.58 | +0.55 |
 | Central Cascades (Stevens/Snoqualmie) | Spring | Storm days per 30 (>= 2 in of new snow) | 45 | **26%** | less snow | -0.54 | +0.41 |
+| Bighorn Mtns | Holidays | Total new snow in the window (in) | 48 | **24%** | less snow | -0.58 | +0.30 |
 | White Mtns AZ (Sunrise Park) | Spring | Base (mean SWE in window) | 46 | **24%** | more snow | +0.56 | -0.36 |
 | Bitterroot & Lolo (Montana Snowbowl) | Spring | Days per 30 with a skiable base | 56 | **24%** | less snow | -0.49 | +0.43 |
 | Jemez & N New Mexico | Spring | Base (mean SWE in window) | 46 | **24%** | more snow | +0.65 | -0.26 |
 | Mt Hood | Spring | Base (mean SWE in window) | 48 | **24%** | less snow | -0.55 | +0.59 |
 | Park Range (Steamboat) | Holidays | Storm days per 30 (>= 2 in of new snow) | 47 | **23%** | less snow | -0.58 | +0.40 |
+| Central Cascades (Stevens/Snoqualmie) | Spring | Total new snow in the window (in) | 45 | **22%** | less snow | -0.54 | +0.38 |
+| Jemez & N New Mexico | Early season | Total new snow in the window (in) | 46 | **22%** | more snow | +0.57 | -0.34 |
+| Bitterroot & Lolo (Montana Snowbowl) | Midwinter | Total new snow in the window (in) | 59 | **21%** | less snow | -0.52 | +0.53 |
 | Snowy Range & Sierra Madre | Holidays | Storm days per 30 (>= 2 in of new snow) | 46 | **21%** | less snow | -0.49 | +0.42 |
 | Central Cascades (Stevens/Snoqualmie) | Spring | Base (mean SWE in window) | 45 | **21%** | less snow | -0.55 | +0.40 |
+| Snowy Range & Sierra Madre | Holidays | Total new snow in the window (in) | 46 | **20%** | less snow | -0.51 | +0.42 |
 | Jemez & N New Mexico | Early season | Storm days per 30 (>= 2 in of new snow) | 46 | **20%** | more snow | +0.49 | -0.28 |
 | Jemez & N New Mexico | Spring | Days per 30 with a skiable base | 46 | **20%** | more snow | +0.57 | -0.26 |
 | Bitterroot & Lolo (Montana Snowbowl) | Midwinter | Powder days per 30 (>= 6 in of new snow) | 59 | **20%** | less snow | -0.45 | +0.46 |
 | Bighorn Mtns | Holidays | Storm days per 30 (>= 2 in of new snow) | 48 | **19%** | less snow | -0.48 | +0.23 |
+| Park Range (Steamboat) | Holidays | Total new snow in the window (in) | 47 | **18%** | less snow | -0.54 | +0.39 |
 | Whitefish & Flathead Range | Spring | Days per 30 with a skiable base | 50 | **18%** | less snow | -0.49 | +0.43 |
 | White Mtns AZ (Sunrise Park) | Spring | Days per 30 with a skiable base | 46 | **18%** | more snow | +0.47 | -0.27 |
 | Bitterroot & Lolo (Montana Snowbowl) | Midwinter | Storm days per 30 (>= 2 in of new snow) | 59 | **18%** | less snow | -0.46 | +0.40 |
@@ -125,6 +131,7 @@ A negative correlation means El Niño winters bring less of that quantity. The s
 | Bridger/Gallatin/Madison (Big Sky) | Spring | Base (mean SWE in window) | 60 | **16%** | less snow | -0.39 | +0.39 |
 | Bitterroot & Lolo (Montana Snowbowl) | Midwinter | Base (mean SWE in window) | 59 | **16%** | less snow | -0.42 | +0.46 |
 | Bitterroot & Lolo (Montana Snowbowl) | Midwinter | Days per 30 with a skiable base | 59 | **15%** | less snow | -0.37 | +0.38 |
+| Bridger/Gallatin/Madison (Big Sky) | Midwinter | Base (mean SWE in window) | 60 | **14%** | less snow | -0.36 | +0.37 |
 | Bridger/Gallatin/Madison (Big Sky) | Midwinter | Days per 30 with a skiable base | 60 | **13%** | less snow | -0.32 | +0.33 |
 
 ### Does the STRENGTH of the event matter?
@@ -133,10 +140,10 @@ Phase means which of El Niño / Neutral / La Niña a winter is. Strength means h
 
 | Window | r² from phase alone | r² from the continuous ONI | change from adding strength | tests where strength helps | r² within El Niño winters only |
 |---|---|---|---|---|---|
-| Early season | 6.0% | 3.9% | **-2.2%** | 16 of 164 | 4.7% |
-| Holidays | 7.2% | 4.7% | **-2.6%** | 6 of 167 | 6.9% |
-| Midwinter | 7.0% | 5.6% | **-1.4%** | 26 of 169 | 7.2% |
-| Spring | 10.3% | 6.7% | **-3.6%** | 21 of 170 | 7.2% |
+| Early season | 6.1% | 4.0% | **-2.1%** | 18 of 198 | 4.6% |
+| Holidays | 7.4% | 5.0% | **-2.4%** | 8 of 201 | 7.0% |
+| Midwinter | 6.8% | 5.4% | **-1.3%** | 33 of 203 | 7.2% |
+| Spring | 9.7% | 6.4% | **-3.3%** | 28 of 204 | 7.2% |
 
 ![](fig_strength_powder.png)
 
