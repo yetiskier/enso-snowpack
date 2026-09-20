@@ -77,9 +77,38 @@ The largest single effect is **Montana Snowbowl in midwinter: 12 inches less
 new snow, 2 fewer storm days, and 45 % fewer powder days.** The largest gain
 is **northern New Mexico in spring: 9 more days with a skiable base.**
 
-### And strength still does not matter
+### Strength does not matter, anywhere, in any window
+
+This was tested directly rather than inferred. Every region, window and
+measure was asked three questions: among El Niño winters only, does a bigger
+event mean less snow; the same among La Niña winters; and does adding the
+index value to a phase-only model explain more. That is 2158 tests.
+
+| Test | tests run | nominally significant (p<0.05) | expected by chance | survive FDR | smallest correlation findable |
+|---|---|---|---|---|---|
+| Adding magnitude to phase (all winters) | 806 | 17 | 40 | **0** | 0.40 |
+| Within La Niña winters only | 701 | 44 | 35 | **0** | 0.65 |
+| Within El Niño winters only | 651 | 11 | 33 | **0** | 0.65 |
+
+**0 of 2158 survive false-discovery control.** The p-values are
+distributed exactly as pure chance distributes them, and the within-El Niño
+family returns *fewer* nominal hits than chance alone would give.
+
+![](results/fig_strength_significance.png)
+
+The last column is the honesty check. A within-phase test has only about 16
+winters, so it could only ever have found a correlation above roughly 0.65 —
+a flat histogram there means "not found", not "not there". The nested test
+uses every winter, could have found 0.40, and did not. So the claim is not
+that magnitude is provably irrelevant at every scale; it is that across 2,158
+chances, nothing rose above noise, and the better-powered test also found
+nothing.
+
+Composite powder days say the same thing plainly: a very strong El Niño
+averages more powder days than a strong one.
 
 | Phase and strength | winters | powder days (midwinter) |
+|---|---|---|
 |---|---|---|
 | La Niña strong | 6 | 1.59 |
 | La Niña moderate | 5 | 1.30 |
@@ -90,16 +119,7 @@ is **northern New Mexico in spring: 9 more days with a skiable base.**
 | El Niño strong | 4 | 1.04 |
 | El Niño very strong | 3 | 1.37 |
 
-| Window | r² from phase alone | r² from the continuous ONI | change from adding strength | tests where strength helps | r² within El Niño winters only |
-|---|---|---|---|---|---|
-| Early season | 6.1% | 4.0% | **-2.1%** | 18 of 198 | 4.6% |
-| Holidays | 7.4% | 5.0% | **-2.4%** | 8 of 201 | 7.0% |
-| Midwinter | 6.8% | 5.4% | **-1.3%** | 33 of 203 | 7.2% |
-| Spring | 9.7% | 6.4% | **-3.3%** | 28 of 204 | 7.2% |
-
-The bars do not descend: a very strong El Niño has more powder days than a
-strong one. Knowing the phase beats knowing the index value, and adding
-magnitude makes the prediction worse in every window.
+**Plan for the phase; ignore the magnitude.**
 
 ---
 

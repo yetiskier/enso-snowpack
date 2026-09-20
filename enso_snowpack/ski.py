@@ -720,3 +720,88 @@ def significant_composites(comp: pd.DataFrame, grid: pd.DataFrame) -> pd.DataFra
     out = comp.merge(keep, on=["region", "window", "metric"], how="inner",
                      suffixes=("", "_test"))
     return out.sort_values("r2", ascending=False).reset_index(drop=True)
+
+
+def minimum_detectable_r(n: int, alpha: float = 0.05, power: float = 0.80) -> float:
+    """Smallest correlation a sample of ``n`` could reliably detect.
+
+    Needed to tell "there is no effect" apart from "this sample could not have
+    seen one". Uses the Fisher z approximation: with ~20 El Nino winters only
+    a correlation above ~0.55 would be found 80 % of the time.
+    """
+    from scipy import stats as _st
+    if n < 5:
+        return np.nan
+    za, zb = _st.norm.ppf(1 - alpha / 2), _st.norm.ppf(power)
+    z = (za + zb) / np.sqrt(n - 3)
+    return float(np.tanh(z))
+
+
+def strength_significance(metrics: pd.DataFrame, region_map: pd.DataFrame, enso: pd.DataFrame,
+                          index_col: str = "oni_djf", n_perm: int = 5000,
+                          alpha_fdr: float = 0.10, min_phase_winters: int = 12,
+                          seed: int = 0) -> pd.DataFrame:
+    """Does the STRENGTH of an event matter, anywhere, in any window?
+
+    Phase says which way; strength says how far. Three tests per region,
+    window and measure:
+
+    * ``within_nino`` — among El Nino winters ONLY, does a larger ONI mean
+      less snow? This is the direct question, and the strictest test.
+    * ``within_nina`` — the same among La Nina winters.
+    * ``nested`` — an F-test of whether adding the continuous index to a
+      three-level phase model explains significantly more variance.
+
+    Each gets a permutation p-value, and Benjamini-Hochberg control is applied
+    across the whole strength grid. ``min_detectable_r`` records what the
+    sample could have found, so a null result can be read honestly.
+    """
+    from scipy import stats as _st
+    rng = np.random.default_rng(seed)
+    e = enso.set_index("water_year")
+    rows = []
+    for metric, label in METRICS:
+        reg = standardize_region_metric(metrics, region_map, metric)
+        if reg.empty:
+            continue
+        for (region, window), g in reg.groupby(["region", "window"]):
+            g = g.dropna(subset=["value"])
+            x = e[index_col].reindex(g["water_year"]).to_numpy(float)
+            y = g["value"].to_numpy(float)
+            ok = np.isfinite(x) & np.isfinite(y)
+            x, y = x[ok], y[ok]
+            if len(x) < MIN_WINTERS:
+                continue
+            base = {"region": region, "window": window, "metric": metric,
+                    "metric_label": label, "n_total": int(len(x))}
+            for tag, mask in (("within_nino", x >= 0.5), ("within_nina", x <= -0.5)):
+                xs, ys = x[mask], y[mask]
+                if len(xs) < min_phase_winters or np.std(xs) == 0 or np.std(ys) == 0:
+                    continue
+                r, p = permutation_p(xs, ys, _stat_r, n_perm, rng)
+                rows.append({**base, "test": tag, "n": int(len(xs)), "r": r, "r2": r ** 2,
+                             "p": p, "min_detectable_r": minimum_detectable_r(len(xs))})
+            # nested F-test: phase alone vs phase + the continuous index
+            phase = np.where(x >= 0.5, 1, np.where(x <= -0.5, -1, 0))
+            fit = np.full(len(y), y.mean())
+            for ph in (-1, 0, 1):
+                m = phase == ph
+                if m.sum() >= 2:
+                    fit[m] = y[m].mean()
+            rss1 = float(((y - fit) ** 2).sum())
+            X = np.column_stack([(phase == -1).astype(float), (phase == 0).astype(float),
+                                 (phase == 1).astype(float), x])
+            beta, *_ = np.linalg.lstsq(X, y, rcond=None)
+            rss2 = float(((y - X @ beta) ** 2).sum())
+            df2 = len(y) - X.shape[1]
+            if df2 > 0 and rss2 > 0 and rss1 >= rss2:
+                f = ((rss1 - rss2) / 1.0) / (rss2 / df2)
+                pf = float(1 - _st.f.cdf(f, 1, df2))
+                rows.append({**base, "test": "nested", "n": int(len(y)),
+                             "r": np.nan, "r2": (rss1 - rss2) / max(rss1, 1e-12),
+                             "p": pf, "min_detectable_r": minimum_detectable_r(len(y))})
+    out = pd.DataFrame(rows)
+    if not out.empty:
+        out["fdr_significant"] = fdr_field_significance(out["p"].to_numpy(), alpha_fdr)
+        out["n_tests"] = len(out)
+    return out.sort_values("p").reset_index(drop=True)

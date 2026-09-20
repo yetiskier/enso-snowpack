@@ -383,3 +383,65 @@ def fig_significant_days(sig: pd.DataFrame, out: Path,
     ax.set_title("What El Niño changes, in days — only results that survive "
                  "false-discovery control", pad=10)
     return _save(fig, out, name)
+
+
+def fig_strength_significance(sig: pd.DataFrame, out: Path,
+                              name: str = "fig_strength_significance") -> Path:
+    """Is there a strength signal anywhere? A p-value histogram answers it.
+
+    If event magnitude mattered somewhere, the p-values from that family of
+    tests would pile up near zero. If it matters nowhere, they are flat — a
+    uniform distribution is exactly what pure noise produces. The dashed line
+    is that uniform expectation, so any real excess would rise above it at the
+    left edge.
+
+    The second panel is the honesty check: with only ~16 winters of a given
+    phase per region, a within-phase test can only find a very large
+    correlation, so a flat histogram there means "not found", not "not there".
+    The nested test, run on every winter, has the power to say more.
+    """
+    if sig.empty:
+        return out / f"{name}.png"
+    titles = {"within_nino": "Within El Niño winters only\ndoes a bigger event mean less snow?",
+              "within_nina": "Within La Niña winters only",
+              "nested": "Does adding magnitude to phase\nexplain more? (every winter)"}
+    tests = [t for t in ("within_nino", "within_nina", "nested") if t in set(sig["test"])]
+    fig, axes = plt.subplots(2, len(tests), figsize=(4.1 * len(tests), 6.4),
+                             gridspec_kw={"height_ratios": [2, 1]}, squeeze=False)
+    bins = np.linspace(0, 1, 21)
+    for j, test in enumerate(tests):
+        g = sig[sig["test"] == test]
+        ax = axes[0][j]
+        ax.hist(g["p"], bins=bins, color=NEUTRAL_GREY, alpha=0.75, lw=0)
+        ax.axhline(len(g) / (len(bins) - 1), color=TEXT, lw=1.6, ls="--",
+                   label="what pure chance gives")
+        obs = int((g["p"] < 0.05).sum())
+        exp = 0.05 * len(g)
+        ax.set_title(titles.get(test, test), fontsize=9.5, loc="left")
+        ax.set_xlabel("permutation p-value", fontsize=9)
+        if j == 0:
+            ax.set_ylabel("number of tests")
+        colour = LESS_SNOW if obs > exp else TEXT
+        ax.text(0.97, 0.94, f"{len(g)} tests\n{obs} at p<0.05\n({exp:.0f} expected by chance)\n"
+                            f"0 survive FDR",
+                transform=ax.transAxes, ha="right", va="top", fontsize=8.5, color=colour,
+                bbox=dict(boxstyle="round,pad=0.35", fc="#fcfcfb", ec=GRID))
+        ax.grid(axis="y", color=GRID, lw=0.6); ax.grid(axis="x", visible=False)
+
+        axp = axes[1][j]
+        mdr = g["min_detectable_r"].dropna()
+        if len(mdr):
+            axp.hist(mdr, bins=np.linspace(0, 1, 25), color=MORE_SNOW, alpha=0.7, lw=0)
+            axp.axvline(float(mdr.median()), color=TEXT, lw=1.6)
+            axp.text(float(mdr.median()) + 0.02, axp.get_ylim()[1] * 0.85,
+                     f"median {mdr.median():.2f}", fontsize=8.5, color=TEXT)
+        axp.set_xlabel("smallest correlation this sample\ncould reliably find", fontsize=8.5)
+        axp.set_xlim(0, 1)
+        if j == 0:
+            axp.set_ylabel("tests")
+        axp.grid(axis="y", color=GRID, lw=0.6); axp.grid(axis="x", visible=False)
+    axes[0][0].legend(frameon=False, fontsize=8.5, loc="upper left")
+    fig.suptitle("Does the strength of an El Niño matter anywhere? No.", y=1.0,
+                 fontsize=12.5, fontweight="bold")
+    fig.tight_layout()
+    return _save(fig, out, name)

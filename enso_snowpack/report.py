@@ -97,6 +97,29 @@ def physical_table(comp, window: str = "Midwinter",
     return "\n".join(out)
 
 
+def strength_significance_table(sig) -> str:
+    """Every strength test, and how many survive."""
+    if sig is None or len(sig) == 0:
+        return "_strength significance not run_"
+    names = {"within_nino": "Within El Niño winters only", "within_nina": "Within La Niña winters only",
+             "nested": "Adding magnitude to phase (all winters)"}
+    out = ["| Test | tests run | nominally significant (p<0.05) | expected by chance | "
+           "survive FDR | smallest correlation findable |", "|---|---|---|---|---|---|"]
+    total = 0
+    for test, g in sig.groupby("test"):
+        obs, exp = int((g["p"] < 0.05).sum()), 0.05 * len(g)
+        total += int(g["fdr_significant"].sum())
+        out.append(f"| {names.get(test, test)} | {len(g)} | {obs} | {exp:.0f} | "
+                   f"**{int(g['fdr_significant'].sum())}** | {g['min_detectable_r'].median():.2f} |")
+    out += ["", f"**{total} of {len(sig)} strength tests survive false-discovery control.** "
+            "The p-values are distributed as pure chance would distribute them, and the "
+            "within-El Niño family produces fewer nominal hits than chance alone. The last "
+            "column is the honesty check: a within-phase test has only ~16 winters, so it "
+            "could only have found a correlation above about 0.65. The nested test, which "
+            "uses every winter, could have found 0.40 and did not."]
+    return "\n".join(out)
+
+
 def ski_strength_table(sv) -> str:
     """Phase versus magnitude, as shares of variance explained."""
     if sv is None or len(sv) == 0:
@@ -315,7 +338,12 @@ def write_report(out_dir: Path, ctx: dict) -> Path:
         "",
         ski_findings(ctx.get("ski_grid")),
         "",
-        "### Does the STRENGTH of the event matter?",
+        "### Does the STRENGTH of the event matter? Tested everywhere.",
+        "",
+        strength_significance_table(ctx.get("ski_strength_significance")),
+        "",
+        "![](fig_strength_significance.png)",
+        "",
         "",
         "Phase means which of El Niño / Neutral / La Niña a winter is. Strength means how far the "
         "ONI actually went. `change from adding strength` is the variance explained by the "

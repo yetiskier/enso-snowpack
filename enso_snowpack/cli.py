@@ -371,6 +371,12 @@ def cmd_analyze(args) -> int:
             FS.fig_window_bars(comp, results)
             FS.fig_region_map(comp, grid, meta, results)
             FS.fig_strength(strength_phys, results)
+            strength_sig = SKI.strength_significance(wm, region_map, enso, n_perm=args.n_perm)
+            strength_sig.to_csv(results / "ski_strength_significance.csv", index=False)
+            ctx["ski_strength_significance"] = strength_sig
+            FS.fig_strength_significance(strength_sig, results)
+            log.info("strength tests: %d, %d survive FDR", len(strength_sig),
+                     int(strength_sig["fdr_significant"].sum()) if len(strength_sig) else 0)
             sig_comp = SKI.significant_composites(comp, grid)
             sig_comp.to_csv(results / "ski_significant_composites.csv", index=False)
             ctx["ski_significant"] = sig_comp

@@ -583,3 +583,51 @@ def test_significant_composites_keeps_only_surviving_tests():
     out2 = SKI.significant_composites(comp, grid)
     assert set(out2["region"]) == {"R1", "R2"}, "mean_swe must match mean_swe_in"
     assert SKI.significant_composites(comp, grid.assign(fdr_significant=False)).empty
+
+
+def test_strength_significance_finds_a_planted_magnitude_effect():
+    """The strength test must fire when magnitude genuinely drives the data,
+    and stay quiet when only phase does — otherwise a null result means
+    nothing."""
+    oni = FX.synthetic_oni(1975, 2025)
+    enso = A.enso_by_water_year(oni)
+    x = enso.set_index("water_year")["oni_djf"]
+    rng = np.random.default_rng(31)
+    region = SKI.SKI_REGIONS_FULL[0].name
+
+    def build(magnitude: bool):
+        rows, rmap = [], []
+        for st in range(4):
+            trip = f"S{st}:MT:SNTL"
+            rmap.append({"stationTriplet": trip, "region": region, "weight": 1.0})
+            for yv in enso.water_year:
+                xv = x[yv]
+                if magnitude:
+                    sig = -2.0 * xv                       # linear in the index
+                else:
+                    sig = -2.0 * (1 if xv >= 0.5 else -1 if xv <= -0.5 else 0)  # phase only
+                rows.append({"stationTriplet": trip, "water_year": yv, "window": "Midwinter",
+                             "mean_swe": 300 + 40 * sig + rng.normal(0, 25),
+                             "mean_depth": np.nan, "storm_days": np.nan,
+                             "big_storm_days": np.nan, "new_snow_in_total": np.nan,
+                             "days_with_base": np.nan})
+        return pd.DataFrame(rows), pd.DataFrame(rmap)
+
+    rows, rmap = build(magnitude=True)
+    hit = SKI.strength_significance(rows, rmap, enso, n_perm=600, min_phase_winters=10)
+    nested = hit[hit.test == "nested"]
+    assert len(nested) and nested.iloc[0]["p"] < 0.05, "a real magnitude effect must be found"
+
+    rows, rmap = build(magnitude=False)
+    miss = SKI.strength_significance(rows, rmap, enso, n_perm=600, min_phase_winters=10)
+    nested = miss[miss.test == "nested"]
+    assert len(nested) and nested.iloc[0]["p"] > 0.05, "phase-only data must not fire"
+    assert (miss["min_detectable_r"] > 0).all()
+
+
+def test_minimum_detectable_r_shrinks_with_sample_size():
+    small, large = SKI.minimum_detectable_r(16), SKI.minimum_detectable_r(100)
+    assert 0.5 < small < 0.8, small
+    assert 0.2 < large < 0.35, large
+    assert large < small
+    assert np.isnan(SKI.minimum_detectable_r(3))
