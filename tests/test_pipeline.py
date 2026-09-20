@@ -662,3 +662,28 @@ def test_region_change_distributions_straddle_zero_when_there_is_no_effect():
     raw = SKI.region_change_distributions(pd.DataFrame(rows), pd.DataFrame(rmap), enso,
                                           n_iter=2000, calibrate=False)
     assert raw[r_null]["values"].std() < null["values"].std()
+
+
+def test_change_distributions_differ_between_windows():
+    """The effect is not constant through winter, so the per-window
+    distributions must actually differ — a bug that ignored the window
+    argument would return the same numbers four times."""
+    oni = FX.synthetic_oni(1980, 2025)
+    enso = A.enso_by_water_year(oni)
+    x = enso.set_index("water_year")["oni_djf"]
+    rng = np.random.default_rng(51)
+    region = SKI.SKI_REGIONS_FULL[0].name
+    rows, rmap = [], []
+    for st in range(4):
+        trip = f"W{st}:MT:SNTL"
+        rmap.append({"stationTriplet": trip, "region": region, "weight": 1.0})
+        for yv in enso.water_year:
+            for w, slope in (("Holidays", -5.0), ("Midwinter", 0.0)):
+                rows.append({"stationTriplet": trip, "water_year": yv, "window": w,
+                             "big_storm_days_per_window": 12.0 + slope * x[yv] + rng.normal(0, 1.2)})
+    m, rm = pd.DataFrame(rows), pd.DataFrame(rmap)
+    hol = SKI.region_change_distributions(m, rm, enso, window="Holidays", n_iter=2000)
+    mid = SKI.region_change_distributions(m, rm, enso, window="Midwinter", n_iter=2000)
+    assert not hol[region]["straddles_zero"], "the planted holiday loss must be decided"
+    assert mid[region]["straddles_zero"], "the flat midwinter window must not be"
+    assert hol[region]["observed"] < mid[region]["observed"] - 10

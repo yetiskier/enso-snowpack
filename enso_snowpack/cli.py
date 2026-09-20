@@ -376,17 +376,35 @@ def cmd_analyze(args) -> int:
             ctx["ski_strength_significance"] = strength_sig
             FS.fig_strength_significance(strength_sig, results)
             # the whole distribution per region, so a zero effect shows as zero
-            pdfs = SKI.region_change_distributions(wm, region_map, enso,
-                                                   n_iter=min(args.n_boot, 10000))
-            if pdfs:
-                FS.fig_region_pdf_map(pdfs, SKI.REGION_META, results)
-                pd.DataFrame([{"region": k, "observed_pct": v["observed"],
-                               "ci_low": v["ci_low"], "ci_high": v["ci_high"],
-                               "share_other_side_of_zero": v["p_zero"],
-                               "n_winters": v["n"], "n_nino": v["n_nino"],
-                               "straddles_zero": v["straddles_zero"]}
-                              for k, v in pdfs.items()]).sort_values("observed_pct").to_csv(
-                    results / "region_change_distributions.csv", index=False)
+            # One map per window, because the effect does not sit still: it
+            # seizes the interior over the holidays and the northern Rockies in
+            # midwinter, and a season-long map would average the two away.
+            try:
+                states = FS.load_states()
+            except Exception:
+                states = []
+            pdf_rows = []
+            for wname, *_ in SKI.SKI_WINDOWS:
+                pdfs = SKI.region_change_distributions(
+                    wm, region_map, enso, window=wname, n_iter=min(args.n_boot, 10000))
+                if not pdfs:
+                    continue
+                slug = wname.lower().replace(" ", "_")
+                FS.fig_region_pdf_map(pdfs, SKI.REGION_META, results,
+                                      name=f"fig_pdf_map_{slug}", window=wname, states=states)
+                pdf_rows += [{"window": wname, "region": k, "observed_pct": v["observed"],
+                              "ci_low": v["ci_low"], "ci_high": v["ci_high"],
+                              "share_other_side_of_zero": v["p_zero"],
+                              "n_winters": v["n"], "n_nino": v["n_nino"],
+                              "straddles_zero": v["straddles_zero"]} for k, v in pdfs.items()]
+            if pdf_rows:
+                pdf_df = pd.DataFrame(pdf_rows)
+                pdf_df.to_csv(results / "region_change_distributions.csv", index=False)
+                ctx["region_pdfs"] = pdf_df
+                log.info("distribution maps: %d windows, decided per window %s",
+                         pdf_df["window"].nunique(),
+                         pdf_df.groupby("window")["straddles_zero"].apply(
+                             lambda s: int((~s).sum())).to_dict())
             log.info("strength tests: %d, %d survive FDR", len(strength_sig),
                      int(strength_sig["fdr_significant"].sum()) if len(strength_sig) else 0)
             sig_comp = SKI.significant_composites(comp, grid)
