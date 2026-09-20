@@ -73,7 +73,7 @@ def fig_powder_days(comp: pd.DataFrame, meta: dict, out: Path, window: str = "Mi
 
 
 def fig_season_shape(cube_means: dict, out: Path, name: str = "fig_season_shape",
-                     unit: str = "in") -> Path:
+                     unit: str = "in of snow depth") -> Path:
     """The base through the winter, El Niño against La Niña, in inches.
 
     ``cube_means`` maps region -> {phase: array over day-of-water-year}. This
@@ -100,7 +100,7 @@ def fig_season_shape(cube_means: dict, out: Path, name: str = "fig_season_shape"
                             where=np.isfinite(nino) & np.isfinite(nina),
                             color=LESS_SNOW, alpha=0.10, lw=0)
         ax.set_title(region, fontsize=9.5, loc="left")
-        ax.set_ylabel(f"Base ({unit})", fontsize=9)
+        ax.set_ylabel(f"Base\n({unit})", fontsize=9)
         ax.grid(color=GRID, lw=0.6)
     ticks = [(pd.Timestamp(2001 if m >= 10 else 2002, m, 1) - pd.Timestamp(2001, 10, 1)).days
              for m in (11, 12, 1, 2, 3, 4, 5)]
@@ -111,7 +111,9 @@ def fig_season_shape(cube_means: dict, out: Path, name: str = "fig_season_shape"
     for ax in axes.ravel()[len(regions):]:
         ax.set_visible(False)
     axes.ravel()[0].legend(frameon=False, fontsize=8.5, loc="upper left")
-    fig.suptitle("How the base builds through the winter, by ENSO phase", y=1.002,
+    fig.suptitle("How the base builds through the winter, by ENSO phase\n"
+                 "worst-hit regions at the top, a region that gains at the bottom right",
+                 y=1.004,
                  fontsize=12, fontweight="bold")
     fig.tight_layout()
     return _save(fig, out, name)

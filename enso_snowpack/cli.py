@@ -371,9 +371,23 @@ def cmd_analyze(args) -> int:
             FS.fig_window_bars(comp, results)
             FS.fig_region_map(comp, grid, meta, results)
             FS.fig_strength(strength_phys, results)
-            shapes = SKI.season_shapes(sub, region_map, enso)
+            # Pick regions that span the seesaw, not the ones with most gauges:
+            # worst-hit, a maritime case, the node, and a gainer.
+            mid = comp[(comp["window"] == "Midwinter")
+                       & (comp["metric"] == "big_storm_days_per_window")].dropna(
+                           subset=["pct_change_nino"]).sort_values("pct_change_nino")
+            picks = [r for r in (list(mid["region"].head(2))
+                                 + list(mid["region"].iloc[len(mid) // 2: len(mid) // 2 + 1])
+                                 + list(mid["region"].tail(1))) if r]
+            # Snow DEPTH is what a skier calls the base, so use SNWD (1993 on)
+            # and fall back to water equivalent only if depth is too sparse.
+            shapes = SKI.season_shapes(sub, region_map, enso, regions=picks, element="SNWD")
+            unit = "in of snow depth"
+            if len(shapes) < 2:
+                shapes = SKI.season_shapes(sub, region_map, enso, regions=picks, element="WTEQ")
+                unit = "in of snow water"
             if shapes:
-                FS.fig_season_shape(shapes, results)
+                FS.fig_season_shape(shapes, results, unit=unit)
             # probability distributions behind the strongest findings
             top = grid.nsmallest(6, "p_perm")[["region", "window", "metric"]]
             dists = [SKI.distributions_for(wm, region_map, enso, r.region, r.window, r.metric,

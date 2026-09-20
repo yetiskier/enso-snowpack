@@ -268,7 +268,8 @@ def fig_ski_heatmap(grid: pd.DataFrame, out: Path, name: str = "fig9_ski_region_
     """
     from .ski import SKI_REGIONS, SKI_WINDOWS, METRICS
     labels = dict(METRICS)
-    regions = [r[0] for r in sorted(SKI_REGIONS, key=lambda r: -r[2])]
+    have = set(grid["region"])
+    regions = [r[0] for r in sorted(SKI_REGIONS, key=lambda r: -r[2]) if r[0] in have]
     windows = [w[0] for w in SKI_WINDOWS]
     metrics = [m for m in metrics if m in set(grid["metric"])]
 
