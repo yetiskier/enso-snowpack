@@ -631,3 +631,34 @@ def test_minimum_detectable_r_shrinks_with_sample_size():
     assert 0.2 < large < 0.35, large
     assert large < small
     assert np.isnan(SKI.minimum_detectable_r(3))
+
+
+def test_region_change_distributions_straddle_zero_when_there_is_no_effect():
+    """A region with no real effect must produce a distribution that spans
+    zero; one with a planted effect must produce one that does not."""
+    oni = FX.synthetic_oni(1980, 2025)
+    enso = A.enso_by_water_year(oni)
+    x = enso.set_index("water_year")["oni_djf"]
+    rng = np.random.default_rng(41)
+    r_signal, r_null = SKI.SKI_REGIONS_FULL[0].name, SKI.SKI_REGIONS_FULL[1].name
+    rows, rmap = [], []
+    for region, slope in ((r_signal, -4.0), (r_null, 0.0)):
+        for st in range(4):
+            trip = f"{region[:3]}{st}:MT:SNTL"
+            rmap.append({"stationTriplet": trip, "region": region, "weight": 1.0})
+            for yv in enso.water_year:
+                rows.append({"stationTriplet": trip, "water_year": yv, "window": "Midwinter",
+                             "big_storm_days_per_window": 12.0 + slope * x[yv] + rng.normal(0, 1.5)})
+    d = SKI.region_change_distributions(pd.DataFrame(rows), pd.DataFrame(rmap), enso,
+                                        n_iter=2000)
+    assert set(d) == {r_signal, r_null}
+    sig, null = d[r_signal], d[r_null]
+    lo_s, hi_s = np.percentile(sig["values"], [2.5, 97.5])
+    lo_n, hi_n = np.percentile(null["values"], [2.5, 97.5])
+    assert hi_s < 0, "a planted loss must give an interval entirely below zero"
+    assert lo_n < 0 < hi_n, "no effect must give an interval that spans zero"
+    assert not sig["straddles_zero"] and null["straddles_zero"]
+    # calibration widens the interval; without it the null would look decided
+    raw = SKI.region_change_distributions(pd.DataFrame(rows), pd.DataFrame(rmap), enso,
+                                          n_iter=2000, calibrate=False)
+    assert raw[r_null]["values"].std() < null["values"].std()

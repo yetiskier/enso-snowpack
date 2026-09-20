@@ -375,6 +375,18 @@ def cmd_analyze(args) -> int:
             strength_sig.to_csv(results / "ski_strength_significance.csv", index=False)
             ctx["ski_strength_significance"] = strength_sig
             FS.fig_strength_significance(strength_sig, results)
+            # the whole distribution per region, so a zero effect shows as zero
+            pdfs = SKI.region_change_distributions(wm, region_map, enso,
+                                                   n_iter=min(args.n_boot, 10000))
+            if pdfs:
+                FS.fig_region_pdf_map(pdfs, SKI.REGION_META, results)
+                pd.DataFrame([{"region": k, "observed_pct": v["observed"],
+                               "ci_low": v["ci_low"], "ci_high": v["ci_high"],
+                               "share_other_side_of_zero": v["p_zero"],
+                               "n_winters": v["n"], "n_nino": v["n_nino"],
+                               "straddles_zero": v["straddles_zero"]}
+                              for k, v in pdfs.items()]).sort_values("observed_pct").to_csv(
+                    results / "region_change_distributions.csv", index=False)
             log.info("strength tests: %d, %d survive FDR", len(strength_sig),
                      int(strength_sig["fdr_significant"].sum()) if len(strength_sig) else 0)
             sig_comp = SKI.significant_composites(comp, grid)

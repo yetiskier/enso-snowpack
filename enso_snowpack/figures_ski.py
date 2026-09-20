@@ -445,3 +445,187 @@ def fig_strength_significance(sig: pd.DataFrame, out: Path,
                  fontsize=12.5, fontweight="bold")
     fig.tight_layout()
     return _save(fig, out, name)
+
+
+def fig_region_pdf_map(dists: dict, meta: dict, out: Path,
+                       name: str = "fig_region_pdf_map", window: str = "Midwinter",
+                       span: float = 70.0, glyph_w: float = 1.30, glyph_h: float = 1.05,
+                       max_lat: float = 52.0, states: list | None = None) -> Path:
+    """Every ski region on the map of the West, carrying its whole distribution.
+
+    State boundaries give the glyphs somewhere to sit, because the result is
+    geographic: the seesaw runs with latitude, and a reader needs to see which
+    range is which. Each region is a smoothed probability density of the change
+    in powder days, anchored at its location on one shared horizontal scale,
+    with a dashed hairline at zero. A density sitting astride that line is a
+    region where El Nino does nothing measurable — most of them, and the reason
+    for drawing distributions rather than colouring dots. Mass left of zero is
+    red (fewer powder days), right is blue.
+    """
+    from scipy import stats as _st
+    items = [(r, d) for r, d in dists.items() if r in meta and meta[r].lat <= max_lat]
+    far = [(r, d) for r, d in dists.items() if r in meta and meta[r].lat > max_lat]
+    if not items:
+        return out / f"{name}.png"
+    items.sort(key=lambda kv: (-meta[kv[0]].lat, meta[kv[0]].lon))
+    lats = [meta[r].lat for r, _ in items]
+    lons = [meta[r].lon for r, _ in items]
+    x0, x1 = min(lons) - 3.0, max(lons) + 3.0
+    y0, y1 = min(lats) - 2.8, max(lats) + 2.2
+
+    fig, ax = plt.subplots(figsize=(13.6, 11.2))
+    ax.set_facecolor("#eef2f6")                      # water / ground behind the land
+    if states is None:
+        try:
+            states = load_states()
+        except Exception:
+            states = []
+    if states:
+        draw_states(ax, states, (x0, x1, y0, y1), land="#fbfaf8", edge="#c3ccd6",
+                    label_color="#8a97a5")
+
+    grid = np.linspace(-span, span, 201)
+    curves, peak = {}, 0.0
+    for r, d in items:
+        v = np.clip(d["values"], -span, span)
+        if v.std() < 1e-6:
+            dens = np.zeros_like(grid)
+            dens[len(grid) // 2] = 1.0
+        else:
+            dens = _st.gaussian_kde(v, bw_method=0.35)(grid)
+        curves[r] = dens
+        peak = max(peak, dens.max())
+
+    placed = []
+    for r, d in items:
+        m = meta[r]
+        dens = curves[r]
+        x = m.lon + grid / span * (glyph_w / 2)
+        y = m.lat + dens / peak * glyph_h * 0.8
+        base = np.full_like(x, m.lat)
+        neg, pos = grid < 0, grid >= 0
+        ax.fill_between(x[neg], base[neg], y[neg], color=LESS_SNOW, alpha=0.88, lw=0, zorder=4)
+        ax.fill_between(x[pos], base[pos], y[pos], color=MORE_SNOW, alpha=0.88, lw=0, zorder=4)
+        ax.plot(x, y, color=TEXT, lw=0.6, zorder=5)
+        ax.plot([x[0], x[-1]], [m.lat, m.lat], color=TEXT, lw=0.6, zorder=5)
+        ax.plot([m.lon, m.lon], [m.lat, m.lat + glyph_h * 0.9], color=TEXT, lw=0.9,
+                ls=(0, (2.2, 1.8)), zorder=6)
+        ax.plot([m.lon], [m.lat], marker="o", ms=2.4, color=TEXT, zorder=6)
+
+        straddles = d.get("straddles_zero", d["p_zero"] > 0.05)
+        near = sum(1 for lo, la in placed
+                   if abs(lo - m.lon) < glyph_w * 1.6 and abs(la - m.lat) < glyph_h * 1.8)
+        top = glyph_h * 0.9 * 46
+        berths = [(0, -8, "center", "top"), (0, top, "center", "bottom"),
+                  (-34, -8, "right", "top"), (34, top, "left", "bottom")]
+        dx, dy, ha, va = berths[near % 4]
+        placed.append((m.lon, m.lat))
+        txt = r.split(" (")[0] + f"  {d['observed']:+.0f}%" + ("  n.s." if straddles else "")
+        ax.annotate(txt, (m.lon, m.lat), fontsize=6.5, xytext=(dx, dy),
+                    textcoords="offset points", ha=ha, va=va,
+                    color=MUTED if straddles else TEXT, zorder=8,
+                    bbox=dict(boxstyle="round,pad=0.14", fc="#fcfcfb", ec="none", alpha=0.85))
+
+    ax.set_xlim(x0, x1)
+    ax.set_ylim(y0, y1)
+    ax.set_aspect(1 / np.cos(np.deg2rad(float(np.mean(lats)))))
+    ax.set_xticks([]); ax.set_yticks([])
+    for sp in ax.spines.values():
+        sp.set_color("#c3ccd6")
+
+    # a worked key on the land in the empty south-west corner
+    kx, ky = x0 + 1.5, y0 + 0.9
+    kh = np.exp(-0.5 * (grid / 20) ** 2)
+    xk = kx + grid / span * (glyph_w / 2)
+    yk = ky + kh / kh.max() * glyph_h * 0.8
+    ax.fill_between(xk[grid < 0], ky, yk[grid < 0], color=LESS_SNOW, alpha=0.6, lw=0, zorder=7)
+    ax.fill_between(xk[grid >= 0], ky, yk[grid >= 0], color=MORE_SNOW, alpha=0.6, lw=0, zorder=7)
+    ax.plot(xk, yk, color=TEXT, lw=0.6, zorder=7)
+    ax.plot([kx, kx], [ky, ky + glyph_h * 0.9], color=TEXT, lw=0.9, ls=(0, (2.2, 1.8)), zorder=7)
+    key = ("each glyph, read left to right:\n"
+           "−70 %   ·   no change   ·   +70 %\n"
+           "height is how likely that value is\n"
+           "red = fewer powder days, blue = more")
+    ax.annotate(key, (kx + glyph_w * 0.58, ky), fontsize=7.4, ha="left", va="bottom",
+                color=MUTED, linespacing=1.4, zorder=8,
+                bbox=dict(boxstyle="round,pad=0.3", fc="#fcfcfb", ec="#d7dee6", alpha=0.9))
+
+    if far:
+        note = "   ".join(f"{r.split(' (')[0]}: {d['observed']:+.0f}%" for r, d in far)
+        ax.text(0.014, 0.986, f"Not shown — {note}", transform=ax.transAxes,
+                fontsize=8.5, color=MUTED, va="top", zorder=9,
+                bbox=dict(boxstyle="round,pad=0.35", fc="#fcfcfb", ec="#d7dee6"))
+    n_ns = sum(1 for _, d in items if d.get("straddles_zero", d["p_zero"] > 0.05))
+    ax.set_title("The change in powder days in every ski region, with its uncertainty — "
+                 + window.lower(), pad=12)
+    sub = ("Each glyph is a probability density from 10,000 resamples of the record, calibrated so "
+           "its width is an honest sampling distribution. "
+           f"{n_ns} of {len(items)} regions straddle zero and are marked n.s.")
+    ax.text(0.5, -0.035, sub, transform=ax.transAxes, ha="center", fontsize=8.5, color=MUTED)
+    return _save(fig, out, name)
+
+
+US_STATES_URL = ("https://raw.githubusercontent.com/PublicaMundi/MappingAPI/"
+                 "master/data/geojson/us-states.json")
+STATE_ABBR = {"Washington": "WA", "Oregon": "OR", "California": "CA", "Nevada": "NV",
+              "Idaho": "ID", "Montana": "MT", "Wyoming": "WY", "Utah": "UT",
+              "Colorado": "CO", "Arizona": "AZ", "New Mexico": "NM", "South Dakota": "SD",
+              "North Dakota": "ND", "Nebraska": "NE", "Kansas": "KS", "Oklahoma": "OK",
+              "Texas": "TX", "Alaska": "AK"}
+
+
+def load_states(path: Path | None = None) -> list:
+    """State boundary polygons as plain coordinate rings.
+
+    Cached in the repo so a figure can be redrawn offline; fetched once if the
+    cache is missing. Returns ``[(name, [ring, ...]), ...]`` where each ring is
+    an (N, 2) array of lon/lat — enough to draw with matplotlib alone, without
+    a GIS stack.
+    """
+    import json
+    path = path or Path("data/geo/us-states.json")
+    if not path.exists():
+        import requests
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(requests.get(US_STATES_URL, timeout=60).text, encoding="utf-8")
+    gj = json.loads(path.read_text(encoding="utf-8"))
+    out = []
+    for f in gj["features"]:
+        name = f["properties"].get("name", "")
+        geom = f["geometry"]
+        rings = []
+        if geom["type"] == "Polygon":
+            rings = [np.asarray(r, dtype=float) for r in geom["coordinates"]]
+        elif geom["type"] == "MultiPolygon":
+            for poly in geom["coordinates"]:
+                rings += [np.asarray(r, dtype=float) for r in poly]
+        if rings:
+            out.append((name, rings))
+    return out
+
+
+def draw_states(ax, states: list, extent: tuple, land: str, edge: str,
+                label_color: str, label_size: float = 9.5) -> None:
+    """Draw state polygons and their two-letter labels inside ``extent``."""
+    from matplotlib.patches import Polygon as MplPolygon
+    x0, x1, y0, y1 = extent
+    for name, rings in states:
+        drew = False
+        for ring in rings:
+            if ring[:, 0].max() < x0 - 6 or ring[:, 0].min() > x1 + 6:
+                continue
+            if ring[:, 1].max() < y0 - 6 or ring[:, 1].min() > y1 + 6:
+                continue
+            ax.add_patch(MplPolygon(ring, closed=True, facecolor=land, edgecolor=edge,
+                                    lw=0.9, zorder=1))
+            drew = True
+        if not drew:
+            continue
+        abbr = STATE_ABBR.get(name)
+        if not abbr:
+            continue
+        big = max(rings, key=lambda r: len(r))
+        cx, cy = float(big[:, 0].mean()), float(big[:, 1].mean())
+        if x0 + 0.6 < cx < x1 - 0.6 and y0 + 0.6 < cy < y1 - 0.6:
+            ax.text(cx, cy, abbr, fontsize=label_size, color=label_color, ha="center",
+                    va="center", fontweight="bold", alpha=0.55, zorder=2)

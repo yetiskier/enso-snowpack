@@ -805,3 +805,79 @@ def strength_significance(metrics: pd.DataFrame, region_map: pd.DataFrame, enso:
         out["fdr_significant"] = fdr_field_significance(out["p"].to_numpy(), alpha_fdr)
         out["n_tests"] = len(out)
     return out.sort_values("p").reset_index(drop=True)
+
+
+def region_change_distributions(metrics: pd.DataFrame, region_map: pd.DataFrame,
+                                enso: pd.DataFrame, window: str = "Midwinter",
+                                metric: str = "big_storm_days_per_window",
+                                n_iter: int = 10000, omit_fraction: float = 0.20,
+                                min_eff_stations: float = 2.0, min_phase: int = 6,
+                                as_percent: bool = True, calibrate: bool = True,
+                                seed: int = 0) -> dict:
+    """The full distribution of El Nino's effect, per region.
+
+    Rather than one number per region, this resamples the winters the Brown &
+    Harper way — drop a random 20 %, recompute, ten thousand times — and keeps
+    every value. The spread IS the uncertainty, so a region whose distribution
+    straddles zero can be shown as genuinely undecided instead of being
+    reported as a small non-zero number.
+
+    Returns ``{region: {"values": array, "observed": float, "n": int,
+    "p_zero": float}}`` where ``p_zero`` is the share of resamples on the
+    opposite side of zero from the observed effect — a two-sided sense of how
+    firmly the sign is pinned.
+    """
+    rng = np.random.default_rng(seed)
+    phase = enso.set_index("water_year")["phase"]
+    d = metrics.dropna(subset=[metric]).merge(
+        region_map[["stationTriplet", "region", "weight"]], on="stationTriplet")
+    d = d[d["window"] == window]
+    out = {}
+    for region, g in d.groupby("region"):
+        per_year = (g.groupby("water_year")
+                      .apply(lambda t: pd.Series({
+                          "value": float(np.average(t[metric], weights=t["weight"])),
+                          "eff": float(t["weight"].sum() ** 2 / (t["weight"] ** 2).sum())}),
+                      include_groups=False)
+                      .reset_index())
+        per_year = per_year[per_year["eff"] >= min_eff_stations]
+        if len(per_year) < MIN_WINTERS:
+            continue
+        v = per_year["value"].to_numpy(float)
+        is_nino = (per_year["water_year"].map(phase) == "El Nino").to_numpy()
+        if is_nino.sum() < min_phase:
+            continue
+        n = len(v)
+        keep = max(5, int(round(n * (1.0 - omit_fraction))))
+        idx = np.argsort(rng.random((n_iter, n)), axis=1)[:, :keep]
+        vals = v[idx]
+        nino_mask = is_nino[idx]
+        n_nino = nino_mask.sum(axis=1)
+        ok = n_nino >= 3
+        allm = vals.mean(axis=1)
+        ninom = np.divide((vals * nino_mask).sum(axis=1), np.where(n_nino > 0, n_nino, 1))
+        diff = ninom - allm
+        if as_percent:
+            diff = 100.0 * np.divide(diff, allm, out=np.full_like(diff, np.nan),
+                                     where=np.abs(allm) > 1e-9)
+        diff = diff[ok & np.isfinite(diff)]
+        if len(diff) < 100:
+            continue
+        if calibrate:
+            c = delete_d_calibration(n, omit_fraction)
+            diff = diff.mean() + (diff - diff.mean()) * c
+        obs_all = float(v.mean())
+        obs = float(v[is_nino].mean() - obs_all)
+        if as_percent and abs(obs_all) > 1e-9:
+            obs = 100.0 * obs / obs_all
+        opposite = float((diff > 0).mean() if obs < 0 else (diff < 0).mean())
+        lo, hi = (float(x_) for x_ in np.percentile(diff, [2.5, 97.5]))
+        out[region] = {"values": diff, "observed": obs, "n": int(n),
+                       "n_nino": int(is_nino.sum()), "p_zero": opposite,
+                       "ci_low": lo, "ci_high": hi,
+                       # the definition the map draws: does the 95 % interval
+                       # contain zero? This and p_zero can disagree when the
+                       # observed value sits very close to zero, and the
+                       # interval is the one a reader can see.
+                       "straddles_zero": bool(lo <= 0 <= hi)}
+    return out
