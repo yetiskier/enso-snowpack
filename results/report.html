@@ -1,0 +1,1290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>El Niño and the Ski Season</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<style>
+:root {
+  --ground:#f5f7fa; --surface:#ffffff; --surface-2:#eaeff5; --inset:#f0f4f8;
+  --ink:#0f1720; --ink-2:#465262; --ink-3:#6d7a89;
+  --rule:#d6dee7; --rule-2:#bcc8d4;
+  --less:#b8403b; --less-bg:#f6e3e2;
+  --more:#215f9e; --more-bg:#dde8f4;
+  --accent:#1d4e7c; --shadow:rgba(15,23,32,.07);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground:#0c1117; --surface:#121a23; --surface-2:#18222d; --inset:#141d27;
+    --ink:#e8eef5; --ink-2:#a6b3c1; --ink-3:#7a8694;
+    --rule:#233040; --rule-2:#31414f;
+    --less:#e2655e; --less-bg:#2a1817;
+    --more:#63a2e0; --more-bg:#131f2d;
+    --accent:#7fb4e8; --shadow:rgba(0,0,0,.4);
+  }
+}
+:root[data-theme="dark"] {
+  --ground:#0c1117; --surface:#121a23; --surface-2:#18222d; --inset:#141d27;
+  --ink:#e8eef5; --ink-2:#a6b3c1; --ink-3:#7a8694;
+  --rule:#233040; --rule-2:#31414f;
+  --less:#e2655e; --less-bg:#2a1817;
+  --more:#63a2e0; --more-bg:#131f2d;
+  --accent:#7fb4e8; --shadow:rgba(0,0,0,.4);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--ground); color:var(--ink);
+  font-family:"Source Serif 4",Georgia,serif; font-size:17px; line-height:1.62;
+  font-variant-numeric:oldstyle-nums;
+}
+.wrap{max-width:1160px; margin:0 auto; padding:0 24px 96px}
+.prose{max-width:68ch}
+h1,h2,h3,.eyebrow,th,.chip,.stat-k,figcaption,.note-h{
+  font-family:"IBM Plex Sans Condensed","Helvetica Neue",Arial,sans-serif;
+  font-variant-numeric:normal;
+}
+h1{font-size:clamp(2.3rem,5.4vw,3.6rem); line-height:1.02; font-weight:700; letter-spacing:-.018em;
+   margin:0 0 .4rem; text-wrap:balance}
+h2{font-size:clamp(1.45rem,2.6vw,1.95rem); font-weight:700; letter-spacing:-.012em; line-height:1.12;
+   margin:0 0 .2rem; text-wrap:balance}
+h3{font-size:1.1rem; font-weight:600; letter-spacing:.004em; margin:0 0 .5rem; text-wrap:balance}
+p{margin:0 0 1.05rem}
+a{color:var(--accent)}
+.eyebrow{font-size:.73rem; font-weight:600; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--ink-3); margin:0 0 .55rem}
+header.masthead{border-bottom:2px solid var(--ink); padding:56px 0 26px; margin-bottom:34px}
+.lede{font-size:1.2rem; line-height:1.5; color:var(--ink-2); max-width:60ch; margin:.7rem 0 0}
+.byline{font-family:"IBM Plex Mono",monospace; font-size:.76rem; color:var(--ink-3);
+  letter-spacing:.02em; margin-top:1.5rem}
+.facts{display:grid; grid-template-columns:repeat(auto-fit,minmax(152px,1fr)); gap:1px;
+  background:var(--rule); border:1px solid var(--rule); margin:30px 0 0}
+.fact{background:var(--surface); padding:13px 15px}
+.stat-v{font-family:"IBM Plex Mono",monospace; font-size:1.35rem; font-weight:600;
+  font-variant-numeric:tabular-nums; line-height:1.1; display:block}
+.stat-k{font-size:.68rem; letter-spacing:.09em; text-transform:uppercase; color:var(--ink-3);
+  margin-top:5px; display:block; line-height:1.3}
+section{margin:0 0 58px; scroll-margin-top:20px}
+.sec-head{border-top:1px solid var(--rule-2); padding-top:14px; margin-bottom:20px}
+.verdict{border-left:3px solid var(--accent); background:var(--inset); padding:16px 20px; margin:0 0 26px}
+.verdict p{margin:0; font-size:1.06rem}
+.verdict p + p{margin-top:.7rem}
+.tablewrap{overflow-x:auto; border:1px solid var(--rule); background:var(--surface); margin:0 0 12px}
+table{border-collapse:collapse; width:100%; font-family:"IBM Plex Mono",monospace; font-size:.8rem;
+  font-variant-numeric:tabular-nums}
+caption{text-align:left; font-family:"IBM Plex Sans Condensed",sans-serif; font-size:.82rem;
+  color:var(--ink-3); padding:10px 14px 0; caption-side:top}
+th,td{padding:7px 11px; text-align:left; border-bottom:1px solid var(--rule); white-space:nowrap}
+thead th{font-size:.68rem; letter-spacing:.07em; text-transform:uppercase; color:var(--ink-3);
+  font-weight:600; background:var(--surface-2); position:sticky; top:0; border-bottom:1px solid var(--rule-2)}
+tbody th{font-weight:500; color:var(--ink); white-space:nowrap}
+tbody tr:last-child th, tbody tr:last-child td{border-bottom:none}
+td.n{text-align:right}
+td.sm{font-size:.72rem; color:var(--ink-3)}
+.strong{font-weight:600}
+.less{color:var(--less)} .more{color:var(--more)}
+.chip{display:inline-block; font-size:.63rem; letter-spacing:.07em; text-transform:uppercase;
+  font-weight:600; padding:2px 7px; border:1px solid currentColor; white-space:nowrap}
+.chip.fdr{color:var(--accent)}
+.chip.null{color:var(--ink-3)}
+.chip.less{color:var(--less); background:var(--less-bg); border-color:transparent}
+.chip.more{color:var(--more); background:var(--more-bg); border-color:transparent}
+.barcell{width:150px}
+.bar{display:block; height:9px; background:var(--ink-3)}
+.bar.less{background:var(--less)} .bar.more{background:var(--more)}
+figure{margin:22px 0 26px; background:var(--surface); border:1px solid var(--rule); padding:14px}
+figure img{width:100%; height:auto; display:block}
+figcaption{font-size:.78rem; color:var(--ink-3); line-height:1.5; margin-top:11px;
+  padding-top:10px; border-top:1px solid var(--rule)}
+.legend{display:flex; gap:18px; flex-wrap:wrap; font-family:"IBM Plex Sans Condensed",sans-serif;
+  font-size:.78rem; color:var(--ink-2); margin:0 0 20px; align-items:center}
+.legend span{display:flex; align-items:center; gap:7px}
+.sw{width:22px; height:10px; display:inline-block}
+.note{border:1px solid var(--rule); background:var(--inset); padding:16px 19px; margin:20px 0}
+.note-h{font-size:.7rem; letter-spacing:.11em; text-transform:uppercase; color:var(--ink-3); margin:0 0 .5rem}
+.note p{margin:0; font-size:.94rem; color:var(--ink-2)}
+.note p + p{margin-top:.6rem}
+.cols{display:grid; grid-template-columns:repeat(auto-fit,minmax(255px,1fr)); gap:26px}
+ul{margin:0 0 1.05rem; padding-left:1.15rem} li{margin-bottom:.45rem}
+code{font-family:"IBM Plex Mono",monospace; font-size:.85em; background:var(--surface-2);
+  padding:1px 5px; border-radius:2px}
+footer{border-top:2px solid var(--ink); padding-top:20px; margin-top:20px;
+  font-family:"IBM Plex Mono",monospace; font-size:.74rem; color:var(--ink-3); line-height:1.7}
+@media (max-width:640px){
+  body{font-size:16px} .wrap{padding:0 16px 64px} header.masthead{padding:34px 0 20px}
+  figure{padding:9px} th,td{padding:6px 9px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important; transition:none!important}}
+
+/* ---- print / PDF -------------------------------------------------------
+   The page is read on screen and on paper. On paper it is always the light
+   palette (a dark OS must not produce a black-ink PDF), tables wrap instead
+   of scrolling sideways, and nothing that reads as one object - a figure, a
+   table, a callout - is allowed to break across a page. */
+@page { size: A4 portrait; margin: 15mm 13mm 16mm; }
+@media print {
+  :root, :root[data-theme="dark"], :root:not([data-theme="light"]) {
+    --ground:#ffffff; --surface:#ffffff; --surface-2:#f2f5f8; --inset:#f6f8fa;
+    --ink:#101820; --ink-2:#414d5c; --ink-3:#5f6b79;
+    --rule:#ccd5de; --rule-2:#b3bfcb;
+    --less:#a8352f; --less-bg:#f7e5e4; --more:#1c548e; --more-bg:#e2ecf6;
+    --accent:#17436b; --shadow:none;
+  }
+  html, body { background:#fff !important; }
+  * { -webkit-print-color-adjust:exact !important; print-color-adjust:exact !important; }
+  body { font-size:10pt; line-height:1.5; }
+  .wrap { max-width:none; padding:0; }
+  .prose { max-width:none; }
+  header.masthead { padding-top:0; break-after:avoid; }
+  h1 { font-size:26pt; }
+  h2 { font-size:15pt; }
+  h3 { font-size:11pt; }
+  .lede { font-size:11.5pt; max-width:none; }
+  section { margin-bottom:26px; break-before:auto; }
+  .sec-head { break-after:avoid; }
+  h2, h3, caption { break-after:avoid; }
+  figure, .note, .verdict, .fact { break-inside:avoid; }
+  figure { margin:12px 0 16px; }
+  figure img { max-height:205mm; width:auto; max-width:100%; margin:0 auto; }
+  /* tables wrap rather than scroll, and repeat their header on each page */
+  .tablewrap { overflow:visible; break-inside:auto; }
+  table { font-size:7.2pt; }
+  thead { display:table-header-group; }
+  thead th { position:static; }
+  tr { break-inside:avoid; }
+  th, td { white-space:normal; padding:4px 6px; }
+  td.sm { font-size:6.6pt; }
+  .chip { font-size:6pt; padding:1px 4px; }
+  .facts { break-inside:avoid; grid-template-columns:repeat(3,1fr); }
+  .cols { display:block; }
+  .cols > div { break-inside:avoid; margin-bottom:14px; }
+  a { color:var(--ink); text-decoration:none; }
+  footer { break-inside:avoid; }
+}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="masthead">
+  <p class="eyebrow">Snowpack analysis · Aesir Consulting</p>
+  <h1>El Niño and the Ski Season</h1>
+  <p class="lede">What the Oceanic Niño Index actually predicts about powder days, storm frequency
+  and base depth across 37 ski regions of the western United States — and, just as usefully,
+  where it predicts nothing at all.</p>
+  <div class="facts">
+    <div class="fact"><span class="stat-v">932</span><span class="stat-k">SNOTEL stations</span></div>
+    <div class="fact"><span class="stat-v">40.2M</span><span class="stat-k">daily observations</span></div>
+    <div class="fact"><span class="stat-v">1964–2026</span><span class="stat-k">water years</span></div>
+    <div class="fact"><span class="stat-v">37</span><span class="stat-k">ski regions</span></div>
+    <div class="fact"><span class="stat-v">806</span><span class="stat-k">tests run</span></div>
+    <div class="fact"><span class="stat-v">31</span><span class="stat-k">survive FDR</span></div>
+  </div>
+  <p class="byline">Prepared 20 September 2026 · Data: NOAA CPC · NRCS AWDB · NCEI nClimDiv
+  · Method after Brown &amp; Harper (2026), HESS 30, 5735</p>
+</header>
+
+<section>
+  <div class="sec-head"><p class="eyebrow">The short version</p><h2>Four findings</h2></div>
+  <div class="verdict">
+    <p><strong>1. The effect is real but geographically narrow.</strong> Of 806 tests across every
+    region, window of winter and measure, 31 survive false-discovery control. Nearly all of them sit in
+    the northern Rockies and the Cascades, where El Niño costs roughly a foot of snow, or in New Mexico
+    and Arizona, where it adds snow in spring.</p>
+    <p><strong>2. For most of the West, El Niño predicts little, and the standard of proof matters.</strong>
+    Under correction across the whole 806 tests, the Wasatch, the I-70 corridor, Tahoe, the San Juans, Sun
+    Valley and the Elk Mountains never clear significance on any measure in any window. Judged one region
+    at a time, several of them do separate from zero over the holidays. Both statements are in this report;
+    the difference between them is the price of having asked the question many times.</p>
+    <p><strong>3. The Christmas–New Year window behaves differently from the rest of winter.</strong> Every
+    other window follows a north–south seesaw. The holidays lean toward less snow in
+    85 of
+    102 tests, in all three latitude bands at once,
+    including the southern ranges that otherwise gain.</p>
+    <p><strong>4. The strength of an event carries no information.</strong> Tested directly across
+    2158 region-window-measure combinations, nothing survives. A very strong El Niño delivers
+    more powder days than a strong one.</p>
+  </div>
+  <div class="legend">
+    <span><i class="sw" style="background:var(--less)"></i> El Niño brings less snow</span>
+    <span><i class="sw" style="background:var(--more)"></i> El Niño brings more snow</span>
+    <span><span class="chip fdr">survives FDR</span> clears false-discovery control across the whole grid</span>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head"><p class="eyebrow">Result</p><h2>What survives, in inches</h2></div>
+  <div class="prose">
+  <p>These are the region–window–measure combinations that clear Benjamini–Hochberg false-discovery
+  control across all 806 tests. Each row compares the long-run average of every winter on record
+  against the average of El Niño winters only.</p>
+  </div>
+  <div class="tablewrap">
+    <table>
+      <caption>Inches. New snow is what fell during the window; base is what was standing, measured both
+      as depth and as water equivalent.</caption>
+      <thead><tr><th>Ski region</th><th>Window</th><th>Measure</th><th>Winters</th>
+      <th>Normal</th><th>El Niño</th><th>Difference</th><th>Change</th><th>r²</th></tr></thead>
+      <tbody>
+<tr>
+<th scope="row">Bighorn Mtns</th><td>Holidays</td><td>Total new snow</td>
+<td class="n">48</td><td class="n">12.3</td>
+<td class="n strong">8.5</td>
+<td class="n less">-3.9 in</td>
+<td class="n less">-31%</td>
+<td class="n">24%</td></tr>
+<tr>
+<th scope="row">Park Range (Steamboat)</th><td>Holidays</td><td>Total new snow</td>
+<td class="n">47</td><td class="n">25.0</td>
+<td class="n strong">17.4</td>
+<td class="n less">-7.6 in</td>
+<td class="n less">-30%</td>
+<td class="n">18%</td></tr>
+<tr>
+<th scope="row">Snowy Range &amp; Sierra Madre</th><td>Holidays</td><td>Total new snow</td>
+<td class="n">46</td><td class="n">26.2</td>
+<td class="n strong">18.7</td>
+<td class="n less">-7.5 in</td>
+<td class="n less">-29%</td>
+<td class="n">20%</td></tr>
+<tr>
+<th scope="row">Central Cascades (Stevens/Snoqualmie)</th><td>Spring</td><td>Total new snow</td>
+<td class="n">45</td><td class="n">51.3</td>
+<td class="n strong">38.9</td>
+<td class="n less">-12.4 in</td>
+<td class="n less">-24%</td>
+<td class="n">22%</td></tr>
+<tr>
+<th scope="row">Mt Hood</th><td>Spring</td><td>Base, water equivalent</td>
+<td class="n">48</td><td class="n">27.2</td>
+<td class="n strong">20.8</td>
+<td class="n less">-6.4 in</td>
+<td class="n less">-24%</td>
+<td class="n">24%</td></tr>
+<tr>
+<th scope="row">Bitterroot &amp; Lolo (Montana Snowbowl)</th><td>Midwinter</td><td>Total new snow</td>
+<td class="n">59</td><td class="n">58.0</td>
+<td class="n strong">45.7</td>
+<td class="n less">-12.3 in</td>
+<td class="n less">-21%</td>
+<td class="n">21%</td></tr>
+<tr>
+<th scope="row">Central Cascades (Stevens/Snoqualmie)</th><td>Spring</td><td>Base, water equivalent</td>
+<td class="n">45</td><td class="n">29.2</td>
+<td class="n strong">23.2</td>
+<td class="n less">-6.0 in</td>
+<td class="n less">-21%</td>
+<td class="n">21%</td></tr>
+<tr>
+<th scope="row">Bitterroot &amp; Lolo (Montana Snowbowl)</th><td>Spring</td><td>Base, water equivalent</td>
+<td class="n">59</td><td class="n">18.7</td>
+<td class="n strong">15.4</td>
+<td class="n less">-3.4 in</td>
+<td class="n less">-18%</td>
+<td class="n">28%</td></tr>
+<tr>
+<th scope="row">Selkirk &amp; Cabinet (Schweitzer/Silver)</th><td>Spring</td><td>Base, snow depth</td>
+<td class="n">25</td><td class="n">77.3</td>
+<td class="n strong">63.5</td>
+<td class="n less">-13.7 in</td>
+<td class="n less">-18%</td>
+<td class="n">34%</td></tr>
+<tr>
+<th scope="row">Whitefish &amp; Flathead Range</th><td>Spring</td><td>Base, snow depth</td>
+<td class="n">25</td><td class="n">60.4</td>
+<td class="n strong">51.5</td>
+<td class="n less">-8.9 in</td>
+<td class="n less">-15%</td>
+<td class="n">34%</td></tr>
+<tr>
+<th scope="row">Whitefish &amp; Flathead Range</th><td>Spring</td><td>Base, water equivalent</td>
+<td class="n">52</td><td class="n">22.1</td>
+<td class="n strong">18.9</td>
+<td class="n less">-3.2 in</td>
+<td class="n less">-14%</td>
+<td class="n">16%</td></tr>
+<tr>
+<th scope="row">Bitterroot &amp; Lolo (Montana Snowbowl)</th><td>Midwinter</td><td>Base, water equivalent</td>
+<td class="n">59</td><td class="n">13.1</td>
+<td class="n strong">11.4</td>
+<td class="n less">-1.7 in</td>
+<td class="n less">-13%</td>
+<td class="n">16%</td></tr>
+<tr>
+<th scope="row">Beartooth &amp; Absaroka (Red Lodge)</th><td>Spring</td><td>Base, water equivalent</td>
+<td class="n">53</td><td class="n">17.8</td>
+<td class="n strong">15.7</td>
+<td class="n less">-2.1 in</td>
+<td class="n less">-12%</td>
+<td class="n">16%</td></tr>
+<tr>
+<th scope="row">Bridger/Gallatin/Madison (Big Sky)</th><td>Spring</td><td>Base, water equivalent</td>
+<td class="n">60</td><td class="n">16.6</td>
+<td class="n strong">14.9</td>
+<td class="n less">-1.7 in</td>
+<td class="n less">-10%</td>
+<td class="n">16%</td></tr>
+<tr>
+<th scope="row">Bridger/Gallatin/Madison (Big Sky)</th><td>Midwinter</td><td>Base, water equivalent</td>
+<td class="n">60</td><td class="n">11.2</td>
+<td class="n strong">10.1</td>
+<td class="n less">-1.1 in</td>
+<td class="n less">-10%</td>
+<td class="n">14%</td></tr>
+<tr>
+<th scope="row">Jemez &amp; N New Mexico</th><td>Early season</td><td>Total new snow</td>
+<td class="n">46</td><td class="n">19.7</td>
+<td class="n strong">25.3</td>
+<td class="n more">+5.6 in</td>
+<td class="n more">+28%</td>
+<td class="n">22%</td></tr>
+<tr>
+<th scope="row">Jemez &amp; N New Mexico</th><td>Spring</td><td>Base, water equivalent</td>
+<td class="n">46</td><td class="n">7.2</td>
+<td class="n strong">9.6</td>
+<td class="n more">+2.4 in</td>
+<td class="n more">+33%</td>
+<td class="n">24%</td></tr>
+<tr>
+<th scope="row">White Mtns AZ (Sunrise Park)</th><td>Spring</td><td>Base, water equivalent</td>
+<td class="n">46</td><td class="n">4.3</td>
+<td class="n strong">6.3</td>
+<td class="n more">+2.0 in</td>
+<td class="n more">+46%</td>
+<td class="n">24%</td></tr>
+      </tbody>
+    </table>
+  </div>
+<figure class="wide">
+<img src="figures/fig_significant_inches.png" alt="Only the results that survive false-discovery control, in inches. Three separate axes: inches of falling snow, inches of standing snow depth and inches of water in that snow are different quantities and cannot share a scale. The open circle is a normal winter; the filled circle is an El Niño winter." loading="lazy">
+<figcaption>Only the results that survive false-discovery control, in inches. Three separate axes: inches of falling snow, inches of standing snow depth and inches of water in that snow are different quantities and cannot share a scale. The open circle is a normal winter; the filled circle is an El Niño winter.</figcaption></figure>
+</section>
+
+<section>
+  <div class="sec-head"><p class="eyebrow">Result</p><h2>What survives, in days</h2></div>
+  <div class="tablewrap">
+    <table>
+      <caption>Days within the window. A powder day is a day with at least six inches of new snow; a storm
+      day at least two.</caption>
+      <thead><tr><th>Ski region</th><th>Window</th><th>Measure</th><th>Winters</th>
+      <th>Normal</th><th>El Niño</th><th>Difference</th><th>Change</th><th>r²</th></tr></thead>
+      <tbody>
+<tr>
+<th scope="row">Bitterroot &amp; Lolo (Montana Snowbowl)</th><td>Midwinter</td><td>Powder days (≥6 in)</td>
+<td class="n">59</td><td class="n">1.5</td>
+<td class="n strong">0.8</td>
+<td class="n less">-0.7 d</td>
+<td class="n less">-45%</td>
+<td class="n">20%</td></tr>
+<tr>
+<th scope="row">Bighorn Mtns</th><td>Holidays</td><td>Storm days (≥2 in)</td>
+<td class="n">48</td><td class="n">1.8</td>
+<td class="n strong">1.1</td>
+<td class="n less">-0.7 d</td>
+<td class="n less">-39%</td>
+<td class="n">19%</td></tr>
+<tr>
+<th scope="row">Park Range (Steamboat)</th><td>Holidays</td><td>Storm days (≥2 in)</td>
+<td class="n">47</td><td class="n">4.3</td>
+<td class="n strong">2.7</td>
+<td class="n less">-1.5 d</td>
+<td class="n less">-36%</td>
+<td class="n">23%</td></tr>
+<tr>
+<th scope="row">Snowy Range &amp; Sierra Madre</th><td>Holidays</td><td>Storm days (≥2 in)</td>
+<td class="n">46</td><td class="n">4.3</td>
+<td class="n strong">3.0</td>
+<td class="n less">-1.3 d</td>
+<td class="n less">-30%</td>
+<td class="n">21%</td></tr>
+<tr>
+<th scope="row">Central Cascades (Stevens/Snoqualmie)</th><td>Spring</td><td>Storm days (≥2 in)</td>
+<td class="n">45</td><td class="n">8.7</td>
+<td class="n strong">6.4</td>
+<td class="n less">-2.2 d</td>
+<td class="n less">-26%</td>
+<td class="n">26%</td></tr>
+<tr>
+<th scope="row">Bitterroot &amp; Lolo (Montana Snowbowl)</th><td>Midwinter</td><td>Storm days (≥2 in)</td>
+<td class="n">59</td><td class="n">9.2</td>
+<td class="n strong">7.1</td>
+<td class="n less">-2.1 d</td>
+<td class="n less">-23%</td>
+<td class="n">18%</td></tr>
+<tr>
+<th scope="row">Bridger/Gallatin/Madison (Big Sky)</th><td>Midwinter</td><td>Days with a skiable base</td>
+<td class="n">60</td><td class="n">29.9</td>
+<td class="n strong">25.1</td>
+<td class="n less">-4.8 d</td>
+<td class="n less">-16%</td>
+<td class="n">13%</td></tr>
+<tr>
+<th scope="row">Bitterroot &amp; Lolo (Montana Snowbowl)</th><td>Spring</td><td>Days with a skiable base</td>
+<td class="n">59</td><td class="n">30.3</td>
+<td class="n strong">25.8</td>
+<td class="n less">-4.5 d</td>
+<td class="n less">-15%</td>
+<td class="n">24%</td></tr>
+<tr>
+<th scope="row">Bitterroot &amp; Lolo (Montana Snowbowl)</th><td>Midwinter</td><td>Days with a skiable base</td>
+<td class="n">59</td><td class="n">26.3</td>
+<td class="n strong">22.8</td>
+<td class="n less">-3.5 d</td>
+<td class="n less">-13%</td>
+<td class="n">15%</td></tr>
+<tr>
+<th scope="row">Whitefish &amp; Flathead Range</th><td>Spring</td><td>Days with a skiable base</td>
+<td class="n">52</td><td class="n">38.0</td>
+<td class="n strong">33.0</td>
+<td class="n less">-4.9 d</td>
+<td class="n less">-13%</td>
+<td class="n">18%</td></tr>
+<tr>
+<th scope="row">Jemez &amp; N New Mexico</th><td>Early season</td><td>Storm days (≥2 in)</td>
+<td class="n">46</td><td class="n">3.4</td>
+<td class="n strong">4.3</td>
+<td class="n more">+0.9 d</td>
+<td class="n more">+28%</td>
+<td class="n">20%</td></tr>
+<tr>
+<th scope="row">Jemez &amp; N New Mexico</th><td>Spring</td><td>Days with a skiable base</td>
+<td class="n">46</td><td class="n">15.0</td>
+<td class="n strong">23.8</td>
+<td class="n more">+8.8 d</td>
+<td class="n more">+58%</td>
+<td class="n">20%</td></tr>
+<tr>
+<th scope="row">White Mtns AZ (Sunrise Park)</th><td>Spring</td><td>Days with a skiable base</td>
+<td class="n">46</td><td class="n">8.1</td>
+<td class="n strong">14.1</td>
+<td class="n more">+6.0 d</td>
+<td class="n more">+74%</td>
+<td class="n">18%</td></tr>
+      </tbody>
+    </table>
+  </div>
+<figure class="wide">
+<img src="figures/fig_significant_days.png" alt="The same surviving results counted in days rather than inches." loading="lazy">
+<figcaption>The same surviving results counted in days rather than inches.</figcaption></figure>
+  <div class="note">
+    <p class="note-h">Reading the largest effects</p>
+    <p>Montana Snowbowl in midwinter is the single most affected place in the study: twelve inches less
+    new snow, two fewer storm days, and 45 % fewer powder days. The largest gain anywhere is northern
+    New Mexico in spring, which picks up nearly nine additional days with a skiable base.</p>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head"><p class="eyebrow">Geography</p><h2>Where the effect lives</h2></div>
+  <div class="prose">
+  <p>The turnover sits near 40–42° N, running through central Colorado and Utah. North of it El Niño
+  suppresses snowfall; south of it, in spring, it adds. The southern half of the seesaw is weaker and
+  less reliable than the northern half — several southern regions show a positive tendency that never
+  reaches significance.</p>
+  </div>
+<figure class="wide">
+<img src="figures/fig_region_map.png" alt="Change in midwinter powder days by region. Ringed markers survive false-discovery control." loading="lazy">
+<figcaption>Change in midwinter powder days by region. Ringed markers survive false-discovery control.</figcaption></figure>
+<figure class="wide">
+<img src="figures/fig_window_change.png" alt="Change in powder days by window of winter, split at the ENSO node. Averaging all regions together would cancel the seesaw to near zero and say nothing true about anywhere; splitting makes both halves visible — and exposes the holiday window, which is negative in all three bands at once." loading="lazy">
+<figcaption>Change in powder days by window of winter, split at the ENSO node. Averaging all regions together would cancel the seesaw to near zero and say nothing true about anywhere; splitting makes both halves visible — and exposes the holiday window, which is negative in all three bands at once.</figcaption></figure>
+  <div class="tablewrap">
+    <table>
+      <caption>Direction consistency by window. Each test is one region and one measure; the sign test asks
+      whether the direction holds across independent regions, which is the question that matters when each
+      individual correlation is modest.</caption>
+      <thead><tr><th>Window of winter</th><th>Tests</th><th>Leaning to less snow</th><th>Share</th>
+      <th>Mean r</th><th>Sign-test p</th></tr></thead>
+      <tbody>
+<tr><th scope="row">Early season</th><td class="n">102</td>
+<td class="n">71 of 102</td><td class="n">70%</td>
+<td class="n">-0.058</td><td class="n">9.3e-05</td></tr>
+<tr><th scope="row">Holidays</th><td class="n">102</td>
+<td class="n">85 of 102</td><td class="n">83%</td>
+<td class="n">-0.132</td><td class="n">4.7e-12</td></tr>
+<tr><th scope="row">Midwinter</th><td class="n">102</td>
+<td class="n">76 of 102</td><td class="n">75%</td>
+<td class="n">-0.107</td><td class="n">7.4e-07</td></tr>
+<tr><th scope="row">Spring</th><td class="n">102</td>
+<td class="n">65 of 102</td><td class="n">64%</td>
+<td class="n">-0.066</td><td class="n">7.2e-03</td></tr>
+      </tbody>
+    </table>
+  </div>
+<figure class="wide">
+<img src="figures/fig_season_shape.png" alt="Base depth through the winter by ENSO phase, in inches of measured snow depth. Two worst-hit regions at the top, a near-neutral region and a gaining region below." loading="lazy">
+<figcaption>Base depth through the winter by ENSO phase, in inches of measured snow depth. Two worst-hit regions at the top, a near-neutral region and a gaining region below.</figcaption></figure>
+</section>
+
+<section>
+  <div class="sec-head"><p class="eyebrow">Geography with uncertainty</p><h2>The effect moves through the winter</h2></div>
+  <div class="prose">
+  <p>A single number per region hides how firmly it is pinned, so every ski region here carries its whole
+  probability distribution rather than a colour. The dashed hairline through each glyph is no change. A
+  density sitting astride that line is a region where El Niño does nothing measurable.</p>
+  <p>Drawn window by window, the maps show something a season-long average cannot: <strong>the effect
+  does not sit still.</strong> It is almost absent in the early season, seizes the interior ranges over
+  the holidays, shifts to the northern Rockies and Cascades in midwinter, and retreats to the Cascades
+  alone by spring. A region can be firmly hit in one window and indistinguishable from zero in the next.</p>
+  </div>
+
+  <h3>Early season · 1 November – 15 December</h3>
+  <div class="prose"><p>Almost nothing is decided. Only Mt Hood and the Selkirks separate from zero.
+  Whatever El Niño does to a season, it has barely started by mid-December.</p></div>
+<figure class="wide">
+<img src="figures/fig_pdf_map_early_season.png" alt="Map of the western United States showing the change in powder days during the early season window, with a probability density at each ski region" loading="lazy">
+<figcaption>Two of thirty-four regions clear zero. The rest are undecided.</figcaption></figure>
+
+  <h3>Holidays · 16 December – 5 January</h3>
+  <div class="prose"><p>The widest, most coherent signal of the winter, and it lands on the interior:
+  the Wasatch, the Uintas, the Elk Mountains, the Park and Snowy ranges, the Rubies. These are the same
+  regions that show nothing at all in midwinter. The Wasatch loses eight of the twenty-three inches it
+  normally gets over Christmas and New Year.</p></div>
+<figure class="wide">
+<img src="figures/fig_pdf_map_holidays.png" alt="Map of the western United States showing the change in powder days during the holidays window, with a probability density at each ski region" loading="lazy">
+<figcaption>Ten of thirty-four regions clear zero, nine of them losses, and the cluster sits over the Great Basin and the Colorado and Wyoming ranges rather than the north.</figcaption></figure>
+
+  <h3>Midwinter · 6 January – 28 February</h3>
+  <div class="prose"><p>The signal migrates north. The Bitterroots, Whitefish, the Selkirks and all three
+  Washington Cascade regions separate from zero, and northern New Mexico does so in the other direction.
+  The interior ranges that were firmly hit over the holidays are now undecided.</p></div>
+<figure class="wide">
+<img src="figures/fig_pdf_map_midwinter.png" alt="Map of the western United States showing the change in powder days during the midwinter window, with a probability density at each ski region" loading="lazy">
+<figcaption>Seven of thirty-four regions clear zero: six northern losses and one southern gain.</figcaption></figure>
+
+  <h3>Spring · 1 March – 15 April</h3>
+  <div class="prose"><p>Only the Cascades and central Oregon remain decided. Everywhere else the
+  distributions have widened back across zero.</p></div>
+<figure class="wide">
+<img src="figures/fig_pdf_map_spring.png" alt="Map of the western United States showing the change in powder days during the spring window, with a probability density at each ski region" loading="lazy">
+<figcaption>Four of thirty-four regions clear zero, all of them in the Cascades and Oregon.</figcaption></figure>
+
+  <div class="note">
+    <p class="note-h">Two standards of evidence, and why they disagree</p>
+    <p>These maps judge each region on its own: does its 95 % interval exclude zero? The headline tables
+    earlier apply Benjamini–Hochberg correction across all 806 tests at once, which is far stricter,
+    because asking a question of 34 regions in 4 windows on 6 measures will turn up apparent effects by
+    chance alone.</p>
+    <p>That is why the Wasatch appears here at −50 % over the holidays and does not appear in the list of
+    results that survive correction. The per-region interval is the right tool for asking "what does the
+    record say about <em>this</em> range"; the corrected grid is the right tool for asking "which of these
+    findings would I bet on". A region that clears the first but not the second is worth watching, not
+    worth relying on.</p>
+  </div>
+  <div class="tablewrap">
+    <table>
+      <caption>Every region whose 95 % interval excludes zero, by window. Percentages of powder days are
+      shown next to the inches of new snow behind them, because a window of twenty-one days has few powder
+      days anywhere and a large percentage can rest on a fraction of a day.</caption>
+      <thead><tr><th>Window</th><th>Ski region</th><th>Powder days, normal</th><th>Change</th>
+      <th>New snow, normal</th><th>El Niño</th><th>Difference</th><th>95 % interval</th></tr></thead>
+      <tbody>
+<tr><th scope="row" rowspan="2">Early season</th>
+<td>Mt Hood</td>
+<td class="n">2.29</td><td class="n strong less">-26%</td>
+<td class="n">51 in</td><td class="n strong less">42 in</td>
+<td class="n less">-10 in</td>
+<td class="n">-54% to -3%</td></tr>
+<tr>
+<td>Selkirk & Cabinet</td>
+<td class="n">2.01</td><td class="n strong less">-22%</td>
+<td class="n">55 in</td><td class="n strong less">50 in</td>
+<td class="n less">-5 in</td>
+<td class="n">-45% to -0%</td></tr>
+<tr><th scope="row" rowspan="10">Holidays</th>
+<td>Bighorn Mtns <span class="chip null">tiny base</span></td>
+<td class="n">0.13</td><td class="n strong less">-59%</td>
+<td class="n">12 in</td><td class="n strong less">8 in</td>
+<td class="n less">-4 in</td>
+<td class="n">-115% to -23%</td></tr>
+<tr>
+<td>Uinta Mtns</td>
+<td class="n">0.54</td><td class="n strong less">-58%</td>
+<td class="n">17 in</td><td class="n strong less">11 in</td>
+<td class="n less">-6 in</td>
+<td class="n">-91% to -30%</td></tr>
+<tr>
+<td>Elk Mtns</td>
+<td class="n">0.59</td><td class="n strong less">-54%</td>
+<td class="n">21 in</td><td class="n strong less">15 in</td>
+<td class="n less">-6 in</td>
+<td class="n">-88% to -22%</td></tr>
+<tr>
+<td>Wasatch</td>
+<td class="n">0.97</td><td class="n strong less">-50%</td>
+<td class="n">23 in</td><td class="n strong less">15 in</td>
+<td class="n less">-8 in</td>
+<td class="n">-81% to -22%</td></tr>
+<tr>
+<td>Snowy Range & Sierra Madre</td>
+<td class="n">0.85</td><td class="n strong less">-49%</td>
+<td class="n">26 in</td><td class="n strong less">19 in</td>
+<td class="n less">-8 in</td>
+<td class="n">-78% to -21%</td></tr>
+<tr>
+<td>Park Range</td>
+<td class="n">0.85</td><td class="n strong less">-45%</td>
+<td class="n">25 in</td><td class="n strong less">17 in</td>
+<td class="n less">-8 in</td>
+<td class="n">-72% to -19%</td></tr>
+<tr>
+<td>Mt Hood</td>
+<td class="n">1.53</td><td class="n strong less">-45%</td>
+<td class="n">33 in</td><td class="n strong less">26 in</td>
+<td class="n less">-7 in</td>
+<td class="n">-72% to -19%</td></tr>
+<tr>
+<td>Ruby Mtns & NE Nevada</td>
+<td class="n">0.65</td><td class="n strong less">-40%</td>
+<td class="n">19 in</td><td class="n strong less">14 in</td>
+<td class="n less">-5 in</td>
+<td class="n">-82% to -3%</td></tr>
+<tr>
+<td>Central Oregon</td>
+<td class="n">1.56</td><td class="n strong less">-37%</td>
+<td class="n">35 in</td><td class="n strong less">28 in</td>
+<td class="n less">-6 in</td>
+<td class="n">-71% to -8%</td></tr>
+<tr>
+<td>Black Hills <span class="chip null">tiny base</span></td>
+<td class="n">0.11</td><td class="n strong more">+149%</td>
+<td class="n">10 in</td><td class="n strong more">11 in</td>
+<td class="n more">+1 in</td>
+<td class="n">+50% to +355%</td></tr>
+<tr><th scope="row" rowspan="7">Midwinter</th>
+<td>Bitterroot & Lolo</td>
+<td class="n">1.52</td><td class="n strong less">-45%</td>
+<td class="n">58 in</td><td class="n strong less">46 in</td>
+<td class="n less">-12 in</td>
+<td class="n">-62% to -29%</td></tr>
+<tr>
+<td>Whitefish & Flathead Range</td>
+<td class="n">1.54</td><td class="n strong less">-38%</td>
+<td class="n">59 in</td><td class="n strong less">48 in</td>
+<td class="n less">-11 in</td>
+<td class="n">-53% to -24%</td></tr>
+<tr>
+<td>Selkirk & Cabinet</td>
+<td class="n">2.53</td><td class="n strong less">-30%</td>
+<td class="n">71 in</td><td class="n strong less">60 in</td>
+<td class="n less">-11 in</td>
+<td class="n">-49% to -11%</td></tr>
+<tr>
+<td>Central Cascades</td>
+<td class="n">3.70</td><td class="n strong less">-28%</td>
+<td class="n">85 in</td><td class="n strong less">71 in</td>
+<td class="n less">-14 in</td>
+<td class="n">-52% to -7%</td></tr>
+<tr>
+<td>North Cascades</td>
+<td class="n">4.59</td><td class="n strong less">-22%</td>
+<td class="n">102 in</td><td class="n strong less">90 in</td>
+<td class="n less">-13 in</td>
+<td class="n">-47% to -1%</td></tr>
+<tr>
+<td>S Washington Cascades</td>
+<td class="n">3.93</td><td class="n strong less">-22%</td>
+<td class="n">89 in</td><td class="n strong less">79 in</td>
+<td class="n less">-10 in</td>
+<td class="n">-47% to -1%</td></tr>
+<tr>
+<td>Jemez & N New Mexico</td>
+<td class="n">0.73</td><td class="n strong more">+43%</td>
+<td class="n">30 in</td><td class="n strong more">38 in</td>
+<td class="n more">+8 in</td>
+<td class="n">+5% to +90%</td></tr>
+<tr><th scope="row" rowspan="4">Spring</th>
+<td>Central Cascades</td>
+<td class="n">1.74</td><td class="n strong less">-31%</td>
+<td class="n">51 in</td><td class="n strong less">39 in</td>
+<td class="n less">-12 in</td>
+<td class="n">-57% to -7%</td></tr>
+<tr>
+<td>Central Oregon</td>
+<td class="n">1.90</td><td class="n strong less">-27%</td>
+<td class="n">54 in</td><td class="n strong less">46 in</td>
+<td class="n less">-9 in</td>
+<td class="n">-52% to -3%</td></tr>
+<tr>
+<td>North Cascades</td>
+<td class="n">2.69</td><td class="n strong less">-26%</td>
+<td class="n">69 in</td><td class="n strong less">60 in</td>
+<td class="n less">-9 in</td>
+<td class="n">-49% to -3%</td></tr>
+<tr>
+<td>S Washington Cascades</td>
+<td class="n">2.09</td><td class="n strong less">-23%</td>
+<td class="n">61 in</td><td class="n strong less">50 in</td>
+<td class="n less">-11 in</td>
+<td class="n">-46% to -2%</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="note">
+    <p class="note-h">One number not to trust</p>
+    <p>The Black Hills reads +149 % over the holidays. That is 0.11 powder days becoming 0.27 — a sixth
+    of a day, at the one region in the study with two SNOTEL stations. Its interval excludes zero, but the
+    quantity is too small to carry meaning. The same caution applies more mildly to the Bighorns, where
+    a 59 % loss is 0.13 days becoming 0.05. Read the inches column for these.</p>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head"><p class="eyebrow">The negative result</p><h2>Event strength carries no information</h2></div>
+  <div class="prose">
+  <p>Phase says which way a winter leans. Strength says how far the index went. The two are routinely
+  conflated in seasonal forecasting, so strength was tested head-on rather than inferred: every region,
+  window and measure was asked whether a larger event means less snow among El Niño winters only, the same
+  among La Niña winters, and whether adding the index value to a phase-only model explains more.</p>
+  </div>
+  <div class="tablewrap">
+    <table>
+      <caption>2158 strength tests with permutation p-values and false-discovery control across the
+      whole family.</caption>
+      <thead><tr><th>Test</th><th>Tests run</th><th>p &lt; 0.05</th><th>Expected by chance</th>
+      <th>Survive FDR</th><th>Smallest r findable</th></tr></thead>
+      <tbody>
+<tr><th scope="row">Within El Niño winters only</th><td class="n">651</td><td class="n">11</td>
+<td class="n">33</td><td class="n strong">0</td>
+<td class="n">0.65</td></tr>
+<tr><th scope="row">Within La Niña winters only</th><td class="n">701</td><td class="n">44</td>
+<td class="n">35</td><td class="n strong">0</td>
+<td class="n">0.65</td></tr>
+<tr><th scope="row">Adding magnitude to phase (every winter)</th><td class="n">806</td><td class="n">17</td>
+<td class="n">40</td><td class="n strong">0</td>
+<td class="n">0.40</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="prose">
+  <p>Nothing survives. The p-values are distributed exactly as pure chance distributes them, and the
+  within-El Niño family returns <em>fewer</em> nominal hits than chance alone would produce.</p>
+  </div>
+<figure class="wide">
+<img src="figures/fig_strength_significance.png" alt="Permutation p-values for every strength test against the uniform expectation. A real signal would pile up at the left edge. The lower row is the power check: with about sixteen winters of a given phase per region, a within-phase test could only have found a correlation above roughly 0.65, so its flat histogram means not found rather than not there. The nested test uses every winter, could have found 0.40, and did not." loading="lazy">
+<figcaption>Permutation p-values for every strength test against the uniform expectation. A real signal would pile up at the left edge. The lower row is the power check: with about sixteen winters of a given phase per region, a within-phase test could only have found a correlation above roughly 0.65, so its flat histogram means not found rather than not there. The nested test uses every winter, could have found 0.40, and did not.</figcaption></figure>
+  <div class="tablewrap">
+    <table>
+      <caption>Midwinter powder days by strength bin, averaged over every region. If magnitude mattered
+      the bars would descend from left to right.</caption>
+      <thead><tr><th>Phase and strength</th><th>Winters</th><th>Powder days</th><th></th></tr></thead>
+      <tbody>
+<tr><th scope="row">La Niña · strong</th>
+<td class="n">6</td><td class="n strong">1.59</td>
+<td class="barcell"><span class="bar more" style="width:100%"></span></td></tr>
+<tr><th scope="row">La Niña · moderate</th>
+<td class="n">5</td><td class="n strong">1.30</td>
+<td class="barcell"><span class="bar more" style="width:82%"></span></td></tr>
+<tr><th scope="row">La Niña · weak</th>
+<td class="n">10</td><td class="n strong">1.32</td>
+<td class="barcell"><span class="bar more" style="width:83%"></span></td></tr>
+<tr><th scope="row">Neutral · neutral</th>
+<td class="n">18</td><td class="n strong">1.30</td>
+<td class="barcell"><span class="bar " style="width:82%"></span></td></tr>
+<tr><th scope="row">El Niño · weak</th>
+<td class="n">9</td><td class="n strong">1.16</td>
+<td class="barcell"><span class="bar less" style="width:73%"></span></td></tr>
+<tr><th scope="row">El Niño · moderate</th>
+<td class="n">4</td><td class="n strong">1.15</td>
+<td class="barcell"><span class="bar less" style="width:72%"></span></td></tr>
+<tr><th scope="row">El Niño · strong</th>
+<td class="n">4</td><td class="n strong">1.04</td>
+<td class="barcell"><span class="bar less" style="width:66%"></span></td></tr>
+<tr><th scope="row">El Niño · very strong</th>
+<td class="n">3</td><td class="n strong">1.37</td>
+<td class="barcell"><span class="bar less" style="width:87%"></span></td></tr>
+      </tbody>
+    </table>
+  </div>
+<figure class="wide">
+<img src="figures/fig_strength_powder.png" alt="Powder days by ENSO strength bin. A very strong El Niño averages more powder days than a strong one." loading="lazy">
+<figcaption>Powder days by ENSO strength bin. A very strong El Niño averages more powder days than a strong one.</figcaption></figure>
+  <div class="tablewrap">
+    <table>
+      <caption>Variance decomposition. Knowing only the phase beats knowing the index value; adding
+      magnitude makes the prediction worse in every window.</caption>
+      <thead><tr><th>Window</th><th>r² from phase alone</th><th>r² from the index</th>
+      <th>Change from adding strength</th><th>Tests where it helps</th><th>r² within El Niño only</th></tr></thead>
+      <tbody>
+<tr><th scope="row">Early season</th><td class="n">6.1%</td>
+<td class="n">4.0%</td><td class="n less strong">-2.1%</td>
+<td class="n">18 of 198</td>
+<td class="n">4.6%</td></tr>
+<tr><th scope="row">Holidays</th><td class="n">7.4%</td>
+<td class="n">5.0%</td><td class="n less strong">-2.4%</td>
+<td class="n">8 of 201</td>
+<td class="n">7.0%</td></tr>
+<tr><th scope="row">Midwinter</th><td class="n">6.8%</td>
+<td class="n">5.4%</td><td class="n less strong">-1.3%</td>
+<td class="n">33 of 203</td>
+<td class="n">7.2%</td></tr>
+<tr><th scope="row">Spring</th><td class="n">9.7%</td>
+<td class="n">6.4%</td><td class="n less strong">-3.3%</td>
+<td class="n">28 of 204</td>
+<td class="n">7.2%</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="note">
+    <p class="note-h">Practical consequence</p>
+    <p>Plan for the phase and ignore the magnitude. The three very strong events on record
+    (1983, 1998, 2016) were not the worst winters in the northern Rockies, and the strong events
+    (1958, 1966, 1973, 1992, 2010, 2024) were not reliably worse than the weak ones.</p>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head"><p class="eyebrow">Full results</p><h2>Every region, midwinter powder days</h2></div>
+  <div class="prose">
+  <p>The complete picture, including the regions where nothing is detectable. Ordered from the largest
+  loss to the largest gain. Regions with under one powder day a month show large percentage swings on
+  very small absolute differences — read the day counts, not the percentages, at the extremes.</p>
+  </div>
+  <div class="tablewrap">
+    <table>
+      <caption>Powder days in the midwinter window, 6 January to 28 February.</caption>
+      <thead><tr><th>Ski region</th><th>States</th><th>Snow climate</th><th>Winters</th>
+      <th>Normal</th><th>El Niño</th><th>Diff</th><th>Change</th><th>La Niña</th><th>Status</th></tr></thead>
+      <tbody>
+<tr>
+<th scope="row">Bitterroot &amp; Lolo (Montana Snowbowl)</th><td class="sm">MT+ID</td><td class="sm">transitional</td>
+<td class="n">59</td><td class="n">1.5</td><td class="n strong">0.8</td>
+<td class="n less">-0.7</td>
+<td class="n less">-45%</td>
+<td class="n">2.0</td><td><span class="chip fdr">survives FDR</span></td></tr>
+<tr>
+<th scope="row">Whitefish &amp; Flathead Range</th><td class="sm">MT</td><td class="sm">transitional</td>
+<td class="n">52</td><td class="n">1.5</td><td class="n strong">1.0</td>
+<td class="n less">-0.6</td>
+<td class="n less">-38%</td>
+<td class="n">2.0</td><td><span class="chip fdr">survives FDR</span></td></tr>
+<tr>
+<th scope="row">Selkirk &amp; Cabinet (Schweitzer/Silver)</th><td class="sm">ID+MT</td><td class="sm">transitional</td>
+<td class="n">46</td><td class="n">2.5</td><td class="n strong">1.8</td>
+<td class="n less">-0.7</td>
+<td class="n less">-30%</td>
+<td class="n">3.2</td><td><span class="chip fdr">survives FDR</span></td></tr>
+<tr>
+<th scope="row">Central Cascades (Stevens/Snoqualmie)</th><td class="sm">WA</td><td class="sm">maritime</td>
+<td class="n">45</td><td class="n">3.7</td><td class="n strong">2.6</td>
+<td class="n less">-1.0</td>
+<td class="n less">-28%</td>
+<td class="n">4.4</td><td><span class="chip fdr">survives FDR</span></td></tr>
+<tr>
+<th scope="row">Yellowstone &amp; Wind River</th><td class="sm">WY</td><td class="sm">continental</td>
+<td class="n">48</td><td class="n">1.0</td><td class="n strong">0.7</td>
+<td class="n less">-0.3</td>
+<td class="n less">-27%</td>
+<td class="n">0.8</td><td><span class="chip null">not significant</span></td></tr>
+<tr>
+<th scope="row">Beartooth &amp; Absaroka (Red Lodge)</th><td class="sm">MT+WY</td><td class="sm">continental</td>
+<td class="n">53</td><td class="n">1.2</td><td class="n strong">0.9</td>
+<td class="n less">-0.3</td>
+<td class="n less">-25%</td>
+<td class="n">1.5</td><td><span class="chip fdr">survives FDR</span></td></tr>
+<tr>
+<th scope="row">Blues &amp; Wallowas (Anthony Lakes)</th><td class="sm">OR</td><td class="sm">transitional</td>
+<td class="n">48</td><td class="n">0.8</td><td class="n strong">0.6</td>
+<td class="n less">-0.2</td>
+<td class="n less">-25%</td>
+<td class="n">0.9</td><td><span class="chip null">not significant</span></td></tr>
+<tr>
+<th scope="row">North Cascades (Mt Baker)</th><td class="sm">WA</td><td class="sm">maritime</td>
+<td class="n">44</td><td class="n">4.6</td><td class="n strong">3.6</td>
+<td class="n less">-1.0</td>
+<td class="n less">-22%</td>
+<td class="n">5.1</td><td><span class="chip null">not significant</span></td></tr>
+<tr>
+<th scope="row">S Washington Cascades (Crystal/White Pass)</th><td class="sm">WA</td><td class="sm">maritime</td>
+<td class="n">45</td><td class="n">3.9</td><td class="n strong">3.1</td>
+<td class="n less">-0.9</td>
+<td class="n less">-22%</td>
+<td class="n">4.3</td><td><span class="chip null">not significant</span></td></tr>
+<tr>
+<th scope="row">Central Oregon (Mt Bachelor)</th><td class="sm">OR</td><td class="sm">transitional</td>
+<td class="n">46</td><td class="n">3.4</td><td class="n strong">2.6</td>
+<td class="n less">-0.7</td>
+<td class="n less">-22%</td>
+<td class="n">4.2</td><td><span class="chip null">not significant</span></td></tr>
+<tr>
+<th scope="row">Tetons (Jackson/Targhee)</th><td class="sm">WY+ID</td><td class="sm">intermountain</td>
+<td class="n">46</td><td class="n">1.8</td><td class="n strong">1.4</td>
+<td class="n less">-0.4</td>
+<td class="n less">-21%</td>
+<td class="n">1.6</td><td><span class="chip null">not significant</span></td></tr>
+<tr>
+<th scope="row">Black Hills (Terry Peak)</th><td class="sm">SD</td><td class="sm">continental</td>
+<td class="n">26</td><td class="n">0.2</td><td class="n strong">0.2</td>
+<td class="n less">-0.0</td>
+<td class="n less">-19%</td>
+<td class="n">0.3</td><td><span class="chip null">not significant</span></td></tr>
+<tr>
+<th scope="row">Bighorn Mtns</th><td class="sm">WY</td><td class="sm">continental</td>
+<td class="n">48</td><td class="n">0.4</td><td class="n strong">0.3</td>
+<td class="n less">-0.1</td>
+<td class="n less">-19%</td>
+<td class="n">0.5</td><td><span class="chip fdr">survives FDR</span></td></tr>
+<tr>
+<th scope="row">Bridger/Gallatin/Madison (Big Sky)</th><td class="sm">MT</td><td class="sm">continental</td>
+<td class="n">60</td><td class="n">1.0</td><td class="n strong">0.8</td>
+<td class="n less">-0.2</td>
+<td class="n less">-19%</td>
+<td class="n">1.0</td><td><span class="chip fdr">survives FDR</span></td></tr>
+<tr>
+<th scope="row">Elk Mtns (Aspen/Crested Butte)</th><td class="sm">CO</td><td class="sm">continental</td>
+<td class="n">46</td><td class="n">1.3</td><td class="n strong">1.1</td>
+<td class="n less">-0.2</td>
+<td class="n less">-19%</td>
+<td class="n">1.5</td><td><span class="chip null">not significant</span></td></tr>
+<tr>
+<th scope="row">Mt Hood</th><td class="sm">OR</td><td class="sm">maritime</td>
+<td class="n">48</td><td class="n">3.9</td><td class="n strong">3.1</td>
+<td class="n less">-0.7</td>
+<td class="n less">-18%</td>
+<td class="n">4.7</td><td><span class="chip fdr">survives FDR</span></td></tr>
+<tr>
+<th scope="row">Sawtooth &amp; Smoky (Sun Valley)</th><td class="sm">ID</td><td class="sm">intermountain</td>
+<td class="n">46</td><td class="n">1.4</td><td class="n strong">1.2</td>
+<td class="n less">-0.2</td>
+<td class="n less">-15%</td>
+<td class="n">1.3</td><td><span class="chip null">not significant</span></td></tr>
+<tr>
+<th scope="row">E Cascades rain shadow (Mission Ridge)</th><td class="sm">WA</td><td class="sm">transitional</td>
+<td class="n">45</td><td class="n">1.2</td><td class="n strong">1.1</td>
+<td class="n less">-0.2</td>
+<td class="n less">-14%</td>
+<td class="n">1.5</td><td><span class="chip null">not significant</span></td></tr>
+<tr>
+<th scope="row">W Central Idaho (Brundage/Tamarack)</th><td class="sm">ID</td><td class="sm">intermountain</td>
+<td class="n">46</td><td class="n">2.2</td><td class="n strong">1.9</td>
+<td class="n less">-0.3</td>
+<td class="n less">-14%</td>
+<td class="n">2.3</td><td><span class="chip null">not significant</span></td></tr>
+<tr>
+<th scope="row">Ruby Mtns &amp; NE Nevada</th><td class="sm">NV</td><td class="sm">continental</td>
+<td class="n">46</td><td class="n">1.3</td><td class="n strong">1.2</td>
+<td class="n less">-0.1</td>
+<td class="n less">-11%</td>
+<td class="n">1.4</td><td><span class="chip null">not significant</span></td></tr>
+<tr>
+<th scope="row">Front Range (Winter Park/Loveland/A-Basin)</th><td class="sm">CO</td><td class="sm">continental</td>
+<td class="n">48</td><td class="n">0.8</td><td class="n strong">0.8</td>
+<td class="n less">-0.1</td>
+<td class="n less">-7%</td>
+<td class="n">0.8</td><td><span class="chip null">not significant</span></td></tr>
+<tr>
+<th scope="row">Gore &amp; Tenmile (Vail/Summit/Copper)</th><td class="sm">CO</td><td class="sm">continental</td>
+<td class="n">48</td><td class="n">0.8</td><td class="n strong">0.8</td>
+<td class="n less">-0.0</td>
+<td class="n less">-2%</td>
+<td class="n">0.8</td><td><span class="chip null">not significant</span></td></tr>
+<tr>
+<th scope="row">Wasatch (Alta/Snowbird/Park City)</th><td class="sm">UT</td><td class="sm">intermountain</td>
+<td class="n">48</td><td class="n">2.5</td><td class="n strong">2.5</td>
+<td class="n more">+0.1</td>
+<td class="n more">+3%</td>
+<td class="n">2.4</td><td><span class="chip null">not significant</span></td></tr>
+<tr>
+<th scope="row">Chugach (Alyeska)</th><td class="sm">AK</td><td class="sm">maritime</td>
+<td class="n">43</td><td class="n">3.1</td><td class="n strong">3.2</td>
+<td class="n more">+0.1</td>
+<td class="n more">+4%</td>
+<td class="n">3.1</td><td><span class="chip null">not significant</span></td></tr>
+<tr>
+<th scope="row">Snowy Range &amp; Sierra Madre</th><td class="sm">WY</td><td class="sm">continental</td>
+<td class="n">46</td><td class="n">1.7</td><td class="n strong">1.8</td>
+<td class="n more">+0.1</td>
+<td class="n more">+5%</td>
+<td class="n">1.7</td><td><span class="chip fdr">survives FDR</span></td></tr>
+<tr>
+<th scope="row">Spring Mtns (Lee Canyon)</th><td class="sm">NV</td><td class="sm">continental</td>
+<td class="n">18</td><td class="n">1.5</td><td class="n strong">1.6</td>
+<td class="n more">+0.1</td>
+<td class="n more">+5%</td>
+<td class="n">1.3</td><td><span class="chip null">not significant</span></td></tr>
+<tr>
+<th scope="row">Uinta Mtns</th><td class="sm">UT</td><td class="sm">continental</td>
+<td class="n">48</td><td class="n">1.3</td><td class="n strong">1.4</td>
+<td class="n more">+0.1</td>
+<td class="n more">+7%</td>
+<td class="n">1.1</td><td><span class="chip null">not significant</span></td></tr>
+<tr>
+<th scope="row">San Juans (Telluride/Purgatory/Wolf Ck)</th><td class="sm">CO</td><td class="sm">continental</td>
+<td class="n">47</td><td class="n">2.2</td><td class="n strong">2.4</td>
+<td class="n more">+0.2</td>
+<td class="n more">+11%</td>
+<td class="n">2.2</td><td><span class="chip null">not significant</span></td></tr>
+<tr>
+<th scope="row">Park Range (Steamboat)</th><td class="sm">CO</td><td class="sm">continental</td>
+<td class="n">47</td><td class="n">2.1</td><td class="n strong">2.3</td>
+<td class="n more">+0.3</td>
+<td class="n more">+12%</td>
+<td class="n">2.1</td><td><span class="chip fdr">survives FDR</span></td></tr>
+<tr>
+<th scope="row">N Sierra / Tahoe (Palisades/Heavenly/Rose)</th><td class="sm">CA+NV</td><td class="sm">maritime</td>
+<td class="n">48</td><td class="n">4.3</td><td class="n strong">4.8</td>
+<td class="n more">+0.5</td>
+<td class="n more">+12%</td>
+<td class="n">4.1</td><td><span class="chip null">not significant</span></td></tr>
+<tr>
+<th scope="row">S Utah (Brian Head/Eagle Point)</th><td class="sm">UT</td><td class="sm">continental</td>
+<td class="n">48</td><td class="n">1.7</td><td class="n strong">1.9</td>
+<td class="n more">+0.2</td>
+<td class="n more">+14%</td>
+<td class="n">1.5</td><td><span class="chip null">not significant</span></td></tr>
+<tr>
+<th scope="row">Sangre de Cristo (Taos/Santa Fe)</th><td class="sm">NM+CO</td><td class="sm">continental</td>
+<td class="n">47</td><td class="n">0.9</td><td class="n strong">1.0</td>
+<td class="n more">+0.2</td>
+<td class="n more">+20%</td>
+<td class="n">0.7</td><td><span class="chip null">not significant</span></td></tr>
+<tr>
+<th scope="row">White Mtns AZ (Sunrise Park)</th><td class="sm">AZ</td><td class="sm">continental</td>
+<td class="n">46</td><td class="n">0.9</td><td class="n strong">1.1</td>
+<td class="n more">+0.2</td>
+<td class="n more">+24%</td>
+<td class="n">0.6</td><td><span class="chip fdr">survives FDR</span></td></tr>
+<tr>
+<th scope="row">San Francisco Peaks (AZ Snowbowl)</th><td class="sm">AZ</td><td class="sm">continental</td>
+<td class="n">46</td><td class="n">1.7</td><td class="n strong">2.1</td>
+<td class="n more">+0.4</td>
+<td class="n more">+25%</td>
+<td class="n">1.4</td><td><span class="chip null">not significant</span></td></tr>
+<tr>
+<th scope="row">Jemez &amp; N New Mexico</th><td class="sm">NM</td><td class="sm">continental</td>
+<td class="n">46</td><td class="n">0.7</td><td class="n strong">1.0</td>
+<td class="n more">+0.3</td>
+<td class="n more">+43%</td>
+<td class="n">0.7</td><td><span class="chip fdr">survives FDR</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+<figure class="wide">
+<img src="figures/fig_powder_days.png" alt="Powder days in a normal winter against an El Niño winter, every region with data, sorted by effect." loading="lazy">
+<figcaption>Powder days in a normal winter against an El Niño winter, every region with data, sorted by effect.</figcaption></figure>
+<figure class="wide">
+<img src="figures/fig9_ski_region_window.png" alt="Variance explained (r²) by region, window and measure, regions ordered north to south. The vertical gradient is the seesaw." loading="lazy">
+<figcaption>Variance explained (r²) by region, window and measure, regions ordered north to south. The vertical gradient is the seesaw.</figcaption></figure>
+<figure class="wide">
+<img src="figures/fig10_distributions.png" alt="Probability distributions behind selected headline results: the subsampling distribution of the estimate against the permutation null, with the fitted normal. Separation between the two is the significance, shown rather than asserted." loading="lazy">
+<figcaption>Probability distributions behind selected headline results: the subsampling distribution of the estimate against the permutation null, with the fitted normal. Separation between the two is the significance, shown rather than asserted.</figcaption></figure>
+<figure class="wide">
+<img src="figures/fig8_daily_enso_curve.png" alt="The correlation with the DJF index for every day of the water year, against the snowpack climatology, showing when in the season the signal acts." loading="lazy">
+<figcaption>The correlation with the DJF index for every day of the water year, against the snowpack climatology, showing when in the season the signal acts.</figcaption></figure>
+</section>
+
+<section>
+  <div class="sec-head"><p class="eyebrow">Method</p><h2>How this was measured</h2></div>
+  <div class="cols">
+    <div>
+      <h3>A powder day is six inches of snow</h3>
+      <p>A fixed water threshold is a maritime yardstick. Cascade new snow runs about 12 % density and
+      Colorado's about 7 %, so 25 mm of water is roughly eight inches of Cascade snow but fourteen inches
+      of Colorado snow — counting water alone makes the driest, lightest snowpacks look storm-free. Each
+      station's own new-snow ratio is measured from the overlap of its depth and water records, then
+      applied to its much longer water record. Across 508 stations the median ratio is 7.5 inches of snow
+      per inch of water.</p>
+    </div>
+    <div>
+      <h3>Regions are ranges, not states</h3>
+      <p>A state boundary is not a snow boundary. Tahoe spans California and Nevada, the Bitterroots and
+      Selkirks span Montana and Idaho, the Tetons span Wyoming and Idaho, the Sangre de Cristo spans
+      Colorado and New Mexico. Each region is anchored on a mountain range around real ski terrain and
+      labelled with its snow climate.</p>
+    </div>
+    <div>
+      <h3>Stations are weighted by elevation</h3>
+      <p>A gauge represents a ski area only insofar as it shares its snow climate, and elevation is most
+      of that. Each region carries its served base-to-summit band; stations are weighted by a Gaussian on
+      the vertical gap to that band and another on horizontal distance, so a valley gauge below the lifts
+      does not speak for a mountain.</p>
+    </div>
+    <div>
+      <h3>Significance, and the correction for asking often</h3>
+      <p>The modified bootstrap of Brown &amp; Harper (2026): omit a random 20 % of winters, refit, repeat
+      ten thousand times, and require the 2σ bounds of the resulting near-Gaussian distribution to exclude
+      zero. That raw rule fires on about 30 % of pure noise, because the subsample spread understates the
+      sampling error by the delete-<em>d</em> factor √((n−d)/d) = 2, so a calibrated version and a
+      permutation p-value are reported alongside. Benjamini–Hochberg control is then applied across the
+      entire grid.</p>
+    </div>
+    <div>
+      <h3>Two views of the same data</h3>
+      <p>The statistical tests run on per-station detrended z-scores, so a long-term warming trend cannot
+      pose as an ENSO signal. The physical composites are raw averages by phase — what actually happened.
+      The two are matched explicitly on region, window and measure rather than assumed to line up.</p>
+    </div>
+    <div>
+      <h3>Windows that carry a season</h3>
+      <p>Early season (1 Nov – 15 Dec), Holidays (16 Dec – 5 Jan), Midwinter (6 Jan – 28 Feb) and Spring
+      (1 Mar – 15 Apr). They abut without gaps. These replace the hydrologic periods used in water-supply
+      work, which are built around runoff timing rather than revenue.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head"><p class="eyebrow">Coverage</p><h2>Regions and station coverage</h2></div>
+  <div class="tablewrap">
+    <table>
+      <caption>Effective station count is Kish's measure applied to the elevation weights. Regions with few
+      stations inside the served band — notably southern Utah and the Snowy Range — should be read with
+      more caution, because SNOTEL does not reach those elevations locally.</caption>
+      <thead><tr><th>Ski region</th><th>States</th><th>Climate</th><th>Served band (ft)</th>
+      <th>Stations</th><th>Effective</th><th>Weighted elev (ft)</th><th>In band</th></tr></thead>
+      <tbody>
+<tr><th scope="row">Beartooth &amp; Absaroka (Red Lodge)</th><td class="sm">MT+WY</td><td class="sm">continental</td>
+<td class="n">7,016–9,416</td><td class="n">16</td>
+<td class="n">14.4</td><td class="n">8,143</td><td class="n">11</td></tr>
+<tr><th scope="row">Bighorn Mtns</th><td class="sm">WY</td><td class="sm">continental</td>
+<td class="n">7,500–9,500</td><td class="n">15</td>
+<td class="n">13.8</td><td class="n">8,747</td><td class="n">12</td></tr>
+<tr><th scope="row">Bitterroot &amp; Lolo (Montana Snowbowl)</th><td class="sm">MT+ID</td><td class="sm">transitional</td>
+<td class="n">5,000–7,600</td><td class="n">13</td>
+<td class="n">10.9</td><td class="n">5,978</td><td class="n">10</td></tr>
+<tr><th scope="row">Black Hills (Terry Peak)</th><td class="sm">SD</td><td class="sm">continental</td>
+<td class="n">5,800–7,064</td><td class="n">3</td>
+<td class="n">2.9</td><td class="n">6,358</td><td class="n">3</td></tr>
+<tr><th scope="row">Blues &amp; Wallowas (Anthony Lakes)</th><td class="sm">OR</td><td class="sm">transitional</td>
+<td class="n">7,100–8,000</td><td class="n">18</td>
+<td class="n">13.7</td><td class="n">5,834</td><td class="n">2</td></tr>
+<tr><th scope="row">Bridger/Gallatin/Madison (Big Sky)</th><td class="sm">MT</td><td class="sm">continental</td>
+<td class="n">6,400–10,000</td><td class="n">20</td>
+<td class="n">17.2</td><td class="n">7,848</td><td class="n">20</td></tr>
+<tr><th scope="row">Central Cascades (Stevens/Snoqualmie)</th><td class="sm">WA</td><td class="sm">maritime</td>
+<td class="n">3,000–5,845</td><td class="n">20</td>
+<td class="n">18.1</td><td class="n">3,758</td><td class="n">17</td></tr>
+<tr><th scope="row">Central Oregon (Mt Bachelor)</th><td class="sm">OR</td><td class="sm">transitional</td>
+<td class="n">6,300–9,065</td><td class="n">10</td>
+<td class="n">7.3</td><td class="n">5,220</td><td class="n">0</td></tr>
+<tr><th scope="row">Chugach (Alyeska)</th><td class="sm">AK</td><td class="sm">maritime</td>
+<td class="n">250–2,750</td><td class="n">11</td>
+<td class="n">9.5</td><td class="n">1,413</td><td class="n">7</td></tr>
+<tr><th scope="row">E Cascades rain shadow (Mission Ridge)</th><td class="sm">WA</td><td class="sm">transitional</td>
+<td class="n">4,570–6,820</td><td class="n">7</td>
+<td class="n">5.9</td><td class="n">4,744</td><td class="n">2</td></tr>
+<tr><th scope="row">Elk Mtns (Aspen/Crested Butte)</th><td class="sm">CO</td><td class="sm">continental</td>
+<td class="n">7,945–12,162</td><td class="n">14</td>
+<td class="n">12.8</td><td class="n">10,172</td><td class="n">14</td></tr>
+<tr><th scope="row">Front Range (Winter Park/Loveland/A-Basin)</th><td class="sm">CO</td><td class="sm">continental</td>
+<td class="n">9,000–13,050</td><td class="n">27</td>
+<td class="n">23.6</td><td class="n">10,314</td><td class="n">23</td></tr>
+<tr><th scope="row">Gore &amp; Tenmile (Vail/Summit/Copper)</th><td class="sm">CO</td><td class="sm">continental</td>
+<td class="n">8,120–12,998</td><td class="n">24</td>
+<td class="n">21.8</td><td class="n">10,417</td><td class="n">24</td></tr>
+<tr><th scope="row">Jemez &amp; N New Mexico</th><td class="sm">NM</td><td class="sm">continental</td>
+<td class="n">8,500–11,500</td><td class="n">9</td>
+<td class="n">7.5</td><td class="n">9,473</td><td class="n">7</td></tr>
+<tr><th scope="row">Mt Hood</th><td class="sm">OR</td><td class="sm">maritime</td>
+<td class="n">4,500–8,540</td><td class="n">11</td>
+<td class="n">9.4</td><td class="n">4,258</td><td class="n">2</td></tr>
+<tr><th scope="row">N Sierra / Tahoe (Palisades/Heavenly/Rose)</th><td class="sm">CA+NV</td><td class="sm">maritime</td>
+<td class="n">6,200–10,067</td><td class="n">27</td>
+<td class="n">25.5</td><td class="n">7,599</td><td class="n">26</td></tr>
+<tr><th scope="row">North Cascades (Mt Baker)</th><td class="sm">WA</td><td class="sm">maritime</td>
+<td class="n">3,500–5,089</td><td class="n">15</td>
+<td class="n">11.8</td><td class="n">4,227</td><td class="n">9</td></tr>
+<tr><th scope="row">Park Range (Steamboat)</th><td class="sm">CO</td><td class="sm">continental</td>
+<td class="n">6,900–10,568</td><td class="n">18</td>
+<td class="n">15.9</td><td class="n">9,367</td><td class="n">16</td></tr>
+<tr><th scope="row">Ruby Mtns &amp; NE Nevada</th><td class="sm">NV</td><td class="sm">continental</td>
+<td class="n">6,500–10,000</td><td class="n">11</td>
+<td class="n">10.0</td><td class="n">7,866</td><td class="n">10</td></tr>
+<tr><th scope="row">S Sierra (Mammoth/June)</th><td class="sm">CA</td><td class="sm">maritime</td>
+<td class="n">7,953–11,053</td><td class="n">2</td>
+<td class="n">1.7</td><td class="n">9,038</td><td class="n">2</td></tr>
+<tr><th scope="row">S Utah (Brian Head/Eagle Point)</th><td class="sm">UT</td><td class="sm">continental</td>
+<td class="n">9,600–10,970</td><td class="n">30</td>
+<td class="n">25.0</td><td class="n">9,396</td><td class="n">11</td></tr>
+<tr><th scope="row">S Washington Cascades (Crystal/White Pass)</th><td class="sm">WA</td><td class="sm">maritime</td>
+<td class="n">4,400–7,012</td><td class="n">24</td>
+<td class="n">19.0</td><td class="n">4,668</td><td class="n">12</td></tr>
+<tr><th scope="row">Sacramento Mtns (Ski Apache)</th><td class="sm">NM</td><td class="sm">continental</td>
+<td class="n">9,600–11,500</td><td class="n">1</td>
+<td class="n">1.0</td><td class="n">10,250</td><td class="n">1</td></tr>
+<tr><th scope="row">San Francisco Peaks (AZ Snowbowl)</th><td class="sm">AZ</td><td class="sm">continental</td>
+<td class="n">9,200–11,500</td><td class="n">8</td>
+<td class="n">4.8</td><td class="n">8,429</td><td class="n">1</td></tr>
+<tr><th scope="row">San Juans (Telluride/Purgatory/Wolf Ck)</th><td class="sm">CO</td><td class="sm">continental</td>
+<td class="n">8,725–13,150</td><td class="n">27</td>
+<td class="n">25.5</td><td class="n">10,495</td><td class="n">27</td></tr>
+<tr><th scope="row">Sangre de Cristo (Taos/Santa Fe)</th><td class="sm">NM+CO</td><td class="sm">continental</td>
+<td class="n">9,200–12,481</td><td class="n">20</td>
+<td class="n">17.1</td><td class="n">10,114</td><td class="n">17</td></tr>
+<tr><th scope="row">Sawtooth &amp; Smoky (Sun Valley)</th><td class="sm">ID</td><td class="sm">intermountain</td>
+<td class="n">5,750–9,150</td><td class="n">20</td>
+<td class="n">18.1</td><td class="n">7,569</td><td class="n">18</td></tr>
+<tr><th scope="row">Selkirk &amp; Cabinet (Schweitzer/Silver)</th><td class="sm">ID+MT</td><td class="sm">transitional</td>
+<td class="n">4,000–6,400</td><td class="n">15</td>
+<td class="n">13.3</td><td class="n">5,206</td><td class="n">14</td></tr>
+<tr><th scope="row">Snowy Range &amp; Sierra Madre</th><td class="sm">WY</td><td class="sm">continental</td>
+<td class="n">8,798–9,663</td><td class="n">21</td>
+<td class="n">19.1</td><td class="n">9,324</td><td class="n">6</td></tr>
+<tr><th scope="row">Spring Mtns (Lee Canyon)</th><td class="sm">NV</td><td class="sm">continental</td>
+<td class="n">8,510–11,290</td><td class="n">4</td>
+<td class="n">4.0</td><td class="n">8,723</td><td class="n">3</td></tr>
+<tr><th scope="row">Tetons (Jackson/Targhee)</th><td class="sm">WY+ID</td><td class="sm">intermountain</td>
+<td class="n">6,300–10,450</td><td class="n">15</td>
+<td class="n">12.3</td><td class="n">7,943</td><td class="n">15</td></tr>
+<tr><th scope="row">Uinta Mtns</th><td class="sm">UT</td><td class="sm">continental</td>
+<td class="n">8,000–11,000</td><td class="n">30</td>
+<td class="n">27.9</td><td class="n">9,345</td><td class="n">26</td></tr>
+<tr><th scope="row">W Central Idaho (Brundage/Tamarack)</th><td class="sm">ID</td><td class="sm">intermountain</td>
+<td class="n">5,840–7,640</td><td class="n">11</td>
+<td class="n">9.5</td><td class="n">5,962</td><td class="n">6</td></tr>
+<tr><th scope="row">Wasatch (Alta/Snowbird/Park City)</th><td class="sm">UT</td><td class="sm">intermountain</td>
+<td class="n">6,800–11,000</td><td class="n">31</td>
+<td class="n">27.8</td><td class="n">8,173</td><td class="n">29</td></tr>
+<tr><th scope="row">White Mtns AZ (Sunrise Park)</th><td class="sm">AZ</td><td class="sm">continental</td>
+<td class="n">9,200–11,100</td><td class="n">9</td>
+<td class="n">8.0</td><td class="n">8,668</td><td class="n">2</td></tr>
+<tr><th scope="row">Whitefish &amp; Flathead Range</th><td class="sm">MT</td><td class="sm">transitional</td>
+<td class="n">4,464–6,817</td><td class="n">12</td>
+<td class="n">10.9</td><td class="n">5,442</td><td class="n">10</td></tr>
+<tr><th scope="row">Yellowstone &amp; Wind River</th><td class="sm">WY</td><td class="sm">continental</td>
+<td class="n">7,000–10,000</td><td class="n">34</td>
+<td class="n">29.6</td><td class="n">8,683</td><td class="n">30</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head"><p class="eyebrow">Limits</p><h2>What this does not establish</h2></div>
+  <div class="prose">
+  <ul>
+    <li><strong>An r² of 15–35 % is real and it is not a forecast.</strong> ENSO shifts the odds for a
+    season. Most of the year-to-year variance remains weather.</li>
+    <li><strong>Snow depth records begin around 1993.</strong> New-snow ratios are calibrated on that
+    period and applied backward, which assumes density has been stable. Depth-based composites rest on
+    roughly 25 winters against 45 to 60 for the water-based ones.</li>
+    <li><strong>A SNOTEL gauge is not a ski area.</strong> Even with elevation weighting these are nearby
+    mountain stations, and they say nothing about aspect, grooming or snowmaking.</li>
+    <li><strong>Overlapping regions are not fully independent</strong> where their radii intersect, so the
+    sign tests read slightly optimistically.</li>
+    <li><strong>Six inches is a choice.</strong> Regions with few powder days in absolute terms show large
+    percentage swings on small differences.</li>
+    <li><strong>The strength null is bounded by power.</strong> Within-phase tests had about sixteen winters
+    and could only have detected a correlation above roughly 0.65. The claim is that across 2158
+    chances nothing rose above noise, and the better-powered nested test also found nothing.</li>
+  </ul>
+  </div>
+</section>
+
+<footer>
+  <p>Sources — NOAA Climate Prediction Center, Oceanic Niño Index. USDA NRCS Air &amp; Water Database,
+  SNOTEL daily snow water equivalent, snow depth, precipitation and temperature. NOAA NCEI nClimDiv.
+  Method after J. Brown and J. Harper (2026), <em>Historical evolution of snowpack capacity to buffer
+  rain-on-snow runoff in a large Columbia River headwaters basin</em>, Hydrol. Earth Syst. Sci. 30,
+  5735–5748. False-discovery control after Benjamini &amp; Hochberg; field significance after Wilks (2016).</p>
+  <p>Analysis code and every table in this report are reproducible from
+  <code>github.com/yetiskier/enso-snowpack</code>.</p>
+</footer>
+
+</div>
+</body>
+</html>
