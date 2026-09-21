@@ -1,6 +1,6 @@
 # El Niño and snowpack in Montana, Idaho, Wyoming, Colorado and Utah
 
-_Generated 2026-09-20 by `enso_snowpack` (real data)._
+_Generated 2026-09-21 by `enso_snowpack` (real data)._
 
 ## Question
 
@@ -31,6 +31,63 @@ Phase from the DJF ONI (El Niño ≥ +0.5 °C, La Niña ≤ −0.5 °C); strengt
 | La Nina | strong | 7 | 1956 (-1.2), 1976 (-1.5), 1989 (-1.6), 1999 (-1.5), 2000 (-1.5), 2008 (-1.8), 2011 (-1.3) |
 | La Nina | very strong | 1 | 1974 (-1.9) |
 
+## What survives statistical scrutiny, in inches and days
+
+These are the only region-window-measures that clear Benjamini-Hochberg false-discovery control across the whole grid. Everything else in this report is context; this table is the result.
+
+| Ski region | Window | Measure | winters | a normal winter | an El Niño winter | difference | r² |
+|---|---|---|---|---|---|---|---|
+| Missoula ranges (Montana Snowbowl) | Midwinter | Powder days (≥6 in) | 46 | 1.4 d | **0.8 d** | **-0.6 d** (-42 %) | 31% |
+| Bighorn Mtns (Meadowlark) | Holidays | Storm days (≥2 in) | 48 | 1.7 d | **1.0 d** | **-0.7 d** (-40 %) | 20% |
+| Park Range (Steamboat) | Holidays | Storm days (≥2 in) | 47 | 4.3 d | **2.7 d** | **-1.6 d** (-36 %) | 22% |
+| Coeur d'Alenes (Silver/Lookout) | Midwinter | Powder days (≥6 in) | 44 | 2.0 d | **1.3 d** | **-0.7 d** (-34 %) | 22% |
+| Snowy Range & Sierra Madre | Holidays | Storm days (≥2 in) | 48 | 4.2 d | **2.9 d** | **-1.3 d** (-32 %) | 17% |
+| Central Cascades (Stevens/Snoqualmie) | Spring | Storm days (≥2 in) | 45 | 8.5 d | **6.4 d** | **-2.1 d** (-25 %) | 24% |
+| Mt Hood | Spring | Storm days (≥2 in) | 48 | 8.5 d | **7.0 d** | **-1.5 d** (-18 %) | 15% |
+| Madison & Gallatin (Big Sky) | Midwinter | Days with a skiable base | 60 | 32.0 d | **26.9 d** | **-5.1 d** (-16 %) | 13% |
+| Missoula ranges (Montana Snowbowl) | Midwinter | Days with a skiable base | 46 | 28.9 d | **24.9 d** | **-4.0 d** (-14 %) | 25% |
+| Whitefish & Flathead Range | Spring | Days with a skiable base | 52 | 38.1 d | **33.2 d** | **-4.9 d** (-13 %) | 18% |
+| Missoula ranges (Montana Snowbowl) | Spring | Days with a skiable base | 46 | 32.6 d | **28.5 d** | **-4.1 d** (-13 %) | 33% |
+| Wind River Range | Spring | Powder days (≥6 in) | 48 | 0.6 d | **0.8 d** | **+0.1 d** (+21 %) | 19% |
+| White Mtns AZ (Sunrise Park) | Spring | Storm days (≥2 in) | 46 | 2.3 d | **2.9 d** | **+0.6 d** (+24 %) | 17% |
+| S Sangre de Cristo (Santa Fe) | Early season | Storm days (≥2 in) | 46 | 3.9 d | **4.9 d** | **+1.0 d** (+26 %) | 19% |
+| Jemez (Pajarito) | Early season | Storm days (≥2 in) | 46 | 3.4 d | **4.3 d** | **+0.9 d** (+28 %) | 20% |
+| S Sangre de Cristo (Santa Fe) | Spring | Days with a skiable base | 46 | 22.1 d | **33.3 d** | **+11.2 d** (+51 %) | 29% |
+| Jemez (Pajarito) | Spring | Days with a skiable base | 46 | 15.2 d | **23.9 d** | **+8.7 d** (+57 %) | 21% |
+| White Mtns AZ (Sunrise Park) | Spring | Days with a skiable base | 46 | 8.2 d | **14.3 d** | **+6.1 d** (+74 %) | 18% |
+| Bighorn Mtns (Meadowlark) | Holidays | Total new snow | 48 | 11.5 in | **7.9 in** | **-3.6 in** (-31 %) | 25% |
+| Park Range (Steamboat) | Holidays | Total new snow | 47 | 25.1 in | **17.5 in** | **-7.7 in** (-30 %) | 19% |
+| Snowy Range & Sierra Madre | Holidays | Total new snow | 48 | 25.3 in | **17.9 in** | **-7.4 in** (-29 %) | 18% |
+| Mt Hood | Spring | Base, snow depth | 29 | 69.5 in | **50.4 in** | **-19.2 in** (-28 %) | 25% |
+| Mt Hood | Spring | Base, water equivalent | 48 | 27.3 in | **20.8 in** | **-6.4 in** (-23 %) | 23% |
+| Central Cascades (Stevens/Snoqualmie) | Spring | Total new snow | 45 | 50.4 in | **38.6 in** | **-11.8 in** (-23 %) | 21% |
+| Central Cascades (Stevens/Snoqualmie) | Spring | Base, water equivalent | 45 | 28.9 in | **23.3 in** | **-5.6 in** (-19 %) | 19% |
+| Bitterroots (Lost Trail) | Midwinter | Total new snow | 59 | 59.7 in | **48.1 in** | **-11.5 in** (-19 %) | 15% |
+| Missoula ranges (Montana Snowbowl) | Spring | Base, water equivalent | 46 | 19.2 in | **15.7 in** | **-3.5 in** (-18 %) | 27% |
+| Coeur d'Alenes (Silver/Lookout) | Spring | Base, water equivalent | 44 | 23.8 in | **19.6 in** | **-4.3 in** (-18 %) | 25% |
+| Missoula ranges (Montana Snowbowl) | Midwinter | Total new snow | 46 | 57.3 in | **47.1 in** | **-10.3 in** (-18 %) | 21% |
+| Bitterroots (Lost Trail) | Spring | Base, water equivalent | 59 | 18.8 in | **15.9 in** | **-2.9 in** (-15 %) | 21% |
+| Missoula ranges (Montana Snowbowl) | Spring | Base, snow depth | 25 | 61.4 in | **52.0 in** | **-9.4 in** (-15 %) | 37% |
+| Whitefish & Flathead Range | Spring | Base, snow depth | 25 | 60.7 in | **51.8 in** | **-8.9 in** (-15 %) | 34% |
+| Whitefish & Flathead Range | Spring | Base, water equivalent | 52 | 22.2 in | **19.0 in** | **-3.2 in** (-14 %) | 16% |
+| Missoula ranges (Montana Snowbowl) | Midwinter | Base, water equivalent | 46 | 13.6 in | **11.8 in** | **-1.8 in** (-13 %) | 17% |
+| Bitterroots (Lost Trail) | Midwinter | Base, water equivalent | 59 | 13.2 in | **11.7 in** | **-1.5 in** (-12 %) | 15% |
+| Beartooth & Absaroka (Red Lodge) | Spring | Base, water equivalent | 53 | 17.6 in | **15.6 in** | **-2.0 in** (-12 %) | 16% |
+| Missoula ranges (Montana Snowbowl) | Midwinter | Base, snow depth | 25 | 51.2 in | **45.5 in** | **-5.7 in** (-11 %) | 36% |
+| Bitterroots (Lost Trail) | Midwinter | Base, snow depth | 25 | 44.5 in | **40.1 in** | **-4.4 in** (-10 %) | 31% |
+| Madison & Gallatin (Big Sky) | Spring | Base, water equivalent | 60 | 17.2 in | **15.6 in** | **-1.7 in** (-10 %) | 15% |
+| Whitefish & Flathead Range | Midwinter | Base, snow depth | 25 | 49.9 in | **45.1 in** | **-4.8 in** (-10 %) | 30% |
+| S Sangre de Cristo (Santa Fe) | Early season | Total new snow | 46 | 24.8 in | **31.7 in** | **+6.9 in** (+28 %) | 22% |
+| Jemez (Pajarito) | Early season | Total new snow | 46 | 20.0 in | **25.7 in** | **+5.7 in** (+28 %) | 23% |
+| S Sangre de Cristo (Santa Fe) | Spring | Base, water equivalent | 46 | 9.5 in | **12.3 in** | **+2.8 in** (+29 %) | 22% |
+| Jemez (Pajarito) | Spring | Base, water equivalent | 46 | 7.3 in | **9.7 in** | **+2.4 in** (+33 %) | 23% |
+| White Mtns AZ (Sunrise Park) | Spring | Base, water equivalent | 46 | 4.3 in | **6.3 in** | **+2.0 in** (+46 %) | 24% |
+| S Sangre de Cristo (Santa Fe) | Early season | Base, snow depth | 25 | 7.0 in | **10.2 in** | **+3.2 in** (+46 %) | 32% |
+
+![](fig_significant_inches.png)
+
+![](fig_significant_days.png)
+
 ## The numbers, in days and inches
 
 These are actual averages over the record, not anomalies: what a normal winter delivers, what an El Niño winter delivered, and the difference.
@@ -39,41 +96,46 @@ These are actual averages over the record, not anomalies: what a normal winter d
 
 | Ski region | winters | a normal winter | an El Niño winter | change | a La Niña winter | change |
 |---|---|---|---|---|---|---|
-| Bitterroot & Lolo (Montana Snowbowl) | 59 | 1.5 d | **0.8 d** | -0.7 d (-45 %) | 2.0 d | +0.5 d (+35 %) |
-| Whitefish & Flathead Range | 52 | 1.5 d | **1.0 d** | -0.6 d (-38 %) | 2.0 d | +0.5 d (+32 %) |
-| Selkirk & Cabinet (Schweitzer/Silver) | 46 | 2.5 d | **1.8 d** | -0.7 d (-30 %) | 3.2 d | +0.7 d (+26 %) |
-| Central Cascades (Stevens/Snoqualmie) | 45 | 3.7 d | **2.6 d** | -1.0 d (-28 %) | 4.4 d | +0.7 d (+19 %) |
-| Yellowstone & Wind River | 48 | 1.0 d | **0.7 d** | -0.3 d (-27 %) | 0.8 d | -0.2 d (-16 %) |
-| Beartooth & Absaroka (Red Lodge) | 53 | 1.2 d | **0.9 d** | -0.3 d (-25 %) | 1.5 d | +0.3 d (+24 %) |
-| Blues & Wallowas (Anthony Lakes) | 48 | 0.8 d | **0.6 d** | -0.2 d (-25 %) | 0.9 d | +0.0 d (+4 %) |
-| North Cascades (Mt Baker) | 44 | 4.6 d | **3.6 d** | -1.0 d (-22 %) | 5.1 d | +0.5 d (+12 %) |
-| S Washington Cascades (Crystal/White Pass) | 45 | 3.9 d | **3.1 d** | -0.9 d (-22 %) | 4.3 d | +0.3 d (+9 %) |
+| Bitterroots (Lost Trail) | 59 | 1.6 d | **0.9 d** | -0.7 d (-45 %) | 2.3 d | +0.6 d (+40 %) |
+| Missoula ranges (Montana Snowbowl) | 46 | 1.4 d | **0.8 d** | -0.6 d (-42 %) | 2.0 d | +0.6 d (+39 %) |
+| Whitefish & Flathead Range | 52 | 1.5 d | **1.0 d** | -0.6 d (-38 %) | 2.0 d | +0.5 d (+31 %) |
+| Coeur d'Alenes (Silver/Lookout) | 44 | 2.0 d | **1.3 d** | -0.7 d (-34 %) | 2.7 d | +0.7 d (+35 %) |
+| North Cascades (Mt Baker) | 31 | 4.6 d | **3.1 d** | -1.5 d (-32 %) | 5.8 d | +1.2 d (+25 %) |
+| Central Cascades (Stevens/Snoqualmie) | 45 | 3.6 d | **2.6 d** | -1.0 d (-27 %) | 4.3 d | +0.7 d (+19 %) |
+| Blue Mtns (Anthony Lakes) | 48 | 0.8 d | **0.6 d** | -0.2 d (-25 %) | 0.9 d | +0.0 d (+4 %) |
+| S Washington Cascades (Crystal/White Pass) | 45 | 3.9 d | **3.0 d** | -0.9 d (-22 %) | 4.3 d | +0.3 d (+9 %) |
 | Central Oregon (Mt Bachelor) | 46 | 3.4 d | **2.6 d** | -0.7 d (-22 %) | 4.2 d | +0.9 d (+25 %) |
-| Tetons (Jackson/Targhee) | 46 | 1.8 d | **1.4 d** | -0.4 d (-21 %) | 1.6 d | -0.1 d (-8 %) |
+| Wind River Range | 48 | 0.8 d | **0.7 d** | -0.2 d (-21 %) | 0.7 d | -0.2 d (-20 %) |
+| Beartooth & Absaroka (Red Lodge) | 53 | 1.2 d | **0.9 d** | -0.2 d (-21 %) | 1.5 d | +0.3 d (+24 %) |
+| Selkirks (Schweitzer) | 43 | 2.8 d | **2.2 d** | -0.5 d (-19 %) | 3.3 d | +0.6 d (+20 %) |
 | Black Hills (Terry Peak) | 26 | 0.2 d | **0.2 d** | -0.0 d (-19 %) | 0.3 d | +0.1 d (+50 %) |
-| Bighorn Mtns | 48 | 0.4 d | **0.3 d** | -0.1 d (-19 %) | 0.5 d | +0.1 d (+16 %) |
-| Bridger/Gallatin/Madison (Big Sky) | 60 | 1.0 d | **0.8 d** | -0.2 d (-19 %) | 1.0 d | +0.1 d (+7 %) |
-| Elk Mtns (Aspen/Crested Butte) | 46 | 1.3 d | **1.1 d** | -0.2 d (-19 %) | 1.5 d | +0.2 d (+12 %) |
-| Mt Hood | 48 | 3.9 d | **3.1 d** | -0.7 d (-18 %) | 4.7 d | +0.8 d (+21 %) |
-| Sawtooth & Smoky (Sun Valley) | 46 | 1.4 d | **1.2 d** | -0.2 d (-15 %) | 1.3 d | -0.2 d (-13 %) |
+| Madison & Gallatin (Big Sky) | 60 | 0.9 d | **0.8 d** | -0.2 d (-19 %) | 1.0 d | +0.0 d (+5 %) |
+| Elk Mtns (Aspen/Crested Butte) | 46 | 1.3 d | **1.1 d** | -0.2 d (-18 %) | 1.5 d | +0.2 d (+13 %) |
+| Mt Hood | 48 | 3.9 d | **3.2 d** | -0.7 d (-18 %) | 4.7 d | +0.8 d (+21 %) |
+| Tetons (Jackson/Targhee) | 46 | 1.9 d | **1.6 d** | -0.4 d (-18 %) | 1.8 d | -0.1 d (-8 %) |
+| Bighorn Mtns (Meadowlark) | 48 | 0.4 d | **0.3 d** | -0.1 d (-16 %) | 0.4 d | +0.1 d (+16 %) |
 | E Cascades rain shadow (Mission Ridge) | 45 | 1.2 d | **1.1 d** | -0.2 d (-14 %) | 1.5 d | +0.3 d (+21 %) |
+| Sawtooth & Smoky (Sun Valley) | 46 | 1.4 d | **1.2 d** | -0.2 d (-14 %) | 1.3 d | -0.2 d (-13 %) |
 | W Central Idaho (Brundage/Tamarack) | 46 | 2.2 d | **1.9 d** | -0.3 d (-14 %) | 2.3 d | +0.1 d (+3 %) |
 | Ruby Mtns & NE Nevada | 46 | 1.3 d | **1.2 d** | -0.1 d (-11 %) | 1.4 d | +0.0 d (+4 %) |
-| Front Range (Winter Park/Loveland/A-Basin) | 48 | 0.8 d | **0.8 d** | -0.1 d (-7 %) | 0.8 d | +0.0 d (+1 %) |
-| Gore & Tenmile (Vail/Summit/Copper) | 48 | 0.8 d | **0.8 d** | -0.0 d (-2 %) | 0.8 d | +0.0 d (+4 %) |
-| Wasatch (Alta/Snowbird/Park City) | 48 | 2.5 d | **2.5 d** | +0.1 d (+3 %) | 2.4 d | -0.1 d (-2 %) |
+| Front Range (Winter Park/Loveland/A-Basin) | 48 | 0.8 d | **0.8 d** | -0.0 d (-5 %) | 0.8 d | +0.0 d (+2 %) |
+| Gore & Tenmile (Vail/Summit/Copper) | 48 | 0.8 d | **0.8 d** | -0.0 d (-1 %) | 0.8 d | +0.0 d (+5 %) |
+| Bridger Range (Bridger Bowl) | 50 | 1.0 d | **1.0 d** | +0.0 d (+1 %) | 1.0 d | +0.0 d (+2 %) |
+| S San Juans (Wolf Creek) | 46 | 2.2 d | **2.3 d** | +0.1 d (+3 %) | 2.4 d | +0.2 d (+9 %) |
+| Wasatch (Alta/Snowbird/Park City) | 48 | 2.5 d | **2.6 d** | +0.1 d (+3 %) | 2.5 d | -0.1 d (-2 %) |
 | Chugach (Alyeska) | 43 | 3.1 d | **3.2 d** | +0.1 d (+4 %) | 3.1 d | +0.0 d (+1 %) |
-| Snowy Range & Sierra Madre | 46 | 1.7 d | **1.8 d** | +0.1 d (+5 %) | 1.7 d | -0.1 d (-3 %) |
+| San Juans (Telluride/Purgatory) | 46 | 2.2 d | **2.2 d** | +0.1 d (+4 %) | 2.2 d | +0.0 d (+1 %) |
 | Spring Mtns (Lee Canyon) | 18 | 1.5 d | **1.6 d** | +0.1 d (+5 %) | 1.3 d | -0.2 d (-15 %) |
 | Uinta Mtns | 48 | 1.3 d | **1.4 d** | +0.1 d (+7 %) | 1.1 d | -0.2 d (-13 %) |
-| San Juans (Telluride/Purgatory/Wolf Ck) | 47 | 2.2 d | **2.4 d** | +0.2 d (+11 %) | 2.2 d | -0.0 d (-1 %) |
-| Park Range (Steamboat) | 47 | 2.1 d | **2.3 d** | +0.3 d (+12 %) | 2.1 d | -0.0 d (-1 %) |
+| N Sangre de Cristo (Taos) | 47 | 0.8 d | **0.9 d** | +0.1 d (+12 %) | 0.7 d | -0.1 d (-13 %) |
 | N Sierra / Tahoe (Palisades/Heavenly/Rose) | 48 | 4.3 d | **4.8 d** | +0.5 d (+12 %) | 4.1 d | -0.2 d (-4 %) |
-| S Utah (Brian Head/Eagle Point) | 48 | 1.7 d | **1.9 d** | +0.2 d (+14 %) | 1.5 d | -0.2 d (-14 %) |
-| Sangre de Cristo (Taos/Santa Fe) | 47 | 0.9 d | **1.0 d** | +0.2 d (+20 %) | 0.7 d | -0.1 d (-17 %) |
-| White Mtns AZ (Sunrise Park) | 46 | 0.9 d | **1.1 d** | +0.2 d (+24 %) | 0.6 d | -0.3 d (-38 %) |
-| San Francisco Peaks (AZ Snowbowl) | 46 | 1.7 d | **2.1 d** | +0.4 d (+25 %) | 1.4 d | -0.3 d (-16 %) |
-| Jemez & N New Mexico | 46 | 0.7 d | **1.0 d** | +0.3 d (+43 %) | 0.7 d | -0.1 d (-7 %) |
+| Park Range (Steamboat) | 47 | 2.1 d | **2.4 d** | +0.3 d (+12 %) | 2.1 d | -0.0 d (-1 %) |
+| Snowy Range & Sierra Madre | 48 | 1.6 d | **1.9 d** | +0.2 d (+13 %) | 1.6 d | -0.1 d (-5 %) |
+| Markagunt (Brian Head) | 46 | 2.5 d | **2.9 d** | +0.3 d (+13 %) | 2.3 d | -0.3 d (-11 %) |
+| S Sangre de Cristo (Santa Fe) | 46 | 1.0 d | **1.2 d** | +0.2 d (+22 %) | 0.9 d | -0.1 d (-8 %) |
+| Tushar Mtns (Eagle Point) | 47 | 1.4 d | **1.7 d** | +0.3 d (+23 %) | 1.3 d | -0.1 d (-5 %) |
+| White Mtns AZ (Sunrise Park) | 46 | 0.9 d | **1.2 d** | +0.2 d (+24 %) | 0.6 d | -0.3 d (-37 %) |
+| San Francisco Peaks (AZ Snowbowl) | 46 | 1.7 d | **2.1 d** | +0.4 d (+24 %) | 1.4 d | -0.3 d (-16 %) |
 
 ![](fig_powder_days.png)
 
@@ -91,59 +153,85 @@ Skiing is not water supply. What matters is the base underfoot and how often it 
 
 | Window of winter | tests | leaning to less snow | mean r | sign-test p |
 |---|---|---|---|---|
-| Early season | 102 | 71 (70%) | -0.06 | 0.0001*** |
-| Holidays | 102 | 85 (83%) | -0.13 | 0.0000*** |
-| Midwinter | 102 | 76 (75%) | -0.11 | 0.0000*** |
-| Spring | 102 | 65 (64%) | -0.07 | 0.0072** |
+| Early season | 120 | 79 (66%) | -0.04 | 0.0007*** |
+| Holidays | 120 | 98 (82%) | -0.13 | 0.0000*** |
+| Midwinter | 120 | 90 (75%) | -0.11 | 0.0000*** |
+| Spring | 120 | 70 (58%) | -0.05 | 0.0824 |
 
 A negative correlation means El Niño winters bring less of that quantity. The sign test asks whether the direction is consistent across independent ski regions, which is the question that matters when each single correlation is modest.
 
-**31 of 806 tests survive false-discovery control at alpha = 0.10.** Each row is a real, sub-seasonal relationship:
+**46 of 944 tests survive false-discovery control at alpha = 0.10.** Each row is a real, sub-seasonal relationship:
 
 | Ski region | Window | What | winters | r² (variance explained) | El Niño brings | mean z, El Niño | mean z, La Niña |
 |---|---|---|---|---|---|---|---|
-| Selkirk & Cabinet (Schweitzer/Silver) | Spring | Base (mean snow depth) | 25 | **34%** | less snow | -0.69 | +0.71 |
-| Whitefish & Flathead Range | Spring | Base (mean snow depth) | 25 | **34%** | less snow | -0.68 | +0.62 |
-| Bitterroot & Lolo (Montana Snowbowl) | Spring | Base (mean SWE in window) | 59 | **28%** | less snow | -0.58 | +0.55 |
-| Central Cascades (Stevens/Snoqualmie) | Spring | Storm days per 30 (>= 2 in of new snow) | 45 | **26%** | less snow | -0.54 | +0.41 |
-| Bighorn Mtns | Holidays | Total new snow in the window (in) | 48 | **24%** | less snow | -0.58 | +0.30 |
+| Missoula ranges (Montana Snowbowl) | Spring | Base (mean snow depth) | 25 | **37%** | less snow | -0.65 | +0.64 |
+| Missoula ranges (Montana Snowbowl) | Midwinter | Base (mean snow depth) | 25 | **36%** | less snow | -0.58 | +0.64 |
+| Whitefish & Flathead Range | Spring | Base (mean snow depth) | 25 | **34%** | less snow | -0.67 | +0.62 |
+| Missoula ranges (Montana Snowbowl) | Spring | Days per 30 with a skiable base | 46 | **33%** | less snow | -0.54 | +0.35 |
+| S Sangre de Cristo (Santa Fe) | Early season | Base (mean snow depth) | 25 | **32%** | more snow | +0.61 | -0.63 |
+| Missoula ranges (Montana Snowbowl) | Midwinter | Powder days per 30 (>= 6 in of new snow) | 46 | **31%** | less snow | -0.51 | +0.46 |
+| Bitterroots (Lost Trail) | Midwinter | Base (mean snow depth) | 25 | **31%** | less snow | -0.55 | +0.53 |
+| Whitefish & Flathead Range | Midwinter | Base (mean snow depth) | 25 | **30%** | less snow | -0.55 | +0.51 |
+| S Sangre de Cristo (Santa Fe) | Spring | Days per 30 with a skiable base | 46 | **29%** | more snow | +0.64 | -0.32 |
+| Missoula ranges (Montana Snowbowl) | Spring | Base (mean SWE in window) | 46 | **27%** | less snow | -0.68 | +0.36 |
+| Coeur d'Alenes (Silver/Lookout) | Spring | Base (mean SWE in window) | 44 | **25%** | less snow | -0.67 | +0.42 |
+| Missoula ranges (Montana Snowbowl) | Midwinter | Days per 30 with a skiable base | 46 | **25%** | less snow | -0.44 | +0.22 |
+| Bighorn Mtns (Meadowlark) | Holidays | Total new snow in the window (in) | 48 | **25%** | less snow | -0.57 | +0.28 |
+| Mt Hood | Spring | Base (mean snow depth) | 29 | **25%** | less snow | -0.67 | +0.61 |
+| Central Cascades (Stevens/Snoqualmie) | Spring | Storm days per 30 (>= 2 in of new snow) | 45 | **24%** | less snow | -0.52 | +0.40 |
 | White Mtns AZ (Sunrise Park) | Spring | Base (mean SWE in window) | 46 | **24%** | more snow | +0.56 | -0.36 |
-| Bitterroot & Lolo (Montana Snowbowl) | Spring | Days per 30 with a skiable base | 56 | **24%** | less snow | -0.49 | +0.43 |
-| Jemez & N New Mexico | Spring | Base (mean SWE in window) | 46 | **24%** | more snow | +0.65 | -0.26 |
-| Mt Hood | Spring | Base (mean SWE in window) | 48 | **24%** | less snow | -0.55 | +0.59 |
-| Park Range (Steamboat) | Holidays | Storm days per 30 (>= 2 in of new snow) | 47 | **23%** | less snow | -0.58 | +0.40 |
-| Central Cascades (Stevens/Snoqualmie) | Spring | Total new snow in the window (in) | 45 | **22%** | less snow | -0.54 | +0.38 |
-| Jemez & N New Mexico | Early season | Total new snow in the window (in) | 46 | **22%** | more snow | +0.57 | -0.34 |
-| Bitterroot & Lolo (Montana Snowbowl) | Midwinter | Total new snow in the window (in) | 59 | **21%** | less snow | -0.52 | +0.53 |
-| Snowy Range & Sierra Madre | Holidays | Storm days per 30 (>= 2 in of new snow) | 46 | **21%** | less snow | -0.49 | +0.42 |
-| Central Cascades (Stevens/Snoqualmie) | Spring | Base (mean SWE in window) | 45 | **21%** | less snow | -0.55 | +0.40 |
-| Snowy Range & Sierra Madre | Holidays | Total new snow in the window (in) | 46 | **20%** | less snow | -0.51 | +0.42 |
-| Jemez & N New Mexico | Early season | Storm days per 30 (>= 2 in of new snow) | 46 | **20%** | more snow | +0.49 | -0.28 |
-| Jemez & N New Mexico | Spring | Days per 30 with a skiable base | 46 | **20%** | more snow | +0.57 | -0.26 |
-| Bitterroot & Lolo (Montana Snowbowl) | Midwinter | Powder days per 30 (>= 6 in of new snow) | 59 | **20%** | less snow | -0.45 | +0.46 |
-| Bighorn Mtns | Holidays | Storm days per 30 (>= 2 in of new snow) | 48 | **19%** | less snow | -0.48 | +0.23 |
-| Park Range (Steamboat) | Holidays | Total new snow in the window (in) | 47 | **18%** | less snow | -0.54 | +0.39 |
-| Whitefish & Flathead Range | Spring | Days per 30 with a skiable base | 50 | **18%** | less snow | -0.49 | +0.43 |
+| Mt Hood | Spring | Base (mean SWE in window) | 48 | **23%** | less snow | -0.55 | +0.59 |
+| Jemez (Pajarito) | Spring | Base (mean SWE in window) | 46 | **23%** | more snow | +0.64 | -0.26 |
+| Jemez (Pajarito) | Early season | Total new snow in the window (in) | 46 | **23%** | more snow | +0.58 | -0.35 |
+| Park Range (Steamboat) | Holidays | Storm days per 30 (>= 2 in of new snow) | 47 | **22%** | less snow | -0.58 | +0.40 |
+| S Sangre de Cristo (Santa Fe) | Spring | Base (mean SWE in window) | 46 | **22%** | more snow | +0.65 | -0.25 |
+| S Sangre de Cristo (Santa Fe) | Early season | Total new snow in the window (in) | 46 | **22%** | more snow | +0.58 | -0.39 |
+| Coeur d'Alenes (Silver/Lookout) | Midwinter | Powder days per 30 (>= 6 in of new snow) | 44 | **22%** | less snow | -0.40 | +0.39 |
+| Missoula ranges (Montana Snowbowl) | Midwinter | Total new snow in the window (in) | 46 | **21%** | less snow | -0.55 | +0.32 |
+| Jemez (Pajarito) | Spring | Days per 30 with a skiable base | 46 | **21%** | more snow | +0.57 | -0.27 |
+| Bitterroots (Lost Trail) | Spring | Base (mean SWE in window) | 59 | **21%** | less snow | -0.46 | +0.53 |
+| Central Cascades (Stevens/Snoqualmie) | Spring | Total new snow in the window (in) | 45 | **21%** | less snow | -0.51 | +0.37 |
+| Jemez (Pajarito) | Early season | Storm days per 30 (>= 2 in of new snow) | 46 | **20%** | more snow | +0.48 | -0.28 |
+| Bighorn Mtns (Meadowlark) | Holidays | Storm days per 30 (>= 2 in of new snow) | 48 | **20%** | less snow | -0.47 | +0.22 |
+| Central Cascades (Stevens/Snoqualmie) | Spring | Base (mean SWE in window) | 45 | **19%** | less snow | -0.51 | +0.39 |
+| Wind River Range | Spring | Powder days per 30 (>= 6 in of new snow) | 48 | **19%** | more snow | +0.16 | -0.28 |
+| Park Range (Steamboat) | Holidays | Total new snow in the window (in) | 47 | **19%** | less snow | -0.54 | +0.39 |
+| S Sangre de Cristo (Santa Fe) | Early season | Storm days per 30 (>= 2 in of new snow) | 46 | **19%** | more snow | +0.47 | -0.27 |
 | White Mtns AZ (Sunrise Park) | Spring | Days per 30 with a skiable base | 46 | **18%** | more snow | +0.47 | -0.27 |
-| Bitterroot & Lolo (Montana Snowbowl) | Midwinter | Storm days per 30 (>= 2 in of new snow) | 59 | **18%** | less snow | -0.46 | +0.40 |
-| Beartooth & Absaroka (Red Lodge) | Spring | Base (mean SWE in window) | 53 | **16%** | less snow | -0.40 | +0.35 |
+| Whitefish & Flathead Range | Spring | Days per 30 with a skiable base | 50 | **18%** | less snow | -0.49 | +0.43 |
+| Snowy Range & Sierra Madre | Holidays | Total new snow in the window (in) | 48 | **18%** | less snow | -0.50 | +0.39 |
+| Snowy Range & Sierra Madre | Holidays | Storm days per 30 (>= 2 in of new snow) | 48 | **17%** | less snow | -0.47 | +0.39 |
+| White Mtns AZ (Sunrise Park) | Spring | Storm days per 30 (>= 2 in of new snow) | 46 | **17%** | more snow | +0.32 | -0.33 |
+| Missoula ranges (Montana Snowbowl) | Midwinter | Base (mean SWE in window) | 46 | **17%** | less snow | -0.52 | +0.31 |
 | Whitefish & Flathead Range | Spring | Base (mean SWE in window) | 52 | **16%** | less snow | -0.55 | +0.34 |
-| Bridger/Gallatin/Madison (Big Sky) | Spring | Base (mean SWE in window) | 60 | **16%** | less snow | -0.39 | +0.39 |
-| Bitterroot & Lolo (Montana Snowbowl) | Midwinter | Base (mean SWE in window) | 59 | **16%** | less snow | -0.42 | +0.46 |
-| Bitterroot & Lolo (Montana Snowbowl) | Midwinter | Days per 30 with a skiable base | 59 | **15%** | less snow | -0.37 | +0.38 |
-| Bridger/Gallatin/Madison (Big Sky) | Midwinter | Base (mean SWE in window) | 60 | **14%** | less snow | -0.36 | +0.37 |
-| Bridger/Gallatin/Madison (Big Sky) | Midwinter | Days per 30 with a skiable base | 60 | **13%** | less snow | -0.32 | +0.33 |
+| Beartooth & Absaroka (Red Lodge) | Spring | Base (mean SWE in window) | 53 | **16%** | less snow | -0.38 | +0.34 |
+| Mt Hood | Spring | Storm days per 30 (>= 2 in of new snow) | 48 | **15%** | less snow | -0.34 | +0.49 |
+| Madison & Gallatin (Big Sky) | Spring | Base (mean SWE in window) | 60 | **15%** | less snow | -0.41 | +0.39 |
+| Bitterroots (Lost Trail) | Midwinter | Base (mean SWE in window) | 59 | **15%** | less snow | -0.33 | +0.47 |
+| Bitterroots (Lost Trail) | Midwinter | Total new snow in the window (in) | 59 | **15%** | less snow | -0.39 | +0.41 |
+| Madison & Gallatin (Big Sky) | Midwinter | Days per 30 with a skiable base | 60 | **13%** | less snow | -0.35 | +0.37 |
 
-### Does the STRENGTH of the event matter?
+### Does the STRENGTH of the event matter? Tested everywhere.
+
+| Test | tests run | nominally significant (p<0.05) | expected by chance | survive FDR | smallest correlation findable |
+|---|---|---|---|---|---|
+| Adding magnitude to phase (all winters) | 944 | 22 | 47 | **0** | 0.40 |
+| Within La Niña winters only | 815 | 45 | 41 | **0** | 0.65 |
+| Within El Niño winters only | 749 | 14 | 37 | **0** | 0.67 |
+
+**0 of 2508 strength tests survive false-discovery control.** The p-values are distributed as pure chance would distribute them, and the within-El Niño family produces fewer nominal hits than chance alone. The last column is the honesty check: a within-phase test has only ~16 winters, so it could only have found a correlation above about 0.65. The nested test, which uses every winter, could have found 0.40 and did not.
+
+![](fig_strength_significance.png)
+
 
 Phase means which of El Niño / Neutral / La Niña a winter is. Strength means how far the ONI actually went. `change from adding strength` is the variance explained by the continuous index minus the variance explained by phase alone: at or below zero, knowing the magnitude adds nothing and a strong El Niño is no worse for skiing than a weak one.
 
 | Window | r² from phase alone | r² from the continuous ONI | change from adding strength | tests where strength helps | r² within El Niño winters only |
 |---|---|---|---|---|---|
-| Early season | 6.1% | 4.0% | **-2.1%** | 18 of 198 | 4.6% |
-| Holidays | 7.4% | 5.0% | **-2.4%** | 8 of 201 | 7.0% |
-| Midwinter | 6.8% | 5.4% | **-1.3%** | 33 of 203 | 7.2% |
-| Spring | 9.7% | 6.4% | **-3.3%** | 28 of 204 | 7.2% |
+| Early season | 6.4% | 4.1% | **-2.3%** | 20 of 232 | 4.6% |
+| Holidays | 7.3% | 4.9% | **-2.4%** | 11 of 236 | 6.8% |
+| Midwinter | 7.0% | 5.7% | **-1.3%** | 36 of 238 | 6.7% |
+| Spring | 10.0% | 6.7% | **-3.3%** | 37 of 238 | 7.1% |
 
 ![](fig_strength_powder.png)
 

@@ -417,8 +417,12 @@ def test_stuart_mountain_anchors_the_snowbowl_region():
     sb = rm[rm.region.str.contains("Snowbowl")].sort_values("weight", ascending=False)
     assert sb.iloc[0].stationTriplet == "901:MT:SNTL"
     assert sb.iloc[0].elev_gap_ft == 0, "Stuart Mountain sits inside Snowbowl's band"
-    # the region is a RANGE that crosses a state line, not a state box
-    assert set(SKI.REGION_META[sb.iloc[0].region].states) == {"MT", "ID"}
+    # the region is named for the range Snowbowl actually sits in, and the
+    # Bitterroots — 148 km south — are a separate region, not folded in
+    region = SKI.REGION_META[sb.iloc[0].region]
+    assert "Snowbowl" in region.name and set(region.states) == {"MT"}
+    bitterroot = SKI.REGION_META["Bitterroots (Lost Trail)"]
+    assert SKI._haversine_km(region.lat, region.lon, bitterroot.lat, bitterroot.lon) > 100
 
 
 def test_strength_effect_separates_phase_from_magnitude():
@@ -687,3 +691,56 @@ def test_change_distributions_differ_between_windows():
     assert not hol[region]["straddles_zero"], "the planted holiday loss must be decided"
     assert mid[region]["straddles_zero"], "the flat midwinter window must not be"
     assert hol[region]["observed"] < mid[region]["observed"] - 10
+
+
+# ------------------------------------------- ski region geography guards ---
+def _state_polygons():
+    from enso_snowpack.figures_ski import load_states, STATE_ABBR
+    out = {}
+    for name, rings in load_states():
+        a = STATE_ABBR.get(name)
+        if a:
+            out.setdefault(a, []).extend(rings)
+    return out
+
+
+def test_ski_region_centres_are_derived_from_their_areas():
+    """The centre must be the mean of the named areas, not a hand-typed
+    number that can drift away from them."""
+    for r in SKI.SKI_REGIONS_FULL:
+        assert r.areas, f"{r.name} names no ski area"
+        assert r.lat == pytest.approx(float(np.mean([a.lat for a in r.areas])))
+        assert r.lon == pytest.approx(float(np.mean([a.lon for a in r.areas])))
+        # every named area must be close to the centre it defines
+        for a in r.areas:
+            km = SKI._haversine_km(r.lat, r.lon, a.lat, a.lon)
+            assert km <= 30, f"{r.name}: {a.name} is {km:.0f} km from the region centre"
+        assert r.spread_km <= 60, f"{r.name} spans {r.spread_km:.0f} km — split it"
+
+
+def test_every_ski_area_sits_in_a_state_the_region_claims():
+    """A coordinate typo, or a region claiming the wrong state, shows up as a
+    named area landing outside every state in its list. This is the check that
+    an earlier hand-typed version failed."""
+    from matplotlib.path import Path as MplPath
+    polys = _state_polygons()
+    problems = []
+    for r in SKI.SKI_REGIONS_FULL:
+        for a in r.areas:
+            hit = any(MplPath(ring).contains_point((a.lon, a.lat))
+                      for st in r.states for ring in polys.get(st, []))
+            if not hit:
+                where = [st for st, rings in polys.items()
+                         if any(MplPath(ring).contains_point((a.lon, a.lat)) for ring in rings)]
+                problems.append(f"{r.name}: {a.name} claims {'+'.join(r.states)} but is in {where}")
+    assert not problems, "\n".join(problems)
+
+
+def test_region_names_are_unique_and_states_are_real():
+    names = [r.name for r in SKI.SKI_REGIONS_FULL]
+    assert len(names) == len(set(names))
+    for r in SKI.SKI_REGIONS_FULL:
+        from enso_snowpack import STATES as ALL_STATES
+        assert set(r.states) <= set(ALL_STATES), f"{r.name} claims a state with no SNOTEL network"
+        assert r.climate in SKI.CLIMATES
+        assert r.base_ft < r.summit_ft, f"{r.name} has base at or above summit"

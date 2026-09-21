@@ -31,78 +31,172 @@ import pandas as pd
 from .bootstrap import fdr_field_significance, permutation_p, _stat_r
 from .daily import bh_vectorized, day_of_water_year, delete_d_calibration
 
+def _haversine_km(lat1, lon1, lat2, lon2):
+    r = 6371.0
+    p1, p2 = np.radians(lat1), np.radians(lat2)
+    dp, dl = np.radians(lat2 - lat1), np.radians(lon2 - lon1)
+    a = np.sin(dp / 2) ** 2 + np.cos(p1) * np.cos(p2) * np.sin(dl / 2) ** 2
+    return 2 * r * np.arcsin(np.sqrt(a))
+
+
 # Ski regions, defined by MOUNTAIN RANGE AND SNOW CLIMATE — not by state.
 #
-# A state boundary is not a snow boundary. The Tahoe basin spans California and
-# Nevada; the Bitterroots and the Selkirks span Montana and Idaho; the Tetons
-# span Wyoming and Idaho; the Sangre de Cristo spans Colorado and New Mexico.
-# Splitting those would average across the divide that matters and merge across
-# one that does not. Each region is therefore anchored on a range around real
-# ski terrain, carries the states it actually touches, and is labelled with its
-# snow climate, because a maritime Cascade snowpack and a continental Colorado
-# one respond to the same ocean differently:
+# A state boundary is not a snow boundary. Tahoe spans California and Nevada;
+# the Coeur d'Alenes span Idaho and Montana; the Tetons span Wyoming and Idaho;
+# the Sangre de Cristo spans Colorado and New Mexico. Each region is a range
+# around real ski terrain, carries the states it actually touches, and is
+# labelled with its snow climate, because a maritime Cascade snowpack and a
+# continental Colorado one answer the same ocean differently:
 #
 #   maritime      deep, warm, dense; storm-track position is everything
 #   transitional  maritime air that has crossed one barrier
 #   intermountain the classic Wasatch/Teton middle ground
 #   continental   cold, dry, shallow; interior, far from the source
 #
-# Fields: name, states, snow climate, lat, lon, radius_km, base_ft, summit_ft.
-SkiRegion = namedtuple("SkiRegion", "name states climate lat lon radius_km base_ft summit_ft")
+# EVERY REGION IS ANCHORED ON THE SKI AREAS IT SERVES, and its centre is
+# COMPUTED from their coordinates rather than typed by hand. Hand-typed
+# anchors drifted: an earlier version put "Selkirk & Cabinet" 61 km from
+# Schweitzer and grouped Lookout Pass with Montana Snowbowl 138 km away.
+# Deriving the centre from the areas makes that class of error impossible,
+# and test_ski_region_anchors_match_their_ski_areas keeps the spread honest.
+SkiArea = namedtuple("SkiArea", "name lat lon")
+
+
+class SkiRegion(namedtuple("SkiRegion",
+                           "name states climate radius_km base_ft summit_ft areas")):
+    """A ski region. ``lat``/``lon`` are the centroid of its areas."""
+
+    __slots__ = ()
+
+    @property
+    def lat(self) -> float:
+        return float(np.mean([a.lat for a in self.areas]))
+
+    @property
+    def lon(self) -> float:
+        return float(np.mean([a.lon for a in self.areas]))
+
+    @property
+    def spread_km(self) -> float:
+        """Greatest distance between any two areas in the region."""
+        if len(self.areas) < 2:
+            return 0.0
+        return max(_haversine_km(a.lat, a.lon, b.lat, b.lon)
+                   for a in self.areas for b in self.areas)
+
+
+def _R(name, states, climate, radius, base, summit, *areas):
+    return SkiRegion(name, states, climate, radius, base, summit,
+                     tuple(SkiArea(*a) for a in areas))
+
 
 SKI_REGIONS_FULL = [
     # --- coastal Alaska
-    SkiRegion("Chugach (Alyeska)", ("AK",), "maritime", 60.97, -149.10, 70, 250, 2750),
+    _R("Chugach (Alyeska)", ("AK",), "maritime", 70, 250, 2750,
+       ("Alyeska", 60.9708, -149.0997)),
     # --- Cascades, west slope
-    SkiRegion("North Cascades (Mt Baker)", ("WA",), "maritime", 48.78, -121.60, 70, 3500, 5089),
-    SkiRegion("Central Cascades (Stevens/Snoqualmie)", ("WA",), "maritime", 47.55, -121.30, 70, 3000, 5845),
-    SkiRegion("S Washington Cascades (Crystal/White Pass)", ("WA",), "maritime", 46.80, -121.45, 70, 4400, 7012),
-    SkiRegion("Mt Hood", ("OR",), "maritime", 45.33, -121.71, 60, 4500, 8540),
-    # --- Cascades, east slope / rain shadow
-    SkiRegion("E Cascades rain shadow (Mission Ridge)", ("WA",), "transitional", 47.29, -120.40, 65, 4570, 6820),
-    SkiRegion("Central Oregon (Mt Bachelor)", ("OR",), "transitional", 43.98, -121.69, 70, 6300, 9065),
-    SkiRegion("Blues & Wallowas (Anthony Lakes)", ("OR",), "transitional", 45.00, -118.20, 95, 7100, 8000),
-    # --- Sierra Nevada (Tahoe deliberately spans CA and NV)
-    SkiRegion("N Sierra / Tahoe (Palisades/Heavenly/Rose)", ("CA", "NV"), "maritime", 39.05, -120.10, 80, 6200, 10067),
-    SkiRegion("S Sierra (Mammoth/June)", ("CA",), "maritime", 37.70, -119.05, 75, 7953, 11053),
-    SkiRegion("Shasta & Trinity", ("CA",), "maritime", 41.35, -122.20, 85, 5500, 7800),
+    _R("North Cascades (Mt Baker)", ("WA",), "maritime", 70, 3500, 5089,
+       ("Mt Baker", 48.8573, -121.6669)),
+    _R("Central Cascades (Stevens/Snoqualmie)", ("WA",), "maritime", 75, 3000, 5845,
+       ("Stevens Pass", 47.7448, -121.0891), ("Snoqualmie", 47.4242, -121.4234)),
+    _R("S Washington Cascades (Crystal/White Pass)", ("WA",), "maritime", 70, 4400, 7012,
+       ("Crystal Mtn", 46.9354, -121.4743), ("White Pass", 46.6373, -121.3914)),
+    _R("Mt Hood", ("OR",), "maritime", 60, 4500, 8540,
+       ("Timberline", 45.3311, -121.7110), ("Mt Hood Meadows", 45.3317, -121.6650)),
+    # --- Cascades, east slope / interior Oregon
+    _R("E Cascades rain shadow (Mission Ridge)", ("WA",), "transitional", 65, 4570, 6820,
+       ("Mission Ridge", 47.2917, -120.3997)),
+    _R("Central Oregon (Mt Bachelor)", ("OR",), "transitional", 70, 6300, 9065,
+       ("Mt Bachelor", 43.9793, -121.6884)),
+    _R("Blue Mtns (Anthony Lakes)", ("OR",), "transitional", 95, 7100, 8000,
+       ("Anthony Lakes", 44.9633, -118.2333)),
+    # --- Sierra Nevada (Tahoe spans CA and NV)
+    _R("N Sierra / Tahoe (Palisades/Heavenly/Rose)", ("CA", "NV"), "maritime", 80, 6200, 10067,
+       ("Palisades Tahoe", 39.1969, -120.2357), ("Heavenly", 38.9353, -119.9400),
+       ("Mt Rose", 39.3297, -119.8850)),
+    _R("S Sierra (Mammoth/June)", ("CA",), "maritime", 75, 7953, 11053,
+       ("Mammoth", 37.6308, -119.0326), ("June Mountain", 37.7670, -119.0900)),
+    _R("Shasta & Trinity", ("CA",), "maritime", 85, 5500, 7800,
+       ("Mt Shasta Ski Park", 41.3186, -122.1436)),
     # --- Great Basin
-    SkiRegion("Ruby Mtns & NE Nevada", ("NV",), "continental", 40.60, -115.40, 95, 6500, 10000),
-    SkiRegion("Spring Mtns (Lee Canyon)", ("NV",), "continental", 36.32, -115.68, 70, 8510, 11290),
-    # --- northern Rockies, maritime-influenced interior (cross MT/ID)
-    SkiRegion("Selkirk & Cabinet (Schweitzer/Silver)", ("ID", "MT"), "transitional", 47.90, -116.20, 95, 4000, 6400),
-    SkiRegion("Bitterroot & Lolo (Montana Snowbowl)", ("MT", "ID"), "transitional", 47.02, -113.98, 85, 5000, 7600),
-    SkiRegion("Whitefish & Flathead Range", ("MT",), "transitional", 48.45, -114.35, 85, 4464, 6817),
+    _R("Ruby Mtns & NE Nevada", ("NV",), "continental", 95, 6500, 10000,
+       ("Ruby Mountains", 40.6000, -115.4000)),
+    _R("Spring Mtns (Lee Canyon)", ("NV",), "continental", 70, 8510, 11290,
+       ("Lee Canyon", 36.3067, -115.6811)),
+    # --- northern Rockies, maritime-influenced interior
+    _R("Selkirks (Schweitzer)", ("ID",), "transitional", 65, 4000, 6400,
+       ("Schweitzer", 48.3683, -116.6228)),
+    _R("Coeur d'Alenes (Silver/Lookout)", ("ID", "MT"), "transitional", 70, 4100, 6300,
+       ("Silver Mountain", 47.5417, -116.1275), ("Lookout Pass", 47.4564, -115.6969)),
+    _R("Missoula ranges (Montana Snowbowl)", ("MT",), "transitional", 70, 5000, 7600,
+       ("Montana Snowbowl", 47.0231, -113.9822)),
+    _R("Bitterroots (Lost Trail)", ("MT", "ID"), "transitional", 80, 6400, 8000,
+       ("Lost Trail Powder Mtn", 45.6939, -113.9506)),
+    _R("Whitefish & Flathead Range", ("MT",), "transitional", 85, 4464, 6817,
+       ("Whitefish Mtn Resort", 48.4817, -114.3533)),
     # --- northern Rockies, continental
-    SkiRegion("Bridger/Gallatin/Madison (Big Sky)", ("MT",), "continental", 45.40, -111.30, 95, 6400, 10000),
-    SkiRegion("Beartooth & Absaroka (Red Lodge)", ("MT", "WY"), "continental", 45.15, -109.50, 90, 7016, 9416),
+    _R("Bridger Range (Bridger Bowl)", ("MT",), "continental", 60, 6100, 8700,
+       ("Bridger Bowl", 45.8178, -110.8981)),
+    _R("Madison & Gallatin (Big Sky)", ("MT",), "continental", 70, 6800, 11166,
+       ("Big Sky", 45.2856, -111.4014)),
+    _R("Beartooth & Absaroka (Red Lodge)", ("MT", "WY"), "continental", 85, 7016, 9416,
+       ("Red Lodge Mountain", 45.1903, -109.3486)),
     # --- central Idaho
-    SkiRegion("Sawtooth & Smoky (Sun Valley)", ("ID",), "intermountain", 43.75, -114.40, 90, 5750, 9150),
-    SkiRegion("W Central Idaho (Brundage/Tamarack)", ("ID",), "intermountain", 44.95, -116.05, 85, 5840, 7640),
-    # --- greater Yellowstone (Tetons span WY and ID)
-    SkiRegion("Tetons (Jackson/Targhee)", ("WY", "ID"), "intermountain", 43.60, -110.85, 80, 6300, 10450),
-    SkiRegion("Yellowstone & Wind River", ("WY",), "continental", 43.60, -109.80, 110, 7000, 10000),
-    SkiRegion("Bighorn Mtns", ("WY",), "continental", 44.35, -107.20, 85, 7500, 9500),
-    SkiRegion("Snowy Range & Sierra Madre", ("WY",), "continental", 41.35, -106.60, 90, 8798, 9663),
-    # --- Wasatch / Uinta
-    SkiRegion("Wasatch (Alta/Snowbird/Park City)", ("UT",), "intermountain", 40.60, -111.60, 70, 6800, 11000),
-    SkiRegion("Uinta Mtns", ("UT",), "continental", 40.70, -110.50, 80, 8000, 11000),
-    SkiRegion("S Utah (Brian Head/Eagle Point)", ("UT",), "continental", 38.20, -112.40, 110, 9600, 10970),
+    _R("Sawtooth & Smoky (Sun Valley)", ("ID",), "intermountain", 90, 5750, 9150,
+       ("Sun Valley", 43.6714, -114.4047)),
+    _R("W Central Idaho (Brundage/Tamarack)", ("ID",), "intermountain", 80, 5840, 7640,
+       ("Brundage", 45.0139, -116.1389), ("Tamarack", 44.6428, -116.1150)),
+    # --- greater Yellowstone (the Tetons span WY and ID)
+    _R("Tetons (Jackson/Targhee)", ("WY", "ID"), "intermountain", 75, 6300, 10450,
+       ("Jackson Hole", 43.5875, -110.8278), ("Grand Targhee", 43.7875, -110.9597)),
+    _R("Wind River Range", ("WY",), "continental", 95, 7000, 10000,
+       ("Wind River Range", 43.1000, -109.6500)),
+    _R("Bighorn Mtns (Meadowlark)", ("WY",), "continental", 85, 7500, 9500,
+       ("Meadowlark", 44.1500, -107.2000)),
+    _R("Snowy Range & Sierra Madre", ("WY",), "continental", 90, 8798, 9663,
+       ("Snowy Range Ski Area", 41.3428, -106.2358)),
+    # --- Wasatch / Uinta / southern Utah
+    _R("Wasatch (Alta/Snowbird/Park City)", ("UT",), "intermountain", 60, 6800, 11000,
+       ("Alta", 40.5883, -111.6386), ("Snowbird", 40.5810, -111.6558),
+       ("Park City", 40.6514, -111.5080)),
+    _R("Uinta Mtns", ("UT",), "continental", 80, 8000, 11000,
+       ("Uinta Mountains", 40.7000, -110.5000)),
+    _R("Tushar Mtns (Eagle Point)", ("UT",), "continental", 70, 9000, 10600,
+       ("Eagle Point", 38.3239, -112.3806)),
+    _R("Markagunt (Brian Head)", ("UT",), "continental", 70, 9600, 10970,
+       ("Brian Head", 37.7019, -112.8497)),
     # --- Colorado, by range, straddling the ENSO node
-    SkiRegion("Park Range (Steamboat)", ("CO",), "continental", 40.45, -106.80, 70, 6900, 10568),
-    SkiRegion("Front Range (Winter Park/Loveland/A-Basin)", ("CO",), "continental", 39.80, -105.80, 65, 9000, 13050),
-    SkiRegion("Gore & Tenmile (Vail/Summit/Copper)", ("CO",), "continental", 39.55, -106.15, 60, 8120, 12998),
-    SkiRegion("Elk Mtns (Aspen/Crested Butte)", ("CO",), "continental", 39.00, -106.90, 60, 7945, 12162),
-    SkiRegion("San Juans (Telluride/Purgatory/Wolf Ck)", ("CO",), "continental", 37.80, -107.60, 90, 8725, 13150),
-    # --- Sangre de Cristo deliberately spans CO and NM
-    SkiRegion("Sangre de Cristo (Taos/Santa Fe)", ("NM", "CO"), "continental", 36.60, -105.45, 100, 9200, 12481),
+    _R("Park Range (Steamboat)", ("CO",), "continental", 70, 6900, 10568,
+       ("Steamboat", 40.4572, -106.8045)),
+    _R("Front Range (Winter Park/Loveland/A-Basin)", ("CO",), "continental", 60, 9000, 13050,
+       ("Winter Park", 39.8869, -105.7625), ("Loveland", 39.6800, -105.8979),
+       ("Arapahoe Basin", 39.6425, -105.8719)),
+    _R("Gore & Tenmile (Vail/Summit/Copper)", ("CO",), "continental", 60, 8120, 12998,
+       ("Vail", 39.6403, -106.3742), ("Copper Mountain", 39.5022, -106.1497),
+       ("Breckenridge", 39.4817, -106.0667)),
+    _R("Elk Mtns (Aspen/Crested Butte)", ("CO",), "continental", 65, 7945, 12162,
+       ("Aspen", 39.1866, -106.8175), ("Crested Butte", 38.8990, -106.9655)),
+    _R("San Juans (Telluride/Purgatory)", ("CO",), "continental", 70, 8725, 13150,
+       ("Telluride", 37.9375, -107.8461), ("Purgatory", 37.6303, -107.8142)),
+    _R("S San Juans (Wolf Creek)", ("CO",), "continental", 70, 10300, 11904,
+       ("Wolf Creek", 37.4722, -106.7933)),
+    # --- Sangre de Cristo, split north and south (they are 94 km apart)
+    _R("N Sangre de Cristo (Taos)", ("NM", "CO"), "continental", 75, 9200, 12481,
+       ("Taos Ski Valley", 36.5961, -105.4506)),
+    _R("S Sangre de Cristo (Santa Fe)", ("NM",), "continental", 70, 10350, 12075,
+       ("Ski Santa Fe", 35.7961, -105.8025)),
     # --- southern ranges, monsoon-influenced
-    SkiRegion("Jemez & N New Mexico", ("NM",), "continental", 35.90, -106.50, 85, 8500, 11500),
-    SkiRegion("Sacramento Mtns (Ski Apache)", ("NM",), "continental", 33.45, -105.75, 90, 9600, 11500),
-    SkiRegion("San Francisco Peaks (AZ Snowbowl)", ("AZ",), "continental", 35.33, -111.68, 80, 9200, 11500),
-    SkiRegion("White Mtns AZ (Sunrise Park)", ("AZ",), "continental", 33.98, -109.55, 85, 9200, 11100),
+    _R("Jemez (Pajarito)", ("NM",), "continental", 80, 8500, 10441,
+       ("Pajarito", 35.8908, -106.3936)),
+    _R("Sacramento Mtns (Ski Apache)", ("NM",), "continental", 90, 9600, 11500,
+       ("Ski Apache", 33.3975, -105.8069)),
+    _R("San Francisco Peaks (AZ Snowbowl)", ("AZ",), "continental", 80, 9200, 11500,
+       ("Arizona Snowbowl", 35.3314, -111.7081)),
+    _R("White Mtns AZ (Sunrise Park)", ("AZ",), "continental", 85, 9200, 11100,
+       ("Sunrise Park", 33.9908, -109.6100)),
     # --- Black Hills
-    SkiRegion("Black Hills (Terry Peak)", ("SD",), "continental", 44.33, -103.83, 85, 5800, 7064),
+    _R("Black Hills (Terry Peak)", ("SD",), "continental", 85, 5800, 7064,
+       ("Terry Peak", 44.3242, -103.8300)),
 ]
 
 # Back-compatible tuple view used by the weighting and plotting code.
@@ -143,14 +237,6 @@ BASE_MM = 250.0        # settled SWE standing in for a comfortably skiable base
 STORM_MM = 10.0        # legacy water thresholds, kept for the water-supply tables
 BIG_STORM_MM = 25.0
 MIN_WINTERS = 20       # winters a region-window needs before it is tested
-
-
-def _haversine_km(lat1, lon1, lat2, lon2):
-    r = 6371.0
-    p1, p2 = np.radians(lat1), np.radians(lat2)
-    dp, dl = np.radians(lat2 - lat1), np.radians(lon2 - lon1)
-    a = np.sin(dp / 2) ** 2 + np.cos(p1) * np.cos(p2) * np.sin(dl / 2) ** 2
-    return 2 * r * np.arcsin(np.sqrt(a))
 
 
 def station_weights(km: np.ndarray, elevation: np.ndarray,
