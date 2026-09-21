@@ -449,18 +449,19 @@ def fig_strength_significance(sig: pd.DataFrame, out: Path,
 
 def fig_region_pdf_map(dists: dict, meta: dict, out: Path,
                        name: str = "fig_region_pdf_map", window: str = "Midwinter",
-                       span: float = 70.0, glyph_w: float = 1.30, glyph_h: float = 1.05,
+                       span: float = 70.0, glyph_w: float = 1.25, glyph_h: float = 1.0,
                        max_lat: float = 52.0, states: list | None = None) -> Path:
     """Every ski region on the map of the West, carrying its whole distribution.
 
-    State boundaries give the glyphs somewhere to sit, because the result is
-    geographic: the seesaw runs with latitude, and a reader needs to see which
-    range is which. Each region is a smoothed probability density of the change
-    in powder days, anchored at its location on one shared horizontal scale,
-    with a dashed hairline at zero. A density sitting astride that line is a
-    region where El Nino does nothing measurable — most of them, and the reason
-    for drawing distributions rather than colouring dots. Mass left of zero is
-    red (fewer powder days), right is blue.
+    Forty-odd ranges will not take inline labels — they collide and the map
+    becomes unreadable — so each glyph carries a number and the names live in a
+    legend beside it, ordered north to south so the list reads down the map.
+
+    Each glyph is a smoothed probability density of the change in powder days,
+    anchored at its range on one shared horizontal scale, with a dashed
+    hairline at zero. A density astride that line is a region where El Nino
+    does nothing measurable. Mass left of zero is red (fewer powder days),
+    right is blue.
     """
     from scipy import stats as _st
     items = [(r, d) for r, d in dists.items() if r in meta and meta[r].lat <= max_lat]
@@ -470,11 +471,18 @@ def fig_region_pdf_map(dists: dict, meta: dict, out: Path,
     items.sort(key=lambda kv: (-meta[kv[0]].lat, meta[kv[0]].lon))
     lats = [meta[r].lat for r, _ in items]
     lons = [meta[r].lon for r, _ in items]
-    x0, x1 = min(lons) - 3.0, max(lons) + 3.0
-    y0, y1 = min(lats) - 2.8, max(lats) + 2.2
+    x0, x1 = min(lons) - 2.4, max(lons) + 2.4
+    y0, y1 = min(lats) - 2.2, max(lats) + 1.8
 
-    fig, ax = plt.subplots(figsize=(13.6, 11.2))
-    ax.set_facecolor("#eef2f6")                      # water / ground behind the land
+    n_leg = len(items) + len(far)
+    leg_cols = 2 if n_leg > 22 else 1
+    fig = plt.figure(figsize=(11.2 + 3.4 * leg_cols, 10.6))
+    gs = fig.add_gridspec(1, 2, width_ratios=[11.2, 3.4 * leg_cols], wspace=0.02)
+    ax = fig.add_subplot(gs[0, 0])
+    lax = fig.add_subplot(gs[0, 1])
+    lax.axis("off")
+
+    ax.set_facecolor("#eef2f6")
     if states is None:
         try:
             states = load_states()
@@ -482,7 +490,7 @@ def fig_region_pdf_map(dists: dict, meta: dict, out: Path,
             states = []
     if states:
         draw_states(ax, states, (x0, x1, y0, y1), land="#fbfaf8", edge="#c3ccd6",
-                    label_color="#8a97a5")
+                    label_color="#8a97a5", label_size=11)
 
     grid = np.linspace(-span, span, 201)
     curves, peak = {}, 0.0
@@ -496,8 +504,7 @@ def fig_region_pdf_map(dists: dict, meta: dict, out: Path,
         curves[r] = dens
         peak = max(peak, dens.max())
 
-    placed = []
-    for r, d in items:
+    for i, (r, d) in enumerate(items, start=1):
         m = meta[r]
         dens = curves[r]
         x = m.lon + grid / span * (glyph_w / 2)
@@ -510,21 +517,13 @@ def fig_region_pdf_map(dists: dict, meta: dict, out: Path,
         ax.plot([x[0], x[-1]], [m.lat, m.lat], color=TEXT, lw=0.6, zorder=5)
         ax.plot([m.lon, m.lon], [m.lat, m.lat + glyph_h * 0.9], color=TEXT, lw=0.9,
                 ls=(0, (2.2, 1.8)), zorder=6)
-        ax.plot([m.lon], [m.lat], marker="o", ms=2.4, color=TEXT, zorder=6)
-
         straddles = d.get("straddles_zero", d["p_zero"] > 0.05)
-        near = sum(1 for lo, la in placed
-                   if abs(lo - m.lon) < glyph_w * 1.6 and abs(la - m.lat) < glyph_h * 1.8)
-        top = glyph_h * 0.9 * 46
-        berths = [(0, -8, "center", "top"), (0, top, "center", "bottom"),
-                  (-34, -8, "right", "top"), (34, top, "left", "bottom")]
-        dx, dy, ha, va = berths[near % 4]
-        placed.append((m.lon, m.lat))
-        txt = r.split(" (")[0] + f"  {d['observed']:+.0f}%" + ("  n.s." if straddles else "")
-        ax.annotate(txt, (m.lon, m.lat), fontsize=6.5, xytext=(dx, dy),
-                    textcoords="offset points", ha=ha, va=va,
-                    color=MUTED if straddles else TEXT, zorder=8,
-                    bbox=dict(boxstyle="round,pad=0.14", fc="#fcfcfb", ec="none", alpha=0.85))
+        ax.annotate(str(i), (m.lon, m.lat), fontsize=7.4, fontweight="bold",
+                    xytext=(0, -3), textcoords="offset points", ha="center", va="top",
+                    color="#fcfcfb", zorder=8,
+                    bbox=dict(boxstyle="circle,pad=0.22",
+                              fc=MUTED if straddles else (LESS_SNOW if d["observed"] < 0 else MORE_SNOW),
+                              ec="#fcfcfb", lw=0.9))
 
     ax.set_xlim(x0, x1)
     ax.set_ylim(y0, y1)
@@ -533,8 +532,8 @@ def fig_region_pdf_map(dists: dict, meta: dict, out: Path,
     for sp in ax.spines.values():
         sp.set_color("#c3ccd6")
 
-    # a worked key on the land in the empty south-west corner
-    kx, ky = x0 + 1.5, y0 + 0.9
+    # key glyph, drawn to the same scale, in the empty south-west corner
+    kx, ky = x0 + 1.4, y0 + 0.7
     kh = np.exp(-0.5 * (grid / 20) ** 2)
     xk = kx + grid / span * (glyph_w / 2)
     yk = ky + kh / kh.max() * glyph_h * 0.8
@@ -542,27 +541,56 @@ def fig_region_pdf_map(dists: dict, meta: dict, out: Path,
     ax.fill_between(xk[grid >= 0], ky, yk[grid >= 0], color=MORE_SNOW, alpha=0.6, lw=0, zorder=7)
     ax.plot(xk, yk, color=TEXT, lw=0.6, zorder=7)
     ax.plot([kx, kx], [ky, ky + glyph_h * 0.9], color=TEXT, lw=0.9, ls=(0, (2.2, 1.8)), zorder=7)
-    key = ("each glyph, read left to right:\n"
-           "−70 %   ·   no change   ·   +70 %\n"
-           "height is how likely that value is\n"
-           "red = fewer powder days, blue = more")
-    ax.annotate(key, (kx + glyph_w * 0.58, ky), fontsize=7.4, ha="left", va="bottom",
+    ax.annotate("each glyph, left to right:\n"
+                "−70 %   ·   no change   ·   +70 %\n"
+                "height is how likely that value is",
+                (kx + glyph_w * 0.6, ky), fontsize=7.6, ha="left", va="bottom",
                 color=MUTED, linespacing=1.4, zorder=8,
-                bbox=dict(boxstyle="round,pad=0.3", fc="#fcfcfb", ec="#d7dee6", alpha=0.9))
+                bbox=dict(boxstyle="round,pad=0.3", fc="#fcfcfb", ec="#d7dee6", alpha=0.92))
 
-    if far:
-        note = "   ".join(f"{r.split(' (')[0]}: {d['observed']:+.0f}%" for r, d in far)
-        ax.text(0.014, 0.986, f"Not shown — {note}", transform=ax.transAxes,
-                fontsize=8.5, color=MUTED, va="top", zorder=9,
-                bbox=dict(boxstyle="round,pad=0.35", fc="#fcfcfb", ec="#d7dee6"))
+    # ---- the legend: number, name, value, ordered north to south
+    entries = [(i, r, d, False) for i, (r, d) in enumerate(items, start=1)]
+    entries += [(None, r, d, True) for r, d in far]
+    per_col = int(np.ceil(len(entries) / leg_cols))
+    lax.set_xlim(0, leg_cols)
+    lax.set_ylim(0, per_col + 2.4)
+    lax.text(0, per_col + 1.9, "Ski regions, north to south",
+             fontsize=10.5, fontweight="bold", color=TEXT, va="top",
+             family="DejaVu Sans")
+    lax.text(0, per_col + 1.15, "change in powder days · n.s. = interval includes zero",
+             fontsize=8, color=MUTED, va="top")
+    for k, (num, r, d, offmap) in enumerate(entries):
+        col, row = divmod(k, per_col)
+        ypos = per_col - row - 0.4
+        straddles = d.get("straddles_zero", d["p_zero"] > 0.05)
+        colour = MUTED if straddles else (LESS_SNOW if d["observed"] < 0 else MORE_SNOW)
+        if num is not None:
+            lax.plot(col + 0.045, ypos, marker="o", ms=11.5, color=colour,
+                     markeredgecolor="#fcfcfb", markeredgewidth=0.9, clip_on=False)
+            lax.text(col + 0.045, ypos, str(num), fontsize=6.8, fontweight="bold",
+                     color="#fcfcfb", ha="center", va="center", clip_on=False)
+        label = r.split(" (")[0]
+        if len(label) > 30:
+            label = label[:29] + "…"
+        suffix = "  (not on map)" if offmap else ""
+        lax.text(col + 0.10, ypos, label + suffix, fontsize=8.1, color=TEXT,
+                 ha="left", va="center", clip_on=False)
+        lax.text(col + 0.95, ypos, f"{d['observed']:+.0f}%" + ("  n.s." if straddles else ""),
+                 fontsize=8.1, color=colour, ha="right", va="center", clip_on=False,
+                 fontweight="normal" if straddles else "bold")
+
     n_ns = sum(1 for _, d in items if d.get("straddles_zero", d["p_zero"] > 0.05))
-    ax.set_title("The change in powder days in every ski region, with its uncertainty — "
-                 + window.lower(), pad=12)
-    sub = ("Each glyph is a probability density from 10,000 resamples of the record, calibrated so "
-           "its width is an honest sampling distribution. "
-           f"{n_ns} of {len(items)} regions straddle zero and are marked n.s.")
-    ax.text(0.5, -0.035, sub, transform=ax.transAxes, ha="center", fontsize=8.5, color=MUTED)
-    return _save(fig, out, name)
+    fig.suptitle("The change in powder days in every ski region, with its uncertainty — "
+                 + window.lower(), y=0.965, fontsize=13, fontweight="bold")
+    fig.text(0.5, 0.025, "Each glyph is a probability density from 10,000 resamples of the record, "
+             "calibrated so its width is an honest sampling distribution. "
+             f"{n_ns} of {len(items)} regions straddle zero and are marked n.s.",
+             ha="center", fontsize=8.6, color=MUTED)
+    out.mkdir(parents=True, exist_ok=True)
+    p = out / f"{name}.png"
+    fig.savefig(p, bbox_inches="tight")
+    plt.close(fig)
+    return p
 
 
 US_STATES_URL = ("https://raw.githubusercontent.com/PublicaMundi/MappingAPI/"
