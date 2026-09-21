@@ -1,0 +1,43 @@
+region,stations,elev_min,elev_max,elev_range_ft,enough_stations,enough_relief,passes
+Spring Mtns (Lee Canyon),4,7840.0,9390.0,1550.0,True,True,True
+Bridger Range (Bridger Bowl),6,6480.0,8090.0,1610.0,True,True,True
+S Sierra (Mammoth/June),7,7200.0,9600.0,2400.0,True,True,True
+E Cascades rain shadow (Mission Ridge),7,3440.0,5480.0,2040.0,True,True,True
+Missoula ranges (Montana Snowbowl),7,4690.0,7270.0,2580.0,True,True,True
+San Francisco Peaks (AZ Snowbowl),8,7020.0,9720.0,2700.0,True,True,True
+Coeur d'Alenes (Silver/Lookout),8,3190.0,6090.0,2900.0,True,True,True
+S Sangre de Cristo (Santa Fe),8,8220.0,11480.0,3260.0,True,True,True
+Klamath & Siskiyou (Mt Shasta),8,4580.0,6830.0,2250.0,True,True,True
+Selkirks (Schweitzer),9,3540.0,6090.0,2550.0,True,True,True
+White Mtns AZ (Sunrise Park),9,7850.0,9210.0,1360.0,True,True,True
+Jemez (Pajarito),10,8220.0,11480.0,3260.0,True,True,True
+Madison & Gallatin (Big Sky),10,6880.0,9200.0,2320.0,True,True,True
+Central Oregon (Mt Bachelor),10,4220.0,5680.0,1460.0,True,True,True
+North Cascades (Mt Baker),10,1680.0,5850.0,4170.0,True,True,True
+Ruby Mtns & NE Nevada,11,6320.0,8990.0,2670.0,True,True,True
+Tetons (Jackson/Targhee),11,6710.0,9590.0,2880.0,True,True,True
+Tushar Mtns (Eagle Point),11,8600.0,10320.0,1720.0,True,True,True
+Mt Hood,11,2690.0,5970.0,3280.0,True,True,True
+W Central Idaho (Brundage/Tamarack),11,4890.0,6990.0,2100.0,True,True,True
+Chugach (Alyeska),11,50.0,2400.0,2350.0,True,True,True
+Whitefish & Flathead Range,12,4340.0,6280.0,1940.0,True,True,True
+Markagunt (Brian Head),13,7460.0,10040.0,2580.0,True,True,True
+N Sangre de Cristo (Taos),13,8740.0,11020.0,2280.0,True,True,True
+Bitterroots (Lost Trail),13,5530.0,8930.0,3400.0,True,True,True
+Beartooth & Absaroka (Red Lodge),14,5920.0,9420.0,3500.0,True,True,True
+Elk Mtns (Aspen/Crested Butte),15,8710.0,11510.0,2800.0,True,True,True
+Bighorn Mtns (Meadowlark),15,7050.0,9830.0,2780.0,True,True,True
+S San Juans (Wolf Creek),16,8360.0,11680.0,3320.0,True,True,True
+Blue Mtns (Anthony Lakes),18,4550.0,7840.0,3290.0,True,True,True
+Park Range (Steamboat),19,8240.0,10960.0,2720.0,True,True,True
+Sawtooth & Smoky (Sun Valley),21,5690.0,9540.0,3850.0,True,True,True
+Snowy Range & Sierra Madre,22,7830.0,10500.0,2670.0,True,True,True
+San Juans (Telluride/Purgatory),23,8900.0,11580.0,2680.0,True,True,True
+Central Cascades (Stevens/Snoqualmie),24,2250.0,5990.0,3740.0,True,True,True
+S Washington Cascades (Crystal/White Pass),24,2250.0,5920.0,3670.0,True,True,True
+Gore & Tenmile (Vail/Summit/Copper),25,8530.0,11600.0,3070.0,True,True,True
+Front Range (Winter Park/Loveland/A-Basin),26,8530.0,11600.0,3070.0,True,True,True
+N Sierra / Tahoe (Palisades/Heavenly/Rose),27,6060.0,8810.0,2750.0,True,True,True
+Wind River Range,27,6770.0,10220.0,3450.0,True,True,True
+Wasatch (Alta/Snowbird/Park City),30,6470.0,9970.0,3500.0,True,True,True
+Uinta Mtns,30,7640.0,10920.0,3280.0,True,True,True

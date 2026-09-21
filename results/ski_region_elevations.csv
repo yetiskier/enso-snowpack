@@ -8,7 +8,8 @@ E Cascades rain shadow (Mission Ridge),WA,transitional,4570,6820,7,5.9,4744.0,43
 Central Oregon (Mt Bachelor),OR,transitional,6300,9065,10,7.3,5220.0,4935.0,0
 Blue Mtns (Anthony Lakes),OR,transitional,7100,8000,18,13.7,5809.0,5455.0,2
 N Sierra / Tahoe (Palisades/Heavenly/Rose),CA+NV,maritime,6200,10067,27,24.9,7573.0,7860.0,26
-S Sierra (Mammoth/June),CA,maritime,7953,11053,2,1.7,9036.0,8810.0,2
+S Sierra (Mammoth/June),CA,maritime,7953,11053,7,6.0,8909.0,9260.0,6
+Klamath & Siskiyou (Mt Shasta),CA+OR,maritime,5500,7800,8,7.7,5607.0,5625.0,4
 Ruby Mtns & NE Nevada,NV,continental,6500,10000,11,10.0,7866.0,7900.0,10
 Spring Mtns (Lee Canyon),NV,continental,8510,11290,4,4.0,8723.0,8760.0,3
 Selkirks (Schweitzer),ID,transitional,4000,6400,9,7.2,5319.0,5020.0,8
@@ -38,7 +39,5 @@ S San Juans (Wolf Creek),CO,continental,10300,11904,16,12.4,10970.0,11090.0,12
 N Sangre de Cristo (Taos),NM+CO,continental,9200,12481,13,11.0,10169.0,10210.0,12
 S Sangre de Cristo (Santa Fe),NM,continental,10350,12075,8,5.9,10371.0,9480.0,3
 Jemez (Pajarito),NM,continental,8500,10441,10,8.2,9514.0,9425.0,5
-Sacramento Mtns (Ski Apache),NM,continental,9600,11500,1,1.0,10250.0,10250.0,1
 San Francisco Peaks (AZ Snowbowl),AZ,continental,9200,11500,8,4.8,8422.0,7425.0,1
 White Mtns AZ (Sunrise Park),AZ,continental,9200,11100,9,7.9,8673.0,8400.0,2
-Black Hills (Terry Peak),SD,continental,5800,7064,3,2.9,6360.0,6150.0,3

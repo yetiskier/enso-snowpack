@@ -114,9 +114,9 @@ SKI_REGIONS_FULL = [
     _R("N Sierra / Tahoe (Palisades/Heavenly/Rose)", ("CA", "NV"), "maritime", 80, 6200, 10067,
        ("Palisades Tahoe", 39.1969, -120.2357), ("Heavenly", 38.9353, -119.9400),
        ("Mt Rose", 39.3297, -119.8850)),
-    _R("S Sierra (Mammoth/June)", ("CA",), "maritime", 75, 7953, 11053,
+    _R("S Sierra (Mammoth/June)", ("CA",), "maritime", 90, 7953, 11053,
        ("Mammoth", 37.6308, -119.0326), ("June Mountain", 37.7670, -119.0900)),
-    _R("Shasta & Trinity", ("CA",), "maritime", 85, 5500, 7800,
+    _R("Klamath & Siskiyou (Mt Shasta)", ("CA", "OR"), "maritime", 130, 5500, 7800,
        ("Mt Shasta Ski Park", 41.3186, -122.1436)),
     # --- Great Basin
     _R("Ruby Mtns & NE Nevada", ("NV",), "continental", 95, 6500, 10000,
@@ -188,15 +188,14 @@ SKI_REGIONS_FULL = [
     # --- southern ranges, monsoon-influenced
     _R("Jemez (Pajarito)", ("NM",), "continental", 80, 8500, 10441,
        ("Pajarito", 35.8908, -106.3936)),
-    _R("Sacramento Mtns (Ski Apache)", ("NM",), "continental", 90, 9600, 11500,
-       ("Ski Apache", 33.3975, -105.8069)),
+    # Sacramento Mtns (Ski Apache) and the Black Hills (Terry Peak) are
+    # deliberately absent: one SNOTEL site and three respectively, at any
+    # radius, with no usable elevation spread. A region needs at least four
+    # gauges spanning 1000 ft to stand for a mountain range, and neither can.
     _R("San Francisco Peaks (AZ Snowbowl)", ("AZ",), "continental", 80, 9200, 11500,
        ("Arizona Snowbowl", 35.3314, -111.7081)),
     _R("White Mtns AZ (Sunrise Park)", ("AZ",), "continental", 85, 9200, 11100,
        ("Sunrise Park", 33.9908, -109.6100)),
-    # --- Black Hills
-    _R("Black Hills (Terry Peak)", ("SD",), "continental", 85, 5800, 7064,
-       ("Terry Peak", 44.3242, -103.8300)),
 ]
 
 # Back-compatible tuple view used by the weighting and plotting code.
@@ -967,3 +966,165 @@ def region_change_distributions(metrics: pd.DataFrame, region_map: pd.DataFrame,
                        # interval is the one a reader can see.
                        "straddles_zero": bool(lo <= 0 <= hi)}
     return out
+
+
+def station_level_effects(metrics: pd.DataFrame, stations: pd.DataFrame, enso: pd.DataFrame,
+                          window: str = "Midwinter", metric: str = "big_storm_days_per_window",
+                          min_years: int = 25, min_base: float = 0.3) -> pd.DataFrame:
+    """The effect at every station, with no regions involved at all.
+
+    Regions are a summarising choice, and any such choice can create or destroy
+    an apparent pattern — the modifiable areal unit problem. The check is to
+    drop the regions entirely: compute El Nino minus the long-run mean at each
+    gauge on its own, and see whether the geography survives. If it does, the
+    regions are a convenience; if it does not, they are the result.
+
+    Returns one row per station with its percentage change and coordinates.
+    """
+    phase = enso.set_index("water_year")["phase"]
+    d = metrics[metrics["window"] == window].dropna(subset=[metric]).copy()
+    d["phase"] = d["water_year"].map(phase)
+    rows = []
+    for trip, g in d.groupby("stationTriplet"):
+        if len(g) < min_years:
+            continue
+        allm = float(g[metric].mean())
+        if allm < min_base:
+            continue
+        nino = g[g["phase"] == "El Nino"][metric]
+        nina = g[g["phase"] == "La Nina"][metric]
+        if len(nino) < 6 or len(nina) < 6:
+            continue
+        rows.append({"stationTriplet": trip, "n_winters": len(g), "n_nino": len(nino),
+                     "all_winters": allm, "mean_nino": float(nino.mean()),
+                     "mean_nina": float(nina.mean()),
+                     "pct_change_nino": 100.0 * (float(nino.mean()) - allm) / allm})
+    out = pd.DataFrame(rows)
+    if out.empty:
+        return out
+    return out.merge(stations[["stationTriplet", "name", "stateCode", "latitude",
+                               "longitude", "elevation"]], on="stationTriplet", how="left")
+
+
+def latitude_gradient(st_eff: pd.DataFrame, n_boot: int = 10000, seed: int = 0) -> dict:
+    """Does the station-level effect vary with latitude, with no regions used?
+
+    A straight regression of each gauge's percentage change on its latitude.
+    Stations are not independent — neighbours share storms — so the confidence
+    interval comes from a spatial block bootstrap that resamples whole
+    one-degree latitude bands rather than individual gauges.
+    """
+    from scipy import stats as _st
+    d = st_eff.dropna(subset=["latitude", "pct_change_nino"])
+    if len(d) < 30:
+        return {}
+    x = d["latitude"].to_numpy(float)
+    y = d["pct_change_nino"].to_numpy(float)
+    lr = _st.linregress(x, y)
+    rng = np.random.default_rng(seed)
+    bands = np.floor(x).astype(int)
+    uniq = np.unique(bands)
+    slopes = np.empty(n_boot)
+    for i in range(n_boot):
+        pick = rng.choice(uniq, len(uniq), replace=True)
+        idx = np.concatenate([np.flatnonzero(bands == b) for b in pick])
+        if len(idx) < 10 or np.std(x[idx]) == 0:
+            slopes[i] = np.nan
+            continue
+        slopes[i] = np.polyfit(x[idx], y[idx], 1)[0]
+    slopes = slopes[np.isfinite(slopes)]
+    lo, hi = np.percentile(slopes, [2.5, 97.5])
+    return {"n_stations": int(len(d)), "slope_pct_per_degree": float(lr.slope),
+            "r2": float(lr.rvalue ** 2), "p_ols": float(lr.pvalue),
+            "block_ci_low": float(lo), "block_ci_high": float(hi),
+            "crossover_latitude": float(-lr.intercept / lr.slope) if lr.slope else np.nan,
+            "sign_is_pinned": bool(lo > 0 or hi < 0)}
+
+
+MIN_STATIONS_PER_REGION = 4
+MIN_ELEVATION_RANGE_FT = 1000.0
+
+
+def validate_regions(region_map: pd.DataFrame, stations: pd.DataFrame) -> pd.DataFrame:
+    """Check every region is sampled well enough to stand for a mountain range.
+
+    A region must have at least ``MIN_STATIONS_PER_REGION`` SNOTEL sites
+    spanning at least ``MIN_ELEVATION_RANGE_FT`` of elevation. One gauge, or
+    four gauges all at the same height, cannot represent terrain that runs from
+    a base area to a summit: the snowpack a skier meets changes with elevation
+    faster than with anything else, so a region without vertical spread is
+    measuring one contour line and calling it a range.
+
+    Returns a frame with a ``passes`` column; raise or drop on it as suits.
+    """
+    rows = []
+    for name, g in region_map.groupby("region"):
+        e = g["elevation"].dropna()
+        n, rng = len(g), (float(e.max() - e.min()) if len(e) else 0.0)
+        rows.append({"region": name, "stations": n, "elev_min": float(e.min()) if len(e) else np.nan,
+                     "elev_max": float(e.max()) if len(e) else np.nan, "elev_range_ft": rng,
+                     "enough_stations": n >= MIN_STATIONS_PER_REGION,
+                     "enough_relief": rng >= MIN_ELEVATION_RANGE_FT,
+                     "passes": n >= MIN_STATIONS_PER_REGION and rng >= MIN_ELEVATION_RANGE_FT})
+    missing = [r.name for r in SKI_REGIONS_FULL if r.name not in set(region_map["region"])]
+    for name in missing:
+        rows.append({"region": name, "stations": 0, "elev_min": np.nan, "elev_max": np.nan,
+                     "elev_range_ft": 0.0, "enough_stations": False, "enough_relief": False,
+                     "passes": False})
+    return pd.DataFrame(rows).sort_values("stations").reset_index(drop=True)
+
+
+def resolution_sensitivity(metrics: pd.DataFrame, region_map: pd.DataFrame, enso: pd.DataFrame,
+                           n_iter: int = 2000, n_perm: int = 1500) -> pd.DataFrame:
+    """How much of the result depends on how finely the domain is divided?
+
+    Dividing a domain is a choice, and any choice can manufacture or destroy a
+    pattern. This re-runs the whole grid under coarser groupings built by
+    relabelling the SAME station memberships, so only the grouping changes and
+    the underlying data does not:
+
+    * the published ranges,
+    * two-degree latitude bands,
+    * the four snow climates,
+    * three latitude zones,
+    * the whole West as one region.
+
+    Two things to read from it. The number of surviving findings barely changes
+    between the published ranges and coarse latitude bands, so the fine
+    division is not being punished into uselessness by multiple comparisons.
+    And the largest effect shrinks as the grouping coarsens, because averaging
+    across the ENSO node cancels the two halves of the seesaw — which is the
+    argument for resolving ranges rather than regions.
+    """
+    meta = REGION_META
+
+    def relabel(fn):
+        out = region_map.copy()
+        out["region"] = out["region"].map(lambda n: fn(n) if n in meta else None)
+        return out.dropna(subset=["region"])
+
+    def lat_band(n):
+        lo = int(np.floor(meta[n].lat / 2) * 2)
+        return f"{lo}-{lo + 2} deg N"
+
+    def zone(n):
+        la = meta[n].lat
+        return "North of 44N" if la >= 44 else ("40-44N" if la >= 40 else "South of 40N")
+
+    schemes = {"ranges (published)": region_map,
+               "latitude bands, 2 deg": relabel(lat_band),
+               "snow climates": relabel(lambda n: meta[n].climate),
+               "latitude zones": relabel(zone),
+               "whole West": relabel(lambda n: "Western US")}
+    rows = []
+    for name, rm in schemes.items():
+        grid = test_grid(metrics, rm, enso, n_iter=n_iter, n_perm=n_perm)
+        if grid.empty:
+            continue
+        sig = grid[grid["fdr_significant"]]
+        rows.append({"scheme": name, "regions": int(grid["region"].nunique()),
+                     "tests": len(grid), "survive_fdr": len(sig),
+                     "survival_rate": len(sig) / len(grid),
+                     "median_abs_r": float(grid["r"].abs().median()),
+                     "largest_abs_r": float(sig["r"].abs().max()) if len(sig) else np.nan})
+    return pd.DataFrame(rows)

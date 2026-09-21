@@ -744,3 +744,55 @@ def test_region_names_are_unique_and_states_are_real():
         assert set(r.states) <= set(ALL_STATES), f"{r.name} claims a state with no SNOTEL network"
         assert r.climate in SKI.CLIMATES
         assert r.base_ft < r.summit_ft, f"{r.name} has base at or above summit"
+
+
+def test_every_region_is_sampled_well_enough_to_stand_for_a_range():
+    """A region must have at least four SNOTEL sites spanning at least 1000 ft
+    of elevation. One gauge, or four at the same height, measures a contour
+    line rather than a mountain range — the snowpack a skier meets changes
+    with elevation faster than with anything else."""
+    stations = pd.read_csv(Path(__file__).resolve().parents[1] /
+                           "data" / "derived" / "stations_SNTL.csv") \
+        if (Path(__file__).resolve().parents[1] / "data" / "derived" /
+            "stations_SNTL.csv").exists() else None
+    if stations is None:
+        pytest.skip("station list not downloaded")
+    rm = SKI.assign_regions(stations)
+    v = SKI.validate_regions(rm, stations)
+    failed = v[~v.passes]
+    assert failed.empty, "under-sampled regions:\n" + failed.to_string(index=False)
+    assert v["stations"].min() >= SKI.MIN_STATIONS_PER_REGION
+    assert v["elev_range_ft"].min() >= SKI.MIN_ELEVATION_RANGE_FT
+    # and every defined region must actually appear
+    assert set(v["region"]) == {r.name for r in SKI.SKI_REGIONS_FULL}
+
+
+def test_coarsening_across_the_node_dilutes_a_real_dipole():
+    """Merging regions on opposite sides of the ENSO node must weaken the
+    measured effect — that is the argument for resolving ranges. If coarsening
+    ever strengthened it, the fine regions would be manufacturing the signal."""
+    oni = FX.synthetic_oni(1980, 2025)
+    enso = A.enso_by_water_year(oni)
+    x = enso.set_index("water_year")["oni_djf"]
+    rng = np.random.default_rng(61)
+    north, south = "N", "S"
+    rows, rmap = [], []
+    for region, slope in ((north, -4.0), (south, +4.0)):   # a clean dipole
+        for st in range(6):
+            trip = f"{region}{st}:XX:SNTL"
+            rmap.append({"stationTriplet": trip, "region": region, "weight": 1.0})
+            for yv in enso.water_year:
+                rows.append({"stationTriplet": trip, "water_year": yv, "window": "Midwinter",
+                             "mean_swe": 300 + 30 * slope * x[yv] + rng.normal(0, 60),
+                             "mean_depth": np.nan, "storm_days": np.nan,
+                             "big_storm_days": np.nan, "new_snow_in_total": np.nan,
+                             "days_with_base": np.nan})
+    m, fine = pd.DataFrame(rows), pd.DataFrame(rmap)
+    coarse = fine.copy(); coarse["region"] = "merged"
+    gf = SKI.test_grid(m, fine, enso, n_iter=400, n_perm=400)
+    gc = SKI.test_grid(m, coarse, enso, n_iter=400, n_perm=400)
+    fine_max = gf[gf.metric == "mean_swe"]["r"].abs().max()
+    coarse_max = gc[gc.metric == "mean_swe"]["r"].abs().max()
+    assert fine_max > 0.4, "the planted dipole must be visible at range resolution"
+    assert coarse_max < fine_max / 2, \
+        f"merging across the node must dilute: fine {fine_max:.2f} vs coarse {coarse_max:.2f}"
