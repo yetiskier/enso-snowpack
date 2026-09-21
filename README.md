@@ -1,239 +1,246 @@
 # El Niño and the ski season — the western United States
 
 **Does El Niño affect the ski season, where, and when in the winter?**
-NOAA's Oceanic Niño Index against NRCS SNOTEL snowpack for 37 ski regions
+NOAA's Oceanic Niño Index against NRCS SNOTEL snowpack for 42 ski regions
 across every SNOTEL state, reported in powder days and inches.
 
-_Last updated 2026-09-20. Real data: 932 SNOTEL stations,
-40.2 million daily observations, water years 1964–2026, {25 El Niño, 27 La Niña,
-25 neutral} winters._
+_Last updated 2026-09-21. Real data: 932 SNOTEL stations,
+40.2 million daily observations, water years 1964–2026, 25 El Niño, 27 La Niña
+and 25 neutral winters._
 
 This is not a water-supply study. April-1 snow-water equivalent is a runoff
 metric. A skier cares how often it snows six inches and how deep the base is
 in the windows that carry a season, so that is what is measured.
 
+**Report:** `results/report.html`, or `results/El-Nino-and-the-Ski-Season.pdf`
+(`make pdf` rebuilds it).
+
 ---
 
-## What actually survives
+## The answer in five points
 
-31 of 806 tests clear Benjamini-Hochberg false-discovery control across the
-whole grid. Everything below that is context; this is the result.
+### 1. The effect is real but geographically narrow
 
-### In inches
+Of 971 tests, **51 survive** Benjamini-Hochberg false-discovery control
+across the whole grid. Nearly all sit in the northern Rockies and the Cascades,
+where El Niño costs roughly a foot of snow, or in New Mexico and Arizona, where
+it adds snow in spring.
+
+**In inches:**
 
 | Ski region | Window | Measure | winters | a normal winter | an El Niño winter | difference | r² |
 |---|---|---|---|---|---|---|---|
-| Bighorn Mtns | Holidays | Total new snow | 48 | 12.3 in | **8.5 in** | **-3.9 in** (-31 %) | 24% |
-| Park Range (Steamboat) | Holidays | Total new snow | 47 | 25.0 in | **17.4 in** | **-7.6 in** (-30 %) | 18% |
-| Snowy Range & Sierra Madre | Holidays | Total new snow | 46 | 26.2 in | **18.7 in** | **-7.5 in** (-29 %) | 20% |
-| Central Cascades (Stevens/Snoqualmie) | Spring | Total new snow | 45 | 51.3 in | **38.9 in** | **-12.4 in** (-24 %) | 22% |
-| Mt Hood | Spring | Base, water equivalent | 48 | 27.2 in | **20.8 in** | **-6.4 in** (-24 %) | 24% |
-| Bitterroot & Lolo (Montana Snowbowl) | Midwinter | Total new snow | 59 | 58.0 in | **45.7 in** | **-12.3 in** (-21 %) | 21% |
-| Central Cascades (Stevens/Snoqualmie) | Spring | Base, water equivalent | 45 | 29.2 in | **23.2 in** | **-6.0 in** (-21 %) | 21% |
-| Bitterroot & Lolo (Montana Snowbowl) | Spring | Base, water equivalent | 59 | 18.7 in | **15.4 in** | **-3.4 in** (-18 %) | 28% |
-| Selkirk & Cabinet (Schweitzer/Silver) | Spring | Base, snow depth | 25 | 77.3 in | **63.5 in** | **-13.7 in** (-18 %) | 34% |
-| Whitefish & Flathead Range | Spring | Base, snow depth | 25 | 60.4 in | **51.5 in** | **-8.9 in** (-15 %) | 34% |
-| Whitefish & Flathead Range | Spring | Base, water equivalent | 52 | 22.1 in | **18.9 in** | **-3.2 in** (-14 %) | 16% |
-| Bitterroot & Lolo (Montana Snowbowl) | Midwinter | Base, water equivalent | 59 | 13.1 in | **11.4 in** | **-1.7 in** (-13 %) | 16% |
-| Beartooth & Absaroka (Red Lodge) | Spring | Base, water equivalent | 53 | 17.8 in | **15.7 in** | **-2.1 in** (-12 %) | 16% |
-| Bridger/Gallatin/Madison (Big Sky) | Spring | Base, water equivalent | 60 | 16.6 in | **14.9 in** | **-1.7 in** (-10 %) | 16% |
-| Bridger/Gallatin/Madison (Big Sky) | Midwinter | Base, water equivalent | 60 | 11.2 in | **10.1 in** | **-1.1 in** (-10 %) | 14% |
-| Jemez & N New Mexico | Early season | Total new snow | 46 | 19.7 in | **25.3 in** | **+5.6 in** (+28 %) | 22% |
-| Jemez & N New Mexico | Spring | Base, water equivalent | 46 | 7.2 in | **9.6 in** | **+2.4 in** (+33 %) | 24% |
+| Bighorn Mtns (Meadowlark) | Holidays | Total new snow | 48 | 11.5 in | **7.9 in** | **-3.6 in** (-31 %) | 25% |
+| Park Range (Steamboat) | Holidays | Total new snow | 47 | 25.1 in | **17.5 in** | **-7.7 in** (-30 %) | 19% |
+| Snowy Range & Sierra Madre | Holidays | Total new snow | 48 | 25.3 in | **17.9 in** | **-7.4 in** (-29 %) | 18% |
+| Mt Hood | Spring | Base, snow depth | 29 | 69.5 in | **50.4 in** | **-19.2 in** (-28 %) | 25% |
+| Central Cascades (Stevens/Snoqualmie) | Spring | Base, snow depth | 28 | 63.7 in | **48.2 in** | **-15.5 in** (-24 %) | 27% |
+| Mt Hood | Spring | Base, water equivalent | 48 | 27.3 in | **20.8 in** | **-6.4 in** (-23 %) | 23% |
+| Central Cascades (Stevens/Snoqualmie) | Spring | Total new snow | 45 | 50.4 in | **38.6 in** | **-11.8 in** (-23 %) | 21% |
+| Central Cascades (Stevens/Snoqualmie) | Spring | Base, water equivalent | 45 | 28.9 in | **23.3 in** | **-5.6 in** (-19 %) | 19% |
+| Bitterroots (Lost Trail) | Midwinter | Total new snow | 59 | 59.7 in | **48.1 in** | **-11.5 in** (-19 %) | 15% |
+| Missoula ranges (Montana Snowbowl) | Spring | Base, water equivalent | 46 | 19.2 in | **15.7 in** | **-3.5 in** (-18 %) | 27% |
+| Coeur d'Alenes (Silver/Lookout) | Spring | Base, water equivalent | 44 | 23.8 in | **19.6 in** | **-4.3 in** (-18 %) | 25% |
+| Missoula ranges (Montana Snowbowl) | Midwinter | Total new snow | 46 | 57.3 in | **47.1 in** | **-10.3 in** (-18 %) | 21% |
+| Bitterroots (Lost Trail) | Spring | Base, water equivalent | 59 | 18.8 in | **15.9 in** | **-2.9 in** (-15 %) | 21% |
+| Missoula ranges (Montana Snowbowl) | Spring | Base, snow depth | 25 | 61.4 in | **52.0 in** | **-9.4 in** (-15 %) | 37% |
+| Whitefish & Flathead Range | Spring | Base, snow depth | 25 | 60.7 in | **51.8 in** | **-8.9 in** (-15 %) | 34% |
+| Whitefish & Flathead Range | Spring | Base, water equivalent | 52 | 22.2 in | **19.0 in** | **-3.2 in** (-14 %) | 16% |
+| Selkirks (Schweitzer) | Spring | Base, snow depth | 25 | 85.1 in | **73.6 in** | **-11.5 in** (-14 %) | 29% |
+| Missoula ranges (Montana Snowbowl) | Midwinter | Base, water equivalent | 46 | 13.6 in | **11.8 in** | **-1.8 in** (-13 %) | 17% |
+| Bitterroots (Lost Trail) | Midwinter | Base, water equivalent | 59 | 13.2 in | **11.7 in** | **-1.5 in** (-12 %) | 15% |
+| Beartooth & Absaroka (Red Lodge) | Spring | Base, water equivalent | 53 | 17.6 in | **15.6 in** | **-2.0 in** (-12 %) | 16% |
+| Missoula ranges (Montana Snowbowl) | Midwinter | Base, snow depth | 25 | 51.2 in | **45.5 in** | **-5.7 in** (-11 %) | 36% |
+| Madison & Gallatin (Big Sky) | Midwinter | Base, water equivalent | 60 | 11.6 in | **10.5 in** | **-1.2 in** (-10 %) | 13% |
+| Bitterroots (Lost Trail) | Midwinter | Base, snow depth | 25 | 44.5 in | **40.1 in** | **-4.4 in** (-10 %) | 31% |
+| Madison & Gallatin (Big Sky) | Spring | Base, water equivalent | 60 | 17.2 in | **15.6 in** | **-1.7 in** (-10 %) | 15% |
+| Whitefish & Flathead Range | Midwinter | Base, snow depth | 25 | 49.9 in | **45.1 in** | **-4.8 in** (-10 %) | 30% |
+| S Sangre de Cristo (Santa Fe) | Early season | Total new snow | 46 | 24.8 in | **31.7 in** | **+6.9 in** (+28 %) | 22% |
+| Jemez (Pajarito) | Early season | Total new snow | 46 | 20.0 in | **25.7 in** | **+5.7 in** (+28 %) | 23% |
+| S Sangre de Cristo (Santa Fe) | Spring | Base, water equivalent | 46 | 9.5 in | **12.3 in** | **+2.8 in** (+29 %) | 22% |
+| Jemez (Pajarito) | Spring | Base, water equivalent | 46 | 7.3 in | **9.7 in** | **+2.4 in** (+33 %) | 23% |
 | White Mtns AZ (Sunrise Park) | Spring | Base, water equivalent | 46 | 4.3 in | **6.3 in** | **+2.0 in** (+46 %) | 24% |
+| S Sangre de Cristo (Santa Fe) | Early season | Base, snow depth | 25 | 7.0 in | **10.2 in** | **+3.2 in** (+46 %) | 32% |
 
-![](results/fig_significant_inches.png)
-
-### In days
+**In days:**
 
 | Ski region | Window | Measure | winters | a normal winter | an El Niño winter | difference | r² |
 |---|---|---|---|---|---|---|---|
-| Bitterroot & Lolo (Montana Snowbowl) | Midwinter | Powder days (≥6 in) | 59 | 1.5 d | **0.8 d** | **-0.7 d** (-45 %) | 20% |
-| Bighorn Mtns | Holidays | Storm days (≥2 in) | 48 | 1.8 d | **1.1 d** | **-0.7 d** (-39 %) | 19% |
-| Park Range (Steamboat) | Holidays | Storm days (≥2 in) | 47 | 4.3 d | **2.7 d** | **-1.5 d** (-36 %) | 23% |
-| Snowy Range & Sierra Madre | Holidays | Storm days (≥2 in) | 46 | 4.3 d | **3.0 d** | **-1.3 d** (-30 %) | 21% |
-| Central Cascades (Stevens/Snoqualmie) | Spring | Storm days (≥2 in) | 45 | 8.7 d | **6.4 d** | **-2.2 d** (-26 %) | 26% |
-| Bitterroot & Lolo (Montana Snowbowl) | Midwinter | Storm days (≥2 in) | 59 | 9.2 d | **7.1 d** | **-2.1 d** (-23 %) | 18% |
-| Bridger/Gallatin/Madison (Big Sky) | Midwinter | Days with a skiable base | 60 | 29.9 d | **25.1 d** | **-4.8 d** (-16 %) | 13% |
-| Bitterroot & Lolo (Montana Snowbowl) | Spring | Days with a skiable base | 59 | 30.3 d | **25.8 d** | **-4.5 d** (-15 %) | 24% |
-| Bitterroot & Lolo (Montana Snowbowl) | Midwinter | Days with a skiable base | 59 | 26.3 d | **22.8 d** | **-3.5 d** (-13 %) | 15% |
-| Whitefish & Flathead Range | Spring | Days with a skiable base | 52 | 38.0 d | **33.0 d** | **-4.9 d** (-13 %) | 18% |
-| Jemez & N New Mexico | Early season | Storm days (≥2 in) | 46 | 3.4 d | **4.3 d** | **+0.9 d** (+28 %) | 20% |
-| Jemez & N New Mexico | Spring | Days with a skiable base | 46 | 15.0 d | **23.8 d** | **+8.8 d** (+58 %) | 20% |
-| White Mtns AZ (Sunrise Park) | Spring | Days with a skiable base | 46 | 8.1 d | **14.1 d** | **+6.0 d** (+74 %) | 18% |
+| Missoula ranges (Montana Snowbowl) | Midwinter | Powder days (≥6 in) | 46 | 1.4 d | **0.8 d** | **-0.6 d** (-42 %) | 31% |
+| Bighorn Mtns (Meadowlark) | Holidays | Storm days (≥2 in) | 48 | 1.7 d | **1.0 d** | **-0.7 d** (-40 %) | 20% |
+| Park Range (Steamboat) | Holidays | Storm days (≥2 in) | 47 | 4.3 d | **2.7 d** | **-1.6 d** (-36 %) | 22% |
+| Coeur d'Alenes (Silver/Lookout) | Midwinter | Powder days (≥6 in) | 44 | 2.0 d | **1.3 d** | **-0.7 d** (-34 %) | 22% |
+| Snowy Range & Sierra Madre | Holidays | Storm days (≥2 in) | 48 | 4.2 d | **2.9 d** | **-1.3 d** (-32 %) | 17% |
+| Central Cascades (Stevens/Snoqualmie) | Spring | Storm days (≥2 in) | 45 | 8.5 d | **6.4 d** | **-2.1 d** (-25 %) | 24% |
+| Bitterroots (Lost Trail) | Midwinter | Storm days (≥2 in) | 59 | 9.9 d | **7.9 d** | **-2.0 d** (-20 %) | 13% |
+| S Washington Cascades (Crystal/White Pass) | Spring | Storm days (≥2 in) | 45 | 9.9 d | **8.1 d** | **-1.8 d** (-18 %) | 16% |
+| Madison & Gallatin (Big Sky) | Midwinter | Days with a skiable base | 60 | 32.0 d | **26.9 d** | **-5.1 d** (-16 %) | 13% |
+| Missoula ranges (Montana Snowbowl) | Midwinter | Days with a skiable base | 46 | 28.9 d | **24.9 d** | **-4.0 d** (-14 %) | 25% |
+| Whitefish & Flathead Range | Spring | Days with a skiable base | 52 | 38.1 d | **33.2 d** | **-4.9 d** (-13 %) | 18% |
+| Missoula ranges (Montana Snowbowl) | Spring | Days with a skiable base | 46 | 32.6 d | **28.5 d** | **-4.1 d** (-13 %) | 33% |
+| Wind River Range | Spring | Powder days (≥6 in) | 48 | 0.6 d | **0.8 d** | **+0.1 d** (+21 %) | 19% |
+| White Mtns AZ (Sunrise Park) | Spring | Storm days (≥2 in) | 46 | 2.3 d | **2.9 d** | **+0.6 d** (+24 %) | 17% |
+| S Sangre de Cristo (Santa Fe) | Early season | Storm days (≥2 in) | 46 | 3.9 d | **4.9 d** | **+1.0 d** (+26 %) | 19% |
+| Jemez (Pajarito) | Early season | Storm days (≥2 in) | 46 | 3.4 d | **4.3 d** | **+0.9 d** (+28 %) | 20% |
+| Chugach (Alyeska) | Holidays | Storm days (≥2 in) | 43 | 4.5 d | **5.7 d** | **+1.2 d** (+28 %) | 17% |
+| S Sangre de Cristo (Santa Fe) | Spring | Days with a skiable base | 46 | 22.1 d | **33.3 d** | **+11.2 d** (+51 %) | 29% |
+| Jemez (Pajarito) | Spring | Days with a skiable base | 46 | 15.2 d | **23.9 d** | **+8.7 d** (+57 %) | 21% |
+| White Mtns AZ (Sunrise Park) | Spring | Days with a skiable base | 46 | 8.2 d | **14.3 d** | **+6.1 d** (+74 %) | 18% |
 
-![](results/fig_significant_days.png)
+### 2. The effect moves through the winter
 
-### Reading it
+Judged region by region, the number whose 95 % interval excludes zero shifts
+window to window — and so does *where* they are. The holidays hit the interior
+ranges; midwinter hits the north.
 
-Fourteen regions never appear above. For most of the West — the Wasatch, the
-I-70 corridor, Tahoe, the San Juans, Sun Valley — **El Niño has no effect on
-the ski season that can be told apart from chance.** The signal is confined to
-the northern Rockies and the Cascades, where it costs roughly a foot of snow
-and a couple of storm days, and to northern New Mexico and Arizona, where it
-adds snow in spring.
+| Window | Regions with an interval excluding zero |
+|---|---|
+| Early season | 2 of 41 |
+| Holidays | 13 of 41 |
+| Midwinter | 8 of 41 |
+| Spring | 4 of 41 |
 
-The largest single effect is **Montana Snowbowl in midwinter: 12 inches less
-new snow, 2 fewer storm days, and 45 % fewer powder days.** The largest gain
-is **northern New Mexico in spring: 9 more days with a skiable base.**
+### 3. Strength carries no information
 
-### Strength does not matter, anywhere, in any window
-
-This was tested directly rather than inferred. Every region, window and
-measure was asked three questions: among El Niño winters only, does a bigger
-event mean less snow; the same among La Niña winters; and does adding the
-index value to a phase-only model explain more. That is 2158 tests.
-
-| Test | tests run | nominally significant (p<0.05) | expected by chance | survive FDR | smallest correlation findable |
+| Test | tests run | p<0.05 | expected by chance | survive FDR | smallest r findable |
 |---|---|---|---|---|---|
-| Adding magnitude to phase (all winters) | 806 | 17 | 40 | **0** | 0.40 |
-| Within La Niña winters only | 701 | 44 | 35 | **0** | 0.65 |
-| Within El Niño winters only | 651 | 11 | 33 | **0** | 0.65 |
+| Adding magnitude to phase (every winter) | 971 | 23 | 49 | **0** | 0.40 |
+| Within La Niña winters only | 859 | 47 | 43 | **0** | 0.65 |
+| Within El Niño winters only | 789 | 16 | 39 | **0** | 0.67 |
 
-**0 of 2158 survive false-discovery control.** The p-values are
-distributed exactly as pure chance distributes them, and the within-El Niño
-family returns *fewer* nominal hits than chance alone would give.
-
-![](results/fig_strength_significance.png)
-
-The last column is the honesty check. A within-phase test has only about 16
-winters, so it could only ever have found a correlation above roughly 0.65 —
-a flat histogram there means "not found", not "not there". The nested test
-uses every winter, could have found 0.40, and did not. So the claim is not
-that magnitude is provably irrelevant at every scale; it is that across 2,158
-chances, nothing rose above noise, and the better-powered test also found
-nothing.
-
-Composite powder days say the same thing plainly: a very strong El Niño
-averages more powder days than a strong one.
+**0 of 2619 survive.** Powder days by strength bin say the same thing plainly:
 
 | Phase and strength | winters | powder days (midwinter) |
 |---|---|---|
-|---|---|---|
-| La Niña strong | 6 | 1.59 |
-| La Niña moderate | 5 | 1.30 |
-| La Niña weak | 10 | 1.32 |
-| Neutral neutral | 18 | 1.30 |
-| El Niño weak | 9 | 1.16 |
-| El Niño moderate | 4 | 1.15 |
-| El Niño strong | 4 | 1.04 |
-| El Niño very strong | 3 | 1.37 |
+| La Niña strong | 6 | 1.63 |
+| La Niña moderate | 5 | 1.31 |
+| La Niña weak | 10 | 1.37 |
+| Neutral neutral | 18 | 1.33 |
+| El Niño weak | 9 | 1.23 |
+| El Niño moderate | 4 | 1.18 |
+| El Niño strong | 4 | 1.09 |
+| El Niño very strong | 3 | 1.40 |
 
-**Plan for the phase; ignore the magnitude.**
+The bars do not descend. Plan for the phase; ignore the magnitude.
+
+### 4. The regions are the right size
+
+Every region is a mountain range or group of ranges with **at least 4 SNOTEL
+sites spanning at least 1,000 ft** of elevation (minimum 4 sites,
+median 11, minimum relief 1360 ft) — enforced by
+`validate_regions()` and a test. Re-running the whole grid under coarser
+groupings of the same station memberships:
+
+| Grouping | regions | tests | survive | rate | largest effect |
+|---|---|---|---|---|---|
+| ranges (published) | 41 | 971 | 42 | 4.3% | 0.61 |
+| latitude bands, 2 deg | 10 | 238 | 42 | 17.6% | 0.51 |
+| snow climates | 4 | 96 | 1 | 1.0% | 0.48 |
+| latitude zones | 3 | 72 | 20 | 27.8% | 0.52 |
+| whole West | 1 | 24 | 13 | 54.2% | 0.37 |
+
+The same number of findings survives at range resolution as at coarse latitude
+bands, so the fine division is not being punished into uselessness by multiple
+comparisons. The largest effect shrinks monotonically as the grouping coarsens,
+because averaging across the ENSO node cancels the two halves of the seesaw.
+Grouping by snow climate destroys the signal almost entirely, because those
+classes span the node.
+
+### 5. An r² of 15–35 % is real and is not a forecast
+
+ENSO shifts the odds. It does not determine a season.
 
 ---
 
-## Figures
+## Regions and coverage
 
-Every figure is about the snowpack as a skier meets it, in days and inches.
-The water-supply figures (April-1 scatter, phase boxes, statewide
-precipitation) were deleted: they answer a different question.
-
-| File | What it shows |
-|---|---|
-| `results/fig_significant_inches.png` | **Only the results that survive false-discovery control, in inches.** |
-| `results/fig_significant_days.png` | **The same, counted in days.** |
-| `results/fig_powder_days.png` | Powder days in a normal winter against an El Niño winter, every region, in days. |
-| `results/fig_window_change.png` | Change by window of winter, split at the ENSO node — the holiday anomaly. |
-| `results/fig_region_map.png` | The seesaw geographically, as a percentage change. |
-| `results/fig_season_shape.png` | How the base builds through the winter by phase, in inches. |
-| `results/fig_strength_powder.png` | Powder days by ENSO strength bin: the bars do not descend. |
-| `results/fig9_ski_region_window.png` | r² by region x window x measure. |
-| `results/fig10_distributions.png` | The probability distributions behind each headline result. |
-| `results/fig8_daily_enso_curve.png` | The correlation for every day of the water year. |
-
-**Colour convention everywhere: red means less snow, blue means more.**
-
----
-
-## How a powder day is defined
-
-A fixed water threshold is a maritime yardstick. Cascade new snow runs about
-12 % density and Colorado's about 7 %, so 25 mm of water is roughly 8 inches
-of Cascade snow but 14 inches of Colorado snow — counting water alone makes
-the driest, lightest snowpacks look storm-free. Instead each station's own
-**new-snow ratio** (inches of snow per inch of water) is measured from the
-overlap of its depth and water records, then applied to its much longer water
-record. Across 508 stations the median ratio is 7.5. A powder day is then
-**6 inches of new snow**, and a storm day 2 inches, anywhere.
-
-## Regions, and why they are not states
-
-A state boundary is not a snow boundary. Tahoe spans California and Nevada;
-the Bitterroots and Selkirks span Montana and Idaho; the Tetons span Wyoming
-and Idaho; the Sangre de Cristo spans Colorado and New Mexico. Each region is
-anchored on a mountain range around real ski terrain, carries the states it
-actually touches, and is labelled with its snow climate.
+A state boundary is not a snow boundary: Tahoe spans California and Nevada, the
+Coeur d'Alenes span Idaho and Montana, the Tetons span Wyoming and Idaho, the
+Sangre de Cristo spans Colorado and New Mexico. Each region is anchored on the
+ski areas it serves and **its centre is computed from their coordinates**, never
+typed by hand — an earlier hand-typed version drifted 61 km from Schweitzer and
+grouped Lookout Pass with Montana Snowbowl 138 km away.
 
 Stations are weighted by a Gaussian on the vertical gap to the served
-base-to-summit band (scale 1,200 ft) times one on horizontal distance, so a
-valley gauge below the lifts does not speak for a mountain. "Eff." is Kish's
-effective station count.
+base-to-summit band times one on horizontal distance, so a valley gauge below
+the lifts does not speak for a mountain.
 
 | Ski region | states | climate | served band (ft) | stations | eff. | weighted elev (ft) |
 |---|---|---|---|---|---|---|
-| Chugach (Alyeska) | AK | maritime | 250–2,750 | 11 | 9.5 | 1,413 |
-| North Cascades (Mt Baker) | WA | maritime | 3,500–5,089 | 15 | 11.8 | 4,227 |
-| Central Cascades (Stevens/Snoqualmie) | WA | maritime | 3,000–5,845 | 20 | 18.1 | 3,758 |
-| S Washington Cascades (Crystal/White Pass) | WA | maritime | 4,400–7,012 | 24 | 19.0 | 4,668 |
-| Mt Hood | OR | maritime | 4,500–8,540 | 11 | 9.4 | 4,258 |
-| E Cascades rain shadow (Mission Ridge) | WA | transitional | 4,570–6,820 | 7 | 5.9 | 4,744 |
+| Beartooth & Absaroka (Red Lodge) | MT+WY | continental | 7,016–9,416 | 14 | 12.4 | 8,101 |
+| Bighorn Mtns (Meadowlark) | WY | continental | 7,500–9,500 | 15 | 13.4 | 8,716 |
+| Bitterroots (Lost Trail) | MT+ID | transitional | 6,400–8,000 | 13 | 10.8 | 7,000 |
+| Blue Mtns (Anthony Lakes) | OR | transitional | 7,100–8,000 | 18 | 13.7 | 5,809 |
+| Bridger Range (Bridger Bowl) | MT | continental | 6,100–8,700 | 6 | 5.2 | 7,156 |
+| Central Cascades (Stevens/Snoqualmie) | WA | maritime | 3,000–5,845 | 24 | 20.9 | 3,832 |
 | Central Oregon (Mt Bachelor) | OR | transitional | 6,300–9,065 | 10 | 7.3 | 5,220 |
-| Blues & Wallowas (Anthony Lakes) | OR | transitional | 7,100–8,000 | 18 | 13.7 | 5,834 |
-| N Sierra / Tahoe (Palisades/Heavenly/Rose) | CA+NV | maritime | 6,200–10,067 | 27 | 25.5 | 7,599 |
-| S Sierra (Mammoth/June) | CA | maritime | 7,953–11,053 | 2 | 1.7 | 9,038 |
+| Chugach (Alyeska) | AK | maritime | 250–2,750 | 11 | 9.5 | 1,413 |
+| Coeur d'Alenes (Silver/Lookout) | ID+MT | transitional | 4,100–6,300 | 8 | 6.3 | 5,055 |
+| E Cascades rain shadow (Mission Ridge) | WA | transitional | 4,570–6,820 | 7 | 5.9 | 4,744 |
+| Elk Mtns (Aspen/Crested Butte) | CO | continental | 7,945–12,162 | 15 | 13.8 | 10,139 |
+| Front Range (Winter Park/Loveland/A-Basin) | CO | continental | 9,000–13,050 | 26 | 22.2 | 10,403 |
+| Gore & Tenmile (Vail/Summit/Copper) | CO | continental | 8,120–12,998 | 25 | 22.5 | 10,388 |
+| Jemez (Pajarito) | NM | continental | 8,500–10,441 | 10 | 8.2 | 9,514 |
+| Klamath & Siskiyou (Mt Shasta) | CA+OR | maritime | 5,500–7,800 | 8 | 7.7 | 5,607 |
+| Madison & Gallatin (Big Sky) | MT | continental | 6,800–11,166 | 10 | 9.2 | 8,173 |
+| Markagunt (Brian Head) | UT | continental | 9,600–10,970 | 13 | 9.9 | 9,123 |
+| Missoula ranges (Montana Snowbowl) | MT | transitional | 5,000–7,600 | 7 | 6.2 | 6,013 |
+| Mt Hood | OR | maritime | 4,500–8,540 | 11 | 9.4 | 4,268 |
+| N Sangre de Cristo (Taos) | NM+CO | continental | 9,200–12,481 | 13 | 11.0 | 10,169 |
+| N Sierra / Tahoe (Palisades/Heavenly/Rose) | CA+NV | maritime | 6,200–10,067 | 27 | 24.9 | 7,573 |
+| North Cascades (Mt Baker) | WA | maritime | 3,500–5,089 | 10 | 8.6 | 4,160 |
+| Park Range (Steamboat) | CO | continental | 6,900–10,568 | 19 | 16.5 | 9,355 |
 | Ruby Mtns & NE Nevada | NV | continental | 6,500–10,000 | 11 | 10.0 | 7,866 |
+| S San Juans (Wolf Creek) | CO | continental | 10,300–11,904 | 16 | 12.4 | 10,970 |
+| S Sangre de Cristo (Santa Fe) | NM | continental | 10,350–12,075 | 8 | 5.9 | 10,371 |
+| S Sierra (Mammoth/June) | CA | maritime | 7,953–11,053 | 7 | 6.0 | 8,909 |
+| S Washington Cascades (Crystal/White Pass) | WA | maritime | 4,400–7,012 | 24 | 18.8 | 4,683 |
+| San Francisco Peaks (AZ Snowbowl) | AZ | continental | 9,200–11,500 | 8 | 4.8 | 8,422 |
+| San Juans (Telluride/Purgatory) | CO | continental | 8,725–13,150 | 23 | 21.6 | 10,381 |
+| Sawtooth & Smoky (Sun Valley) | ID | intermountain | 5,750–9,150 | 21 | 18.6 | 7,514 |
+| Selkirks (Schweitzer) | ID | transitional | 4,000–6,400 | 9 | 7.2 | 5,319 |
+| Snowy Range & Sierra Madre | WY | continental | 8,798–9,663 | 22 | 18.7 | 9,475 |
 | Spring Mtns (Lee Canyon) | NV | continental | 8,510–11,290 | 4 | 4.0 | 8,723 |
-| Selkirk & Cabinet (Schweitzer/Silver) | ID+MT | transitional | 4,000–6,400 | 15 | 13.3 | 5,206 |
-| Bitterroot & Lolo (Montana Snowbowl) | MT+ID | transitional | 5,000–7,600 | 13 | 10.9 | 5,978 |
-| Whitefish & Flathead Range | MT | transitional | 4,464–6,817 | 12 | 10.9 | 5,442 |
-| Bridger/Gallatin/Madison (Big Sky) | MT | continental | 6,400–10,000 | 20 | 17.2 | 7,848 |
-| Beartooth & Absaroka (Red Lodge) | MT+WY | continental | 7,016–9,416 | 16 | 14.4 | 8,143 |
-| Sawtooth & Smoky (Sun Valley) | ID | intermountain | 5,750–9,150 | 20 | 18.1 | 7,569 |
-| W Central Idaho (Brundage/Tamarack) | ID | intermountain | 5,840–7,640 | 11 | 9.5 | 5,962 |
-| Tetons (Jackson/Targhee) | WY+ID | intermountain | 6,300–10,450 | 15 | 12.3 | 7,943 |
-| Yellowstone & Wind River | WY | continental | 7,000–10,000 | 34 | 29.6 | 8,683 |
-| Bighorn Mtns | WY | continental | 7,500–9,500 | 15 | 13.8 | 8,747 |
-| Snowy Range & Sierra Madre | WY | continental | 8,798–9,663 | 21 | 19.1 | 9,324 |
-| Wasatch (Alta/Snowbird/Park City) | UT | intermountain | 6,800–11,000 | 31 | 27.8 | 8,173 |
+| Tetons (Jackson/Targhee) | WY+ID | intermountain | 6,300–10,450 | 11 | 9.3 | 7,874 |
+| Tushar Mtns (Eagle Point) | UT | continental | 9,000–10,600 | 11 | 9.4 | 9,359 |
 | Uinta Mtns | UT | continental | 8,000–11,000 | 30 | 27.9 | 9,345 |
-| S Utah (Brian Head/Eagle Point) | UT | continental | 9,600–10,970 | 30 | 25.0 | 9,396 |
-| Park Range (Steamboat) | CO | continental | 6,900–10,568 | 18 | 15.9 | 9,367 |
-| Front Range (Winter Park/Loveland/A-Basin) | CO | continental | 9,000–13,050 | 27 | 23.6 | 10,314 |
-| Gore & Tenmile (Vail/Summit/Copper) | CO | continental | 8,120–12,998 | 24 | 21.8 | 10,417 |
-| Elk Mtns (Aspen/Crested Butte) | CO | continental | 7,945–12,162 | 14 | 12.8 | 10,172 |
-| San Juans (Telluride/Purgatory/Wolf Ck) | CO | continental | 8,725–13,150 | 27 | 25.5 | 10,495 |
-| Sangre de Cristo (Taos/Santa Fe) | NM+CO | continental | 9,200–12,481 | 20 | 17.1 | 10,114 |
-| Jemez & N New Mexico | NM | continental | 8,500–11,500 | 9 | 7.5 | 9,473 |
-| Sacramento Mtns (Ski Apache) | NM | continental | 9,600–11,500 | 1 | 1.0 | 10,250 |
-| San Francisco Peaks (AZ Snowbowl) | AZ | continental | 9,200–11,500 | 8 | 4.8 | 8,429 |
-| White Mtns AZ (Sunrise Park) | AZ | continental | 9,200–11,100 | 9 | 8.0 | 8,668 |
-| Black Hills (Terry Peak) | SD | continental | 5,800–7,064 | 3 | 2.9 | 6,358 |
+| W Central Idaho (Brundage/Tamarack) | ID | intermountain | 5,840–7,640 | 11 | 9.9 | 5,937 |
+| Wasatch (Alta/Snowbird/Park City) | UT | intermountain | 6,800–11,000 | 30 | 25.2 | 8,173 |
+| White Mtns AZ (Sunrise Park) | AZ | continental | 9,200–11,100 | 9 | 7.9 | 8,673 |
+| Whitefish & Flathead Range | MT | transitional | 4,464–6,817 | 12 | 10.9 | 5,443 |
+| Wind River Range | WY | continental | 7,000–10,000 | 27 | 23.7 | 8,956 |
 
-The Montana Snowbowl region is anchored on **Stuart Mountain SNOTEL**
-(901:MT:SNTL, 7,270 ft, 5.3 km from the area, inside its band), which carries
-the highest weight there.
+Two regions are deliberately absent. The Sacramento Mountains have one SNOTEL
+site at any radius and the Black Hills three with 970 ft of relief; neither can
+stand for a range.
 
 ---
 
 ## Method
 
-1. **Water year** N runs 1 Oct N-1 to 30 Sep N. Phase from the DJF ONI
-   (El Niño at or above +0.5 °C, La Niña at or below −0.5 °C); strength bins
-   follow CPC on the winter peak.
+1. **Water year** N runs 1 Oct N−1 to 30 Sep N. Phase from the DJF ONI
+   (El Niño ≥ +0.5 °C, La Niña ≤ −0.5 °C); strength bins follow CPC on the
+   winter peak.
 2. **Ski windows**: Early season (1 Nov–15 Dec), Holidays (16 Dec–5 Jan),
    Midwinter (6 Jan–28 Feb), Spring (1 Mar–15 Apr). They abut without gaps.
-3. **Measures**: powder days and storm days in inches of new snow; days with a
-   skiable base; average base as SWE and as depth; total new snow.
-4. **Two views of every result.** Physical composites are raw averages by
-   phase — what actually happened. The statistical tests use per-station
-   detrended z-scores, so a warming trend cannot pose as an ENSO signal.
+3. **A powder day is six inches of snow, not a fixed amount of water.** Cascade
+   new snow runs about 12 % density and Colorado's about 7 %, so counting water
+   would make the driest snowpacks look storm-free. Each station's new-snow
+   ratio is measured from the overlap of its depth and water records (median
+   7.5 in of snow per in of water over 508 stations) and applied to its much
+   longer water record.
+4. **Two views.** Physical composites are raw averages by phase — what happened.
+   The tests use per-station detrended z-scores, so a warming trend cannot pose
+   as an ENSO signal.
 5. **Significance**: the modified bootstrap of Brown & Harper (2026) — omit a
-   random 20 % of winters, refit, repeat 10,000 times, require the 2σ bounds
-   to exclude zero. The raw rule fires on about 30 % of pure noise, so a
-   calibrated version (σ scaled by the delete-d factor sqrt((n−d)/d) = 2) and
-   a permutation p-value are reported alongside. Benjamini-Hochberg
-   false-discovery control is applied across all 670 tests.
+   random 20 % of winters, refit, repeat 10,000 times, require the 2σ bounds to
+   exclude zero. The raw rule fires on ~30 % of pure noise, so a calibrated
+   version (σ × the delete-d factor √((n−d)/d) = 2) and a permutation p-value
+   are reported alongside. Benjamini–Hochberg control is applied across all
+   971 tests.
+6. **Two standards, stated separately.** The maps judge each region alone; the
+   headline tables correct across the whole grid. A region that clears the
+   first but not the second is worth watching, not worth relying on.
 
 ### Data
 
@@ -249,12 +256,13 @@ the highest weight there.
 ```
 python3 -m pip install -r requirements.txt
 python3 -m enso_snowpack fetch      # ~1 h, resumable, caches per station
-python3 -m enso_snowpack analyze    # results/summary.md, figures, CSV tables
-python3 -m pytest tests -q          # 30 offline tests
+python3 -m enso_snowpack analyze    # results/, figures, CSV tables
+make pdf                            # results/El-Nino-and-the-Ski-Season.pdf
+python3 -m pytest tests -q          # 40 offline tests
 ```
 
-The daily table is streamed straight to parquet: 40 million rows will not fit
-in memory as one frame.
+The daily table streams straight to parquet: 40 million rows will not fit in
+memory as one frame.
 
 ### Layout
 
@@ -274,14 +282,16 @@ enso_snowpack/
 
 ## Caveats
 
-- **Snow depth starts around 1993.** The new-snow ratios are calibrated on
-  that period and applied to the full water record, which assumes density
-  has been stable. Depth-based composites rest on ~25 winters.
-- **SNOTEL is not the ski area.** Even with elevation weighting these are
-  nearby mountain gauges, and they say nothing about grooming or snowmaking.
+- **Snow depth starts around 1993.** New-snow ratios are calibrated on that
+  period and applied backward, assuming density has been stable.
+- **A SNOTEL gauge is not a ski area.** These are nearby mountain stations, and
+  they say nothing about aspect, grooming or snowmaking.
 - **Overlapping regions** are not fully independent where radii intersect.
-- **A powder day at 6 inches is a choice.** Regions with few powder days in
-  absolute terms show large percentage swings on small differences.
+- **Six inches is a choice.** Regions with few powder days show large
+  percentage swings on small differences; read the inches columns there.
+- **The strength null is bounded by power.** Within-phase tests had ~16 winters
+  and could only have found r above ~0.65. The nested test uses every winter,
+  could have found 0.40, and did not.
 
 ## Citation
 
